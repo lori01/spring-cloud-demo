@@ -65,6 +65,7 @@ public class SysUserFilter extends AccessControlFilter {
             	}
         	}
         	else hasAuth = true;*/
+
         	
         	if(!hasAuth){
         		((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/403"); 
