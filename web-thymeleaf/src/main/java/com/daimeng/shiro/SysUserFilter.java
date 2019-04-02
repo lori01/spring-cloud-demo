@@ -67,6 +67,7 @@ public class SysUserFilter extends AccessControlFilter {
         	else hasAuth = true;*/
         	//idea修改测试git
 			//idea修改测试git2
+			//idea修改测试git3
         	
         	if(!hasAuth){
         		((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/403"); 
