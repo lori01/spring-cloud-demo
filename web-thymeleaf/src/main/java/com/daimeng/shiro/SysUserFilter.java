@@ -35,7 +35,7 @@ public class SysUserFilter extends AccessControlFilter {
         SysUser suser = (SysUser) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER2);
         if(suser != null){
         	System.out.println("------->SysUserFilter.preHandle------>user=" + user.getRealName());
-        	boolean hasAuto = false;
+        	boolean hasAuth = true;
         	HttpServletRequest req = (HttpServletRequest)request;
         	System.out.println("-------->getContextPath()--->" + req.getContextPath());
         	System.out.println("-------->getRemoteAddr()--->" + req.getRemoteAddr());
@@ -53,19 +53,19 @@ public class SysUserFilter extends AccessControlFilter {
         	String path = req.getRequestURI();
         	System.out.println(path);
         	
-        	if(!"/403".equals(path) && !"/".equals(path) && !"/index".equals(path)
+        	/*if(!"/403".equals(path) && !"/".equals(path) && !"/index".equals(path)
         			&& !"daimeng".equals(suser.getLoginName()) && !"zhangfan".equals(suser.getLoginName())){
-        		/*for(SysRole role : suser.getRoleList()){
+        		for(SysRole role : suser.getRoleList()){
             		for(SysPermission per : role.getPermissions()){
             			if(path.indexOf(per.getUrl()) > -1){
             				hasAuto = true;
             				break;
             			}
             		}
-            	}*/
-        	}else hasAuto = true;
+            	}
+        	}else hasAuth = true;*/
         	
-        	if(!hasAuto){
+        	if(!hasAuth){
         		((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/403"); 
 				return false;
         	}
