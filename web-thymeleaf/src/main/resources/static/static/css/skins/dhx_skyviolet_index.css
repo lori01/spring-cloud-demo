@@ -1,0 +1,101 @@
+body {
+	background-image: url(../../images/dhx_skyviolet/body_bground.gif);
+	background-repeat: repeat-x;
+	background-position: center top;
+}
+
+.header_logo01 {
+	width:250px;
+	background-image: url(../../images/dhx_skyviolet/logo.jpg);
+}
+.header_logo02 {
+	width:300px;
+	padding-left:-15px;
+	background-image: url(../../images/dhx_skyviolet/name.jpg);
+	
+}
+
+.header_logo01, .header_logo02{
+	height:100px;
+	float:left;
+	background-repeat: no-repeat;
+}
+
+.header_menu_bg {
+	width:211px;
+	height:63px;
+	float:right;
+	margin-right:5px;
+	background-image: url(../../images/dhx_skyviolet/head_menu_bground.gif);
+	background-repeat: no-repeat;
+}
+
+/* menu */
+
+.menu .orgdiv{background:url('../../images/dhx_skyviolet/icon_topmenu01.gif');}
+.menu .colordiv{background:url('../../images/dhx_skyviolet/icon_topmenu04.gif');}
+.menu .outdiv{background:url('../../images/dhx_skyviolet/icon_topmenu06.gif');}
+.menulihover{background-image: url(../../images/dhx_skyviolet/icon_topmenu_hover.gif);background-repeat: no-repeat;}
+.no_sub:hover{border:0px solid #629d2a;}
+
+.menu ul{border:1px solid #CFC1DB;border-top:none;}
+.menu li:hover ul{display:block;}
+.menu li:hover ul li a{color:#333;}
+.menu li:hover ul li a:hover{color:#7732B9;}
+/*IE6*/
+.menu li.hover a{color:#357d13}
+.menu li.hover ul li a{color:#333;}
+.menu li.hover ul li a:hover{color:#7732B9;}
+/*menu_style*/
+.menuer {
+	width:984px;
+	height:35px;
+	padding-left:3px;
+	padding-right:3px;
+	line-height:35px;
+	margin:0 auto;
+	background-image: url(../../images/dhx_skyviolet/menu_bground.gif);
+	background-repeat: no-repeat;
+}
+
+.head_menu_yeqian_left {
+	height:32px;
+	width:33px;
+	float:left;
+	background-image: url(../../images/dhx_skyviolet/head_menu_left.gif);
+	background-repeat: no-repeat;
+}
+.head_menu_yeqian_mid {
+	height:32px;
+	float:left;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size:13px;
+	background-image: url(../../images/dhx_skyviolet/head_menu_mid.gif);
+	background-repeat: repeat-x;
+}
+.head_menu_yeqian_right {
+	height:32px;
+	width:33px;
+	float:left;
+	background-image: url(../../images/dhx_skyviolet/head_menu_right.gif);
+	background-repeat: no-repeat;
+}
+
+/*footer_style*/
+.footer {
+	width:100%;
+	height:31px;
+	margin-top:5px;
+	border-bottom:4px solid #725295;
+}
+.foot_content {
+	width:990px;
+	height:31px;
+	line-height:31px;
+	margin:0 auto;
+	text-align:center;
+	color:#FFF;
+	background-image: url(../../images/dhx_skyviolet/foot_bground.gif);
+	background-repeat: no-repeat;
+}

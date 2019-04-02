@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: spring-cloud-consumer
+
+server:
+  port: 7000
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    
+feign:
+  hystrix:
+    enabled: true

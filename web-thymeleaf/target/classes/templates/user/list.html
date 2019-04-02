@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>文章列表 - 梦神十夜的小站</title>
+</head>
+
+<body>
+<div id="wrap" class="container clearfix">
+	<!-- 引入导航栏 -->
+	<div th:include="common/header::pagination"></div>
+    
+    <div id="main" class="container">
+    	<div class="content alpha" id="content_main_apl">
+    		<!-- 循环咨询列表start -->
+    		<div class="entry clearfix" th:each="info:${list}">
+				<h1><a class="post-title" th:href="@{/article/user/{uid}/1(uid=${info.id})}" rel="bookmark" th:text="${info.realname}"></a></h1>
+			
+				<div class="clear"></div>
+				<div class="entry-content ">
+					<!-- <a th:href="@{/article/user/{uid}/1(uid=${info.id})}" rel="tag"><img th:src="${info.img}" class="thumb"/></a> -->
+					<div id="me_div_box" class="add_box">	
+					<!-- <p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"> -->
+						<a th:href="@{/article/user/{uid}/1(uid=${info.id})}" rel="tag">
+							<img th:src="${info.img}" class="thumb" style="width: 200px;float:left;"/>
+						</a>
+						<table class="formtable_noborder" style="width:50%;font-size: 16px;float: left;">
+							<thead>
+							</thead>
+							<tbody>
+								<tr>
+									<th width="30%"><span th:text="用户ID"></span></th>
+									<td width="70%"><span th:text="${info.id}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="登录号"></span></th>
+									<td width="70%"><span th:text="${info.loginName}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="salt"></span></th>
+									<td width="70%"><span th:text="${info.salt}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="用户名称"></span></th>
+									<td width="70%"><span th:text="${info.realname}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="e-mail"></span></th>
+									<td width="70%"><span th:text="${info.email}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="联系方式"></span></th>
+									<td width="70%"><span th:text="${info.phone}"></span></td>
+								</tr>
+							</tbody>
+						</table>
+					<!-- </p> -->
+					</div>
+				</div>
+				<!-- END post-bottom -->
+			</div>
+			<!-- 循环咨询列表end -->
+			
+			<!-- 引入分页 -->
+			<div th:include="common/page::user-list-pagination"></div>
+			
+    	</div>
+    </div>
+</div>
+<!-- 引入底部 -->
+<div th:include="common/footer::common-pagination"></div>
+</body>
+</html>

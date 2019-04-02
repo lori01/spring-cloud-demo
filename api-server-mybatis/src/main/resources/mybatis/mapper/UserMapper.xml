@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.daimeng.api.user.mapper.UserMapper" >
+    <select id="getAll" resultType="com.daimeng.api.user.entity.UserEntity"  >
+       SELECT id as id, 
+       		login_name as loginName, 
+       		password as password, 
+       		realname as realName,
+       		email as email,
+       		phone as phone
+	   FROM sys_user
+	   <if test="loginName != null and loginName != ''">
+	   	and login_name = #{loginName}
+	   </if>
+	   order by id asc
+    </select>
+    <select id="getUserByLoginName" resultType="com.daimeng.api.user.entity.UserEntity"  >
+       SELECT id as id, 
+       		login_name as loginName, 
+       		password as password, 
+       		realname as realName,
+       		email as email,
+       		phone as phone
+	   FROM sys_user
+	   where 1=1
+	   <if test="loginName != null and loginName != ''">
+	   	and login_name = #{loginName}
+	   </if>
+	   order by id asc
+    </select>
+    
+    <insert id="saveUser"  >
+       insert into sys_user(login_name,password) values(#{loginName},#{password})
+    </insert>
+    <select id="countUserByLoginName" resultType="java.lang.Long"  >
+       SELECT count(id)
+	   FROM sys_user
+	   where 1=1
+	   	and login_name = #{0}
+    </select>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.daimeng.web.user.mapper.UserMapper" >
+	<sql id="selectUser">
+		SELECT id as id, 
+       		login_name as loginName, 
+       		password as password, 
+       		realname as realName,
+       		email as email,
+       		phone as phone,
+       		permission as permission,
+       		salt as salt,
+       		img as img
+	   FROM sys_user
+	</sql>
+    <select id="getAll" resultType="com.daimeng.web.user.entity.UserEntity"  >
+       <include refid="selectUser"></include>
+       
+	   <if test="loginName != null and loginName != ''">
+	   	and login_name = #{loginName}
+	   </if>
+	   order by id asc
+    </select>
+    <select id="getPage" resultType="com.daimeng.web.user.entity.UserEntity"  >
+       <include refid="selectUser"></include>
+
+	   order by id asc
+    </select>
+    <select id="getUserByParameter" resultType="com.daimeng.web.user.entity.UserEntity"  >
+       <include refid="selectUser"></include>
+	   where 1=1
+	   <if test="loginName != null and loginName != ''">
+	   	and login_name = #{loginName}
+	   </if>
+	   <if test="id != null and id != ''">
+	   	and id = #{id}
+	   </if>
+	   order by id asc
+    </select>
+    
+    <insert id="insertUser"  >
+       insert into sys_user(login_name,password) values(#{loginName},#{password})
+    </insert>
+    
+    <update id="updateUser"  >
+       update sys_user set login_name=#{loginName},password=#{password},realname=#{realName},email=#{email},phone=#{phone} where id=#{id}
+    </update>
+    <select id="countUserByLoginName" resultType="java.lang.Long"  >
+       SELECT count(id)
+	   FROM sys_user
+	   where 1=1
+	   	and login_name = #{0}
+    </select>
+
+</mapper>

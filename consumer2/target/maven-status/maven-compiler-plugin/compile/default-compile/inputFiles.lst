@@ -1,0 +1,6 @@
+D:\_Workspaces\e\democloud-maven-modules\spring-cloud-demo\consumer2\src\main\java\com\daimeng\consumer\ConsumerApplication.java
+D:\_Workspaces\e\democloud-maven-modules\spring-cloud-demo\consumer2\src\main\java\com\daimeng\consumer\interceptor\LogInterceptor.java
+D:\_Workspaces\e\democloud-maven-modules\spring-cloud-demo\consumer2\src\main\java\com\daimeng\consumer\hello\action\HelloController.java
+D:\_Workspaces\e\democloud-maven-modules\spring-cloud-demo\consumer2\src\main\java\com\daimeng\consumer\hello\remote\HelloRemote.java
+D:\_Workspaces\e\democloud-maven-modules\spring-cloud-demo\consumer2\src\main\java\com\daimeng\consumer\hello\remote\HelloRemoteHystrix.java
+D:\_Workspaces\e\democloud-maven-modules\spring-cloud-demo\consumer2\src\main\java\com\daimeng\consumer\interceptor\MvcConfig.java

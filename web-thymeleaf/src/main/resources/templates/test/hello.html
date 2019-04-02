@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+</head>
+<body>
+<h2>用户列表</h2>
+<div>
+    <img alt="" src="/img/01.jpg" style="width:50px;height:50px"/>
+    <span th:text="${muser.id}"></span>
+    <span th:text="${muser.name}"></span>
+    <span th:text="${muser.add}"></span>
+
+    <ul>
+        <li  th:each="user:${users}">
+            <span th:text="${user.id}"></span>-
+            <span th:text="${user.name}"></span>-
+            <span th:text="${user.add}"></span>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<div th:fragment="pagination">
+<!-- 
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+				佛祖保佑       永无BUG
+ -->
+ 	<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+ 	
+	<script type="text/javascript" src="/js/jquery.js" ></script>
+	<script type="text/javascript" src="/js/jquery-common.js" ></script>
+	
+	
+		
+	<div class="header_wrap" id="top_banner">
+		<div id="header" class="clearfix">
+			<div id="logo">
+				<h2>
+					<a href="/" title="梦神十夜的小站" rel="home bookmark">梦神十夜的小站</a>
+				</h2>
+			</div>
+			<!-- END logo -->
+		</div>
+		<!-- END header -->
+		<div id="navigation" class="clearfix">
+			<nav class="nav">
+				<ul class="sf-menu">
+					<li><a th:text="欢饮您-+${myname}" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
+					<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
+					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
+					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
+					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${cuser.id})}"></a></li>
+					<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${cuser.id})}"></a></li>
+					<li><a th:text="用户" th:href="@{/user/list/1}"></a></li>
+					<li><a th:text="注销" th:href="@{/logout}"></a></li>
+				</ul>
+			</nav>
+		</div>
+		<!-- END navigation -->
+	</div>
+	
+	<div id="add_div" class="add_main" style="display:none;">
+		<div id="add_div_box" class="add_box">
+			<table class="formtable_noborder">
+				<thead>
+				</thead>
+				<tbody>
+					<tr>
+						<th width="20%"><span th:text="标题"></span></th>
+						<td width="80%"><input class="inputclass" style="width: 350px;" type="text" name="title" id="title_s"/></td>
+					</tr>
+					<tr>
+						<th width="20%"><span th:text="简介"></span></th>
+						<td width="80%"><textarea   name="shortContext" id="shortContext_s"></textarea></td>
+					</tr>
+					<tr>
+						<th width="20%"><span th:text="内容"></span></th>
+						<td width="80%"><textarea   name="context" id="context_s"></textarea></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div class="add_btn">
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancle()'" value="取消"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value="确定"/>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div id="me_div" class="add_main" style="display:none;height: 300px;">
+		<div id="me_div_box" class="add_box">
+			<div>
+				<img th:src="${cuser.img}" class="thumb" style="width: 200px;float:left;"/>
+				<table class="formtable_noborder" style="width:50%;font-size: 16px;">
+					<thead>
+					</thead>
+					<tbody>
+						<tr>
+							<th width="30%"><span th:text="用户ID"></span></th>
+							<td width="70%"><span th:text="${cuser.id}"></span></td>
+						</tr>
+						<tr>
+							<th width="30%"><span th:text="登录号"></span></th>
+							<td width="70%"><span th:text="${cuser.loginName}"></span></td>
+						</tr>
+						<tr>
+							<th width="30%"><span th:text="salt"></span></th>
+							<td width="70%"><span th:text="${cuser.salt}"></span></td>
+						</tr>
+						<tr>
+							<th width="30%"><span th:text="用户名称"></span></th>
+							<td width="70%"><input class="inputclass" type="text" name="realname" id="realname_s" th:value="${cuser.realname}"/></td>
+						</tr>
+						<tr>
+							<th width="30%"><span th:text="e-mail"></span></th>
+							<td width="70%"><input class="inputclass" type="text" name="email" id="email_s" th:value="${cuser.email}"/></td>
+						</tr>
+						<tr>
+							<th width="30%"><span th:text="联系方式"></span></th>
+							<td width="70%"><input class="inputclass" type="text" name="phone" id="phone_s" th:value="${cuser.phone}"/></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="add_btn">
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancleme()'" value="关闭"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value="确定"/>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div style="display:none;">
+		<div id="content_main_append">
+			<div class="content alpha">
+				<div class="entry clearfix">
+					<h1><a class="post-title" rel="bookmark" href="/article/detail/{id}/1">{title}</a></h1>	
+					<div class="post-meta">
+						<span>{createTm}</span> | 
+						作者: <span>{realname}</span>投稿 | 
+						文章编号: <a class="post-title" rel="bookmark" href="/article/detail/{id}/1">{id}</a> | 
+						<a class="post-title" rel="bookmark" href="/article/detail/{id}/1">阅读全文​...</a>
+					</div>
+				
+					<div class="clear"></div>
+					<div class="entry-content">
+						<a rel="tag" href="/article/user/{uid}/1"><img class="thumb" src="{img}"></a>
+							<span>{shortContext}</span>
+							<p class="cloudreamHelperLink" codetype="postmulti" entryid="5655" style="display:none;"></p>
+					</div>
+					<!-- END post-bottom -->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		function showme(){
+			$("#me_div").fadeIn();
+			$("#me_div_box").delay(500).slideDown();
+		}
+		function saveuser(uid){
+			$.ajax({
+				"url" : "/user/update",
+				"type" : "POST",
+				"dataType" : "json",
+				"data" : {
+					id : uid,
+					realname : $("#realname_s").val(),
+					email : $("#email_s").val(),
+					phone : $("#phone_s").val()
+				},
+				"success" : function(msgjsonobj) {
+					if(msgjsonobj.status == 100){
+						alert(msgjsonobj.status +"-"+ msgjsonobj.desc +" 修改成功!");
+						cancleme();
+						//var check = confirm(msgjsonobj.status + "-" + msgjsonobj.desc);
+						if(check){
+							
+						}
+					}else{
+						alert(msgjsonobj.status + "-" + msgjsonobj.desc);
+					}
+					
+				},
+				"error" : function() {
+					alert("error");
+				}
+			});
+		}
+		function cancleme(){
+			$("#me_div").fadeOut();
+		}
+		
+		
+		function show(){
+			$("#add_div").fadeIn();
+			$("#add_div_box").delay(500).slideDown();
+		}
+		function add(){
+			$.ajax({
+				"url" : "/article/add",
+				"type" : "POST",
+				"dataType" : "json",
+				"data" : {
+					title : $("#title_s").val(),
+					shortContext : $("#shortContext_s").val(),
+					context : $("#context_s").val()
+				},
+				"success" : function(msgjsonobj) {
+					if(msgjsonobj.status == 100){
+						if($("#add_content_replace_div").html() == undefined){
+							alert(msgjsonobj.status +"-"+ msgjsonobj.desc +" 发布成功!");
+						}
+						else{
+							append(msgjsonobj.obj,msgjsonobj.desc);
+						}
+						cancle();
+						//var check = confirm(msgjsonobj.status + "-" + msgjsonobj.desc);
+						if(check){
+							
+						}
+					}else{
+						alert(msgjsonobj.status + "-" + msgjsonobj.desc);
+					}
+					
+				},
+				"error" : function() {
+					alert("error");
+				}
+			});
+		}
+		function cancle(){
+			$("#add_div").fadeOut();
+		}
+		function append(obj,date){
+			var html = $("#content_main_append").html();
+			
+			var newHtml = html.replace(/{title}/g,obj.title)
+				.replace(/{realname}/g,obj.createUser.realname)
+				.replace(/{id}/g,obj.id)
+				.replace(/{shortContext}/g,obj.shortContext)
+				.replace(/{img}/g,obj.createUser.img)
+				.replace(/{uid}/g,obj.createUser.id)
+				.replace(/{createTm}/g,date)
+			//$("#content_main_apl").before(newHtml);
+			$("#add_content_replace_div").after(newHtml);
+		}
+	</script>
+</div>

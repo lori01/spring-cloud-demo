@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.daimeng.api.cst.mapper.CstMapper" >
+    <select id="getAll" resultType="com.daimeng.api.cst.entity.CstEntity"  >
+       SELECT cst_id as cstId, 
+       		cst_nm as cstNm,
+       		cst_type as cstType
+	   FROM cst_inf
+	   where 1=1
+	   <if test="cstId != null and cstId != ''">
+	   	and cst_id = #{cstId}
+	   </if>
+	   <if test="cstNm != null and cstNm != ''">
+	   	and cst_nm like '%' || #{cstNm} || '%'
+	   </if>
+	   order by cst_id asc
+    </select>
+    
+
+</mapper>

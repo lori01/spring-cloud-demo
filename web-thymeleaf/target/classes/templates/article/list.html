@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>文章列表 - 梦神十夜的小站</title>
+</head>
+
+<body>
+<div id="wrap" class="container clearfix">
+	<!-- 引入导航栏 -->
+	<div th:include="common/header::pagination"></div>
+    
+    <div id="main" class="container">
+    	<div id="add_content_replace_div"></div>
+    	<div class="content alpha" id="content_main_apl">
+    		<!-- 循环咨询列表start -->
+    		<div class="entry clearfix" th:each="info:${list}">
+				<h1><a class="post-title" th:href="@{/article/detail/{id}/1(id=${info.id})}" rel="bookmark" th:text="${info.title}"></a></h1>	
+				<div class="post-meta">
+					<!-- <span th:text="${info.createTm}"></span> |  -->
+					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span> | 
+					作者: <span th:text="${info.createUser.realname}"></span>投稿 | 
+					文章编号: <a class="post-title" th:href="@{/article/detail/{id}/1(id=${info.id})}" rel="bookmark" th:text="${info.id}"></a> | 
+					<a class="post-title" th:href="@{/article/detail/{id}/1(id=${info.id})}" rel="bookmark" >阅读全文​...</a>
+				</div>
+			
+				<div class="clear"></div>
+				<div class="entry-content">
+					<a th:href="@{/article/user/{uid}/1(uid=${info.createUser.id})}" rel="tag"><img th:src="${info.createUser.img}" class="thumb"/></a>
+						<span th:text="${info.shortContext}"></span>
+						<p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"></p>
+				</div>
+				<!-- END post-bottom -->
+			</div>
+			<!-- 循环咨询列表end -->
+			
+			<!-- 引入分页 -->
+			<div th:include="common/page::ar-list-pagination"></div>
+			
+    	</div>
+    </div>
+</div>
+<!-- 引入底部 -->
+<div th:include="common/footer::common-pagination"></div>
+</body>
+</html>
