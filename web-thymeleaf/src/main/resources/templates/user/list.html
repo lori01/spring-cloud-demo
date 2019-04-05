@@ -24,7 +24,7 @@
 						<a th:href="@{/article/user/{uid}/1(uid=${info.id})}" rel="tag">
 							<img th:src="${info.img}" class="thumb" style="width: 200px;float:left;"/>
 						</a>
-						<table class="formtable_noborder" style="width:50%;font-size: 16px;float: left;">
+						<table class="formtable_noborder" style="width:70%;font-size: 16px;float: left;">
 							<thead>
 							</thead>
 							<tbody>
@@ -51,6 +51,10 @@
 								<tr>
 									<th width="30%"><span th:text="联系方式"></span></th>
 									<td width="70%"><span th:text="${info.phone}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="头像"></span></th>
+									<td width="70%"><span th:text="${info.img}"></span></td>
 								</tr>
 							</tbody>
 						</table>

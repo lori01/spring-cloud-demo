@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService{
 				cur.setPhone(user.getPhone());
 				cur.setEmail(user.getEmail());
 				cur.setRealname(user.getRealname());
+				cur.setImg(user.getImg());
 				userRepository.save(cur);
 				vo.setStatus(100);
 				vo.setDesc("更新成功!");
@@ -89,13 +90,13 @@ public class UserServiceImpl implements UserService{
 		if(uid != null){
 			SysUser cur = findSysUser(uid);
 			if(cur != null){
-				String oldpd = getNewPassword(cur.getLoginName(), oldPwd, cur.getLoginName() + cur.getSalt());
+				String oldpd = getNewPassword(cur.getLoginName(), oldPwd, cur.getSalt());
 				if(!oldpd.equals(cur.getPassword())){
 					vo.setStatus(200);
 					vo.setDesc("原密码错误!");
 					return vo;
 				}else{
-					String newpd = getNewPassword(cur.getLoginName(), newPwd, cur.getLoginName() + cur.getSalt());
+					String newpd = getNewPassword(cur.getLoginName(), newPwd, cur.getSalt());
 					cur.setPassword(newpd);
 					userRepository.save(cur);
 					vo.setStatus(100);
@@ -116,15 +117,22 @@ public class UserServiceImpl implements UserService{
 	public ResponseVo add(SysUser user) {
 		ResponseVo vo = new ResponseVo();
 		if(user != null){
-			String salt = getNewPassword(user.getLoginName(), user.getPassword(), user.getLoginName());
-			String newpd = getNewPassword(user.getLoginName(), user.getPassword(), user.getLoginName()+salt);
-			user.setSalt(salt);
-			user.setPassword(newpd);
-			userRepository.save(user);
-			vo.setStatus(100);
-			vo.setDesc("新增成功!");
-			vo.setObj(user);
-			return vo;
+			Long count = userMapper.countUserByLoginName(user.getLoginName());
+			if(count != null && count > 0){
+				vo.setStatus(200);
+				vo.setDesc("登录名已存在!");
+				return vo;
+			}else{
+				String salt = getNewPassword(user.getLoginName(), user.getPassword(), user.getLoginName());
+				String newpd = getNewPassword(user.getLoginName(), user.getPassword(), salt);
+				user.setSalt(salt);
+				user.setPassword(newpd);
+				userRepository.save(user);
+				vo.setStatus(100);
+				vo.setDesc("新增成功!");
+				vo.setObj(user);
+				return vo;
+			}
 		}
 		vo.setStatus(200);
 		vo.setDesc("新增失败!");
