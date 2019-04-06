@@ -42,7 +42,6 @@
 			<nav class="nav">
 				<ul class="sf-menu">
 					<li id="showmenu_li"><a th:text="欢饮您-+${myname}" href="javascript:void(0)" th:onclick= "'javascript:showmenu()'"></a></li>
-					<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
 					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${cuser.id})}"></a></li>
@@ -55,6 +54,7 @@
 				<nav class="nav">
 					<ul class="sf-menu-2">
 						<li><a style="color:#FFF;background: #424242;" th:text="欢饮您-+${myname}"></a></li>
+						<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
 						<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
 						<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
 						<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
