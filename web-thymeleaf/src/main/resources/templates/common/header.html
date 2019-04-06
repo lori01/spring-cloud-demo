@@ -51,16 +51,18 @@
 					<li><a th:text="注销" th:href="@{/logout}"></a></li>
 				</ul>
 			</nav>
+			<div id="menu_me" class="clearfix-menu">
+				<nav class="nav">
+					<ul class="sf-menu-2">
+						<li><a style="color:#FFF;background: #424242;" th:text="欢饮您-+${myname}"></a></li>
+						<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
+						<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
+						<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
+					</ul>
+				</nav>	
+			</div>
 		</div>
-		<div id="menu_me" class="clearfix-menu">
-			<nav class="nav">
-				<ul class="sf-menu-2">
-					<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
-					<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
-					<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
-				</ul>
-			</nav>	
-		</div>
+		
 		<!-- END navigation -->
 	</div>
 	
@@ -95,7 +97,7 @@
 	</div>
 	
 	<!-- 个人用户信息弹出页面 -->
-	<div id="me_div" class="add_main" style="display:none;height: 320px;">
+	<div id="me_div" class="add_main" style="display:none;height: 370px;">
 		<div id="me_div_box" class="add_box">
 			<div>
 				<img th:src="${cuser.img}" class="thumb" style="width: 220px;float:left;"/>
@@ -118,6 +120,13 @@
 						<tr>
 							<th width="30%"><span th:text="用户名称"></span></th>
 							<td width="70%"><input class="inputclass" type="text" name="realname" id="realname_s" th:value="${cuser.realname}"/></td>
+						</tr>
+						<tr>
+							<th width="30%"><span th:text="性别"></span></th>
+							<td width="70%">
+								<input class="" type="radio" name="sexCd_s" value="0" id="sexCd_s" th:text="女" th:checked="${cuser.sexCd == '0'}?checked"/>
+								<input class="" type="radio" name="sexCd_s" value="1" id="sexCd_s" th:text="男" th:checked="${cuser.sexCd == '1'}?checked"/>
+							</td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="e-mail"></span></th>
@@ -250,7 +259,7 @@
 			
 			$el.click(function(e) {
 				e.stopPropagation();
-				$(this).toggleClass('active');
+				//$(this).toggleClass('active');
 			}); 
 			$(document).on('click', function(e) {
 				if (($(e.target) != $el)) {
@@ -262,10 +271,11 @@
 		function showmenu() {
 			var litop = $('#showmenu_li').offset().top;
 			var lileft = $('#showmenu_li').offset().left;
+			var liright = $('#showmenu_li').offset().right;
 			var width = $('#showmenu_li').width();
-			$("#menu_me").css("left", lileft);
-			$("#menu_me").css("top", 80);
-			$("#menu_me").css("width", width);
+			//$("#menu_me").css("left", lileft+width);
+			//$("#menu_me").css("top", litop);
+			//$("#menu_me").css("width", "100%");
 			$("#menu_me").fadeIn();
 			$("#menu_me").delay(500).slideDown();
 			//$("#menu_me").show();
@@ -397,7 +407,8 @@
 					realname : $("#realname_s").val(),
 					email : $("#email_s").val(),
 					phone : $("#phone_s").val(),
-					img : $("#img_s").val()
+					img : $("#img_s").val(),
+					sexCd : $("input[name='sexCd_s']:checked").val()
 				},
 				"success" : function(msgjsonobj) {
 					if (msgjsonobj.status == 100) {

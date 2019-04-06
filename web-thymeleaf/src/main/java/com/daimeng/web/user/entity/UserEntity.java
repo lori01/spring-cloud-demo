@@ -15,6 +15,7 @@ public class UserEntity implements Serializable{
 	private String permission;
 	private String salt;
 	private String img;
+	private String sexCd;
 	
 	public UserEntity(String loginName, String password, String realName) {
 		super();
@@ -86,6 +87,14 @@ public class UserEntity implements Serializable{
 
 	public void setImg(String img) {
 		this.img = img;
+	}
+
+	public String getSexCd() {
+		return sexCd;
+	}
+
+	public void setSexCd(String sexCd) {
+		this.sexCd = sexCd;
 	}
 	
 	

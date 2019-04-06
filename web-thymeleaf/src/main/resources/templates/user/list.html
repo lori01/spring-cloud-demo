@@ -45,6 +45,10 @@
 									<td width="70%"><span th:text="${info.realname}"></span></td>
 								</tr>
 								<tr>
+									<th width="30%"><span th:text="性别"></span></th>
+									<td width="70%"><span th:text="${info.sexCd == '0'}?'女':(${info.sexCd == '1'}?'男':'未知')"></span></td>
+								</tr>
+								<tr>
 									<th width="30%"><span th:text="e-mail"></span></th>
 									<td width="70%"><span th:text="${info.email}"></span></td>
 								</tr>

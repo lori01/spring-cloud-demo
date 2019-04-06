@@ -23,7 +23,8 @@ body {
     /* margin-right: 5px; */
     margin-top: 5px;
     cursor: pointer;
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 .btn_public_cur {
     height: 30px;
@@ -38,6 +39,8 @@ body {
     /* margin-right: 5px; */
     margin-top: 5px;
     cursor: pointer;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .btn_public:hover,
@@ -56,6 +59,8 @@ input.btn_public_cur:hover a:hover{
 	padding-right:10px;
 	background:#FEB425;
 	border-radius:20px;
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 .page_div {
 	text-align:center;
@@ -250,7 +255,8 @@ input,textarea,select,.inputclass {
     background-color: white;
     align-items: center;
     text-align:center;
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     cursor:pointer; */
 }
 .display_img_up {
@@ -383,12 +389,15 @@ input,textarea,select,.inputclass {
 }
 
 .clearfix-menu {
-	border-top: 5px solid #424242;
+	border-right: 4px solid #424242;
 	zoom: 1;
 	display : none;
-	position: fixed;
+	/* position: fixed; */
+	position: absolute;
 	background: #fff;
 	z-index: 999;
+	height : 40px;
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 .sf-menu-2, .sf-menu-2 * {
@@ -418,7 +427,7 @@ input,textarea,select,.inputclass {
 .sf-menu-2 li {
 	float: left;
 	position: relative;
-	width : 100%;
+	/* width : 100%; */
 }
 
 .sf-menu-2 a {
@@ -466,8 +475,10 @@ ul.sf-menu-2 li li li:hover ul, ul.sf-menu-2 li li li.sfHover ul {
 }
 
 .sf-menu-2 a:focus, .sf-menu-2 a:hover {
-	color: #FEB425;
-    background: #337ab7/* #71BACF */;
+	/* color: #FEB425;
+    background: #337ab7#71BACF; */
+	color: #FFF;
+    background: #424242;
     
 }
 /* daimeng */
@@ -1056,8 +1067,8 @@ a:focus>.sf-sub-indicator, a:hover>.sf-sub-indicator, a:active>.sf-sub-indicator
 	height: 260px;
 	margin-top: 20px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	position: relative
 }
 
@@ -1167,8 +1178,8 @@ a:focus>.sf-sub-indicator, a:hover>.sf-sub-indicator, a:active>.sf-sub-indicator
 	padding: 20px;
 	background: #FFF;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	position: relative
 }
 
@@ -1459,8 +1470,8 @@ h2.entry-title {
 	padding: 20px;
 	background: #FFF;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	position: relative
 }
 
@@ -1541,8 +1552,8 @@ a.r span {
 	padding: 20px;
 	background: #FFF;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	position: relative
 }
 
@@ -1655,7 +1666,7 @@ a.r span {
 	background: #FFF;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	position: relative
 }
 
@@ -1867,8 +1878,8 @@ a.r span {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
 	box-shadow: 0 1px 2px rgba(0, 0, 0, .2)
 }
 
@@ -2254,8 +2265,8 @@ ul.children {
 	padding-bottom: 20px;
 	background: #FFF;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	position: relative
 }
 

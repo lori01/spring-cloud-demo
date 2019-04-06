@@ -10,7 +10,8 @@
        		phone as phone,
        		permission as permission,
        		salt as salt,
-       		img as img
+       		img as img,
+       		sex_cd as sexCd
 	   FROM sys_user
 	</sql>
     <select id="getAll" resultType="com.daimeng.web.user.entity.UserEntity"  >

@@ -72,6 +72,7 @@ public class UserServiceImpl implements UserService{
 				cur.setEmail(user.getEmail());
 				cur.setRealname(user.getRealname());
 				cur.setImg(user.getImg());
+				cur.setSexCd(user.getSexCd());
 				userRepository.save(cur);
 				vo.setStatus(100);
 				vo.setDesc("更新成功!");
