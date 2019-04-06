@@ -20,8 +20,10 @@
 					<!-- <span th:text="${info.createTm}"></span> |  -->
 					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span> | 
 					作者: <span th:text="${info.createUser.realname}"></span>投稿 | 
-					文章编号: <a class="post-title" th:href="@{/article/detail/{id}/1(id=${info.id})}" rel="bookmark" th:text="${info.id}"></a> | 
-					<a class="post-title" th:href="@{/article/detail/{id}/1(id=${info.id})}" rel="bookmark" >阅读全文​...</a>
+					文章编号: <span th:text="${info.id}"></span> | 
+					<a class="post-title" th:style="${info.createUid != cuser.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:editArticle('+${info.id}+')'" th:text="修改"></a>
+					<a class="post-title" th:style="${info.createUid != cuser.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:delArticle('+${info.id}+')'" th:text="删除"></a>
+					<a class="post-title" th:href="@{/article/detail/{id}/1(id=${info.id})}" rel="bookmark" th:text="阅读全文..."></a>
 				</div>
 			
 				<div class="clear"></div>

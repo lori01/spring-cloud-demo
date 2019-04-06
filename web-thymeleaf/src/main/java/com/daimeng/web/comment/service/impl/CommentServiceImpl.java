@@ -26,13 +26,13 @@ public class CommentServiceImpl implements CommentService{
 	public Page<CommentInfo> findAllByArticleIdOrderByLayerDesc(
 			Integer articleId, int page) {
 		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_5);
-		return commentRepository.findAllByArticleIdOrderByLayerDesc(articleId, pageable);
+		return commentRepository.findAllByArticleIdAndStatusCdOrderByLayerDesc(articleId,1, pageable);
 	}
 
 	@Override
 	public Page<CommentInfo> findAllByOrderByIdDesc(int page) {
 		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_5);
-		return commentRepository.findAllByOrderByIdDesc(pageable);
+		return commentRepository.findAllByStatusCdOrderByIdDesc(1,pageable);
 	}
 
 	@Override
@@ -50,7 +50,32 @@ public class CommentServiceImpl implements CommentService{
 	@Override
 	public Page<CommentInfo> findByCreateUid(Integer uid, int page) {
 		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_5);
-		return commentRepository.findAllByCreateUidOrderByIdDesc(uid,pageable);
+		return commentRepository.findAllByCreateUidAndStatusCdOrderByIdDesc(uid,1,pageable);
+	}
+
+	@Override
+	public CommentInfo updateCommentInfo(CommentInfo info) {
+		CommentInfo cur = commentRepository.findOne(info.getId());
+		if(cur != null){
+			cur.setContext(info.getContext());
+			cur.setUpdateTm(info.getUpdateTm());
+			cur.setUpdateUid(info.getUpdateUid());
+			cur.setUpdateUser(info.getUpdateUser());
+			info = commentRepository.save(cur);
+			return info;
+		}else return null;
+		
+	}
+
+	@Override
+	public CommentInfo deleteCommentInfo(CommentInfo info) {
+		info = commentRepository.findOne(info.getId());
+		if(info != null){
+			info.setStatusCd(0);
+			info = commentRepository.save(info);
+			return info;
+		}else return null;
+		
 	}
 
 }

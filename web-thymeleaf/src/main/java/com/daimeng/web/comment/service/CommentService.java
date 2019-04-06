@@ -11,4 +11,6 @@ public interface CommentService {
 	public Page<CommentInfo> findByCreateUid(Integer uid,int page);
 	public Page<CommentInfo> findAllByOrderByIdDesc(int page);
 	public CommentInfo addCommentInfo(CommentInfo info);
+	public CommentInfo updateCommentInfo(CommentInfo info);
+	public CommentInfo deleteCommentInfo(CommentInfo info);
 }

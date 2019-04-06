@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.daimeng.util.Constants;
 import com.daimeng.util.DateUtils;
+import com.daimeng.web.article.entity.ArticleInfo;
 import com.daimeng.web.comment.entity.CommentInfo;
 import com.daimeng.web.comment.service.CommentService;
 import com.daimeng.web.common.ResponseVo;
@@ -102,6 +103,56 @@ public class CommentController {
 			vo.setDesc(e.getMessage());
 			return vo;
 		}
+	}
+	
+	@RequestMapping(value="/delete",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public ResponseVo delete(CommentInfo info) {
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		ResponseVo vo = new ResponseVo();
+		try {
+			info = commentService.deleteCommentInfo(info);
+			if(info != null){
+				vo.setStatus(100);
+				vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
+				//vo.setObj(info);
+			}else{
+				vo.setStatus(200);
+				vo.setDesc("删除失败,找不到对象!");
+			}
+			return vo;
+		} catch (Exception e) {
+			vo.setStatus(200);
+			vo.setDesc(e.getMessage());
+			return vo;
+		}
 		
+	}
+	
+	@RequestMapping(value="/update",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public ResponseVo update(CommentInfo info) {
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		ResponseVo vo = new ResponseVo();
+		if(cuser != null){
+			info.setUpdateUser(cuser);
+		}
+		info.setUpdateTm(new Date());
+		try {
+			info = commentService.updateCommentInfo(info);
+			if(info != null){
+				vo.setStatus(100);
+				vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
+				//vo.setObj(info);
+			}else{
+				vo.setStatus(200);
+				vo.setDesc("更新失败,找不到对象!");
+			}
+			return vo;
+		} catch (Exception e) {
+			vo.setStatus(200);
+			vo.setDesc(e.getMessage());
+			return vo;
+		}
 	}
 }

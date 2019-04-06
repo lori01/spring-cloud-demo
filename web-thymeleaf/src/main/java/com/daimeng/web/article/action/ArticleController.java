@@ -119,15 +119,36 @@ public class ArticleController {
 		if(cuser != null){
 			/*info.setCreateUid(cuser.getId());
 			info.setUpdateUid(cuser.getId());*/
-			info.setCreateUser(cuser);
+			if(info.getId() != null) info.setCreateUser(cuser);
 			info.setUpdateUser(cuser);
 		}
-		info.setCreateTm(new Date());
+		if(info.getId() != null){
+			info.setCreateTm(new Date());
+			info.setStatusCd(1);
+		}
 		info.setUpdateTm(new Date());
-		info.setStatusCd(1);
 		ResponseVo vo = new ResponseVo();
 		try {
-			articleService.add(info);
+			info = articleService.addArticle(info);
+			vo.setStatus(100);
+			vo.setDesc(DateUtils.getDateStrFormat(info.getUpdateTm(), "yyyy年MM月dd日 HH:mm"));
+			vo.setObj(info);
+			return vo;
+		} catch (Exception e) {
+			vo.setStatus(200);
+			vo.setDesc(e.getMessage());
+			return vo;
+		}
+		
+	}
+	
+	@RequestMapping(value="/findOne",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public ResponseVo findOne(ArticleInfo info) {
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		ResponseVo vo = new ResponseVo();
+		try {
+			info = articleService.findOne(info.getId());
 			vo.setStatus(100);
 			vo.setDesc(DateUtils.getDateStrFormat(info.getCreateTm(), "yyyy年MM月dd日 HH:mm"));
 			vo.setObj(info);
@@ -140,5 +161,52 @@ public class ArticleController {
 		
 	}
 	
+	@RequestMapping(value="/delete",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public ResponseVo delete(ArticleInfo info) {
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		ResponseVo vo = new ResponseVo();
+		try {
+			info = articleService.deleteArticle(info);
+			if(info != null){
+				vo.setStatus(100);
+				vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
+				vo.setObj(info);
+			}else{
+				vo.setStatus(200);
+				vo.setDesc("删除失败,找不到对象!");
+			}
+			return vo;
+		} catch (Exception e) {
+			vo.setStatus(200);
+			vo.setDesc(e.getMessage());
+			return vo;
+		}
+		
+	}
+	
+	@RequestMapping(value="/update",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public ResponseVo update(ArticleInfo info) {
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		ResponseVo vo = new ResponseVo();
+		try {
+			info = articleService.updateArticle(info);
+			if(info != null){
+				vo.setStatus(100);
+				vo.setDesc(DateUtils.getDateStrFormat(info.getCreateTm(), "yyyy年MM月dd日 HH:mm"));
+				vo.setObj(info);
+			}else{
+				vo.setStatus(200);
+				vo.setDesc("更新失败,找不到对象!");
+			}
+			return vo;
+		} catch (Exception e) {
+			vo.setStatus(200);
+			vo.setDesc(e.getMessage());
+			return vo;
+		}
+		
+	}
 	
 }

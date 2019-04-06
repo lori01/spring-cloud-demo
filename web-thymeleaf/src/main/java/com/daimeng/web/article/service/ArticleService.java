@@ -10,5 +10,7 @@ public interface ArticleService {
 	public ArticleInfo findOne(int id);
 	public Page<ArticleInfo> findByCreateUid(int page,int uid);
 	
-	public void add(ArticleInfo info);
+	public ArticleInfo addArticle(ArticleInfo info);
+	public ArticleInfo updateArticle(ArticleInfo info);
+	public ArticleInfo deleteArticle(ArticleInfo info);
 }

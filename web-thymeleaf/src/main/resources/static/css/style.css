@@ -330,7 +330,12 @@ input,textarea,select,.inputclass {
 	margin-left: 15px;
 	margin-right: 15px
 }
-
+.post-meta a{
+	color : #71BACF;
+}
+.content a:hover {
+	color : #FEB425;
+}
 .alpha {
 	margin-left: 0
 }

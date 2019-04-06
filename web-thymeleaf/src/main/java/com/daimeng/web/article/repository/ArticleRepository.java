@@ -9,6 +9,6 @@ import com.daimeng.web.article.entity.ArticleInfo;
 
 public interface ArticleRepository extends JpaRepository<ArticleInfo, Integer>{
 
-	public Page<ArticleInfo> findByCreateUidOrderByIdDesc(Integer createUid,Pageable pageable);
-	public Page<ArticleInfo> findAllByOrderByIdDesc(Pageable pageable);
+	public Page<ArticleInfo> findByCreateUidAndStatusCdOrderByIdDesc(Integer createUid,Integer statusCd,Pageable pageable);
+	public Page<ArticleInfo> findByStatusCdOrderByIdDesc(Integer statusCd,Pageable pageable);
 }
