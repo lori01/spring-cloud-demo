@@ -82,12 +82,10 @@ public class CommentController {
 	@ResponseBody
 	public ResponseVo add(CommentInfo info) {
 		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			/*info.setCreateUid(cuser.getId());
-			info.setUpdateUid(cuser.getId());*/
-			info.setCreateUser(cuser);
-			info.setUpdateUser(cuser);
-		}
+		/*info.setCreateUid(cuser.getId());
+		info.setUpdateUid(cuser.getId());*/
+		info.setCreateUser(cuser);
+		info.setUpdateUser(cuser);
 		info.setCreateTm(new Date());
 		info.setUpdateTm(new Date());
 		info.setStatusCd(1);
@@ -97,6 +95,31 @@ public class CommentController {
 			vo.setStatus(100);
 			vo.setDesc(DateUtils.getDateStrFormat(info.getCreateTm(), "yyyy年MM月dd日 HH:mm"));
 			vo.setObj(info);
+			return vo;
+		} catch (Exception e) {
+			vo.setStatus(200);
+			vo.setDesc(e.getMessage());
+			return vo;
+		}
+	}
+	
+	@RequestMapping(value="/update",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public ResponseVo update(CommentInfo info) {
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		ResponseVo vo = new ResponseVo();
+		info.setUpdateUser(cuser);
+		info.setUpdateTm(new Date());
+		try {
+			info = commentService.updateCommentInfo(info);
+			if(info != null){
+				vo.setStatus(100);
+				vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
+				//vo.setObj(info);
+			}else{
+				vo.setStatus(200);
+				vo.setDesc("更新失败,找不到对象!");
+			}
 			return vo;
 		} catch (Exception e) {
 			vo.setStatus(200);
@@ -129,30 +152,4 @@ public class CommentController {
 		
 	}
 	
-	@RequestMapping(value="/update",method = {RequestMethod.POST,RequestMethod.GET})
-	@ResponseBody
-	public ResponseVo update(CommentInfo info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		ResponseVo vo = new ResponseVo();
-		if(cuser != null){
-			info.setUpdateUser(cuser);
-		}
-		info.setUpdateTm(new Date());
-		try {
-			info = commentService.updateCommentInfo(info);
-			if(info != null){
-				vo.setStatus(100);
-				vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
-				//vo.setObj(info);
-			}else{
-				vo.setStatus(200);
-				vo.setDesc("更新失败,找不到对象!");
-			}
-			return vo;
-		} catch (Exception e) {
-			vo.setStatus(200);
-			vo.setDesc(e.getMessage());
-			return vo;
-		}
-	}
 }

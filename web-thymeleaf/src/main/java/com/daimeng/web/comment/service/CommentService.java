@@ -13,4 +13,6 @@ public interface CommentService {
 	public CommentInfo addCommentInfo(CommentInfo info);
 	public CommentInfo updateCommentInfo(CommentInfo info);
 	public CommentInfo deleteCommentInfo(CommentInfo info);
+	
+	public Page<CommentInfo> findAllBySpecification(CommentInfo info,int page);
 }

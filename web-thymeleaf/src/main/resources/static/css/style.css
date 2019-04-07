@@ -333,8 +333,16 @@ input,textarea,select,.inputclass {
 .post-meta a{
 	color : #71BACF;
 }
-.content a:hover {
+.entry a:hover {
 	color : #FEB425;
+}
+.entry img {
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+.add_box img {
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 .alpha {
 	margin-left: 0

@@ -16,4 +16,6 @@ public interface UserService {
 	public ResponseVo updateUserBscInf(SysUser user);
 	public ResponseVo updateUserPd(Integer uid,String oldPwd,String newPwd);
 	public ResponseVo add(SysUser user);
+	
+	public Page<SysUser> findAllBySpecification(SysUser info,int page);
 }

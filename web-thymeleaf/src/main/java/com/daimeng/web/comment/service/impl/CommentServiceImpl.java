@@ -1,9 +1,18 @@
 package com.daimeng.web.comment.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.daimeng.util.Constants;
@@ -23,16 +32,61 @@ public class CommentServiceImpl implements CommentService{
 	private ArticleRepository articleRepository;
 	
 	@Override
+	public Page<CommentInfo> findAllBySpecification(CommentInfo info, int page) {
+		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+		Specification specification = new Specification<CommentInfo>() {
+            @Override
+            public Predicate toPredicate(Root<CommentInfo> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            	List<Predicate> list = new ArrayList<>();
+            	if(info.getCreateUid() != null && info.getCreateUid() > 0){
+            		list.add(criteriaBuilder.equal(root.get("createUid"), info.getCreateUid()));
+            	}
+            	if(info.getStatusCd() != null){
+            		list.add(criteriaBuilder.equal(root.get("statusCd"), info.getStatusCd()));
+            	}
+            	if(info.getContext() != null && !"".equals(info.getContext())){
+            		list.add(criteriaBuilder.like(root.get("context"), "%" +info.getContext()+ "%"));
+            	}
+            	if(info.getArticleId() != null && info.getArticleId() > 0){
+            		list.add(criteriaBuilder.equal(root.get("articleId"), info.getArticleId()));
+            	}
+            	//return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
+            	criteriaQuery.where(list.toArray(new Predicate[list.size()]));
+            	criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
+                return criteriaQuery.getRestriction();
+            }
+        };
+		return commentRepository.findAll(specification, pageable);
+	}
+	
+	@Override
 	public Page<CommentInfo> findAllByArticleIdOrderByLayerDesc(
 			Integer articleId, int page) {
-		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_5);
-		return commentRepository.findAllByArticleIdAndStatusCdOrderByLayerDesc(articleId,1, pageable);
+		/*Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+		return commentRepository.findAllByArticleIdAndStatusCdOrderByLayerDesc(articleId,1, pageable);*/
+		CommentInfo info = new CommentInfo();
+		info.setStatusCd(1);
+		info.setArticleId(articleId);
+		return findAllBySpecification(info, page);
 	}
 
 	@Override
 	public Page<CommentInfo> findAllByOrderByIdDesc(int page) {
-		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_5);
-		return commentRepository.findAllByStatusCdOrderByIdDesc(1,pageable);
+		/*Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+		return commentRepository.findAllByStatusCdOrderByIdDesc(1,pageable);*/
+		CommentInfo info = new CommentInfo();
+		info.setStatusCd(1);
+		return findAllBySpecification(info, page);
+	}
+	
+	@Override
+	public Page<CommentInfo> findByCreateUid(Integer uid, int page) {
+		/*Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+		return commentRepository.findAllByCreateUidAndStatusCdOrderByIdDesc(uid,1,pageable);*/
+		CommentInfo info = new CommentInfo();
+		info.setStatusCd(1);
+		info.setCreateUid(uid);
+		return findAllBySpecification(info, page);
 	}
 
 	@Override
@@ -48,12 +102,6 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public Page<CommentInfo> findByCreateUid(Integer uid, int page) {
-		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_5);
-		return commentRepository.findAllByCreateUidAndStatusCdOrderByIdDesc(uid,1,pageable);
-	}
-
-	@Override
 	public CommentInfo updateCommentInfo(CommentInfo info) {
 		CommentInfo cur = commentRepository.findOne(info.getId());
 		if(cur != null){
@@ -61,8 +109,8 @@ public class CommentServiceImpl implements CommentService{
 			cur.setUpdateTm(info.getUpdateTm());
 			cur.setUpdateUid(info.getUpdateUid());
 			cur.setUpdateUser(info.getUpdateUser());
-			info = commentRepository.save(cur);
-			return info;
+			cur = commentRepository.save(cur);
+			return cur;
 		}else return null;
 		
 	}

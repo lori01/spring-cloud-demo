@@ -1,9 +1,18 @@
 package com.daimeng.web.article.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.daimeng.util.Constants;
@@ -16,24 +25,64 @@ public class ArticleServiceImpl implements ArticleService{
 
 	@Autowired
 	private ArticleRepository articleRepository;
-
-	@Override
-	public Page<ArticleInfo> findAll(int page) {
-		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
-		Page<ArticleInfo> pagelist = articleRepository.findByStatusCdOrderByIdDesc(1,pageable);
-		return pagelist;
-	}
-
+	
 	@Override
 	public ArticleInfo findOne(int id) {
 		return articleRepository.findOne(id);
 	}
+	
+	@Override
+	public Page<ArticleInfo> findAllBySpecification(ArticleInfo info, int page) {
+		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+		Specification specification = new Specification<ArticleInfo>() {
+			@Override
+			public Predicate toPredicate(Root<ArticleInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb){
+				List<Predicate> list = new ArrayList<Predicate>();
+				if(info.getCreateUid() != null && info.getCreateUid() > 0){
+					list.add(cb.equal(root.get("createUid"), info.getCreateUid()));
+				}
+				if(info.getId() != null && info.getId() > 0){
+					list.add(cb.equal(root.get("id"), info.getId()));
+				}
+				if(info.getStatusCd() != null){
+					list.add(cb.equal(root.get("statusCd"), info.getStatusCd()));
+				}
+				if(info.getContext() != null && !"".equals(info.getContext())){
+					list.add(cb.like(root.get("context"), "%" +info.getContext()+ "%"));
+				}
+				if(info.getTitle() != null && !"".equals(info.getTitle())){
+					list.add(cb.like(root.get("title"), "%" +info.getTitle()+ "%"));
+				}
+				if(info.getShortContext() != null && !"".equals(info.getShortContext())){
+					list.add(cb.like(root.get("shortContext"), "%" +info.getShortContext()+ "%"));
+				}
+				query.where(list.toArray(new Predicate[list.size()]));
+				query.orderBy(cb.desc(root.get("id")));
+				return query.getRestriction();
+			}
+		};
+		return articleRepository.findAll(specification, pageable);
+	}
 
 	@Override
-	public Page<ArticleInfo> findByCreateUid(int page, int uid) {
-		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+	public Page<ArticleInfo> findAll(int page) {
+		/*Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+		Page<ArticleInfo> pagelist = articleRepository.findByStatusCdOrderByIdDesc(1,pageable);
+		return pagelist;*/
+		ArticleInfo info = new ArticleInfo();
+		info.setStatusCd(1);
+		return findAllBySpecification(info, page);
+	}
+
+	@Override
+	public Page<ArticleInfo> findByCreateUid(Integer uid,int page) {
+		/*Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
 		Page<ArticleInfo> pagelist = articleRepository.findByCreateUidAndStatusCdOrderByIdDesc(uid,1, pageable);
-		return pagelist;
+		return pagelist;*/
+		ArticleInfo info = new ArticleInfo();
+		info.setStatusCd(1);
+		info.setCreateUid(uid);
+		return findAllBySpecification(info, page);
 	}
 
 	@Override
@@ -56,8 +105,8 @@ public class ArticleServiceImpl implements ArticleService{
 			cur.setUpdateTm(info.getUpdateTm());
 			cur.setUpdateUid(info.getUpdateUid());
 			cur.setUpdateUser(info.getUpdateUser());
-			info = articleRepository.save(cur);
-			return info;
+			cur = articleRepository.save(cur);
+			return cur;
 		}else return null;
 		
 	}
@@ -72,4 +121,5 @@ public class ArticleServiceImpl implements ArticleService{
 		}else return null;
 		
 	}
+
 }

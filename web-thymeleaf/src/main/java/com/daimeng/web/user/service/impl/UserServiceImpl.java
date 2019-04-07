@@ -1,6 +1,12 @@
 package com.daimeng.web.user.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -9,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.daimeng.util.Constants;
@@ -33,28 +40,47 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private SysUserRepository userRepository;
 	
-	public static void main(String[] args) {
-		/*String login = "guest";
-		String salt = "8b0477b73a371b5579aacd9a89bdf380";
-		String password = "86fb24bcfc4ee83489faad2f4e0940df";
-		String newPassword = getNewPassword(login, "123456", salt);
-    	System.out.println(newPassword);
-    	System.out.println(password.equals(newPassword));*/
+	@Override
+	public Page<SysUser> findAllBySpecification(SysUser info, int page) {
+		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+		Specification specification = new Specification<SysUser>() {
+			@Override
+			public Predicate toPredicate(Root<SysUser> root, CriteriaQuery<?> query, CriteriaBuilder cb){
+				List<Predicate> list = new ArrayList<Predicate>();
+				if(info.getLoginName() != null && !"".equals(info.getLoginName())){
+					list.add(cb.equal(root.get("loginName"), info.getLoginName()));
+				}
+				if(info.getSexCd() != null && !"".equals(info.getSexCd())){
+					list.add(cb.equal(root.get("sexCd"), info.getSexCd()));
+				}
+				if(info.getEmail() != null && !"".equals(info.getEmail())){
+					list.add(cb.equal(root.get("email"), info.getEmail()));
+				}
+				if(info.getPhone() != null && !"".equals(info.getPhone())){
+					list.add(cb.equal(root.get("phone"), info.getPhone()));
+				}
+				if(info.getRealname() != null && !"".equals(info.getRealname())){
+					list.add(cb.like(root.get("realname"), "%" +info.getRealname()+ "%"));
+				}
+				query.where(list.toArray(new Predicate[list.size()]));
+				query.orderBy(cb.asc(root.get("id")));
+				return query.getRestriction();
+			}
+		};
+		return userRepository.findAll(specification, pageable);
 	}
-	public static String getNewPassword(String login, String passwd, String salt){
-		String newPassword = new SimpleHash(
-                "md5",
-                passwd,
-                ByteSource.Util.bytes(login+salt),
-                1).toHex();
-		System.out.println(newPassword);
-		return newPassword;
-	}
-
+	
 	@Override
 	public Page<SysUser> getUserPage(Integer pageNum) {
-		Pageable pageable = new PageRequest(pageNum, Constants.PAGE_SIZE_5);
-		return userRepository.findAll(pageable);
+		/*Pageable pageable = new PageRequest(pageNum, Constants.PAGE_SIZE_5);
+		return userRepository.findAll(pageable);*/
+		SysUser info = new SysUser();
+		return findAllBySpecification(info, pageNum);
+	}
+	
+	@Override
+	public ArrayList<UserEntity> getUserByParameter(UserEntity user) {
+		return userMapper.getUserByParameter(user);
 	}
 
 	@Override
@@ -84,6 +110,16 @@ public class UserServiceImpl implements UserService{
 		vo.setDesc("更新失败!");
 		return vo;
 	}
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	public static String getNewPassword(String login, String passwd, String salt){
+		String newPassword = new SimpleHash("md5",passwd,ByteSource.Util.bytes(login+salt),1).toHex();
+		System.out.println(newPassword);
+		return newPassword;
+	}
 
 	@Override
 	public ResponseVo updateUserPd(Integer uid,String oldPwd,String newPwd) {
@@ -108,12 +144,8 @@ public class UserServiceImpl implements UserService{
 			}
 		}
 		return vo;
-		
 	}
-	@Override
-	public ArrayList<UserEntity> getUserByParameter(UserEntity user) {
-		return userMapper.getUserByParameter(user);
-	}
+	
 	@Override
 	public ResponseVo add(SysUser user) {
 		ResponseVo vo = new ResponseVo();

@@ -40,10 +40,10 @@ public class ArticleInfo  implements Serializable{
 	private Date updateTm;
 	
 	@Column(nullable = false, unique = true,insertable=false, updatable=false)
-	private int createUid;
+	private Integer createUid;
 	
 	@Column(nullable = false, unique = true,insertable=false, updatable=false)
-	private int updateUid;
+	private Integer updateUid;
 	
 	@ManyToOne(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
 	@JoinColumn(name="createUid")
@@ -97,19 +97,19 @@ public class ArticleInfo  implements Serializable{
 		this.updateTm = updateTm;
 	}
 
-	public int getCreateUid() {
+	public Integer getCreateUid() {
 		return createUid;
 	}
 
-	public void setCreateUid(int createUid) {
+	public void setCreateUid(Integer createUid) {
 		this.createUid = createUid;
 	}
 
-	public int getUpdateUid() {
+	public Integer getUpdateUid() {
 		return updateUid;
 	}
 
-	public void setUpdateUid(int updateUid) {
+	public void setUpdateUid(Integer updateUid) {
 		this.updateUid = updateUid;
 	}
 
