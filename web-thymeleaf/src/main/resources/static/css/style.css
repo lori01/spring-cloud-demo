@@ -77,6 +77,7 @@ input.btn_public_cur:hover a:hover{
     font-size: 12px;
     width: 100%;
     margin-top: 8px;
+    font-size: 16px;
 }
 
 table {
@@ -133,7 +134,7 @@ select {
 }
 .inputclass {
 	width:180px;
-	height:19px;
+	height:25px;
 	line-height:19px;
 	border:solid 1px #DBDFE6;
 	color:#333;
@@ -199,11 +200,13 @@ textarea {
     border: solid 1px #DBDFE6;
     margin-top: 3px;
     margin-bottom: 3px;
+    border-radius: 5px;
 }
 
 input,textarea,select,.inputclass {
 	font-family:Arial;
 	font-size:12px;
+	border-radius: 5px;
 }
 
 .add_main {
