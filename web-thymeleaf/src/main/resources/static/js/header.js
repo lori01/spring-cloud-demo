@@ -107,11 +107,11 @@ function addUser() {
 	}
 	if ($("#re_new_password").val() == null
 			|| $("#re_new_password").val() == "") {
-		alert("请确认新密码!");
+		alert("请确认密码!");
 		return;
 	}
 	if ($("#new_password").val() != $("#re_new_password").val()) {
-		alert("新密码不匹配!");
+		alert("密码不匹配!");
 		return;
 	}
 	$.ajax({
@@ -148,6 +148,14 @@ function cancleme() {
 	$("#me_div").fadeOut();
 }
 function saveuser(uid) {
+	if ($("#realname_s").val() == null || $("#realname_s").val() == "") {
+		alert("请输入用户名称!");
+		return;
+	}
+	if ($("#img_s").val() == null || $("#img_s").val() == "") {
+		alert("请输入头像!");
+		return;
+	}
 	$.ajax({
 		"url" : "/user/update",
 		"type" : "POST",
@@ -164,10 +172,10 @@ function saveuser(uid) {
 			if (msgjsonobj.status == 100) {
 				alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!");
 				cancleme();
-				//var check = confirm(msgjsonobj.status + "-" + msgjsonobj.desc);
+				/*var check = confirm(msgjsonobj.status + "-" + msgjsonobj.desc);
 				if (check) {
 
-				}
+				}*/
 			} else {
 				alert(msgjsonobj.status + "-" + msgjsonobj.desc);
 			}
@@ -193,6 +201,18 @@ function cancle() {
 	$("#add_div").fadeOut();
 }
 function add() {
+	if ($("#title_s").val() == null || $("#title_s").val() == "") {
+		alert("请输入标题!");
+		return;
+	}
+	if ($("#shortContext_s").val() == null || $("#shortContext_s").val() == "") {
+		alert("请输入简介!");
+		return;
+	}
+	if ($("#context_s").val() == null || $("#context_s").val() == "") {
+		alert("请输入内容!");
+		return;
+	}
 	$.ajax({
 		"url" : "/article/add",
 		"type" : "POST",
@@ -217,11 +237,10 @@ function add() {
 					append(msgjsonobj.obj, msgjsonobj.desc);
 				}
 				cancle();
-				// var check = confirm(msgjsonobj.status + "-" +
-				// msgjsonobj.desc);
+				/*var check = confirm(msgjsonobj.status + "-" + msgjsonobj.desc);
 				if (check) {
 
-				}
+				}*/
 			} else {
 				alert(msgjsonobj.status + "-" + msgjsonobj.desc);
 			}
