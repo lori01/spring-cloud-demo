@@ -67,9 +67,9 @@ public class ArticleController {
 		ArticleInfo info = new ArticleInfo();
 		if(id != null && id >0){
 			info = articleService.findOne(id);
-			String newContext = CommonUtils.replaceEnter(info.getContext());
-			//info.setContext(newContext);
-			System.out.println(newContext);
+			/*String newContext = CommonUtils.replaceEnter(info.getContext());
+			info.setContext(newContext);
+			System.out.println(newContext);*/
 		}
 		model.addAttribute("info",info);
 		
