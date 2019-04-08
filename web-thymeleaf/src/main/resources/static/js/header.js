@@ -43,6 +43,10 @@ function updPwd(uid) {
 		alert("请输入新密码!");
 		return;
 	}
+	if($("#new_pwd").val().length <6 || $("#new_pwd").val().length > 20){
+		alert("密码长度必须在6-20之间!");
+		return;
+	}
 	if ($("#re_new_psd").val() == null || $("#re_new_psd").val() == "") {
 		alert("请确认新密码!");
 		return;
@@ -95,6 +99,10 @@ function addUser() {
 	}
 	if ($("#new_password").val() == null || $("#new_password").val() == "") {
 		alert("请输入密码!");
+		return;
+	}
+	if($("#new_password").val().length <6 || $("#new_password").val().length > 20){
+		alert("密码长度必须在6-20之间!");
 		return;
 	}
 	if ($("#re_new_password").val() == null

@@ -67,6 +67,9 @@
 		<!-- END navigation -->
 	</div>
 	
+	
+	
+	<!-- 以下为各个弹出页面 -->
 	<!-- 新增文章弹出页面 -->
 	<div id="add_div" class="add_main" style="display:none;">
 		<h3 class="add_div_title">写文章</h3>
@@ -78,15 +81,15 @@
 				<tbody>
 					<tr>
 						<th width="20%"><span th:text="标题"></span></th>
-						<td width="80%"><input class="inputclass" style="width: 350px;" type="text" name="title" id="title_s"/></td>
+						<td width="80%"><input class="inputclass" style="width: 435px;" type="text" name="title" id="title_s" maxlength="100" placeholder="最多可输入100个字"/></td>
 					</tr>
 					<tr>
 						<th width="20%"><span th:text="简介"></span></th>
-						<td width="80%"><textarea   name="shortContext" id="shortContext_s"></textarea></td>
+						<td width="80%"><textarea name="shortContext" id="shortContext_s" maxlength="300" placeholder="最多可输入300个字"></textarea></td>
 					</tr>
 					<tr>
 						<th width="20%"><span th:text="内容"></span></th>
-						<td width="80%"><textarea   name="context" id="context_s"></textarea></td>
+						<td width="80%"><textarea name="context" id="context_s" maxlength="1000" placeholder="最多可输入1000个字"></textarea></td>
 					</tr>
 				</tbody>
 			</table>
@@ -100,7 +103,7 @@
 	</div>
 	
 	<!-- 个人用户信息弹出页面 -->
-	<div id="me_div" class="add_main" style="display:none;height: 400px;">
+	<div id="me_div" class="add_main" style="display:none;height: 450px;">
 		<h3 class="add_div_title">个人信息</h3>
 		<div id="me_div_box" class="add_box">
 			<div>
@@ -123,7 +126,7 @@
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="用户名称"></span></th>
-							<td width="70%"><input class="inputclass" type="text" name="realname" id="realname_s" th:value="${cuser.realname}"/></td>
+							<td width="70%"><input class="inputclass" type="text" name="realname" id="realname_s" th:value="${cuser.realname}" maxlength="10" placeholder="最多可输入10个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="性别"></span></th>
@@ -134,15 +137,17 @@
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="e-mail"></span></th>
-							<td width="70%"><input class="inputclass" type="text" name="email" id="email_s" th:value="${cuser.email}"/></td>
+							<td width="70%"><input class="inputclass" type="text" name="email" id="email_s" th:value="${cuser.email}" maxlength="50" placeholder="最多可输入50个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="联系方式"></span></th>
-							<td width="70%"><input class="inputclass" type="text" name="phone" id="phone_s" th:value="${cuser.phone}"/></td>
+							<td width="70%"><input class="inputclass" type="text" name="phone" id="phone_s" th:value="${cuser.phone}" maxlength="20" placeholder="最多可输入20个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="头像"></span></th>
-							<td width="70%"><input class="inputclass" type="text" name="img" id="img_s" th:value="${cuser.img}"/></td>
+							<td width="70%">
+								<textarea name="img" id="img_s" style="width:180px;height: 50px;" th:text="${cuser.img}" maxlength="300" placeholder="最多可输入300个字"></textarea>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -156,7 +161,7 @@
 	</div>
 	
 	<!-- 修改密码弹出页面 -->
-	<div id="upd_pwd_div" class="add_main" style="display:none;height: 180px;">
+	<div id="upd_pwd_div" class="add_main" style="display:none;height: 200px;">
 		<h3 class="add_div_title">修改密码</h3>
 		<div id="upd_pwd_div_box" class="add_box">
 			<div>
@@ -198,11 +203,11 @@
 					<tbody>
 						<tr>
 							<th width="30%"><span th:text="登录号"></span></th>
-							<td width="70%"><input class="inputclass" type="text" name="new_loginName" id="new_loginName" /></td>
+							<td width="70%"><input class="inputclass" type="text" name="new_loginName" id="new_loginName" maxlength="20" placeholder="最多可输入20个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="姓名"></span></th>
-							<td width="70%"><input class="inputclass" type="text" name="new_realname" id="new_realname" /></td>
+							<td width="70%"><input class="inputclass" type="text" name="new_realname" id="new_realname" maxlength="10" placeholder="最多可输入10个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="新密码"></span></th>

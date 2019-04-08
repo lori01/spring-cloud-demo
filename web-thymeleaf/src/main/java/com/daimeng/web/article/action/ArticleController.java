@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.daimeng.util.CommonUtils;
 import com.daimeng.util.Constants;
 import com.daimeng.util.DateUtils;
 import com.daimeng.web.article.entity.ArticleInfo;
@@ -66,6 +67,9 @@ public class ArticleController {
 		ArticleInfo info = new ArticleInfo();
 		if(id != null && id >0){
 			info = articleService.findOne(id);
+			String newContext = CommonUtils.replaceEnter(info.getContext());
+			//info.setContext(newContext);
+			System.out.println(newContext);
 		}
 		model.addAttribute("info",info);
 		
