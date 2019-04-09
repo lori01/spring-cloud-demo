@@ -57,6 +57,7 @@ public class ShiroConfig {
 		Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 		// 配置不会被拦截的链接 顺序判断
 		//修复登录成功后跳转/favicon.ico页面的问题
+		//因为如果ico没有anon权限,这注销后可能还会请求/favicon.ico,所以登录后直接跳转到/favicon.ico
 		filterChainDefinitionMap.put("/favicon.ico", "anon");
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/css/**", "anon");
