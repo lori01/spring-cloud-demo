@@ -53,7 +53,7 @@
 			</nav>
 			<div id="menu_me" class="clearfix-menu">
 				<nav class="nav">
-					<ul class="sf-menu-2">
+					<ul class="sf-menu-2" id="menu_ul">
 						<li><a style="color:#FFF;background: #424242;" th:text="欢饮您-+${myname}"></a></li>
 						<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
 						<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
@@ -80,23 +80,32 @@
 				</thead>
 				<tbody>
 					<tr>
-						<th width="20%"><span th:text="标题"></span></th>
-						<td width="80%"><input class="inputclass" style="width: 575px;" type="text" name="title" id="title_s" maxlength="100" placeholder="  最多可输入100个字"/></td>
+						<th width="15%"><span th:text="标题"></span></th>
+						<td width="85%">
+							<input class="inputclass textarea_count" style="width: 575px;" type="text" name="title" id="title_s" maxlength="100" placeholder="  最多可输入100个字"/>
+							<span class="t_h"><i>0</i>/100</span>
+						</td>
 					</tr>
 					<tr>
-						<th width="20%"><span th:text="简介"></span></th>
-						<td width="80%"><textarea name="shortContext" id="shortContext_s" style="width:570px;" maxlength="300" placeholder="  最多可输入300个字"></textarea></td>
+						<th width="15%"><span th:text="简介"></span></th>
+						<td width="85%">
+							<textarea class="textarea_count" name="shortContext" id="shortContext_s" style="width:570px;" maxlength="300" placeholder="  最多可输入300个字"></textarea>
+							<span class="t_h"><i>0</i>/300</span>
+						</td>
 					</tr>
 					<tr>
-						<th width="20%"><span th:text="内容"></span></th>
-						<td width="80%"><textarea name="context" id="context_s" style="width:570px;height:230px;" maxlength="3000" placeholder="  最多可输入3000个字"></textarea></td>
+						<th width="15%"><span th:text="内容"></span></th>
+						<td width="85%">
+							<textarea class="textarea_count" name="context" id="context_s" style="width:570px;height:230px;" maxlength="3000" placeholder="  最多可输入3000个字"></textarea>
+							<span class="t_h"><i>0</i>/3000</span>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 			
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancle()'" value="取消"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value="确定"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancle()'" value="X"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value="✔"/>
 			</div>
 			
 		</div>
@@ -153,8 +162,8 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancleme()'" value="关闭"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value="确定"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancleme()'" value="X"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value="✔"/>
 			</div>
 			
 		</div>
@@ -185,8 +194,8 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:canclePwd()'" value="关闭"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value="确定"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:canclePwd()'" value="X"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value="✔"/>
 			</div>
 			
 		</div>
@@ -221,8 +230,8 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancleUser()'" value="关闭"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:addUser()'" value="确定"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancleUser()'" value="X"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:addUser()'" value="✔"/>
 			</div>
 			
 		</div>
@@ -256,7 +265,7 @@
 	</div>
 	
 	<!-- 修改评论弹出页面 -->
-	<div id="edit_comment_div" class="add_main" style="display:none;height: 330px;">
+	<div id="edit_comment_div" class="add_main" style="display:none;height:380px;width:600px;">
 		<h3 class="add_div_title">修改评论</h3>
 		<input type="hidden" name="comment_id" id="comment_id_s" value=""/>
 		<div id="edit_comment_div_box" class="add_box">
@@ -266,7 +275,10 @@
 				<tbody>
 					<tr>
 						<th width="0%"></th>
-						<td width="100%"><textarea name="comment_context" id="comment_context_s" style="width: 570px;height: 230px;"></textarea></td>
+						<td width="100%">
+							<textarea class="textarea_count" name="comment_context" id="comment_context_s" style="width: 570px;height: 230px;" maxlength="1000" placeholder="  最多可输入1000个字"></textarea>
+							<span class="t_h"><i>0</i>/1000</span>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -280,28 +292,63 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var $el = $("#showmenu_li, #menu_me li");
-			
-			/* $("#showmenu_li").mouseover(function(e){
+			$("#showmenu_li").mouseover(function(e){
+				var flag = $("#menu_me").is(":hidden");
+				if(flag){  
+					showmenu(); 
+	            }else{  
+	                
+	            }  
 				showmenu();
-			}).mouseout(function(e){
+			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
+				
+			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
 				
 			});
 			$("#menu_me").mouseover(function(e){
-				showmenu();
-			}).mouseout(function(e){
-				hidemenu();
-			}); */
+				
+			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
+				
+			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
+				var flag = $("#menu_me").is(":hidden");
+				if(flag){  
+					
+	            }else{  
+	            	hidemenu();
+	            }  
+			});
 			
-			$el.click(function(e) {
+			var $el = $("#navigation, #add_div, #me_div, #upd_pwd_div, #add_user_div, #edit_comment_div");
+			/* $el.click(function(e) {
 				e.stopPropagation();
 				//$(this).toggleClass('active');
-			}); 
-			$(document).on('click', function(e) {
-				if (($(e.target) != $el)) {
-					hidemenu();
+			});  */
+			/* $(document).on('click', function(e) {
+				var inEl = false;
+				for(var i = 0; i < $el.length; i++){
+					if($(e.target) == $el[i]){
+						inEl = true;
+					}
 				}
-			});
+				if (!inEl) {
+					hideAll();
+				}
+			}); */
+			
+			
+			//计数
+			$(".textarea_count").change(function(){
+				var num = $(this).parent().find (".t_h i");
+				num.html($(this).val().length);
+			})
+			$(".textarea_count").keydown(function(){
+				var num = $(this).parent().find (".t_h i");
+				num.html($(this).val().length);
+			})
+			$(".textarea_count").keyup(function(){
+				var num = $(this).parent().find (".t_h i");
+				num.html($(this).val().length);
+			})
 		});
 	</script>
 </div>

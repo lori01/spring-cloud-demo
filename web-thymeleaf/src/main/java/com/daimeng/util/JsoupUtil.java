@@ -26,12 +26,14 @@ public class JsoupUtil {
 		whitelist.addAttributes(":all", "style");
 	}
  
-	public static String clean(String content) {
-	    if(StringUtils.isNotBlank(content)){
+	public static String clean(String content, boolean doTrim) {
+	    if(doTrim && StringUtils.isNotBlank(content)){
+	    	//去掉两端的空格
 	        content = content.trim();
         }
 	    content = xssEncode(content);
-        return Jsoup.clean(content, "", whitelist, outputSettings);
+	    content = Jsoup.clean(content, "", whitelist, outputSettings);
+        return content;
 	}
 	
 	private static String xssEncode(String s) {  
@@ -85,7 +87,7 @@ public class JsoupUtil {
 	
 	public static void main(String[] args) throws IOException {
 		String text = "   <a href=\"http://www.baidu.com/a\" onclick=\"alert(1);\">sss</a><script>alert(0);</script>sss   ";
-		System.out.println(clean(text));
+		System.out.println(clean(text,true));
 	}
 	
 }

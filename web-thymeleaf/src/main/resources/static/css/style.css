@@ -3,6 +3,9 @@ body {
 }
 
 /* daimeng */
+.t_h {
+	color: #C0C0C0;
+}
 .login_error {
 	text-align: center;
 }
