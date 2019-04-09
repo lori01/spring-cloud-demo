@@ -122,6 +122,10 @@
 		}
 	});
 	function add_com(qid){
+		if($("#context_com_s").val() == null || $("#context_com_s").val() == ""){
+			alert("请输入评论再提交!");
+			return;
+		}
 		$.ajax({
 			"url" : "/comment/add",
 			"type" : "POST",

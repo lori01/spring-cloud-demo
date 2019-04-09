@@ -232,7 +232,18 @@ input,textarea,select,.inputclass {
     -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
     -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
 }
-
+.add_div_title_cnl {
+	float : right;
+	padding-right : 10px;
+	color : #71BACF;
+	cursor : pointer;/* 鼠标变成小手 */
+}
+.add_div_title_cnl:hover {
+	float : right;
+	padding-right : 10px;
+	color : #FEB425;
+	cursor : pointer;/* 鼠标变成小手 */
+}
 .add_box {
 	height : 100%;
 }

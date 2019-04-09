@@ -352,6 +352,10 @@ function cancle_comment(){
 	$("#edit_comment_div").fadeOut();
 }
 function updateComment(){
+	if($("#comment_context_s").val() == null || $("#comment_context_s").val() == ""){
+		alert("请输入评论再提交!");
+		return;
+	}
 	$.ajax({
 		"url" : "/comment/update",
 		"type" : "POST",

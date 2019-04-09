@@ -72,7 +72,7 @@
 	<!-- 以下为各个弹出页面 -->
 	<!-- 新增文章弹出页面 -->
 	<div id="add_div" class="add_main" style="display:none;width:800px;height:580px;top:80px;">
-		<h3 class="add_div_title">写文章</h3>
+		<h3 class="add_div_title">写文章<span class="add_div_title_cnl">X</span></h3>
 		<div id="add_div_box" class="add_box">
 			<input type="hidden" name="article_id" id="article_id_s" value=""/>
 			<table class="formtable_noborder" style="">
@@ -113,7 +113,7 @@
 	
 	<!-- 个人用户信息弹出页面 -->
 	<div id="me_div" class="add_main" style="display:none;height: 460px;">
-		<h3 class="add_div_title">个人信息</h3>
+		<h3 class="add_div_title">个人信息<span class="add_div_title_cnl">X</span></h3>
 		<div id="me_div_box" class="add_box">
 			<div>
 				<img th:src="${cuser.img}" class="thumb" style="width: 220px;float:left;"/>
@@ -171,7 +171,7 @@
 	
 	<!-- 修改密码弹出页面 -->
 	<div id="upd_pwd_div" class="add_main" style="display:none;height: 200px;">
-		<h3 class="add_div_title">修改密码</h3>
+		<h3 class="add_div_title">修改密码<span class="add_div_title_cnl">X</span></h3>
 		<div id="upd_pwd_div_box" class="add_box">
 			<div>
 				<table class="formtable_noborder" style="width:50%;">
@@ -203,7 +203,7 @@
 	
 	<!-- 新增用户弹出页面 -->
 	<div id="add_user_div" class="add_main" style="display:none;height: 240px;">
-		<h3 class="add_div_title">创建用户</h3>
+		<h3 class="add_div_title">创建用户<span class="add_div_title_cnl">X</span></h3>
 		<div id="add_user_div_box" class="add_box">
 			<div>
 				<table class="formtable_noborder" style="width:50%;">
@@ -266,7 +266,7 @@
 	
 	<!-- 修改评论弹出页面 -->
 	<div id="edit_comment_div" class="add_main" style="display:none;height:380px;width:600px;">
-		<h3 class="add_div_title">修改评论</h3>
+		<h3 class="add_div_title">修改评论<span class="add_div_title_cnl">X</span></h3>
 		<input type="hidden" name="comment_id" id="comment_id_s" value=""/>
 		<div id="edit_comment_div_box" class="add_box">
 			<table class="formtable_noborder">
@@ -318,6 +318,10 @@
 	            }  
 			});
 			
+			$(".add_div_title_cnl").click(function(){
+				hideAll();
+			});
+			
 			var $el = $("#navigation, #add_div, #me_div, #upd_pwd_div, #add_user_div, #edit_comment_div");
 			/* $el.click(function(e) {
 				e.stopPropagation();
@@ -338,17 +342,19 @@
 			
 			//计数
 			$(".textarea_count").change(function(){
-				var num = $(this).parent().find (".t_h i");
-				num.html($(this).val().length);
-			})
-			$(".textarea_count").keydown(function(){
-				var num = $(this).parent().find (".t_h i");
-				num.html($(this).val().length);
-			})
-			$(".textarea_count").keyup(function(){
-				var num = $(this).parent().find (".t_h i");
-				num.html($(this).val().length);
-			})
+				textCount(this);
+			}).keydown(function(){
+				textCount(this);
+			}).keyup(function(){
+				textCount(this);
+			}).click(function(){
+				textCount(this);
+			});
 		});
+		
+		function textCount(obj){
+			var num = $(obj).parent().find (".t_h i");
+			num.html($(obj).val().length);
+		}
 	</script>
 </div>
