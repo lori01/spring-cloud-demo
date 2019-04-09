@@ -30,8 +30,58 @@ public class JsoupUtil {
 	    if(StringUtils.isNotBlank(content)){
 	        content = content.trim();
         }
+	    content = xssEncode(content);
         return Jsoup.clean(content, "", whitelist, outputSettings);
 	}
+	
+	private static String xssEncode(String s) {  
+        if (s == null || s.isEmpty()) {  
+            return s;  
+        }else{  
+        	StringBuilder sb = new StringBuilder(s.length() + 16);  
+            for (int i = 0; i < s.length(); i++) {  
+                char c = s.charAt(i);  
+                switch (c) {  
+                case '>':  
+                    sb.append("＞");// 转义大于号  
+                    //System.out.println("转义大于号");
+                    break;  
+                case '<':  
+                    sb.append("＜");// 转义小于号  
+                    //System.out.println("转义小于号");
+                    break;  
+                case '\'':  
+                    sb.append("＇");// 转义单引号  
+                    //System.out.println("转义单引号");
+                    break;  
+                case '\"':  
+                    sb.append("＂");// 转义双引号  
+                    //System.out.println("转义双引号  ");
+                    break;  
+                /*case '&':  
+                    sb.append("＆");// 转义&  
+                    System.out.println("转义&");
+                    break;*/
+                case '#':  
+                    sb.append("＃");// 转义#  
+                    //System.out.println("转义# ");
+                    break;  
+                case '(':  
+                    sb.append("（");// 转义(  
+                    //System.out.println("转义( ");
+                    break;
+                case ')':  
+                    sb.append("）");// 转义)  
+                    //System.out.println("转义) ");
+                    break;
+                default:  
+                    sb.append(c);  
+                    break;  
+                }  
+            }  
+            return sb.toString();  
+        }  
+    }  
 	
 	public static void main(String[] args) throws IOException {
 		String text = "   <a href=\"http://www.baidu.com/a\" onclick=\"alert(1);\">sss</a><script>alert(0);</script>sss   ";

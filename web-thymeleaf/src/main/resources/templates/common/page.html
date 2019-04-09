@@ -6,7 +6,7 @@
 			<a class="btn_public" th:href="@{{page}(page=1)}"   th:text="首" />
 		</span>
 		<span class="page_span" th:style="${cpage<=4}? 'display:none':''" >
-			<a class="btn_public" th:href="@{{page}(page=${cpage-4})}"   th:text="..." />
+			<a class="btn_public" th:href="@{{page}(page=${cpage-4})}"   th:text="···" />
 		</span>
 		<span th:each="i : ${#numbers.sequence(cpage-3,cpage+3)}" class="page_span" 
 			th:style="${pages < i || i < 1}? 'display:none':''" >
@@ -15,7 +15,7 @@
 			th:text="${i}" />
 		</span>
 		<span class="page_span" th:style="${cpage+4>pages}? 'display:none':''" >
-			<a class="btn_public" th:href="@{{page}(page=${cpage+4})}"   th:text="..." />
+			<a class="btn_public" th:href="@{{page}(page=${cpage+4})}"   th:text="···" />
 		</span>
 		<span class="page_span">
 			<a th:class="btn_public" th:href="@{{page}(page=${pages})}" th:text="末" />

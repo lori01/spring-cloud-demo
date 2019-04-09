@@ -19,7 +19,7 @@ import com.daimeng.web.user.entity.SysUser;
 @Controller
 public class LoginController {
 
-	@RequestMapping({"/"})
+	@RequestMapping({"/","/favicon"})
     public String main(Model model){
 		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
 		if(cuser != null){
