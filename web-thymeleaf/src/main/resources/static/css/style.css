@@ -247,6 +247,11 @@ input,textarea,select,.inputclass {
 
 .add_btn {
 	bottom : 20px;
+	display: inline-block;
+}
+.add_btn input[type=button] {
+	margin-right : 10px;
+	font-size: 14px;
 }
 
 .up_down_main {
