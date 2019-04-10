@@ -82,21 +82,21 @@
 					<tr>
 						<th width="15%"><span th:text="标题"></span></th>
 						<td width="85%">
-							<input class="inputclass textarea_count" style="width: 575px;" type="text" name="title" id="title_s" maxlength="100" placeholder="  最多可输入100个字"/>
+							<input class="inputclass textarea_count" style="width: 575px;" type="text" name="title" id="title_s" maxlength="100" placeholder="最多可输入100个字"/>
 							<span class="t_h"><i>0</i>/100</span>
 						</td>
 					</tr>
 					<tr>
 						<th width="15%"><span th:text="简介"></span></th>
 						<td width="85%">
-							<textarea class="textarea_count" name="shortContext" id="shortContext_s" style="width:570px;" maxlength="300" placeholder="  最多可输入300个字"></textarea>
+							<textarea class="textarea_count" name="shortContext" id="shortContext_s" style="width:575px;" maxlength="300" placeholder="最多可输入300个字"></textarea>
 							<span class="t_h"><i>0</i>/300</span>
 						</td>
 					</tr>
 					<tr>
 						<th width="15%"><span th:text="内容"></span></th>
 						<td width="85%">
-							<textarea class="textarea_count" name="context" id="context_s" style="width:570px;height:230px;" maxlength="3000" placeholder="  最多可输入3000个字"></textarea>
+							<textarea class="textarea_count" name="context" id="context_s" style="width:575px;height:230px;" maxlength="3000" placeholder="最多可输入3000个字"></textarea>
 							<span class="t_h"><i>0</i>/3000</span>
 						</td>
 					</tr>
@@ -104,15 +104,15 @@
 			</table>
 			
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancle()'" value="X"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value="✔"/>
+				<input type="button" class="btn_no_public" th:onclick= "'javascript:cancle()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value=""/>
 			</div>
 			
 		</div>
 	</div>
 	
 	<!-- 个人用户信息弹出页面 -->
-	<div id="me_div" class="add_main" style="display:none;height: 460px;">
+	<div id="me_div" class="add_main" style="display:none;height: 480px;">
 		<h3 class="add_div_title">个人信息<span class="add_div_title_cnl">X</span></h3>
 		<div id="me_div_box" class="add_box">
 			<div>
@@ -135,7 +135,7 @@
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="用户名称"></span></th>
-							<td width="70%"><input class="inputclass" style="width:200px;" type="text" name="realname" id="realname_s" th:value="${cuser.realname}" maxlength="10" placeholder="  最多可输入10个字"/></td>
+							<td width="70%"><input class="inputclass" style="width:200px;" type="text" name="realname" id="realname_s" th:value="${cuser.realname}" maxlength="10" placeholder="最多可输入10个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="性别"></span></th>
@@ -146,31 +146,31 @@
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="e-mail"></span></th>
-							<td width="70%"><input class="inputclass" style="width:200px;" type="text" name="email" id="email_s" th:value="${cuser.email}" maxlength="50" placeholder="  最多可输入50个字"/></td>
+							<td width="70%"><input class="inputclass" style="width:200px;" type="text" name="email" id="email_s" th:value="${cuser.email}" maxlength="50" placeholder="最多可输入50个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="联系方式"></span></th>
-							<td width="70%"><input class="inputclass" style="width:200px;" type="text" name="phone" id="phone_s" th:value="${cuser.phone}" maxlength="20" placeholder="  最多可输入20个字"/></td>
+							<td width="70%"><input class="inputclass" style="width:200px;" type="text" name="phone" id="phone_s" th:value="${cuser.phone}" maxlength="20" placeholder="最多可输入20个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="头像"></span></th>
 							<td width="70%">
-								<textarea name="img" id="img_s" style="width:200px;height: 50px;" th:text="${cuser.img}" maxlength="300" placeholder="  最多可输入300个字"></textarea>
+								<textarea name="img" id="img_s" style="width:200px;height: 50px;" th:text="${cuser.img}" maxlength="300" placeholder="最多可输入300个字"></textarea>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancleme()'" value="X"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value="✔"/>
+				<input type="button" class="btn_no_public" th:onclick= "'javascript:cancleme()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value=""/>
 			</div>
 			
 		</div>
 	</div>
 	
 	<!-- 修改密码弹出页面 -->
-	<div id="upd_pwd_div" class="add_main" style="display:none;height: 200px;">
+	<div id="upd_pwd_div" class="add_main" style="display:none;height: 220px;">
 		<h3 class="add_div_title">修改密码<span class="add_div_title_cnl">X</span></h3>
 		<div id="upd_pwd_div_box" class="add_box">
 			<div>
@@ -194,15 +194,15 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:canclePwd()'" value="X"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value="✔"/>
+				<input type="button" class="btn_no_public" th:onclick= "'javascript:canclePwd()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value=""/>
 			</div>
 			
 		</div>
 	</div>
 	
 	<!-- 新增用户弹出页面 -->
-	<div id="add_user_div" class="add_main" style="display:none;height: 240px;">
+	<div id="add_user_div" class="add_main" style="display:none;height: 260px;">
 		<h3 class="add_div_title">创建用户<span class="add_div_title_cnl">X</span></h3>
 		<div id="add_user_div_box" class="add_box">
 			<div>
@@ -212,11 +212,11 @@
 					<tbody>
 						<tr>
 							<th width="30%"><span th:text="登录号"></span></th>
-							<td width="70%"><input class="inputclass" type="text" name="new_loginName" id="new_loginName" maxlength="20" placeholder="  最多可输入20个字"/></td>
+							<td width="70%"><input class="inputclass" type="text" name="new_loginName" id="new_loginName" maxlength="20" placeholder="最多可输入20个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="姓名"></span></th>
-							<td width="70%"><input class="inputclass" type="text" name="new_realname" id="new_realname" maxlength="10" placeholder="  最多可输入10个字"/></td>
+							<td width="70%"><input class="inputclass" type="text" name="new_realname" id="new_realname" maxlength="10" placeholder="最多可输入10个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="密码"></span></th>
@@ -230,8 +230,8 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancleUser()'" value="X"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:addUser()'" value="✔"/>
+				<input type="button" class="btn_no_public" th:onclick= "'javascript:cancleUser()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:addUser()'" value=""/>
 			</div>
 			
 		</div>
@@ -276,7 +276,7 @@
 					<tr>
 						<th width="0%"></th>
 						<td width="100%">
-							<textarea class="textarea_count" name="comment_context" id="comment_context_s" style="width: 570px;height: 230px;" maxlength="1000" placeholder="  最多可输入1000个字"></textarea>
+							<textarea class="textarea_count" name="comment_context" id="comment_context_s" style="width: 570px;height: 230px;" maxlength="1000" placeholder="最多可输入1000个字"></textarea>
 							<span class="t_h"><i>0</i>/1000</span>
 						</td>
 					</tr>
@@ -284,8 +284,8 @@
 			</table>
 			
 			<div class="add_btn">
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancle_comment()'" value="取消"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:updateComment()'" value="确定"/>
+				<input type="button" class="btn_no_public" th:onclick= "'javascript:cancle_comment()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updateComment()'" value=""/>
 			</div>
 		</div>
 	</div>

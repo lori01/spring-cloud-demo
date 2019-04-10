@@ -13,6 +13,58 @@ body {
 	float:left;
 }
 
+.btn_yes_public {
+	background-image: url(/img/yes_btn.png);
+    background-size: 45px;
+    background-position: center;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    border: 0px;
+    background-color: #fff;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	float:left;
+	padding: 0px;
+    /* background-position: -6px -9px; */
+    /* background-attachment: fixed; */
+    /* background-color: white; */
+    /* background-repeat: no-repeat; */
+}
+
+.btn_yes_public:hover {
+    background-color: red;
+}
+
+.btn_no_public {
+	background-image: url(/img/no_btn.png);
+    background-size: 45px;
+    background-position: center;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    border: 0px;
+    background-color: #fff;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	float:left;
+	padding: 0px;
+}
+
+.btn_no_public:hover {
+    background-color: #71BACF;
+}
+
 .btn_public {
     height: 40px;
     width: 40px;
@@ -22,7 +74,7 @@ body {
     border: 0px;
     /* padding-left: 10px;
     padding-right: 10px; */
-    background: #71BACF;
+    background-color: #71BACF;
     border-radius: 20px;
     /* margin-right: 5px; */
     margin-top: 10px;
@@ -30,6 +82,7 @@ body {
     -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 	float:left;
+	padding: 0px;
 }
 .btn_public_cur {
     height: 40px;
@@ -38,7 +91,7 @@ body {
     line-height: 40px;
     color: #fff;
     border: 0px;
-    background: #337ab7;
+    background-color: #337ab7;
     border-radius: 20px;
     /* margin-right: 5px; */
     margin-top: 10px;
@@ -62,7 +115,7 @@ input.btn_public_cur:hover a:hover{
     line-height: 40px;
 	color:#fff;
 	border:0px;
-	background:#FEB425;
+	background-color:#FEB425;
 	border-radius:20px;
 	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -95,7 +148,8 @@ table {
 .formtable_noborder tr th {
     height: 30px;
     text-align: right;
-    font-weight: lighter;
+    /* font-weight: lighter;
+    color: #C0C0C0; */
 }
 
 .formtable_noborder th{
@@ -141,8 +195,8 @@ select {
 }
 .inputclass {
 	width:180px;
-	height:25px;
-	line-height:19px;
+	height:20px;
+	line-height:20px;
 	border:solid 1px #DBDFE6;
 	color:#333;
 	vertical-align:middle;
@@ -212,8 +266,9 @@ textarea {
 
 input,textarea,select,.inputclass {
 	font-family:Arial;
-	font-size:12px;
+	font-size:14px;
 	border-radius: 5px;
+	padding: 5px;
 }
 
 .add_main {
