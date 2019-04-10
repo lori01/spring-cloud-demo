@@ -292,6 +292,8 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			document.execCommand("BackgroundImageCache", false, true);
+			
 			$("#showmenu_li").mouseover(function(e){
 				var flag = $("#menu_me").is(":hidden");
 				if(flag){  

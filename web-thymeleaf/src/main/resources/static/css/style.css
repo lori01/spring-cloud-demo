@@ -14,9 +14,9 @@ body {
 }
 
 .btn_yes_public {
-	background-image: url(/img/yes_btn.png);
-    background-size: 45px;
-    background-position: center;
+	background-image: url(/img/btn_image_color.png);
+    background-position:-2px -1px;
+    /* background-size: 45px; */
     height: 40px;
     width: 40px;
     text-align: center;
@@ -38,13 +38,14 @@ body {
 }
 
 .btn_yes_public:hover {
-    background-color: red;
+    /* background-color: red; */
+    /* background-size: 45px; */
+    background-position:43px -1px;
 }
 
 .btn_no_public {
-	background-image: url(/img/no_btn.png);
-    background-size: 45px;
-    background-position: center;
+	background-image: url(/img/btn_image_color.png);
+    background-position: -2px 43px;
     height: 40px;
     width: 40px;
     text-align: center;
@@ -62,7 +63,9 @@ body {
 }
 
 .btn_no_public:hover {
-    background-color: #71BACF;
+    /* background-color: blue; */
+    /* background-image: url(/img/no_btn_red_yellow.png); */
+    background-position: 43px 43px;
 }
 
 .btn_public {
