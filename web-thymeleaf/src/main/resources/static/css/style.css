@@ -293,7 +293,8 @@ input,textarea,select,.inputclass {
 .add_div_title_cnl {
 	float : right;
 	padding-right : 10px;
-	color : #71BACF;
+	/* color : #71BACF; */
+	color : red;
 	cursor : pointer;/* 鼠标变成小手 */
 }
 .add_div_title_cnl:hover {
