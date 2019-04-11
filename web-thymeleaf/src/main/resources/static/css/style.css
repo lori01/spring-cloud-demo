@@ -294,7 +294,7 @@ input,textarea,select,.inputclass {
 	float : right;
 	padding-right : 10px;
 	/* color : #71BACF; */
-	color : red;
+	color : red; 
 	cursor : pointer;/* 鼠标变成小手 */
 }
 .add_div_title_cnl:hover {
