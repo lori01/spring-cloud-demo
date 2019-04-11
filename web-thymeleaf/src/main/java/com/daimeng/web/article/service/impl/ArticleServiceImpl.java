@@ -3,10 +3,7 @@ package com.daimeng.web.article.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +29,7 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 	
 	@Override
-	public Page<ArticleInfo> findAllBySpecification(ArticleInfo info, int page) {
+	public Page<ArticleInfo> findAllBySpecification(final ArticleInfo info, int page) {
 		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
 		Specification specification = new Specification<ArticleInfo>() {
 			@Override
@@ -48,13 +45,13 @@ public class ArticleServiceImpl implements ArticleService{
 					list.add(cb.equal(root.get("statusCd"), info.getStatusCd()));
 				}
 				if(info.getContext() != null && !"".equals(info.getContext())){
-					list.add(cb.like(root.get("context"), "%" +info.getContext()+ "%"));
+					list.add(cb.like((Expression) root.get("context"), "%" +info.getContext()+ "%"));
 				}
 				if(info.getTitle() != null && !"".equals(info.getTitle())){
-					list.add(cb.like(root.get("title"), "%" +info.getTitle()+ "%"));
+					list.add(cb.like((Expression) root.get("title"), "%" +info.getTitle()+ "%"));
 				}
 				if(info.getShortContext() != null && !"".equals(info.getShortContext())){
-					list.add(cb.like(root.get("shortContext"), "%" +info.getShortContext()+ "%"));
+					list.add(cb.like((Expression) root.get("shortContext"), "%" +info.getShortContext()+ "%"));
 				}
 				query.where(list.toArray(new Predicate[list.size()]));
 				query.orderBy(cb.desc(root.get("id")));

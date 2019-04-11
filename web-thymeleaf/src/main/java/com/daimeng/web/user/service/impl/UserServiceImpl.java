@@ -3,10 +3,7 @@ package com.daimeng.web.user.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -41,7 +38,7 @@ public class UserServiceImpl implements UserService{
 	private SysUserRepository userRepository;
 	
 	@Override
-	public Page<SysUser> findAllBySpecification(SysUser info, int page) {
+	public Page<SysUser> findAllBySpecification(final SysUser info, int page) {
 		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
 		Specification specification = new Specification<SysUser>() {
 			@Override
@@ -60,7 +57,7 @@ public class UserServiceImpl implements UserService{
 					list.add(cb.equal(root.get("phone"), info.getPhone()));
 				}
 				if(info.getRealname() != null && !"".equals(info.getRealname())){
-					list.add(cb.like(root.get("realname"), "%" +info.getRealname()+ "%"));
+					list.add(cb.like((Expression) root.get("realname"), "%" +info.getRealname()+ "%"));
 				}
 				query.where(list.toArray(new Predicate[list.size()]));
 				query.orderBy(cb.asc(root.get("id")));

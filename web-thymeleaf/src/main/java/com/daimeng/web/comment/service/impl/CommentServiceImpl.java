@@ -3,10 +3,7 @@ package com.daimeng.web.comment.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +29,7 @@ public class CommentServiceImpl implements CommentService{
 	private ArticleRepository articleRepository;
 	
 	@Override
-	public Page<CommentInfo> findAllBySpecification(CommentInfo info, int page) {
+	public Page<CommentInfo> findAllBySpecification(final CommentInfo info, int page) {
 		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
 		Specification specification = new Specification<CommentInfo>() {
             @Override
@@ -45,7 +42,7 @@ public class CommentServiceImpl implements CommentService{
             		list.add(criteriaBuilder.equal(root.get("statusCd"), info.getStatusCd()));
             	}
             	if(info.getContext() != null && !"".equals(info.getContext())){
-            		list.add(criteriaBuilder.like(root.get("context"), "%" +info.getContext()+ "%"));
+            		list.add(criteriaBuilder.like((Expression) root.get("context"), "%" +info.getContext()+ "%"));
             	}
             	if(info.getArticleId() != null && info.getArticleId() > 0){
             		list.add(criteriaBuilder.equal(root.get("articleId"), info.getArticleId()));
