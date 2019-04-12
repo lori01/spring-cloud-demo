@@ -1,0 +1,262 @@
+/* daimeng */
+.t_h {
+	color: #C0C0C0;
+}
+.login_error {
+	text-align: center;
+}
+.img_left {
+	float:left;
+}
+
+.btn_yes_public {
+	background-image: url(/img/btn_image_color.png);
+    background-position:-2px -1px;
+    /* background-size: 45px; */
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    border: 0px;
+    background-color: #fff;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	float:left;
+	padding: 0px;
+    /* background-position: -6px -9px; */
+    /* background-attachment: fixed; */
+    /* background-color: white; */
+    /* background-repeat: no-repeat; */
+}
+
+.btn_yes_public:hover {
+    /* background-color: red; */
+    /* background-size: 45px; */
+    background-position:43px -1px;
+}
+
+.btn_no_public {
+	background-image: url(/img/btn_image_color.png);
+    background-position: -2px 43px;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    border: 0px;
+    background-color: #fff;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	float:left;
+	padding: 0px;
+}
+
+.btn_no_public:hover {
+    /* background-color: blue; */
+    /* background-image: url(/img/no_btn_red_yellow.png); */
+    background-position: 43px 43px;
+}
+
+.btn_public {
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    border: 0px;
+    /* padding-left: 10px;
+    padding-right: 10px; */
+    background-color: #71BACF;
+    border-radius: 20px;
+    /* margin-right: 5px; */
+    margin-top: 10px;
+    cursor: pointer;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	float:left;
+	padding: 0px;
+}
+.btn_public_cur {
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    border: 0px;
+    background-color: #337ab7;
+    border-radius: 20px;
+    /* margin-right: 5px; */
+    margin-top: 10px;
+    cursor: pointer;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	float:left;
+}
+
+.btn_public:hover,
+.btn_public_cur:hover,
+a.btn_public:hover,
+a.btn_public_cur:hover,
+button.btn_public:hover,
+button.btn_public_cur:hover,
+input.btn_public:hover a:hover 
+input.btn_public_cur:hover a:hover{
+	height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+	color:#fff;
+	border:0px;
+	background-color:#FEB425;
+	border-radius:20px;
+	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+.page_div {
+	text-align:center;
+	margin-bottom: 20px;
+}
+.page_span {
+	display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.add_main {
+	position: fixed;
+    z-index: 999;
+    background-color: white;
+    width: 600px;
+    height: 480px;
+    left: 0px;
+    right: 0px;
+    padding-bottom: 20px;
+    margin-left: auto;
+	margin-right: auto;
+	text-align:center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+}
+.add_div_title_cnl {
+	float : right;
+	padding-right : 10px;
+	/* color : #71BACF; */
+	color : red; 
+	cursor : pointer;/* 鼠标变成小手 */
+}
+.add_div_title_cnl:hover {
+	float : right;
+	padding-right : 10px;
+	color : #FEB425;
+	cursor : pointer;/* 鼠标变成小手 */
+}
+.add_box {
+	height : 100%;
+}
+.add_box input {
+	
+}
+.add_box textarea {
+	width: 430px;
+    height: 150px;
+}
+.add_box table {
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.add_btn {
+	bottom : 20px;
+	display: inline-block;
+}
+.add_btn input[type=button] {
+	margin-right : 10px;
+	font-size: 14px;
+}
+
+.up_down_main {
+	position: fixed;
+    bottom: 40px;
+    right: 50px;
+    font-size: 20px;
+}
+.up_down_div {
+	margin: 10px;
+	/* width: 40px;
+    height: 20px;
+    background-color: white;
+    align-items: center;
+    text-align:center;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    cursor:pointer; */
+}
+.display_img_up {
+	background: url(/img/up1.png) no-repeat;
+	float: left;
+    width: 40px;
+    height: 20px;
+    background-size: 40px 20px;
+}
+.display_img_down {
+	background: url(/img/down1.png) no-repeat;
+	float: left;
+    width: 40px;
+    height: 20px;
+    background-size: 40px 20px;
+}
+.display_img_up:hover{
+	background: url(/img/up-hover1.png) no-repeat;
+	float: left;
+    width: 40px;
+    height: 20px;
+    background-size: 40px 20px;
+}
+.display_img_down:hover{
+	background: url(/img/down-hover1.png) no-repeat;
+	float: left;
+    width: 40px;
+    height: 20px;
+    background-size: 40px 20px;
+}
+.display_img_comment {
+	/* background: url(/img/comment.png) no-repeat; */
+	float: left;
+    width: 40px;
+    height: 20px;
+    background-size: 40px 20px;
+    -webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);
+	/* 上面代码是兼容火狐与谷歌的样式
+	下面代码是兼容ie9以下浏览器的样式，包括ie9 */
+	filter: gray;
+}
+.display_img_comment:hover {
+	background: url(/img/comment.png) no-repeat;
+	float: left;
+    width: 40px;
+    height: 20px;
+    background-size: 40px 20px;
+}
+
+.entry-content span {
+	/* normal	默认。空白会被浏览器忽略。
+	pre	空白会被浏览器保留。其行为方式类似 HTML 中的 <pre> 标签。
+	nowrap	文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+	pre-wrap	保留空白符序列，但是正常地进行换行。
+	pre-line	合并空白符序列，但是保留换行符。
+	inherit	规定应该从父元素继承 white-space 属性的值。 */
+	white-space:pre-wrap;
+}
