@@ -150,7 +150,7 @@ input,textarea,select,.inputclass {
 
 /* daimeng */
 .add_div_title {
-	background: #434343;
+	background: #5d3d21;
     color: #fff;
     margin-top: 0px;
 }
@@ -168,7 +168,7 @@ input,textarea,select,.inputclass {
 }
 
 .clearfix-menu {
-	border-right: 4px solid #424242;
+	border-right: 4px solid #5d3d21;
 	zoom: 1;
 	display : none;
 	/* position: fixed; */
@@ -218,7 +218,7 @@ input,textarea,select,.inputclass {
 	left: 0;
 	top: 40px;
 	z-index: 99;
-	background: #424242;
+	background: #5d3d21;
 }
 
 ul.sf-menu-2 li:hover li ul, ul.sf-menu-2 li.sfHover li ul {
@@ -257,7 +257,7 @@ ul.sf-menu-2 li li li:hover ul, ul.sf-menu-2 li li li.sfHover ul {
 	/* color: #FEB425;
     background: #337ab7#71BACF; */
 	color: #FFF;
-    background: #424242;
+    background: #5d3d21;
     
 }
 /* daimeng */
@@ -285,20 +285,7 @@ ul.sf-menu-2 li li li:hover ul, ul.sf-menu-2 li li li.sfHover ul {
 	margin-left: 15px;
 	margin-right: 15px
 }
-.post-meta a{
-	color : #71BACF;
-}
-.entry a:hover {
-	color : #FEB425;
-}
-.entry img {
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-.add_box img {
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
+
 .alpha {
 	margin-left: 0
 }
@@ -418,7 +405,7 @@ a {
 
 a:hover {
 	text-decoration: none;
-	color: #424242
+	color: #5d3d21
 }
 
 a img {
@@ -473,6 +460,7 @@ em {
 	height: auto;
 	padding: 5px;
 	width: 150px;/* daimeng */
+	border-radius: 80px;
 }
 
 h1, h2, h3, h4 {
@@ -621,12 +609,12 @@ blockquote.right {
 }
 
 .divTags li:hover {
-	background: #424242;
+	background: #5d3d21;
 	text-decoration: none
 }
 
 .divTags a:hover {
-	background: #424242;
+	background: #5d3d21;
 	color: #000;
 	text-decoration: none
 }
@@ -652,7 +640,7 @@ blockquote.right {
 }
 
 .divArchives a:hover, .divPrevious a:hover {
-	background: #424242;
+	background: #5d3d21;
 	color: #FFF;
 	text-decoration: none
 }
@@ -690,11 +678,11 @@ p.d {
 }
 
 p.d:hover {
-	background: #424242
+	background: #5d3d21
 }
 
 p.yd {
-	background: #424242;
+	background: #5d3d21;
 	color: #FFFFFF
 }
 
@@ -751,12 +739,12 @@ p.w {
 }
 
 #logo h2 a, #logo h1 a,#logo_login h2 a, #logo_login h1 a {
-	color: #424242;
+	color: #5d3d21;
 	text-decoration: none
 }
 
 #logo h2 a:hover, #logo h1 a:hover,#logo_login h2 a:hover, #logo_login h1 a:hover {
-	color: #434343
+	color: #5d3d21
 }
 
 #top-ad {
@@ -817,7 +805,7 @@ p.w {
 	left: 0;
 	top: 40px;
 	z-index: 99;
-	background: #424242
+	background: #5d3d21
 }
 
 ul.sf-menu li:hover li ul, ul.sf-menu li.sfHover li ul {
@@ -854,7 +842,7 @@ ul.sf-menu li li li:hover ul, ul.sf-menu li li li.sfHover ul {
 
 .sf-menu a:focus, .sf-menu a:hover {
 	color: #FFF;
-	background: #424242
+	background: #5d3d21
 }
 
 li.sfHover {
@@ -866,11 +854,11 @@ li.sfHover {
 }
 
 .sf-menu li li li {
-	background: #424242
+	background: #5d3d21
 }
 
 .sf-menu ul a {
-	color: #424242;
+	color: #5d3d21;
 	padding: 0 1.2em;
 	height: 35px;
 	line-height: 35px
@@ -1062,7 +1050,7 @@ a:focus>.sf-sub-indicator, a:hover>.sf-sub-indicator, a:active>.sf-sub-indicator
 
 .entry-content ul:hover, .entry-content ol:hover, .entry-content blockquote:hover,
 	.entry-content code:hover {
-	border-left: #424242 2px solid;
+	border-left: #5d3d21 2px solid;
 	background-color: #F5FFF7
 }
 
@@ -1084,8 +1072,8 @@ a:focus>.sf-sub-indicator, a:hover>.sf-sub-indicator, a:active>.sf-sub-indicator
 }
 
 .entry-content a:hover {
-	border-bottom: 1px dashed #424242;
-	color: #424242;
+	border-bottom: 1px dashed #5d3d21;
+	color: #5d3d21;
 	text-decoration: none
 }
 
@@ -1163,7 +1151,7 @@ h2.entry-title {
 }
 
 .post-tags-pig  a:hover {
-	background: #424242;
+	background: #5d3d21;
 	color: #FFF;
 	text-decoration: none
 }
@@ -1279,7 +1267,7 @@ h2.entry-title {
 .pagination a:hover, .pagination span.current {
 	text-decoration: none;
 	color: #FFF;
-	background: #424242
+	background: #5d3d21
 }
 
 #comments {
@@ -1396,7 +1384,7 @@ h2.entry-title {
 .paginationcomments a:hover, .paginationcomments span.current {
 	text-decoration: none;
 	color: #FFF;
-	background: #424242
+	background: #5d3d21
 }
 
 a.l  span {
@@ -1473,9 +1461,9 @@ a.r span {
 	color: #969696;
 	padding: 5px 0px;
 	width: 150px !important;
-	background: -moz-linear-gradient(top, #424242 0%, #424242);
-	background: -webkit-gradient(linear, left top, left bottom, from(#424242),
-		to(#424242));
+	background: -moz-linear-gradient(top, #5d3d21 0%, #5d3d21);
+	background: -webkit-gradient(linear, left top, left bottom, from(#5d3d21),
+		to(#5d3d21));
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -1489,12 +1477,12 @@ a.r span {
 #commentSubmit {
 	border: 1px solid #6587a2;
 	background: #CCC;
-	background: -webkit-gradient(linear, left top, left bottom, from(#424242),
-		to(#424242));
-	background: -webkit-linear-gradient(top, #424242, #424242);
-	background: -moz-linear-gradient(top, #424242, #424242);
-	background: -ms-linear-gradient(top, #424242, #424242);
-	background: -o-linear-gradient(top, #424242, #424242);
+	background: -webkit-gradient(linear, left top, left bottom, from(#5d3d21),
+		to(#5d3d21));
+	background: -webkit-linear-gradient(top, #5d3d21, #5d3d21);
+	background: -moz-linear-gradient(top, #5d3d21, #5d3d21);
+	background: -ms-linear-gradient(top, #5d3d21, #5d3d21);
+	background: -o-linear-gradient(top, #5d3d21, #5d3d21);
 	padding: 8px 16px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -1506,8 +1494,8 @@ a.r span {
 }
 
 #commentSubmit:hover {
-	border-top-color: #424242 !important;
-	background: #424242 !important;
+	border-top-color: #5d3d21 !important;
+	background: #5d3d21 !important;
 	color: #ffffff
 }
 
@@ -2094,7 +2082,7 @@ a.r span {
 #blog-loading {
 	width: 100%;
 	height: 2px;
-	background: #424242;
+	background: #5d3d21;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -2144,7 +2132,7 @@ ul.children {
 }
 
 .readmore a {
-	color: #424242;
+	color: #5d3d21;
 	border: none
 }
 
@@ -2229,11 +2217,11 @@ ul.children {
 }
 
 .post-title {
-	color: #424242
+	color: #5d3d21
 }
 
 .post-title:hover {
-	color: #424242
+	color: #5d3d21
 }
 
 .divCalendar caption {
@@ -2275,12 +2263,12 @@ ul.children {
 }
 
 .divCalendar tbody td:hover {
-	background: #424242;
+	background: #5d3d21;
 	color: #FFFFFF
 }
 
 .divCalendar tbody td a {
-	color: #424242
+	color: #5d3d21
 }
 
 #today {

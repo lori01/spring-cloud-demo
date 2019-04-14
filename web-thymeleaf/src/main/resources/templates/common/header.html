@@ -55,7 +55,7 @@
 			<div id="menu_me" class="clearfix-menu">
 				<nav class="nav">
 					<ul class="sf-menu-2" id="menu_ul">
-						<li><a style="color:#FFF;background: #424242;" th:text="欢饮您-+${myname}"></a></li>
+						<li><a style="color:#FFF;background: #5d3d21;" th:text="欢饮您-+${myname}"></a></li>
 						<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
 						<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
 						<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
@@ -117,7 +117,7 @@
 		<h3 class="add_div_title">个人信息<span class="add_div_title_cnl">X</span></h3>
 		<div id="me_div_box" class="add_box">
 			<div>
-				<img th:src="${cuser.img}" class="thumb" style="width: 220px;float:left;"/>
+				<img th:src="${cuser.img}" class="thumb" style="width: 220px;float:left;border-radius: 110px;"/>
 				<table class="formtable_noborder" style="width:50%;">
 					<thead>
 					</thead>

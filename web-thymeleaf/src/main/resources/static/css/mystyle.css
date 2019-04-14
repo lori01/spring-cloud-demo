@@ -1,3 +1,25 @@
+.back-color {
+	background-color : #71BACF;
+	background-color : #12a182;
+	
+	
+	background-color : #FEB425;
+	background-color : #f07c82;
+	
+	
+	background-color : #337ab7;
+	background-color : #1661ab;
+	
+	
+	background-color : #424242;
+	background-color : #434343;
+	background-color : #ad9e5f;
+	background-color : #5d3d21;
+	background-color : #edc3ae;
+	
+	
+}
+
 /* daimeng */
 .t_h {
 	color: #C0C0C0;
@@ -73,7 +95,7 @@
     border: 0px;
     /* padding-left: 10px;
     padding-right: 10px; */
-    background-color: #71BACF;
+    background-color: #12a182;
     border-radius: 20px;
     /* margin-right: 5px; */
     margin-top: 10px;
@@ -90,7 +112,7 @@
     line-height: 40px;
     color: #fff;
     border: 0px;
-    background-color: #337ab7;
+    background-color: #1661ab;
     border-radius: 20px;
     /* margin-right: 5px; */
     margin-top: 10px;
@@ -114,7 +136,7 @@ input.btn_public_cur:hover a:hover{
     line-height: 40px;
 	color:#fff;
 	border:0px;
-	background-color:#FEB425;
+	background-color:#f07c82;
 	border-radius:20px;
 	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -149,14 +171,14 @@ input.btn_public_cur:hover a:hover{
 .add_div_title_cnl {
 	float : right;
 	padding-right : 10px;
-	/* color : #71BACF; */
+	/* color : #12a182; */
 	color : red; 
 	cursor : pointer;/* 鼠标变成小手 */
 }
 .add_div_title_cnl:hover {
 	float : right;
 	padding-right : 10px;
-	color : #FEB425;
+	color : #12a182;
 	cursor : pointer;/* 鼠标变成小手 */
 }
 .add_box {
@@ -259,4 +281,20 @@ input.btn_public_cur:hover a:hover{
 	pre-line	合并空白符序列，但是保留换行符。
 	inherit	规定应该从父元素继承 white-space 属性的值。 */
 	white-space:pre-wrap;
+}
+
+
+.post-meta a{
+	color : #12a182;
+}
+.entry a:hover {
+	color : #f07c82;
+}
+.entry img {
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+.add_box img {
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
