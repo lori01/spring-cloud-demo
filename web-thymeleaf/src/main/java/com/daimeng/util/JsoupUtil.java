@@ -32,7 +32,7 @@ public class JsoupUtil {
 	        content = content.trim();
         }
 	    content = xssEncode(content);
-	    content = Jsoup.clean(content, "", whitelist, outputSettings);
+	    //content = Jsoup.clean(content, "", whitelist, outputSettings);
         return content;
 	}
 	
