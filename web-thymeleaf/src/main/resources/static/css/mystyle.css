@@ -1,21 +1,21 @@
 .back-color {
+	/* 按钮颜色 */
 	background-color : #71BACF;
 	background-color : #12a182;
 	
-	
+	/* 按钮hover颜色 */
 	background-color : #FEB425;
 	background-color : #f07c82;
 	
-	
+	/* 分页按钮当前颜色 */
 	background-color : #337ab7;
 	background-color : #1661ab;
 	
-	
+	/* 标题颜色 */
 	background-color : #424242;
 	background-color : #434343;
-	background-color : #ad9e5f;
 	background-color : #5d3d21;
-	background-color : #edc3ae;
+	
 	
 	
 }

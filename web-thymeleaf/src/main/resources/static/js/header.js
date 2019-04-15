@@ -1,14 +1,18 @@
+var animation_time = 500;
 function hideAll() {
-	hidemenu();
+	/*hidemenu();
 	canclePwd();
 	cancleUser();
 	cancleme();
 	cancle();
-	cancle_comment();
+	cancle_comment();*/
+	
+		
+	
 }
 /* 菜单 */
 function showmenu() {
-	//hideAll();
+	hideAll();
 	var litop = $('#showmenu_li').offset().top;
 	var lileft = $('#showmenu_li').offset().left;
 	var liright = $('#showmenu_li').offset().right;
@@ -18,7 +22,6 @@ function showmenu() {
 	//$("#menu_me").css("width", "100%");
 	$("#menu_me").fadeIn();
 	$("#menu_me").delay(500).slideDown();
-	//$("#menu_me").show();
 }
 function hidemenu() {
 	$("#menu_me").fadeOut();
@@ -28,15 +31,31 @@ function hidemenu() {
 /* 更新密码 */
 function showPwd() {
 	hideAll();
-	$("#upd_pwd_div").fadeIn();
-	$("#upd_pwd_div_box").delay(500).slideDown();
+	/*$("#upd_pwd_div").fadeIn();
+	$("#upd_pwd_div_box").delay(500).slideDown();*/
+	$("#upd_pwd_div").dialog({
+		width : 800,
+		height : 250,
+		autoOpen : true,
+		show : {
+			effect : "blind",
+			duration : animation_time
+		},
+		hide : {
+			effect : "explode",
+			duration : animation_time
+		}
+	});
+	
 }
 function canclePwd() {
-	$("#upd_pwd_div").fadeOut();
+	//$("#upd_pwd_div").fadeOut();
+	$("#upd_pwd_div").dialog("close");
 }
 function updPwd(uid) {
 	if ($("#old_pwd").val() == null || $("#old_pwd").val() == "") {
 		alert("请输入原密码!");
+		//$.messager.alert("提示信息","请输入原密码!","info");
 		return;
 	}
 	if ($("#new_pwd").val() == null || $("#new_pwd").val() == "") {
@@ -82,11 +101,25 @@ function updPwd(uid) {
 /* 新增用户 */
 function showAddUser() {
 	hideAll();
-	$("#add_user_div").fadeIn();
-	$("#add_user_div_box").delay(500).slideDown();
+	/*$("#add_user_div").fadeIn();
+	$("#add_user_div_box").delay(500).slideDown();*/
+	$("#add_user_div").dialog({
+		width : 800,
+		height : 280,
+		autoOpen : true,
+		show : {
+			effect : "blind",
+			duration : animation_time
+		},
+		hide : {
+			effect : "explode",
+			duration : animation_time
+		}
+	});
 }
 function cancleUser() {
-	$("#add_user_div").fadeOut();
+	//$("#add_user_div").fadeOut();
+	$("#add_user_div").dialog("close");
 }
 function addUser() {
 	if ($("#new_loginName").val() == null || $("#new_loginName").val() == "") {
@@ -141,11 +174,25 @@ function addUser() {
 /* 个人信息 */
 function showme() {
 	hideAll();
-	$("#me_div").fadeIn();
-	$("#me_div_box").delay(500).slideDown();
+	/*$("#me_div").fadeIn();
+	$("#me_div_box").delay(500).slideDown();*/
+	$("#me_div").dialog({
+		width : 800,
+		height : 500,
+		autoOpen : true,
+		show : {
+			effect : "blind",
+			duration : animation_time
+		},
+		hide : {
+			effect : "explode",
+			duration : animation_time
+		}
+	});
 }
 function cancleme() {
-	$("#me_div").fadeOut();
+	//$("#me_div").fadeOut();
+	$("#me_div").dialog("close");
 }
 function saveuser(uid) {
 	if ($("#realname_s").val() == null || $("#realname_s").val() == "") {
@@ -189,16 +236,38 @@ function saveuser(uid) {
 
 /* 写文章 */
 function show() {
-	hideAll();
-	$("#add_div").fadeIn();
-	$("#add_div_box").delay(500).slideDown();
+	//hideAll();
+	/*$("#add_div").fadeIn();
+	$("#add_div_box").delay(500).slideDown();*/
+	$("#add_div").dialog({
+		width : 800,
+		height : 650,
+		autoOpen : true,
+		show : {
+			effect : "blind",
+			duration : animation_time
+		},
+		hide : {
+			effect : "explode",
+			duration : animation_time
+		},
+		/*buttons: {
+		      "Ok": function() {
+		    	  $(this).dialog("close");  
+		      } ,
+		      "Cancel": function() {
+		    	  $(this).dialog("close");  
+		      }
+		   }*/
+	});
 }
 function cancle() {
 	$("#article_id_s").val("");
 	$("#title_s").val("");
 	$("#shortContext_s").val("");
 	$("#context_s").val("");
-	$("#add_div").fadeOut();
+	//$("#add_div").fadeOut();
+	$("#add_div").dialog("close");  
 }
 function add() {
 	if ($("#title_s").val() == null || $("#title_s").val() == "") {
@@ -345,11 +414,25 @@ function editComment(id){
 	hideAll();
 	$("#comment_id_s").val(id);
 	$("#comment_context_s").val($("#comment_contxt_id_"+id).text());
-	$("#edit_comment_div").fadeIn();
-	$("#edit_comment_div_box").delay(500).slideDown();
+	/*$("#edit_comment_div").fadeIn();
+	$("#edit_comment_div_box").delay(500).slideDown();*/
+	$("#edit_comment_div").dialog({
+		width : 800,
+		height : 400,
+		autoOpen : true,
+		show : {
+			effect : "blind",
+			duration : animation_time
+		},
+		hide : {
+			effect : "explode",
+			duration : animation_time
+		}
+	});
 }
 function cancle_comment(){
-	$("#edit_comment_div").fadeOut();
+	//$("#edit_comment_div").fadeOut();
+	$("#edit_comment_div").dialog("close");
 }
 function updateComment(){
 	if($("#comment_context_s").val() == null || $("#comment_context_s").val() == ""){
