@@ -293,6 +293,55 @@
 		</div>
 	</div>
 	
+	
+	<!-- 提示框页面 -->
+	<div id="alert_message" class="add_main" style="display:none;height: 500px;">
+		<!-- <h3 class="add_div_title">个人信息<span class="add_div_title_cnl">X</span></h3> -->
+		<div id="alert_message_box" class="add_box">
+			<div>
+				<img id="alert_message_success_img" src="/img/yes_btn_blue.png" class="thumb" style="width: 150px;float:left;border-radius: 110px;display:none;"/>
+				<img id="alert_message_error_img" src="/img/no_btn_red.png" class="thumb" style="width: 150px;float:left;border-radius: 110px;display:none;"/>
+				<table class="formtable_noborder" style="width:50%;">
+					<thead>
+					</thead>
+					<tbody>
+						<tr>
+							<th width="100%" style="text-align: left;"><span id="alert_message_span"></span></th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="add_btn">
+				<input type="button" style="position: absolute;margin-left: -70px;" class="btn_yes_public" id="alert_message_btn" value=""/>
+			</div>
+			
+		</div>
+	</div>
+	
+	<!-- 提示框页面 -->
+	<div id="confirm_message" class="add_main" style="display:none;height: 500px;">
+		<!-- <h3 class="add_div_title">个人信息<span class="add_div_title_cnl">X</span></h3> -->
+		<div id="confirm_message_box" class="add_box">
+			<div>
+				<img id="confirm_message_error_img" src="/img/no_btn_violet.png" class="thumb" style="width: 150px;float:left;border-radius: 110px;"/>
+				<table class="formtable_noborder" style="width:50%;">
+					<thead>
+					</thead>
+					<tbody>
+						<tr>
+							<th width="100%" style="text-align: left;"><span id="confirm_message_span"></span></th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="add_btn">
+				<input type="button" style="/* position: absolute;margin-left: -60px; */"  class="btn_no_public" th:onclick= "'javascript:cancle_confirm_message()'" value=""/>
+				<input type="button" style="/* position: absolute;margin-left: -80px; */" class="btn_yes_public" id="confirm_message_btn" value=""/>
+			</div>
+			
+		</div>
+	</div>
+	
 	<script type="text/javascript">
 		$(document).ready(function() {
 			document.execCommand("BackgroundImageCache", false, true);
