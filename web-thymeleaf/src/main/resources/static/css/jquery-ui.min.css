@@ -528,9 +528,13 @@ input.ui-button::-moz-focus-inner, button.ui-button::-moz-focus-inner {
 	outline: 0
 }
 
+/* daimeng title 大小 */
 .ui-dialog .ui-dialog-titlebar {
 	padding: .4em 1em;
-	position: relative
+	position: relative;
+	line-height: 16px;
+	text-align: center;
+	
 }
 
 .ui-dialog .ui-dialog-title {
@@ -931,12 +935,13 @@ body .ui-tooltip {
 	font-size: 1em
 }
 
+/* daimeng 框体 边框 */
 .ui-widget-content {
-	border: 1px solid #ddd;
+	/* border: 1px solid #ddd; */
 	background: #eee
 		url("../../images/jquery_images/ui-bg_highlight-soft_100_eeeeee_1x100.png")
 		50% top repeat-x;
-	color: #333
+	color: #333;
 }
 
 .ui-widget-content a {
