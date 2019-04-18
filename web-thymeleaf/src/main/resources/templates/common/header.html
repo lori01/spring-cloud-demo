@@ -107,8 +107,10 @@
 			</table>
 			
 			<div class="add_btn">
-				<input type="button" class="btn_no_public" th:onclick= "'javascript:cancle()'" value=""/>
-				<input type="button" class="btn_yes_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value=""/>
+				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancle()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value=""/> -->
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancle()'" value="取消"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value="确定"/>
 			</div>
 			
 		</div>
@@ -165,8 +167,10 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_no_public" th:onclick= "'javascript:cancleme()'" value=""/>
-				<input type="button" class="btn_yes_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value=""/>
+				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancleme()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value=""/> -->
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancleme()'" value="取消"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value="确定"/>
 			</div>
 			
 		</div>
@@ -197,8 +201,10 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_no_public" th:onclick= "'javascript:canclePwd()'" value=""/>
-				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value=""/>
+				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:canclePwd()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value=""/> -->
+				<input type="button" class="btn_public" th:onclick= "'javascript:canclePwd()'" value="取消"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value="确定"/>
 			</div>
 			
 		</div>
@@ -233,8 +239,10 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" class="btn_no_public" th:onclick= "'javascript:cancleUser()'" value=""/>
-				<input type="button" class="btn_yes_public" th:onclick= "'javascript:addUser()'" value=""/>
+				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancleUser()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:addUser()'" value=""/> -->
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancleUser()'" value="取消"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:addUser()'" value="确定"/>
 			</div>
 			
 		</div>
@@ -287,8 +295,10 @@
 			</table>
 			
 			<div class="add_btn">
-				<input type="button" class="btn_no_public" th:onclick= "'javascript:cancle_comment()'" value=""/>
-				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updateComment()'" value=""/>
+				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancle_comment()'" value=""/>
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updateComment()'" value=""/> -->
+				<input type="button" class="btn_public" th:onclick= "'javascript:cancle_comment()'" value="取消"/>
+				<input type="button" class="btn_public" th:onclick= "'javascript:updateComment()'" value="确定"/>
 			</div>
 		</div>
 	</div>
@@ -312,7 +322,8 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<input type="button" style="position: absolute;margin-left: -70px;" class="btn_yes_public" id="alert_message_btn" value=""/>
+				<!-- <input type="button" style="position: absolute;margin-left: -70px;" class="btn_yes_public" id="alert_message_btn" value=""/> -->
+				<input type="button" style="position: absolute;margin-left: -70px;" class="btn_public" id="alert_message_btn" value="确定"/>
 			</div>
 			
 		</div>
@@ -323,7 +334,7 @@
 		<!-- <h3 class="add_div_title">个人信息<span class="add_div_title_cnl">X</span></h3> -->
 		<div id="confirm_message_box" class="add_box">
 			<div>
-				<img id="confirm_message_error_img" src="/img/no_btn_violet.png" class="thumb" style="width: 150px;float:left;border-radius: 110px;"/>
+				<img id="confirm_message_error_img" src="/img/no_btn_red.png" class="thumb" style="width: 150px;float:left;border-radius: 110px;"/>
 				<table class="formtable_noborder" style="width:50%;">
 					<thead>
 					</thead>
@@ -334,9 +345,11 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="add_btn">
-				<input type="button" style="/* position: absolute;margin-left: -60px; */"  class="btn_no_public" th:onclick= "'javascript:cancle_confirm_message()'" value=""/>
-				<input type="button" style="/* position: absolute;margin-left: -80px; */" class="btn_yes_public" id="confirm_message_btn" value=""/>
+			<div class="add_btn" style="margin-left: -70px;">
+				<!-- <input type="button" style="" class="btn_no_public" th:onclick= "'javascript:cancle_confirm_message()'" value=""/>
+				<input type="button" style="" class="btn_yes_public" id="confirm_message_btn" value=""/> -->
+				<input type="button" style="" class="btn_public" th:onclick= "'javascript:cancle_confirm_message()'" value="取消"/>
+				<input type="button" style="" class="btn_public" id="confirm_message_btn" value="确定"/>
 			</div>
 			
 		</div>

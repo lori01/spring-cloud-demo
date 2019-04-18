@@ -17,12 +17,14 @@ table {
     max-width: 100%;
     background-color: transparent;
 }
-
+/* daimeng */
 .formtable_noborder tr th {
     height: 30px;
     text-align: right;
     /* font-weight: lighter;
     color: #C0C0C0; */
+    font-weight: bold;
+    color: #aaa;
 }
 
 .formtable_noborder th{
