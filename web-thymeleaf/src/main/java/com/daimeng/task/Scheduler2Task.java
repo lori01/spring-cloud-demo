@@ -13,6 +13,6 @@ public class Scheduler2Task {
 
     @Scheduled(fixedRate = 6000)
     public void reportCurrentTime() {
-        //System.out.println("现在时间：" + dateFormat.format(new Date()));
+        System.out.println("现在时间：" + dateFormat.format(new Date()));
     }
 }
