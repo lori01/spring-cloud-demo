@@ -2,6 +2,8 @@ package com.daimeng.util;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
@@ -15,7 +17,10 @@ public class ExcelUtils {
 	
 	public static void main(String[] args) {
 		String src = "D:/java_test/excel/Excel_Remove_Mod.xls";
-		String targ = "D:/java_test/excel/new_excel_" +System.currentTimeMillis()+ ".xls";
+		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
+		System.out.println(date);
+		String targ = "D:/java_test/excel/new_excel_" +date+ ".xls";
 		delRowAndColumn(src, targ);
 	}
 	
