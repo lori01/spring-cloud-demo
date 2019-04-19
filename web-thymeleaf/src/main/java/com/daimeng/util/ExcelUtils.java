@@ -11,8 +11,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
-import com.daimeng.excel.ExcelRemove;
-
 public class ExcelUtils {
 	
 	public static void main(String[] args) {
@@ -40,25 +38,25 @@ public class ExcelUtils {
             HSSFSheet sheet = workbook.getSheetAt(0);
             
             System.out.println("===delete row start!===");
-            sheet = ExcelRemove.delRow(sheet, 10, 15);
+            sheet = delRow(sheet, 12, 16);
             System.out.println("===delete row end!===");
             
             System.out.println("===delete column start!===");
-            sheet = ExcelRemove.delColumn(sheet, 12, 13);
+            sheet = delColumn(sheet, 11, 12);
             System.out.println("===delete column end!===");
             
            /* System.out.println("===hide row start!===");
-            sheet = ExcelHide.hideRow(sheet, 3, 78);
+            sheet = hideRow(sheet, 3, 78);
             System.out.println("===hide row end!===");*/
             
             /*System.out.println("===hide column start!===");
-            sheet = ExcelHide.hideColumn(sheet, 3, 10);
+            sheet = hideColumn(sheet, 3, 10);
             System.out.println("===hide column end!===");*/
             
             //执行计算公式
-            HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
+            //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
             //循环所有,执行计算公式
-            //evaluate(workbook);
+            evaluate(workbook);
             
             FileOutputStream os = new FileOutputStream(targ);
             workbook.write(os);
