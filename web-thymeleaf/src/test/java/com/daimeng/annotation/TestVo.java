@@ -3,19 +3,19 @@ package com.daimeng.annotation;
 @XmlAnnotation
 public class TestVo {
 	
-	@XmlAnnotation(xml="user_name")
+	@XmlAnnotation("user_name")
 	private String userName;
-	@XmlAnnotation(xml="user_age")
+	@XmlAnnotation("user_age")
 	private Integer uaerAge;
-	@XmlAnnotation(xml="local_address")
+	@XmlAnnotation("local_address")
 	private String localAddress;
-	@XmlAnnotation(xml="sex_cd")
+	@XmlAnnotation("sex_cd")
 	private String sexCd;
-	@XmlAnnotation(xml="student_no")
+	@XmlAnnotation("student_no")
 	private Long studentNo;
-	@XmlAnnotation(xml="point")
+	@XmlAnnotation("point")
 	private Double point;
-	@XmlAnnotation(xml="is_first")
+	@XmlAnnotation("is_first")
 	private boolean isFirst;
 
 	public String getUserName() {

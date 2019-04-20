@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface XmlAnnotation {
-	String xml() default "";//defalt 表示默认值
+	public abstract String value() default "";//defalt 表示默认值
 }

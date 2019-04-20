@@ -40,7 +40,7 @@ public class AnnotationUtils {
 			if(hasAnnotation){
 				XmlAnnotation xmlAnnotation = field.getAnnotation(com.daimeng.annotation.XmlAnnotation.class);
 				if(xmlAnnotation != null){
-					xmlName = xmlAnnotation.xml();
+					xmlName = xmlAnnotation.value();
 				}
 			}
 			xml += "<" + xmlName + ">";
