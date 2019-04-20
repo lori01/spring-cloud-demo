@@ -90,7 +90,7 @@ function showPwd() {
 	/*$("#upd_pwd_div").fadeIn();
 	$("#upd_pwd_div_box").delay(500).slideDown();*/
 	$("#upd_pwd_div").dialog({
-		width : 800,
+		width : 500,
 		height : 250,
 		autoOpen : true,
 		show : {
@@ -169,7 +169,7 @@ function showAddUser() {
 	/*$("#add_user_div").fadeIn();
 	$("#add_user_div_box").delay(500).slideDown();*/
 	$("#add_user_div").dialog({
-		width : 800,
+		width : 500,
 		height : 280,
 		autoOpen : true,
 		show : {
