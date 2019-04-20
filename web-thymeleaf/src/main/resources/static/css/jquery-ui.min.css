@@ -962,14 +962,18 @@ body .ui-tooltip {
 	color: #fff
 }
 
+/* daimeng 关闭按钮颜色修改 */
 .ui-state-default, .ui-widget-content .ui-state-default,
 	.ui-widget-header .ui-state-default {
-	border: 1px solid #ccc;
-	background: #f6f6f6
+	/* border: 1px solid #ccc; */
+	border: 1px solid #12A182;
+	/* background: #f6f6f6
 		url("../../images/jquery_images/ui-bg_glass_100_f6f6f6_1x400.png") 50%
-		50% repeat-x;
+		50% repeat-x; */
 	font-weight: bold;
-	color: #1c94c4
+	color: #1c94c4;
+	background-color: #12A182 !important;
+    border-radius: 20px;
 }
 
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited
@@ -981,12 +985,15 @@ body .ui-tooltip {
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,
 	.ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus
 	{
-	border: 1px solid #fbcb09;
-	background: #fdf5ce
+	/* border: 1px solid #fbcb09; */
+	border: 1px solid #F07C82;
+	/* background: #fdf5ce
 		url("../../images/jquery_images/ui-bg_glass_100_fdf5ce_1x400.png") 50%
-		50% repeat-x;
+		50% repeat-x; */
 	font-weight: bold;
-	color: #c77405
+	color: #c77405;
+	background-color: #F07C82 !important;
+	border-radius: 20px;
 }
 
 .ui-state-hover a, .ui-state-hover a:hover, .ui-state-hover a:link,

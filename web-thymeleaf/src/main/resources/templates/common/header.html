@@ -109,8 +109,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancle()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value=""/> -->
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancle()'" value="取消"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value="确定"/>
+				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancle()'" />
+				<input type="button" class="btn_public btn_public_yes_text" th:onclick= "'javascript:add('+${cuser.id}+')'" />
 			</div>
 			
 		</div>
@@ -169,8 +169,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancleme()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value=""/> -->
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancleme()'" value="取消"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value="确定"/>
+				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancleme()'" />
+				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" />
 			</div>
 			
 		</div>
@@ -203,8 +203,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:canclePwd()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value=""/> -->
-				<input type="button" class="btn_public" th:onclick= "'javascript:canclePwd()'" value="取消"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value="确定"/>
+				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:canclePwd()'"/>
+				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:updPwd('+${cuser.id}+')'"/>
 			</div>
 			
 		</div>
@@ -241,8 +241,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancleUser()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:addUser()'" value=""/> -->
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancleUser()'" value="取消"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:addUser()'" value="确定"/>
+				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancleUser()'"/>
+				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:addUser()'" />
 			</div>
 			
 		</div>
@@ -297,8 +297,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancle_comment()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updateComment()'" value=""/> -->
-				<input type="button" class="btn_public" th:onclick= "'javascript:cancle_comment()'" value="取消"/>
-				<input type="button" class="btn_public" th:onclick= "'javascript:updateComment()'" value="确定"/>
+				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancle_comment()'" />
+				<input type="button" class="btn_public btn_public_yes_text" th:onclick= "'javascript:updateComment()'" />
 			</div>
 		</div>
 	</div>
@@ -311,7 +311,7 @@
 			<div>
 				<img id="alert_message_success_img" src="/img/yes_btn_blue.png" class="thumb" style="width: 150px;float:left;border-radius: 110px;display:none;"/>
 				<img id="alert_message_error_img" src="/img/no_btn_red.png" class="thumb" style="width: 150px;float:left;border-radius: 110px;display:none;"/>
-				<table class="formtable_noborder" style="width:50%;">
+				<table class="formtable_noborder" style="width:50%;word-break: break-all;">
 					<thead>
 					</thead>
 					<tbody>
@@ -322,20 +322,19 @@
 				</table>
 			</div>
 			<div class="add_btn">
-				<!-- <input type="button" style="position: absolute;margin-left: -70px;" class="btn_yes_public" id="alert_message_btn" value=""/> -->
-				<input type="button" style="position: absolute;margin-left: -70px;" class="btn_public" id="alert_message_btn" value="确定"/>
+				<input type="button" style="margin-bottom: 10px;" class="btn_public btn_public_yes_text" id="alert_message_btn"/>
 			</div>
 			
 		</div>
 	</div>
 	
-	<!-- 提示框页面 -->
+	<!-- 确认框页面 -->
 	<div id="confirm_message" class="add_main" style="display:none;height: 500px;">
 		<!-- <h3 class="add_div_title">个人信息<span class="add_div_title_cnl">X</span></h3> -->
 		<div id="confirm_message_box" class="add_box">
 			<div>
 				<img id="confirm_message_error_img" src="/img/no_btn_red.png" class="thumb" style="width: 150px;float:left;border-radius: 110px;"/>
-				<table class="formtable_noborder" style="width:50%;">
+				<table class="formtable_noborder" style="width:50%;word-break: break-all;">
 					<thead>
 					</thead>
 					<tbody>
@@ -345,11 +344,11 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="add_btn" style="margin-left: -70px;">
+			<div class="add_btn" style="margin-bottom: 10px;">
 				<!-- <input type="button" style="" class="btn_no_public" th:onclick= "'javascript:cancle_confirm_message()'" value=""/>
 				<input type="button" style="" class="btn_yes_public" id="confirm_message_btn" value=""/> -->
-				<input type="button" style="" class="btn_public" th:onclick= "'javascript:cancle_confirm_message()'" value="取消"/>
-				<input type="button" style="" class="btn_public" id="confirm_message_btn" value="确定"/>
+				<input type="button" style="" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancle_confirm_message()'" />
+				<input type="button" style="" class="btn_public btn_public_yes_text" id="confirm_message_btn" />
 			</div>
 			
 		</div>
@@ -357,7 +356,31 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			document.execCommand("BackgroundImageCache", false, true);
+			//document.execCommand("BackgroundImageCache", false, true);
+			//批量给确定,取消按钮设置text
+			$(".btn_public_no_text").val("✂");
+			$(".btn_public_no_text").attr("title","取消");
+			$(".btn_public_yes_text").val("✒");
+			$(".btn_public_yes_text").attr("title","确定");
+			$(".btn_public_save_text").val("✉");
+			$(".btn_public_save_text").attr("title","保存");
+			//✏  ✒  🖋  🖊  🖌  🖍
+			
+			//批量给顶部,底部,评论按钮设置text
+			$(".btn_public_up_text").html("🚀");
+			$(".btn_public_up_text").attr("title","回到顶部");
+			$(".btn_public_down_text").html("🌠");
+			$(".btn_public_down_text").attr("title","回到底部");
+			$(".btn_public_comment_text").html("✍");
+			$(".btn_public_comment_text").val("✍");
+			$(".btn_public_comment_text").attr("title","评论");
+			//批量给分页按钮设置text
+			$(".btn_public_page_s_text").html("👈");
+			$(".btn_public_page_s_text").attr("title","首页");
+			$(".btn_public_page_e_text").html("👉");
+			$(".btn_public_page_e_text").attr("title","末页");
+			
+			
 			
 			$("#showmenu_li").mouseover(function(e){
 				var flag = $("#menu_me").is(":hidden");
