@@ -4,8 +4,13 @@ import java.lang.reflect.Field;
 
 
 /**
- * @author Administrator
- *    反射工具
+ * 
+* @功能描述: 常用反射工具类
+* @名称: ReflectHelper.java 
+* @路径 com.daimeng.util 
+* @作者 daimeng@tansun.com.cn
+* @创建时间 2019年4月20日 下午2:52:22 
+* @version V1.0
  */
 public class ReflectHelper {
     /**

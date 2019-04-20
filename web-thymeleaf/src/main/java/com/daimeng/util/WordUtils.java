@@ -27,6 +27,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * 
+* @功能描述: word模板解析,将数据填充入模板,生成新的word并导出
+* @名称: WordUtils.java 
+* @路径 com.daimeng.util 
+* @作者 daimeng@tansun.com.cn
+* @创建时间 2019年4月20日 下午2:51:49 
+* @version V1.0
+ */
 public class WordUtils {
 
 	public static void main(String[] args) {

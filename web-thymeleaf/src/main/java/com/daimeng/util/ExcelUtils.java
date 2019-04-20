@@ -13,6 +13,15 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
+/**
+ * 
+* @功能描述: excel操作,主要为excel的删除行/删除列/隐藏行/隐藏列
+* @名称: ExcelUtils.java 
+* @路径 com.daimeng.util 
+* @作者 daimeng@tansun.com.cn
+* @创建时间 2019年4月20日 下午2:51:22 
+* @version V1.0
+ */
 public class ExcelUtils {
 	
 	public static void main(String[] args) {
