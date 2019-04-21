@@ -370,9 +370,10 @@
 			//✏  ✒  🖋  🖊  🖌  🖍
 			
 			//批量给顶部,底部,评论按钮设置text
-			$(".btn_public_up_text").html("🚀");
+			//🚀
+			$(".btn_public_up_text").html("🛫");
 			$(".btn_public_up_text").attr("title","回到顶部");
-			$(".btn_public_down_text").html("🌠");
+			$(".btn_public_down_text").html("🛬");
 			$(".btn_public_down_text").attr("title","回到底部");
 			$(".btn_public_comment_text").html("✍");
 			$(".btn_public_comment_text").val("✍");
@@ -392,7 +393,6 @@
 	            }else{  
 	                
 	            }  
-				showmenu();
 			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
 				
 			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
@@ -407,33 +407,36 @@
 				if(flag){  
 					
 	            }else{  
-	            	hidemenu();
+	            	//hidemenu();
 	            }  
 			});
 			
-			$(".add_div_title_cnl").click(function(){
+			/* 弹出框的关闭按钮绑定 */
+			/* $(".add_div_title_cnl").click(function(){
 				hideAll();
-			});
+			}); */
 			
-			var $el = $("#navigation, #add_div, #me_div, #upd_pwd_div, #add_user_div, #edit_comment_div");
+			var $el = $("#showmenu_li,#menu_me");
 			/* $el.click(function(e) {
 				e.stopPropagation();
 				//$(this).toggleClass('active');
-			});  */
-			/* $(document).on('click', function(e) {
-				var inEl = false;
+			}); */
+			//点击任何地方都关闭菜单条
+			$(document).on('click', function(e) {
+				hidemenu();
+				/* var inEl = false;
 				for(var i = 0; i < $el.length; i++){
 					if($(e.target) == $el[i]){
 						inEl = true;
 					}
 				}
 				if (!inEl) {
-					hideAll();
-				}
-			}); */
+					hidemenu();
+				} */
+			});
 			
 			
-			//计数
+			//textarea字数统计
 			$(".textarea_count").change(function(){
 				textCount(this);
 			}).keydown(function(){

@@ -17,13 +17,14 @@ import com.daimeng.util.DateUtils;
 import com.daimeng.web.article.entity.ArticleInfo;
 import com.daimeng.web.comment.entity.CommentInfo;
 import com.daimeng.web.comment.service.CommentService;
+import com.daimeng.web.common.BaseController;
 import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.service.UserService;
 
 @Controller
 @RequestMapping("/comment")
-public class CommentController {
+public class CommentController extends BaseController {
 
 	@Autowired
 	private CommentService commentService;
@@ -33,44 +34,20 @@ public class CommentController {
 	
 	@RequestMapping("/list/{page}")
 	public String list(Model model,@PathVariable Integer page) {
-		if(page != null && page >0){
-			page--;
-		}else page = 0;
+		page = getPageNum(page);
 		Page<CommentInfo> list = commentService.findAllByOrderByIdDesc(page);
-		model.addAttribute("list",list);
-		model.addAttribute("cpage",page+1);
-		if(list.getTotalPages() > 0){
-			model.addAttribute("pages",Integer.valueOf(list.getTotalPages()));
-		}else model.addAttribute("pages",1);
-		
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			model.addAttribute("myname",cuser.getRealname());
-			model.addAttribute("cuser",cuser);
-		}
+		setPageToModel(model, list, page);
+		setCurrentUser(model);
 		return "comment/list";
 	}
 	
 	@RequestMapping("/user/{uid}/{page}")
 	public String user(Model model,@PathVariable Integer uid,@PathVariable Integer page) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			model.addAttribute("myname",cuser.getRealname());
-			model.addAttribute("cuser",cuser);
-		}
-		
-		if(page != null && page >0){
-			page--;
-		}else page = 0;
+		page = getPageNum(page);
 		Page<CommentInfo> list = commentService.findByCreateUid(uid,page);
 		
-		model.addAttribute("list",list);
-		model.addAttribute("cpage",page+1);
-		model.addAttribute("quid",uid);
-		if(list.getTotalPages() > 0){
-			model.addAttribute("pages",Integer.valueOf(list.getTotalPages()));
-		}else model.addAttribute("pages",1);
-		
+		setPageToModel(model, list, page);
+		setCurrentUser(model);
 		SysUser quser = userService.findSysUser(uid);
 		model.addAttribute("quser",quser);
 		

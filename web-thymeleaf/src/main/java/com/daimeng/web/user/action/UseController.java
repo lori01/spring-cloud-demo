@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.daimeng.util.Constants;
 import com.daimeng.util.DateUtils;
+import com.daimeng.web.common.BaseController;
 import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.entity.SysUserLog;
@@ -21,53 +22,33 @@ import com.daimeng.web.user.service.UserService;
 
 @Controller
 @RequestMapping("/user")
-public class UseController {
+public class UseController extends BaseController {
 
 	@Autowired
 	private UserService userService;
 	
 	@RequestMapping("/list/{page}")
 	public String list(Model model,@PathVariable Integer page) {
-		if(page != null && page >0){
-			page--;
-		}else page = 0;
+		page = getPageNum(page);
 		Page<SysUser> users = userService.getUserPage(page);
 		model.addAttribute("list",users);
 		
-		model.addAttribute("cpage",page+1);
-		if(users.getTotalPages() > 0){
-			model.addAttribute("pages",Integer.valueOf(users.getTotalPages()));
-		}else model.addAttribute("pages",1);
+		setPageToModel(model, users, page);
+		setCurrentUser(model);
 		
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			model.addAttribute("myname",cuser.getRealname());
-			model.addAttribute("cuser",cuser);
-		}
 		return "user/list";
 	}
 	
 	@RequestMapping("/log/{uid}/{page}")
 	public String log(Model model,@PathVariable Integer uid,@PathVariable Integer page) {
-		if(page != null && page >0){
-			page--;
-		}else page = 0;
-		
+		page = getPageNum(page);
 		SysUserLog info = new SysUserLog();
 		info.setUid(uid);
 		Page<SysUserLog> logs = userService.getUserLogPage(info, page);
-		model.addAttribute("list",logs);
 		
-		model.addAttribute("cpage",page+1);
-		if(logs.getTotalPages() > 0){
-			model.addAttribute("pages",Integer.valueOf(logs.getTotalPages()));
-		}else model.addAttribute("pages",1);
+		setPageToModel(model, logs, page);
+		setCurrentUser(model);
 		
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			model.addAttribute("myname",cuser.getRealname());
-			model.addAttribute("cuser",cuser);
-		}
 		return "user/log";
 	}
 

@@ -2,7 +2,7 @@
 <div th:fragment="common-pagination">
 	<div class="page_div">
 		<!-- 循环分页start -->
-		<span class="page_span">
+		<span class="page_span" th:style="${cpage==1}? 'display:none':''" >
 			<a class="btn_public btn_public_page_s_text" th:href="@{{page}(page=1)}" ></a>
 		</span>
 		<span class="page_span" th:style="${cpage<=4}? 'display:none':''" >
@@ -17,7 +17,7 @@
 		<span class="page_span" th:style="${cpage+4>pages}? 'display:none':''" >
 			<a class="btn_public" th:href="@{{page}(page=${cpage+4})}"   th:text="···" />
 		</span>
-		<span class="page_span">
+		<span class="page_span" class="page_span" th:style="${cpage==pages}? 'display:none':''" >
 			<a class="btn_public btn_public_page_e_text" th:href="@{{page}(page=${pages})}" ></a>
 		</span>
 		<!-- 循环分页end -->

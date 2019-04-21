@@ -18,13 +18,14 @@ import com.daimeng.web.article.entity.ArticleInfo;
 import com.daimeng.web.article.service.ArticleService;
 import com.daimeng.web.comment.entity.CommentInfo;
 import com.daimeng.web.comment.service.CommentService;
+import com.daimeng.web.common.BaseController;
 import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.service.UserService;
 
 @Controller
 @RequestMapping("/article")
-public class ArticleController {
+public class ArticleController extends BaseController {
 
 	@Autowired
 	private ArticleService articleService;
@@ -37,32 +38,17 @@ public class ArticleController {
 	
 	@RequestMapping("/list/{page}")
 	public String list(Model model,@PathVariable Integer page) {
-		if(page != null && page >0){
-			page--;
-		}else page = 0;
+		page = getPageNum(page);
 		Page<ArticleInfo> list = articleService.findAll(page);
-		model.addAttribute("list",list);
-		model.addAttribute("cpage",page+1);
-		if(list.getTotalPages() > 0){
-			model.addAttribute("pages",Integer.valueOf(list.getTotalPages()));
-		}else model.addAttribute("pages",1);
 		
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			model.addAttribute("myname",cuser.getRealname());
-			model.addAttribute("cuser",cuser);
-		}
+		setPageToModel(model, list, page);
+		setCurrentUser(model);
+		
 		return "article/list";
 	}
 	
 	@RequestMapping("/detail/{id}/{page}")
 	public String detail(Model model,@PathVariable Integer id,@PathVariable Integer page) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			model.addAttribute("myname",cuser.getRealname());
-			model.addAttribute("cuser",cuser);
-		}
-		
 		ArticleInfo info = new ArticleInfo();
 		if(id != null && id >0){
 			info = articleService.findOne(id);
@@ -72,43 +58,25 @@ public class ArticleController {
 		}
 		model.addAttribute("info",info);
 		
-		
-		if(page != null && page >0){
-			page--;
-		}else page = 0;
+		page = getPageNum(page);
 		Page<CommentInfo> list = commentService.findAllByArticleIdOrderByLayerDesc(id, page);
 		
-		model.addAttribute("list",list);
+		setPageToModel(model, list, page);
+		setCurrentUser(model);
+		
 		model.addAttribute("qid",id);
-		model.addAttribute("cpage",page+1);
-		
-		if(list.getTotalPages() > 0){
-			model.addAttribute("pages",Integer.valueOf(list.getTotalPages()));
-		}else model.addAttribute("pages",1);
-		
 		return "article/detail";
 	}
 	
 	@RequestMapping("/user/{uid}/{page}")
 	public String user(Model model,@PathVariable Integer uid,@PathVariable Integer page) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			model.addAttribute("myname",cuser.getRealname());
-			model.addAttribute("cuser",cuser);
-		}
-		
-		if(page != null && page >0){
-			page--;
-		}else page = 0;
+		page = getPageNum(page);
 		Page<ArticleInfo> list = articleService.findByCreateUid(uid,page);
 		
-		model.addAttribute("list",list);
-		model.addAttribute("cpage",page+1);
-		model.addAttribute("quid",uid);
-		if(list.getTotalPages() > 0){
-			model.addAttribute("pages",Integer.valueOf(list.getTotalPages()));
-		}else model.addAttribute("pages",1);
+		setPageToModel(model, list, page);
+		setCurrentUser(model);
 		
+		model.addAttribute("qid",uid);
 		SysUser quser = userService.findSysUser(uid);
 		model.addAttribute("quser",quser);
 		
