@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${cuser.realname}+的日志-梦神十夜的小站"></title>
+</head>
+
+<body>
+<div id="wrap" class="container clearfix">
+	<!-- 引入导航栏 -->
+	<div th:include="common/header::pagination"></div>
+    
+    <div id="main" class="container">
+    	<div class="content alpha" id="content_main_apl">
+    		<!-- 循环咨询列表start -->
+    		<div class="entry clearfix" th:each="info:${list}">
+				<h1><a class="post-title"  rel="bookmark" th:text="${info.url}"></a></h1>
+			
+				<div class="clear"></div>
+				<div class="entry-content ">
+					<!-- <a th:href="@{/article/user/{uid}/1(uid=${info.id})}" rel="tag"><img th:src="${info.img}" class="thumb"/></a> -->
+					<div id="me_div_box" class="add_box">	
+					<!-- <p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"> -->
+						<a rel="tag">
+							<img th:src="${info.sysUser.img}" class="thumb" style="width: 200px;float:left;border-radius: 100px;"/>
+						</a>
+						<table class="formtable_noborder" style="width:70%;font-size: 16px;float: left;">
+							<thead>
+							</thead>
+							<tbody>
+								<tr>
+									<th width="30%"><span th:text="ID"></span></th>
+									<td width="70%"><span th:text="${info.id}"></span></td>
+								</tr>
+								<!-- <tr>
+									<th width="30%"><span th:text="用户名称"></span></th>
+									<td width="70%"><span th:text="${info.sysUser.realname}"></span></td>
+								</tr> -->
+								<tr>
+									<th width="30%"><span th:text="访问url"></span></th>
+									<td width="70%"><span th:text="${info.url}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="参数"></span></th>
+									<td width="70%"><span th:text="${info.parameter}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="备注"></span></th>
+									<td width="70%"><span th:text="${info.comment}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="访问时间"></span></th>
+									<td width="70%">
+										<span th:text="${info.createTm != null} ? ${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}:'-'"></span>
+									</td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="方法执行时间"></span></th>
+									<td width="70%"><span th:text="${info.executeTime}+ms"></span></td>
+								</tr>
+							</tbody>
+						</table>
+					<!-- </p> -->
+					</div>
+				</div>
+				<!-- END post-bottom -->
+			</div>
+			<!-- 循环咨询列表end -->
+			
+			<!-- 引入分页 -->
+			<div th:include="common/page::common-pagination"></div>
+			
+    	</div>
+    </div>
+</div>
+<!-- 引入底部 -->
+<div th:include="common/footer::common-pagination"></div>
+</body>
+</html>

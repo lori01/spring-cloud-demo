@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysUser;
+import com.daimeng.web.user.entity.SysUserLog;
 import com.daimeng.web.user.entity.UserEntity;
 
 public interface UserService {
@@ -18,4 +19,7 @@ public interface UserService {
 	public ResponseVo add(SysUser user);
 	
 	public Page<SysUser> findAllBySpecification(SysUser info,int page);
+	
+	public Page<SysUserLog> getUserLogPage(SysUserLog info, int page);
+	
 }

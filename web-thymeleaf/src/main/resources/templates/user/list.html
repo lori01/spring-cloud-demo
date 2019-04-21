@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>文章列表 - 梦神十夜的小站</title>
+    <title>用户列表 - 梦神十夜的小站</title>
 </head>
 
 <body>
@@ -21,7 +21,8 @@
 					<!-- <a th:href="@{/article/user/{uid}/1(uid=${info.id})}" rel="tag"><img th:src="${info.img}" class="thumb"/></a> -->
 					<div id="me_div_box" class="add_box">	
 					<!-- <p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"> -->
-						<a th:href="@{/article/user/{uid}/1(uid=${info.id})}" rel="tag">
+						<!-- <a th:href="@{/article/user/{uid}/1(uid=${info.id})}" rel="tag"> -->
+						<a th:href="@{/user/log/{uid}/1(uid=${info.id})}" rel="tag">
 							<img th:src="${info.img}" class="thumb" style="width: 200px;float:left;border-radius: 100px;"/>
 						</a>
 						<table class="formtable_noborder" style="width:70%;font-size: 16px;float: left;">
@@ -55,6 +56,12 @@
 								<tr>
 									<th width="30%"><span th:text="联系方式"></span></th>
 									<td width="70%"><span th:text="${info.phone}"></span></td>
+								</tr>
+								<tr>
+									<th width="30%"><span th:text="最后访问时间"></span></th>
+									<td width="70%">
+										<span th:text="${info.lastActionTm != null} ? ${#dates.format(info.lastActionTm, 'yyyy年MM月dd日 HH:mm')}:'未登录过系统'"></span>
+									</td>
 								</tr>
 								<tr>
 									<th width="30%"><span th:text="头像"></span></th>

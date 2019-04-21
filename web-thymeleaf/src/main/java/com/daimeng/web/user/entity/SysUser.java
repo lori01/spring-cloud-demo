@@ -1,16 +1,12 @@
 package com.daimeng.web.user.entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 @Entity
@@ -45,8 +41,12 @@ public class SysUser implements Serializable{
 	
 	/*@ManyToMany(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
     @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
-    private List<SysRole> roleList;// 一个用户具有多个角色
-*/	
+    private List<SysRole> roleList;// 一个用户具有多个角色*/	
+	
+	//不映射数据库
+	@Transient
+	private Date lastActionTm;
+	
 	public SysUser(String loginName, String password, String realname) {
 		super();
 		this.loginName = loginName;
@@ -137,6 +137,14 @@ public class SysUser implements Serializable{
 
 	public void setSexCd(String sexCd) {
 		this.sexCd = sexCd;
+	}
+
+	public Date getLastActionTm() {
+		return lastActionTm;
+	}
+
+	public void setLastActionTm(Date lastActionTm) {
+		this.lastActionTm = lastActionTm;
 	}
 
 	

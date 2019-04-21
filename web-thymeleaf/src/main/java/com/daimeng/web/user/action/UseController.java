@@ -1,8 +1,6 @@
 package com.daimeng.web.user.action;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.daimeng.util.Constants;
 import com.daimeng.util.DateUtils;
-import com.daimeng.web.comment.entity.CommentInfo;
 import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysUser;
-import com.daimeng.web.user.entity.UserEntity;
+import com.daimeng.web.user.entity.SysUserLog;
 import com.daimeng.web.user.service.UserService;
-import com.github.pagehelper.PageInfo;
 
 @Controller
 @RequestMapping("/user")
@@ -49,6 +45,30 @@ public class UseController {
 			model.addAttribute("cuser",cuser);
 		}
 		return "user/list";
+	}
+	
+	@RequestMapping("/log/{uid}/{page}")
+	public String log(Model model,@PathVariable Integer uid,@PathVariable Integer page) {
+		if(page != null && page >0){
+			page--;
+		}else page = 0;
+		
+		SysUserLog info = new SysUserLog();
+		info.setUid(uid);
+		Page<SysUserLog> logs = userService.getUserLogPage(info, page);
+		model.addAttribute("list",logs);
+		
+		model.addAttribute("cpage",page+1);
+		if(logs.getTotalPages() > 0){
+			model.addAttribute("pages",Integer.valueOf(logs.getTotalPages()));
+		}else model.addAttribute("pages",1);
+		
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		if(cuser != null){
+			model.addAttribute("myname",cuser.getRealname());
+			model.addAttribute("cuser",cuser);
+		}
+		return "user/log";
 	}
 
 	@RequestMapping(value="/update",method = {RequestMethod.POST,RequestMethod.GET})

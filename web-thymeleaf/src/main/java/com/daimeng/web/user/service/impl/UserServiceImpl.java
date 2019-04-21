@@ -3,7 +3,11 @@ package com.daimeng.web.user.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -18,8 +22,10 @@ import org.springframework.stereotype.Service;
 import com.daimeng.util.Constants;
 import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysUser;
+import com.daimeng.web.user.entity.SysUserLog;
 import com.daimeng.web.user.entity.UserEntity;
 import com.daimeng.web.user.mapper.UserMapper;
+import com.daimeng.web.user.repository.SysUserLogRepository;
 import com.daimeng.web.user.repository.SysUserRepository;
 import com.daimeng.web.user.service.UserService;
 
@@ -36,6 +42,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private SysUserRepository userRepository;
+	
+	@Autowired
+	private SysUserLogRepository userLogRepository;
 	
 	@Override
 	public Page<SysUser> findAllBySpecification(final SysUser info, int page) {
@@ -64,7 +73,15 @@ public class UserServiceImpl implements UserService{
 				return query.getRestriction();
 			}
 		};
-		return userRepository.findAll(specification, pageable);
+		Page<SysUser> pagelist = userRepository.findAll(specification, pageable);
+		for(SysUser user : pagelist){
+			SysUserLog log = userLogRepository.findFirstByUidOrderByIdDesc(user.getId());
+			if(log != null){
+				user.setLastActionTm(log.getCreateTm());
+			}
+		}
+		
+		return pagelist;
 	}
 	
 	@Override
@@ -167,6 +184,29 @@ public class UserServiceImpl implements UserService{
 		vo.setStatus(200);
 		vo.setDesc("新增失败!");
 		return vo;
+	}
+
+	@Override
+	public Page<SysUserLog> getUserLogPage(final SysUserLog info, int page) {
+		Pageable pageable = new PageRequest(page, Constants.PAGE_SIZE_10);
+		Specification specification = new Specification<SysUserLog>() {
+			@Override
+			public Predicate toPredicate(Root<SysUserLog> root, CriteriaQuery<?> query, CriteriaBuilder cb){
+				List<Predicate> list = new ArrayList<Predicate>();
+				if(info.getUid() != null){
+					list.add(cb.equal(root.get("uid"), info.getUid()));
+				}
+				if(info.getUrl() != null && !"".equals(info.getUrl())){
+					list.add(cb.like((Expression) root.get("url"), "%" +info.getUrl()+ "%"));
+				}
+				query.where(list.toArray(new Predicate[list.size()]));
+				query.orderBy(cb.desc(root.get("id")));
+				return query.getRestriction();
+			}
+		};
+		Page<SysUserLog> pagelist = userLogRepository.findAll(specification, pageable);
+		
+		return pagelist;
 	}
 	
 

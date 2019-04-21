@@ -44,6 +44,16 @@ public class SysUserFilter extends AccessControlFilter {
         	System.out.println("-------->getRequestURI()--->" + req.getRequestURI());
         	System.out.println("-------->getQueryString()--->" + req.getQueryString());
         	System.out.println("-------->getRemoteUser()--->" + req.getRemoteUser());
+        	/*-------->getContextPath()--->
+        	-------->getRemoteAddr()--->0:0:0:0:0:0:0:1
+        	-------->getServletPath()--->/article/list/{img}
+        	-------->getRequestURL()--->http://localhost/article/list/%7Bimg%7D
+        	-------->getRequestURI()--->/article/list/%7Bimg%7D
+        	-------->getQueryString()--->null
+        	-------->getRemoteUser()--->daimeng
+        	-------->basePath--->http://localhost:80/
+        	-------->realPath--->C:\Users\Sephy\AppData\Local\Temp\tomcat-docbase.6424093694088627621.80\
+        	/article/list/%7Bimg%7D*/
         	
         	String basePath = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath()+"/";
         	System.out.println("-------->basePath--->" + basePath);
