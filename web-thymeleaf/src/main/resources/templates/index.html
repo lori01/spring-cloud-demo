@@ -7,22 +7,25 @@
 <link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
 <body>
 <div id="wrap" class="container clearfix">
+	<div th:include="common/header::pagination"></div>
+	
 	<div class="header_wrap">
 		<div id="header_login" class="clearfix">
 			<div id="logo_login" style="text-align:center; ">
 				<h2><a href="/" title="登录成功" rel="home bookmark">登录成功</a></h2>
+				<h3><a href="/" title="登录成功" rel="home bookmark">您已登录成功!</a></h3>
 			</div><!-- END logo --> 
 		</div>
 	</div>
-	<div class="header_wrap">
+	<!-- <div class="header_wrap">
 		<div id="header_login" class="clearfix">
 			<div id="logo_login">
 				<h3>欢迎您:<span th:text="${myname}"></span></h3>
 				<div><a th:text="点击进入首页" th:href="@{/}"></a></<div>
 				<div><a th:text="点击注销" th:href="@{/logout}"></a></<div>
-			</div><!-- END logo --> 
+			</div>END logo 
 		</div>
-	</div>
+	</div> -->
 </div>
 </body>
 </html>

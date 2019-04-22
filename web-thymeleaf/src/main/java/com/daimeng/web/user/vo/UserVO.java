@@ -1,9 +1,9 @@
-package com.daimeng.web.user.entity;
+package com.daimeng.web.user.vo;
 
 import java.io.Serializable;
 
 
-public class UserEntity implements Serializable{
+public class UserVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -17,14 +17,14 @@ public class UserEntity implements Serializable{
 	private String img;
 	private String sexCd;
 	
-	public UserEntity(String loginName, String password, String realName) {
+	public UserVO(String loginName, String password, String realName) {
 		super();
 		this.loginName = loginName;
 		this.password = password;
 		this.realName = realName;
 	}
 	
-	public UserEntity() {
+	public UserVO() {
 		super();
 		
 	}

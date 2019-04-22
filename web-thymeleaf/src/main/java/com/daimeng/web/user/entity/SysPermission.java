@@ -15,7 +15,8 @@ import javax.persistence.ManyToMany;
 @Entity
 public class SysPermission implements Serializable {
 
-	@Id@GeneratedValue
+	@Id
+	@GeneratedValue
     private Integer id;//主键.
     private String name;//名称.
     @Column(columnDefinition="enum('menu','button')")
@@ -25,9 +26,10 @@ public class SysPermission implements Serializable {
     private Long parentId; //父编号
     private String parentIds; //父编号列表
     private Boolean available = Boolean.FALSE;
-    @ManyToMany
+    
+    /*@ManyToMany
     @JoinTable(name="SysRolePermission",joinColumns={@JoinColumn(name="permissionId")},inverseJoinColumns={@JoinColumn(name="roleId")})
-    private List<SysRole> roles;
+    private List<SysRole> roles;*/
 	public Integer getId() {
 		return id;
 	}
@@ -76,12 +78,5 @@ public class SysPermission implements Serializable {
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}
-	public List<SysRole> getRoles() {
-		return roles;
-	}
-	public void setRoles(List<SysRole> roles) {
-		this.roles = roles;
-	}
-    
     
 }

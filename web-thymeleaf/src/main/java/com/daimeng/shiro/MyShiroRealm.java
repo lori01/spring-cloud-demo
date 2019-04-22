@@ -1,6 +1,7 @@
 package com.daimeng.shiro;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -16,12 +17,12 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.daimeng.shiro.exception.NullAccountException;
-import com.daimeng.shiro.exception.NullCredentialsException;
 import com.daimeng.util.Constants;
+import com.daimeng.web.user.entity.SysPermission;
+import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
-import com.daimeng.web.user.entity.UserEntity;
 import com.daimeng.web.user.service.UserService;
+import com.daimeng.web.user.vo.UserVO;
 
 
 
@@ -43,23 +44,24 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        UserEntity user  = (UserEntity)principals.getPrimaryPrincipal();
+        /*UserEntity user  = (UserEntity)principals.getPrimaryPrincipal();
         if(user.getId() > 0){
         	SysUser sysUser = userService.findSysUser(user.getId());
-        	/*for(SysRole role : sysUser.getRoleList()){
+        	for(SysRole role : sysUser.getRoleList()){
                 authorizationInfo.addRole(role.getRole());
                 for(SysPermission p : role.getPermissions()){
                     authorizationInfo.addStringPermission(p.getPermission());
                 }
-            }*/
+            }
         }
-        authorizationInfo.addStringPermission(user.getPermission());
+        authorizationInfo.addStringPermission(user.getPermission());*/
         
         //当然也可以添加 set 集合：roles 是从数据库查询的当前用户的角色，stringPermissions 是从数据库查询的当前用户对应的权限
         //authorizationInfo.setRoles(roles);
         //authorizationInfo.setStringPermissions(stringPermissions);
         
         return authorizationInfo;
+        
     }
 	
 	/**
@@ -94,9 +96,9 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         //通过username从数据库中查找 User对象，如果找到，没找到.
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
-        UserEntity user = new UserEntity();
+        UserVO user = new UserVO();
         user.setLoginName(username);
-        ArrayList<UserEntity> userList = userService.getUserByParameter(user);
+        ArrayList<UserVO> userList = userService.getUserByParameter(user);
         if(userList == null || userList.size() == 0){
         	throw new UnknownAccountException();
         }else if(userList.size() > 1){

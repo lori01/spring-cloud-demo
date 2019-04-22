@@ -12,7 +12,7 @@ import com.daimeng.util.Constants;
 import com.daimeng.web.user.entity.SysPermission;
 import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
-import com.daimeng.web.user.entity.UserEntity;
+import com.daimeng.web.user.vo.UserVO;
 
 public class SysUserFilter extends AccessControlFilter {
 
@@ -31,11 +31,11 @@ public class SysUserFilter extends AccessControlFilter {
         	return true;
         }
         
-        UserEntity user = (UserEntity) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER1);
+        UserVO user = (UserVO) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER1);
         SysUser suser = (SysUser) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER2);
         if(suser != null){
         	System.out.println("------->SysUserFilter.preHandle------>user=" + user.getRealName());
-        	boolean hasAuth = true;
+        	boolean hasAuth = false;
         	HttpServletRequest req = (HttpServletRequest)request;
         	System.out.println("-------->getContextPath()--->" + req.getContextPath());
         	System.out.println("-------->getRemoteAddr()--->" + req.getRemoteAddr());
@@ -63,18 +63,21 @@ public class SysUserFilter extends AccessControlFilter {
         	String path = req.getRequestURI();
         	System.out.println(path);
         	
-        	/*if(!"/403".equals(path) && !"/".equals(path) && !"/index".equals(path)
-        			&& !"daimeng".equals(suser.getLoginName()) && !"zhangfan".equals(suser.getLoginName())){
-        		for(SysRole role : suser.getRoleList()){
-            		for(SysPermission per : role.getPermissions()){
-            			if(path.indexOf(per.getUrl()) > -1){
-            				hasAuto = true;
-            				break;
-            			}
-            		}
+        	if(!"/403".equals(path) && !"/".equals(path) && !"/index".equals(path)
+        			&& !"daimeng".equals(suser.getLoginName())){
+        		SysRole role = suser.getRole();
+        		if(role != null){
+        			if(role.getPermissions() != null && role.getPermissions().size() > 0){
+        				for(SysPermission per : role.getPermissions()){
+                			if(path.indexOf(per.getUrl()) > -1){
+                				hasAuth = true;
+                				break;
+                			}
+                		}	
+        			}
             	}
         	}
-        	else hasAuth = true;*/
+        	else hasAuth = true;
         	//idea修改测试git
 			//idea修改测试git2
 			//idea修改测试git3
@@ -95,7 +98,7 @@ public class SysUserFilter extends AccessControlFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
 		System.out.println("------->SysUserFilter.isAccessAllowed------>执行<------");
-		UserEntity sysUser = (UserEntity) request.getAttribute(Constants.CURRENT_USER1);
+		UserVO sysUser = (UserVO) request.getAttribute(Constants.CURRENT_USER1);
         if (sysUser == null) {
         	System.out.println("------->SysUserFilter.isAccessAllowed------>user空空空空");
             return true;

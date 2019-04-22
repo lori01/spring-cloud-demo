@@ -21,10 +21,6 @@ public class LoginController {
 
 	@RequestMapping({"/","/favicon"})
     public String main(Model model){
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
-		if(cuser != null){
-			model.addAttribute("myname",cuser.getRealname());
-		}
         return"redirect:/article/list/1";
     }
 	@RequestMapping({"/index"})
@@ -32,6 +28,7 @@ public class LoginController {
 		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
 		if(cuser != null){
 			model.addAttribute("myname",cuser.getRealname());
+			model.addAttribute("cuser",cuser);
 		}
 		return"/index";
 	}
@@ -71,7 +68,12 @@ public class LoginController {
     }
 
     @RequestMapping("/403")
-    public String unauthorizedRole(){
+    public String unauthorizedRole(Model model){
+    	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		if(cuser != null){
+			model.addAttribute("myname",cuser.getRealname());
+			model.addAttribute("cuser",cuser);
+		}
         System.out.println("------没有权限-------");
         return "403";
     }

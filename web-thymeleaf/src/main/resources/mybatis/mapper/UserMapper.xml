@@ -14,7 +14,7 @@
        		sex_cd as sexCd
 	   FROM sys_user
 	</sql>
-    <select id="getAll" resultType="com.daimeng.web.user.entity.UserEntity"  >
+    <select id="getAll" resultType="com.daimeng.web.user.vo.UserVO"  >
        <include refid="selectUser"></include>
        
 	   <if test="loginName != null and loginName != ''">
@@ -22,12 +22,12 @@
 	   </if>
 	   order by id asc
     </select>
-    <select id="getPage" resultType="com.daimeng.web.user.entity.UserEntity"  >
+    <select id="getPage" resultType="com.daimeng.web.user.vo.UserVO"  >
        <include refid="selectUser"></include>
 
 	   order by id asc
     </select>
-    <select id="getUserByParameter" resultType="com.daimeng.web.user.entity.UserEntity"  >
+    <select id="getUserByParameter" resultType="com.daimeng.web.user.vo.UserVO"  >
        <include refid="selectUser"></include>
 	   where 1=1
 	   <if test="loginName != null and loginName != ''">

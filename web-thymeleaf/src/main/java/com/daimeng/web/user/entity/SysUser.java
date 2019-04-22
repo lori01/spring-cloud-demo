@@ -2,11 +2,16 @@ package com.daimeng.web.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -39,9 +44,11 @@ public class SysUser implements Serializable{
 	@Column(nullable = false, unique = true)
     private String sexCd;
 	
-	/*@ManyToMany(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
+	//@ManyToMany(fetch= FetchType.EAGER)//EAGER 立即从数据库中进行加载数据;
+	@OneToOne(fetch= FetchType.EAGER)
     @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
-    private List<SysRole> roleList;// 一个用户具有多个角色*/	
+	//@OrderBy("id ASC")
+	private SysRole role;// 一个用户具有多个角色
 	
 	//不映射数据库
 	@Transient
@@ -115,14 +122,6 @@ public class SysUser implements Serializable{
 		this.salt = salt;
 	}
 
-	/*public List<SysRole> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<SysRole> roleList) {
-		this.roleList = roleList;
-	}*/
-
 	public String getImg() {
 		return img;
 	}
@@ -146,6 +145,16 @@ public class SysUser implements Serializable{
 	public void setLastActionTm(Date lastActionTm) {
 		this.lastActionTm = lastActionTm;
 	}
+
+	public SysRole getRole() {
+		return role;
+	}
+
+	public void setRole(SysRole role) {
+		this.role = role;
+	}
+
+	
 
 	
 	

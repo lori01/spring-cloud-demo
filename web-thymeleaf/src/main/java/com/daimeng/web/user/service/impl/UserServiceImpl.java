@@ -23,11 +23,11 @@ import com.daimeng.util.Constants;
 import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.entity.SysUserLog;
-import com.daimeng.web.user.entity.UserEntity;
 import com.daimeng.web.user.mapper.UserMapper;
 import com.daimeng.web.user.repository.SysUserLogRepository;
 import com.daimeng.web.user.repository.SysUserRepository;
 import com.daimeng.web.user.service.UserService;
+import com.daimeng.web.user.vo.UserVO;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private SysUserRepository userRepository;
-	
 	@Autowired
 	private SysUserLogRepository userLogRepository;
 	
@@ -93,7 +92,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public ArrayList<UserEntity> getUserByParameter(UserEntity user) {
+	public ArrayList<UserVO> getUserByParameter(UserVO user) {
 		return userMapper.getUserByParameter(user);
 	}
 
@@ -208,6 +207,7 @@ public class UserServiceImpl implements UserService{
 		
 		return pagelist;
 	}
+
 	
 
 }

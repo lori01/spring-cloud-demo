@@ -10,11 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class SysRole implements Serializable {
 
-	@Id@GeneratedValue
+	@Id
+	@GeneratedValue
     private Integer id; // 编号
     private String role; // 角色标识程序中判断使用,如"admin",这个是唯一的:
     private String description; // 角色描述,UI界面显示使用
@@ -23,7 +25,9 @@ public class SysRole implements Serializable {
     //角色 -- 权限关系：多对多关系;
     @ManyToMany(fetch= FetchType.EAGER)
     @JoinTable(name="SysRolePermission",joinColumns={@JoinColumn(name="roleId")},inverseJoinColumns={@JoinColumn(name="permissionId")})
+	//@Transient
     private List<SysPermission> permissions;
+    
 
 	public Integer getId() {
 		return id;
@@ -65,6 +69,7 @@ public class SysRole implements Serializable {
 		this.permissions = permissions;
 	}
 
+	
     
     
 }
