@@ -61,8 +61,8 @@ input {
 	vertical-align:middle;
 }
 select {
-	width:185px;
-	height:23px;
+	width:192px !important;
+	height:32px !important;
 	line-height:23px;
 	border:solid 1px #DBDFE6;
 	color:#333;
@@ -145,7 +145,6 @@ input,textarea,select,.inputclass {
 	border-radius: 5px;
 	padding: 5px;
 }
-
 
 
 

@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -21,11 +22,16 @@ import org.springframework.stereotype.Service;
 
 import com.daimeng.util.Constants;
 import com.daimeng.web.common.ResponseVo;
+import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.entity.SysUserLog;
+import com.daimeng.web.user.entity.SysUserRole;
+import com.daimeng.web.user.entity.SysUserRoleId;
 import com.daimeng.web.user.mapper.UserMapper;
+import com.daimeng.web.user.repository.SysRoleRepository;
 import com.daimeng.web.user.repository.SysUserLogRepository;
 import com.daimeng.web.user.repository.SysUserRepository;
+import com.daimeng.web.user.repository.SysUserRoleRepository;
 import com.daimeng.web.user.service.UserService;
 import com.daimeng.web.user.vo.UserVO;
 
@@ -44,6 +50,10 @@ public class UserServiceImpl implements UserService{
 	private SysUserRepository userRepository;
 	@Autowired
 	private SysUserLogRepository userLogRepository;
+	@Autowired
+	private SysUserRoleRepository userRoleRepository;
+	@Autowired
+	private SysRoleRepository roleRepository;
 	
 	@Override
 	public Page<SysUser> findAllBySpecification(final SysUser info, int page) {
@@ -102,6 +112,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	@Transactional
 	public ResponseVo updateUserBscInf(SysUser user) {
 		ResponseVo vo = new ResponseVo();
 		if(user != null){
@@ -135,6 +146,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	@Transactional
 	public ResponseVo updateUserPd(Integer uid,String oldPwd,String newPwd) {
 		ResponseVo vo = new ResponseVo();
 		if(uid != null){
@@ -160,7 +172,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public ResponseVo add(SysUser user) {
+	@Transactional
+	public ResponseVo addUser(SysUser user) {
 		ResponseVo vo = new ResponseVo();
 		if(user != null){
 			Long count = userMapper.countUserByLoginName(user.getLoginName());
@@ -174,6 +187,12 @@ public class UserServiceImpl implements UserService{
 				user.setSalt(salt);
 				user.setPassword(newpd);
 				userRepository.save(user);
+				
+				SysUserRole role = new SysUserRole();
+				role.setRoleId(Integer.valueOf(user.getPermission()));
+				role.setUid(user.getId());
+				role = userRoleRepository.save(role);
+				
 				vo.setStatus(100);
 				vo.setDesc("新增成功!");
 				vo.setObj(user);
@@ -206,6 +225,12 @@ public class UserServiceImpl implements UserService{
 		Page<SysUserLog> pagelist = userLogRepository.findAll(specification, pageable);
 		
 		return pagelist;
+	}
+
+	@Override
+	public List<SysRole> findAllRole() {
+		List<SysRole> list = roleRepository.findAll();
+		return list;
 	}
 
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -87,6 +88,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
+	@Transactional
 	public CommentInfo addCommentInfo(CommentInfo info) {
 		Integer layer = commentRepository.maxLayerByArticleId(info.getArticleId());
 		ArticleInfo ainfo = articleRepository.findOne(info.getArticleId());
@@ -95,10 +97,12 @@ public class CommentServiceImpl implements CommentService{
 		}
 		info.setLayer(layer+1);
 		info.setArticleInfo(ainfo);
-		return commentRepository.save(info);
+		commentRepository.save(info);
+		return info;
 	}
 
 	@Override
+	@Transactional
 	public CommentInfo updateCommentInfo(CommentInfo info) {
 		CommentInfo cur = commentRepository.findOne(info.getId());
 		if(cur != null){
@@ -113,6 +117,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
+	@Transactional
 	public CommentInfo deleteCommentInfo(CommentInfo info) {
 		info = commentRepository.findOne(info.getId());
 		if(info != null){

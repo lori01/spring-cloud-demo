@@ -154,9 +154,9 @@ function updPwd(uid) {
 			}
 
 		},
-		"error" : function() {
+		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","保存失败","引发了莫名的错误?",function(){
+			showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -170,7 +170,7 @@ function showAddUser() {
 	$("#add_user_div_box").delay(500).slideDown();*/
 	$("#add_user_div").dialog({
 		width : 500,
-		height : 280,
+		height : 340,
 		autoOpen : true,
 		show : {
 			effect : showEffect,
@@ -219,7 +219,8 @@ function addUser() {
 		"data" : {
 			loginName : $("#new_loginName").val(),
 			password : $("#new_password").val(),
-			realname : $("#new_realname").val()
+			realname : $("#new_realname").val(),
+			permission : $("#new_role_id").val()
 		},
 		"success" : function(msgjsonobj) {
 			if (msgjsonobj.status == 100) {
@@ -236,9 +237,9 @@ function addUser() {
 			}
 
 		},
-		"error" : function() {
+		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","保存失败","引发了莫名的错误?",function(){
+			showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -304,9 +305,9 @@ function saveuser(uid) {
 			}
 
 		},
-		"error" : function() {
+		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","保存失败","引发了莫名的错误?",function(){
+			showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -402,9 +403,9 @@ function add() {
 			}
 
 		},
-		"error" : function() {
+		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","保存失败","引发了莫名的错误?",function(){
+			showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -453,9 +454,9 @@ function delArticleAction(id){
 				}
 
 			},
-			"error" : function() {
+			"error" : function(msgjsonobj) {
 				//alert("引发了莫名的错误?");
-				showAlertMessage("error","删除失败","引发了莫名的错误?",function(){
+				showAlertMessage("error","删除失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 					
 				});
 			}
@@ -485,9 +486,9 @@ function editArticle(id){
 			}
 
 		},
-		"error" : function() {
+		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","查询失败","引发了莫名的错误?",function(){
+			showAlertMessage("error","查询失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -521,9 +522,9 @@ function delCommentAction(id){
 				}
 
 			},
-			"error" : function() {
+			"error" : function(msgjsonobj) {
 				//alert("引发了莫名的错误?");
-				showAlertMessage("error","删除失败","引发了莫名的错误?",function(){
+				showAlertMessage("error","删除失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 					
 				});
 			}
@@ -582,9 +583,38 @@ function updateComment(){
 			}
 			
 		},
-		"error" : function() {
+		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","修改失败","引发了莫名的错误?",function(){
+			showAlertMessage("error","修改失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+				
+			});
+		}
+	});
+}
+
+//查询角色列表
+function selectRole(){
+	/*<select class="inputclass" id="new_role_id" name="new_role_id">
+	<option value="100001">管理员</option>
+	<option value="100002">普通用户</option>
+	</select>*/
+	$.ajax({
+		"url" : "/user/rolelist",
+		"type" : "POST",
+		"dataType" : "json",
+		"data" : {
+			
+		},
+		"success" : function(data) {
+			var html = "";
+			for(var i = 0; i < data.length; i++){
+				html += "<option value='" + data[i].id + "'>" + data[i].description + "</option>";
+			}
+			$("#new_role_id").html(html);
+		},
+		"error" : function(msgjsonobj) {
+			//alert("引发了莫名的错误?");
+			showAlertMessage("error","查询角色列表失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}

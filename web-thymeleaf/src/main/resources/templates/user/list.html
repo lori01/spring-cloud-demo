@@ -42,6 +42,10 @@
 									<td width="70%"><span th:text="${info.salt}"></span></td>
 								</tr>
 								<tr>
+									<th width="30%"><span th:text="角色"></span></th>
+									<td width="70%"><span th:text="${info.role != null} ? ${info.role.description}:'未赋权限'"></span></td>
+								</tr>
+								<tr>
 									<th width="30%"><span th:text="用户名称"></span></th>
 									<td width="70%"><span th:text="${info.realname}"></span></td>
 								</tr>

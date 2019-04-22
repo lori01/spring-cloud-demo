@@ -139,6 +139,10 @@
 							<td width="70%"><span th:text="${cuser.salt}"></span></td>
 						</tr>
 						<tr>
+							<th width="30%"><span th:text="角色"></span></th>
+							<td width="70%"><span th:text="${cuser.role.description}"></span></td>
+						</tr>
+						<tr>
 							<th width="30%"><span th:text="用户名称"></span></th>
 							<td width="70%"><input class="inputclass" style="width:280px;" type="text" name="realname" id="realname_s" th:value="${cuser.realname}" maxlength="10" placeholder="最多可输入10个字"/></td>
 						</tr>
@@ -226,6 +230,14 @@
 						<tr>
 							<th width="40%"><span th:text="姓名"></span></th>
 							<td width="60%"><input class="inputclass" type="text" name="new_realname" id="new_realname" maxlength="10" placeholder="最多可输入10个字"/></td>
+						</tr>
+						<tr>
+							<th width="40%"><span th:text="角色"></span></th>
+							<td width="60%">
+								<select class="inputclass" id="new_role_id" name="new_role_id">
+									
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<th width="40%"><span th:text="密码"></span></th>
@@ -452,5 +464,7 @@
 			var num = $(obj).parent().find (".t_h i");
 			num.html($(obj).val().length);
 		}
+		
+		selectRole();
 	</script>
 </div>

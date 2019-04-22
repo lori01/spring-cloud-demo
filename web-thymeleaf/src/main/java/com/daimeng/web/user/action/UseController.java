@@ -1,6 +1,7 @@
 package com.daimeng.web.user.action;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.daimeng.util.Constants;
 import com.daimeng.util.DateUtils;
 import com.daimeng.web.common.BaseController;
 import com.daimeng.web.common.ResponseVo;
+import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.entity.SysUserLog;
 import com.daimeng.web.user.service.UserService;
@@ -98,16 +100,22 @@ public class UseController extends BaseController {
 	public ResponseVo add(SysUser info) {
 		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
 		ResponseVo vo = new ResponseVo();
+		vo = userService.addUser(info);
+		if(vo.getStatus() == 100){
+			vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
+		}
+		return vo;
+		
+	}
+	
+	@RequestMapping(value="/rolelist",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public List<SysRole> rolelist() {
 		try {
-			vo = userService.add(info);
-			if(vo.getStatus() == 100){
-				vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
-			}
-			return vo;
+			List<SysRole> list = userService.findAllRole();
+			return list;
 		} catch (Exception e) {
-			vo.setStatus(200);
-			vo.setDesc(e.getMessage());
-			return vo;
+			return null;
 		}
 		
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,6 +84,7 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
+	@Transactional
 	public ArticleInfo addArticle(ArticleInfo info) {
 		if(info.getId() != null){
 			return updateArticle(info);
@@ -93,6 +95,7 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
+	@Transactional
 	public ArticleInfo updateArticle(ArticleInfo info) {
 		ArticleInfo cur = articleRepository.findOne(info.getId());
 		if(cur != null){
@@ -109,6 +112,7 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
+	@Transactional
 	public ArticleInfo deleteArticle(ArticleInfo info) {
 		info = articleRepository.findOne(info.getId());
 		if(info != null){

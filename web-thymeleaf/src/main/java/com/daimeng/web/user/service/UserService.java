@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.daimeng.web.common.ResponseVo;
-import com.daimeng.web.user.entity.SysPermission;
+import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.entity.SysUserLog;
 import com.daimeng.web.user.vo.UserVO;
@@ -18,9 +18,10 @@ public interface UserService {
 	public SysUser findSysUser(int id);
 	public ResponseVo updateUserBscInf(SysUser user);
 	public ResponseVo updateUserPd(Integer uid,String oldPwd,String newPwd);
-	public ResponseVo add(SysUser user);
+	public ResponseVo addUser(SysUser user);
 	
 	public Page<SysUser> findAllBySpecification(SysUser info,int page);
 	
 	public Page<SysUserLog> getUserLogPage(SysUserLog info, int page);
+	public List<SysRole> findAllRole();
 }

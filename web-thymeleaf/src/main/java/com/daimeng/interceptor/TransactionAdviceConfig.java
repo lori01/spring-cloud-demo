@@ -14,6 +14,14 @@ import org.springframework.transaction.interceptor.NameMatchTransactionAttribute
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 /**
+ * springboot实现事务只需要	在头上加上@Transactional注解
+ * @Transactional 默认只捕获RuntimeException.class
+ * 对Exception异常得需要 @Transactional(rollbackFor = {Exception.class}) 捕获回滚
+ * 或者使用全局AOP配置 TransactionAdviceConfig
+ */
+//@Transactional
+
+/**
  * 通过AOP切面设置全局事务，拦截service包下面所有方法
  * AOP术语：通知（Advice）、连接点（Joinpoint）、切入点（Pointcut)、切面（Aspect）、目标(Target)、代理(Proxy)、织入（Weaving）
  * @author daimeng
