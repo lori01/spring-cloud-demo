@@ -3,6 +3,7 @@ package com.daimeng.web.user.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,8 +19,11 @@ public class SysRole implements Serializable {
 	@Id
 	@GeneratedValue
     private Integer id; // 编号
+	@Column(nullable = false, unique = true)
     private String role; // 角色标识程序中判断使用,如"admin",这个是唯一的:
+	@Column(nullable = false, unique = true)
     private String description; // 角色描述,UI界面显示使用
+	@Column(nullable = false, unique = true)
     private Boolean available = Boolean.FALSE; // 是否可用,如果不可用将不会添加给用户
 
     //角色 -- 权限关系：多对多关系;

@@ -34,7 +34,7 @@ public class TransactionAdviceConfig {
 	/*定义切点变量：拦截com包下所有类的所有方法,返回值类型任意的方法*/
 	//private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.***.service.*.*(..))";
 	//..表示包含子路劲
-	private static final String AOP_POINTCUT_EXPRESSION = "execution (* com..service..*+.*(..))";
+	private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.daimeng..service..*+.*(..))";
 	
 	@Autowired
     private PlatformTransactionManager transactionManager;

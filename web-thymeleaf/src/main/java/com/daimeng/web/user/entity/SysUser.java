@@ -54,17 +54,7 @@ public class SysUser implements Serializable{
 	@Transient
 	private Date lastActionTm;
 	
-	public SysUser(String loginName, String password, String realname) {
-		super();
-		this.loginName = loginName;
-		this.password = password;
-		this.realname = realname;
-	}
 	
-	public SysUser() {
-		super();
-		
-	}
 	public Integer getId() {
 		return id;
 	}

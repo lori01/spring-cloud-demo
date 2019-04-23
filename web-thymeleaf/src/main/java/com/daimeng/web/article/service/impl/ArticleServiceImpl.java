@@ -108,7 +108,7 @@ public class ArticleServiceImpl implements ArticleService{
 			cur.setUpdateUid(info.getUpdateUid());
 			cur.setUpdateUser(info.getUpdateUser());
 			cur = articleRepository.save(cur);
-			
+			Integer.valueOf("sss");
 			return cur;
 		}else return null;
 		

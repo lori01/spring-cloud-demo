@@ -15,7 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInterceptor;
 
 @SpringBootApplication
-//@MapperScan("com.daimeng.**.mapper")
+@MapperScan("com.daimeng.**.mapper")
 public class WebServerApplication  {
 
 	public static void main(String[] args) {
