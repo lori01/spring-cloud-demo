@@ -116,6 +116,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	//user的事务无法自动生效,必须使用transactional,不知道为什么
+	@Transactional
 	public ResponseVo updateUserBscInf(SysUser user) {
 		ResponseVo vo = new ResponseVo();
 		if(user != null){
@@ -136,7 +137,7 @@ public class UserServiceImpl implements UserService{
 				uvo.setSexCd(user.getSexCd());
 				uvo.setId(cur.getId());
 				userMapper.updateUser(uvo);*/
-				Integer.valueOf("sss");
+				
 				vo.setStatus(100);
 				vo.setDesc("更新成功!");
 				vo.setObj(cur);
@@ -261,7 +262,6 @@ public class UserServiceImpl implements UserService{
 			userlog.setExecuteTime(executeTime);
 			userlog.setSysUser(cuser);
 			userLogRepository.save(userlog);
-			Integer.valueOf("ssss");
     	}
 		
 	}
