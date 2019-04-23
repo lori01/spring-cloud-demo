@@ -86,7 +86,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value="/add",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo add(ArticleInfo info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		if(info.getId() == null){
 			info.setCreateUser(cuser);
 			info.setCreateTm(new Date());
@@ -112,7 +112,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value="/findOne",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo findOne(ArticleInfo info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		ResponseVo vo = new ResponseVo();
 		try {
 			info = articleService.findOne(info.getId());
@@ -131,7 +131,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value="/delete",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo delete(ArticleInfo info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		ResponseVo vo = new ResponseVo();
 		try {
 			info = articleService.deleteArticle(info);

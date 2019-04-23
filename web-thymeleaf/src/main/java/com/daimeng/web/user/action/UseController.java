@@ -57,48 +57,36 @@ public class UseController extends BaseController {
 	@RequestMapping(value="/update",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo update(SysUser info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		
 		ResponseVo vo = new ResponseVo();
-		try {
-			vo = userService.updateUserBscInf(info);
-			if(vo.getStatus() == 100){
-				vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
-				SecurityUtils.getSubject().getSession().setAttribute(Constants.CURRENT_USER2, vo.getObj());
-			}
-			return vo;
-		} catch (Exception e) {
-			vo.setStatus(200);
-			vo.setDesc(e.getMessage());
-			return vo;
+		vo = userService.updateUserBscInf(info);
+		if(vo.getStatus() == 100){
+			vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
+			SecurityUtils.getSubject().getSession().setAttribute(Constants.CURRENT_USER, vo.getObj());
 		}
+		return vo;
 		
 	}
 	
 	@RequestMapping(value="/updatePwd",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo updatePwd(Integer uid, String oldPwd, String newPwd) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		
 		ResponseVo vo = new ResponseVo();
-		try {
-			vo = userService.updateUserPd(uid, oldPwd, newPwd);
-			if(vo.getStatus() == 100){
-				vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
-			}
-			return vo;
-		} catch (Exception e) {
-			vo.setStatus(200);
-			vo.setDesc(e.getMessage());
-			return vo;
+		vo = userService.updateUserPd(uid, oldPwd, newPwd);
+		if(vo.getStatus() == 100){
+			vo.setDesc(DateUtils.getDateStrFormat(new Date(), "yyyy年MM月dd日 HH:mm"));
 		}
+		return vo;
 		
 	}
 	
 	@RequestMapping(value="/add",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo add(SysUser info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		ResponseVo vo = new ResponseVo();
 		vo = userService.addUser(info);
 		if(vo.getStatus() == 100){

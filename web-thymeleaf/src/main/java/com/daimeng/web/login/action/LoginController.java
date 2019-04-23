@@ -25,7 +25,7 @@ public class LoginController {
     }
 	@RequestMapping({"/index"})
 	public String index(Model model){
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		if(cuser != null){
 			model.addAttribute("myname",cuser.getRealname());
 			model.addAttribute("cuser",cuser);
@@ -69,7 +69,7 @@ public class LoginController {
 
     @RequestMapping("/403")
     public String unauthorizedRole(Model model){
-    	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+    	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		if(cuser != null){
 			model.addAttribute("myname",cuser.getRealname());
 			model.addAttribute("cuser",cuser);

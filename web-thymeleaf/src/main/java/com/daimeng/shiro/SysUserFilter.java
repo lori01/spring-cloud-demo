@@ -31,10 +31,9 @@ public class SysUserFilter extends AccessControlFilter {
         	return true;
         }
         
-        UserVO user = (UserVO) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER1);
-        SysUser suser = (SysUser) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER2);
+        SysUser suser = (SysUser) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER);
         if(suser != null){
-        	System.out.println("------->SysUserFilter.preHandle------>user=" + user.getRealName());
+        	System.out.println("------->SysUserFilter.preHandle------>user=" + suser.getRealname());
         	boolean hasAuth = false;
         	HttpServletRequest req = (HttpServletRequest)request;
         	System.out.println("-------->getContextPath()--->" + req.getContextPath());
@@ -98,7 +97,7 @@ public class SysUserFilter extends AccessControlFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
 		System.out.println("------->SysUserFilter.isAccessAllowed------>执行<------");
-		UserVO sysUser = (UserVO) request.getAttribute(Constants.CURRENT_USER1);
+		SysUser sysUser = (SysUser) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER);
         if (sysUser == null) {
         	System.out.println("------->SysUserFilter.isAccessAllowed------>user空空空空");
             return true;

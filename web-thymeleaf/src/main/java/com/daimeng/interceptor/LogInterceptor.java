@@ -74,7 +74,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter{
         }
         
         try {
-        	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+        	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
         	if(cuser != null){
         		SysUserLog userlog = new SysUserLog();
     			userlog.setUid(cuser.getId());

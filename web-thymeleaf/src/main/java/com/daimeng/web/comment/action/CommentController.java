@@ -58,7 +58,7 @@ public class CommentController extends BaseController {
 	@RequestMapping(value="/add",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo add(CommentInfo info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		/*info.setCreateUid(cuser.getId());
 		info.setUpdateUid(cuser.getId());*/
 		info.setCreateUser(cuser);
@@ -83,7 +83,7 @@ public class CommentController extends BaseController {
 	@RequestMapping(value="/update",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo update(CommentInfo info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		ResponseVo vo = new ResponseVo();
 		info.setUpdateUser(cuser);
 		info.setUpdateTm(new Date());
@@ -108,7 +108,7 @@ public class CommentController extends BaseController {
 	@RequestMapping(value="/delete",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo delete(CommentInfo info) {
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER2);
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		ResponseVo vo = new ResponseVo();
 		try {
 			info = commentService.deleteCommentInfo(info);

@@ -16,6 +16,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
 import com.daimeng.util.Constants;
 import com.daimeng.web.user.entity.SysPermission;
@@ -96,16 +97,26 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         //通过username从数据库中查找 User对象，如果找到，没找到.
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
-        UserVO user = new UserVO();
+        /*UserVO user = new UserVO();
         user.setLoginName(username);
         ArrayList<UserVO> userList = userService.getUserByParameter(user);
         if(userList == null || userList.size() == 0){
         	throw new UnknownAccountException();
         }else if(userList.size() > 1){
         	throw new UnknownAccountException();
+        }*/
+        
+        SysUser user = new SysUser();
+        user.setLoginName(username);
+        Page<SysUser> userList = userService.findAllBySpecification(user, 0);
+        if(userList == null || userList.getContent().size() == 0){
+        	throw new UnknownAccountException();
+        }else if(userList.getContent().size() > 1){
+        	throw new UnknownAccountException();
         }
-        System.out.println("----->>userInfo="+userList.size());
-        user = userList.get(0);
+        
+        System.out.println("----->>userInfo="+userList.getSize());
+        user = userList.getContent().get(0);
         System.out.println("----->>loginname="+user.getLoginName());
         System.out.println("----->>password="+user.getPassword());
         System.out.println("----->>salt="+user.getSalt());
@@ -115,9 +126,7 @@ public class MyShiroRealm extends AuthorizingRealm {
                 ByteSource.Util.bytes(user.getLoginName()+user.getSalt()),//salt=username+salt
                 getName()  //realm name
         );
-        SysUser sysUser = userService.findSysUser(user.getId());
-        SecurityUtils.getSubject().getSession().setAttribute(Constants.CURRENT_USER1, user);
-        SecurityUtils.getSubject().getSession().setAttribute(Constants.CURRENT_USER2, sysUser);
+        SecurityUtils.getSubject().getSession().setAttribute(Constants.CURRENT_USER, user);
         return authenticationInfo;
     }
     

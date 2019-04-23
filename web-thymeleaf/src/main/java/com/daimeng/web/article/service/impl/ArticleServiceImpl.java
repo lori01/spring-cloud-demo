@@ -3,8 +3,11 @@ package com.daimeng.web.article.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.*;
-import javax.transaction.Transactional;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -84,18 +87,17 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	@Transactional
 	public ArticleInfo addArticle(ArticleInfo info) {
 		if(info.getId() != null){
 			return updateArticle(info);
 		}else{
 			info = articleRepository.save(info);
+			
 			return info;
 		}
 	}
 
 	@Override
-	@Transactional
 	public ArticleInfo updateArticle(ArticleInfo info) {
 		ArticleInfo cur = articleRepository.findOne(info.getId());
 		if(cur != null){
@@ -106,18 +108,19 @@ public class ArticleServiceImpl implements ArticleService{
 			cur.setUpdateUid(info.getUpdateUid());
 			cur.setUpdateUser(info.getUpdateUser());
 			cur = articleRepository.save(cur);
+			
 			return cur;
 		}else return null;
 		
 	}
 
 	@Override
-	@Transactional
 	public ArticleInfo deleteArticle(ArticleInfo info) {
 		info = articleRepository.findOne(info.getId());
 		if(info != null){
 			info.setStatusCd(0);
 			info =  articleRepository.save(info);
+			
 			return info;
 		}else return null;
 		

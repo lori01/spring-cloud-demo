@@ -88,7 +88,6 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	@Transactional
 	public CommentInfo addCommentInfo(CommentInfo info) {
 		Integer layer = commentRepository.maxLayerByArticleId(info.getArticleId());
 		ArticleInfo ainfo = articleRepository.findOne(info.getArticleId());
@@ -98,11 +97,11 @@ public class CommentServiceImpl implements CommentService{
 		info.setLayer(layer+1);
 		info.setArticleInfo(ainfo);
 		commentRepository.save(info);
+		
 		return info;
 	}
 
 	@Override
-	@Transactional
 	public CommentInfo updateCommentInfo(CommentInfo info) {
 		CommentInfo cur = commentRepository.findOne(info.getId());
 		if(cur != null){
@@ -111,18 +110,19 @@ public class CommentServiceImpl implements CommentService{
 			cur.setUpdateUid(info.getUpdateUid());
 			cur.setUpdateUser(info.getUpdateUser());
 			cur = commentRepository.save(cur);
+			
 			return cur;
 		}else return null;
 		
 	}
 
 	@Override
-	@Transactional
 	public CommentInfo deleteCommentInfo(CommentInfo info) {
 		info = commentRepository.findOne(info.getId());
 		if(info != null){
 			info.setStatusCd(0);
 			info = commentRepository.save(info);
+			
 			return info;
 		}else return null;
 		

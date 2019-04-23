@@ -12,7 +12,7 @@ import com.daimeng.web.user.entity.SysUserLog;
 import com.daimeng.web.user.vo.UserVO;
 
 public interface UserService {
-	public ArrayList<UserVO> getUserByParameter(UserVO user);
+	//public ArrayList<UserVO> getUserByParameter(UserVO user);
 	
 	public Page<SysUser> getUserPage(Integer pageNum);
 	public SysUser findSysUser(int id);
