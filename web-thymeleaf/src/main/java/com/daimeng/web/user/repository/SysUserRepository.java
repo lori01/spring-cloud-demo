@@ -12,4 +12,5 @@ public interface SysUserRepository extends JpaRepository<SysUser, Integer>,JpaSp
 	//public PageInfo<UserEntity> getPage(Integer pageNum);
 	public ArrayList<SysUser> findByLoginName(SysUser user);
 	
+	public Long countByLoginName(String loginName);
 }

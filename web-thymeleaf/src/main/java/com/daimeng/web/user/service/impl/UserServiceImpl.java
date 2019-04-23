@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService{
 	@Value("${shiro.password.hashIterations}")
     private int hashIterations;//生成Hash值的迭代次数
 	
-	@Autowired
-	private UserMapper userMapper;
+	/*@Autowired
+	private UserMapper userMapper;*/
 	
 	@Autowired
 	private SysUserRepository userRepository;
@@ -101,10 +101,10 @@ public class UserServiceImpl implements UserService{
 		return findAllBySpecification(info, pageNum);
 	}
 	
-	@Override
+	/*@Override
 	public ArrayList<UserVO> getUserByParameter(UserVO user) {
 		return userMapper.getUserByParameter(user);
-	}
+	}*/
 
 	@Override
 	public SysUser findSysUser(int id) {
@@ -112,6 +112,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	//user的事务无法自动生效,必须使用transactional,不知道为什么
 	@Transactional
 	public ResponseVo updateUserBscInf(SysUser user) {
 		ResponseVo vo = new ResponseVo();
@@ -127,6 +128,7 @@ public class UserServiceImpl implements UserService{
 				vo.setStatus(100);
 				vo.setDesc("更新成功!");
 				vo.setObj(cur);
+				
 				return vo;
 			}
 		}
@@ -164,6 +166,7 @@ public class UserServiceImpl implements UserService{
 					vo.setStatus(100);
 					vo.setDesc("更新成功!");
 					vo.setObj(cur);
+					
 					return vo;
 				}
 			}
@@ -176,7 +179,7 @@ public class UserServiceImpl implements UserService{
 	public ResponseVo addUser(SysUser user) {
 		ResponseVo vo = new ResponseVo();
 		if(user != null){
-			Long count = userMapper.countUserByLoginName(user.getLoginName());
+			Long count = userRepository.countByLoginName(user.getLoginName());
 			if(count != null && count > 0){
 				vo.setStatus(200);
 				vo.setDesc("登录名已存在!");
