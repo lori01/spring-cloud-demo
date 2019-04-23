@@ -44,7 +44,12 @@
     </insert>
     
     <update id="updateUser"  >
-       update sys_user set login_name=#{loginName},password=#{password},realname=#{realName},email=#{email},phone=#{phone} where id=#{id}
+       update sys_user set 
+       realname=#{realName},	
+       sex_cd=#{sexCd},
+       email=#{email},
+       phone=#{phone},
+       img=#{img} where id=#{id}
     </update>
     <select id="countUserByLoginName" resultType="java.lang.Long"  >
        SELECT count(id)
