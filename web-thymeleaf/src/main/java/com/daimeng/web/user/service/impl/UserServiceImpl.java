@@ -1,6 +1,7 @@
 package com.daimeng.web.user.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -8,8 +9,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +46,8 @@ public class UserServiceImpl implements UserService{
 	@Value("${shiro.password.hashIterations}")
     private int hashIterations;//生成Hash值的迭代次数
 	
-	/*@Autowired
-	private UserMapper userMapper;*/
+	@Autowired
+	private UserMapper userMapper;
 	
 	@Autowired
 	private SysUserRepository userRepository;
@@ -113,7 +116,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	//user的事务无法自动生效,必须使用transactional,不知道为什么
-	@Transactional
 	public ResponseVo updateUserBscInf(SysUser user) {
 		ResponseVo vo = new ResponseVo();
 		if(user != null){
@@ -125,6 +127,16 @@ public class UserServiceImpl implements UserService{
 				cur.setImg(user.getImg());
 				cur.setSexCd(user.getSexCd());
 				userRepository.save(cur);
+				
+				/*UserVO uvo = new UserVO();
+				uvo.setPhone(user.getPhone());
+				uvo.setEmail(user.getEmail());
+				uvo.setRealName(user.getRealname());
+				uvo.setImg(user.getImg());
+				uvo.setSexCd(user.getSexCd());
+				uvo.setId(cur.getId());
+				userMapper.updateUser(uvo);*/
+				Integer.valueOf("sss");
 				vo.setStatus(100);
 				vo.setDesc("更新成功!");
 				vo.setObj(cur);
@@ -234,6 +246,24 @@ public class UserServiceImpl implements UserService{
 	public List<SysRole> findAllRole() {
 		List<SysRole> list = roleRepository.findAll();
 		return list;
+	}
+
+	@Override
+	@Transactional
+	public void saveSysUserLog(HttpServletRequest request,long executeTime) {
+		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
+    	if(cuser != null){
+    		SysUserLog userlog = new SysUserLog();
+			userlog.setUid(cuser.getId());
+			userlog.setCreateTm(new Date());
+			userlog.setUrl(request.getRequestURL().toString());
+			userlog.setParameter(request.getRequestURI());
+			userlog.setExecuteTime(executeTime);
+			userlog.setSysUser(cuser);
+			userLogRepository.save(userlog);
+			Integer.valueOf("ssss");
+    	}
+		
 	}
 
 	

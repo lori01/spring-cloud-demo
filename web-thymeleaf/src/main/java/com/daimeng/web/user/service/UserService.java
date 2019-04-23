@@ -3,6 +3,8 @@ package com.daimeng.web.user.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 
 import com.daimeng.web.common.ResponseVo;
@@ -24,4 +26,6 @@ public interface UserService {
 	
 	public Page<SysUserLog> getUserLogPage(SysUserLog info, int page);
 	public List<SysRole> findAllRole();
+	
+	public void saveSysUserLog(HttpServletRequest request,long executeTime);
 }

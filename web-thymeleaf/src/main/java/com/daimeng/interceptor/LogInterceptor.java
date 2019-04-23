@@ -20,6 +20,7 @@ import com.daimeng.util.Constants;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.entity.SysUserLog;
 import com.daimeng.web.user.repository.SysUserLogRepository;
+import com.daimeng.web.user.service.UserService;
 
 @Component
 public class LogInterceptor extends HandlerInterceptorAdapter{
@@ -27,7 +28,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter{
 	private static final Logger LOGGER = LoggerFactory.getLogger(LogInterceptor.class);
 	
 	@Autowired
-	private SysUserLogRepository sysUserLogRepository;
+	private UserService userService;
 	
 	/**
      * 前置检查,方法执行前
@@ -74,17 +75,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter{
         }
         
         try {
-        	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
-        	if(cuser != null){
-        		SysUserLog userlog = new SysUserLog();
-    			userlog.setUid(cuser.getId());
-    			userlog.setCreateTm(new Date());
-    			userlog.setUrl(request.getRequestURL().toString());
-    			userlog.setParameter(request.getRequestURI());
-    			userlog.setExecuteTime(executeTime);
-    			userlog.setSysUser(cuser);
-    			sysUserLogRepository.save(userlog);
-        	}
+        	userService.saveSysUserLog(request, executeTime);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
