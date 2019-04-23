@@ -21,7 +21,7 @@ public class ArticleInfo  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue//字段自动生成 
 	private Integer id;
 	
 	@Column(nullable = false, unique = true)
