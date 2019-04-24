@@ -76,7 +76,7 @@ function showmenu() {
 	//$("#menu_me").css("top", litop);
 	//$("#menu_me").css("width", "100%");
 	$("#menu_me").fadeIn();
-	$("#menu_me").delay(500).slideDown();
+	//$("#menu_me").delay(500).slideDown();
 }
 function hidemenu() {
 	$("#menu_me").fadeOut();
