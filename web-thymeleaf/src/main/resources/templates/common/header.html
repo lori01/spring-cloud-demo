@@ -397,10 +397,11 @@
 			$(".btn_public_page_e_text").html("👉");
 			$(".btn_public_page_e_text").attr("title","末页");
 			
-			//相对left
+			//position是设置元素相对于父元素的偏移，而offset方法是设置元素相对于整个浏览器的位置偏移
+			//position相对left
 			//当menu_me和showmenu_li同处于一个div下时
 			//$("#menu_me").css("left",$("#showmenu_li").position().left);
-			//绝对left
+			//offset绝对left
 			//当menu_me和showmenu_li不在一个div下时
 			$("#menu_me").css("left",$("#showmenu_li").offset().left);
 			$("#menu_me").css("width",$("#showmenu_li").css('width'));
