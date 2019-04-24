@@ -169,9 +169,10 @@ input,textarea,select,.inputclass {
 }
 
 .clearfix-menu {
-	border-right: 4px solid #5d3d21;
+	border-top: 4px solid #5d3d21;
 	zoom: 1;
 	display : none;
+	top:80px;
 	/* position: fixed; */
 	position: absolute;
 	background: #fff;
@@ -207,7 +208,7 @@ input,textarea,select,.inputclass {
 .sf-menu-2 li {
 	float: left;
 	position: relative;
-	/* width : 100%; */
+	width : 100%;
 }
 
 .sf-menu-2 a {
@@ -242,7 +243,10 @@ ul.sf-menu-2 li li li:hover ul, ul.sf-menu-2 li li li.sfHover ul {
 
 .sf-menu-2 {
 	float: left;
-	margin-bottom: 1em
+	margin-bottom: 1em;
+    background-color: #fff;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .sf-menu-2 a {

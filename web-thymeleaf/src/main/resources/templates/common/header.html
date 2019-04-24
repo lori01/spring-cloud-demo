@@ -44,6 +44,7 @@
 		<!-- END header -->
 		<div id="navigation" class="clearfix">
 			<nav class="nav">
+				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img th:src="${cuser.img}" style="width: 60px;border-radius: 80px;"/></a>
 				<ul class="sf-menu">
 					<li id="showmenu_li"><a th:text="欢饮您-+${myname}" href="javascript:void(0)" th:onclick= "'javascript:showmenu()'"></a></li>
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
@@ -54,20 +55,20 @@
 					<li><a th:text="注销" th:href="@{/logout}"></a></li>
 				</ul>
 			</nav>
-			<div id="menu_me" class="clearfix-menu">
-				<nav class="nav">
-					<ul class="sf-menu-2" id="menu_ul">
-						<li><a style="color:#FFF;background: #5d3d21;" th:text="欢饮您-+${myname}"></a></li>
-						<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
-						<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
-						<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
-						<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
-					</ul>
-				</nav>	
-			</div>
 		</div>
 		
 		<!-- END navigation -->
+	</div>
+	
+	<div id="menu_me" class="clearfix-menu">
+		<nav class="nav">
+			<ul class="sf-menu-2" id="menu_ul">
+				<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
+				<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
+				<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
+				<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
+			</ul>
+		</nav>	
 	</div>
 	
 	
@@ -396,8 +397,11 @@
 			$(".btn_public_page_e_text").html("👉");
 			$(".btn_public_page_e_text").attr("title","末页");
 			
-			
-			
+			//相对left
+			//$("#menu_me").css("left",$("#showmenu_li").position().left);
+			//绝对left
+			$("#menu_me").css("left",$("#showmenu_li").offset().left);
+			$("#menu_me").css("width",$("#showmenu_li").css('width'));
 			$("#showmenu_li").mouseover(function(e){
 				var flag = $("#menu_me").is(":hidden");
 				if(flag){  
@@ -419,7 +423,7 @@
 				if(flag){  
 					
 	            }else{  
-	            	hidemenu();
+	            	//hidemenu();
 	            }  
 			});
 			
