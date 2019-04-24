@@ -52,11 +52,11 @@ public class ExcelUtils {
             HSSFSheet sheet = workbook.getSheetAt(0);
             
             System.out.println("===delete row start!===");
-            sheet = delRow(sheet, 12, 16);
+            sheet = delRow(sheet, 12, 160);
             System.out.println("===delete row end!===");
             
             System.out.println("===delete column start!===");
-            sheet = delColumn(sheet, 11, 12);
+            sheet = delColumn(sheet, 15, 120);
             System.out.println("===delete column end!===");
             
            /* System.out.println("===hide row start!===");
