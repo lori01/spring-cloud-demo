@@ -398,8 +398,10 @@
 			$(".btn_public_page_e_text").attr("title","末页");
 			
 			//相对left
+			//当menu_me和showmenu_li同处于一个div下时
 			//$("#menu_me").css("left",$("#showmenu_li").position().left);
 			//绝对left
+			//当menu_me和showmenu_li不在一个div下时
 			$("#menu_me").css("left",$("#showmenu_li").offset().left);
 			$("#menu_me").css("width",$("#showmenu_li").css('width'));
 			$("#showmenu_li").mouseover(function(e){
@@ -423,7 +425,7 @@
 				if(flag){  
 					
 	            }else{  
-	            	//hidemenu();
+	            	hidemenu();
 	            }  
 			});
 			
