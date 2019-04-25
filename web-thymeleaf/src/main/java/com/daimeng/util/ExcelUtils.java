@@ -31,6 +31,56 @@ public class ExcelUtils {
 		System.out.println(date);
 		String targ = "D:/java_test/excel/new_excel_" +date+ ".xls";
 		delRowAndColumn(src, targ);
+		System.out.println(targ);
+		
+		/*String src = "D:/java_test/excel/新设法人房地产模板.xls";
+		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
+		System.out.println(date);
+		String targ = "D:/java_test/excel/新设法人房地产模板_new_excel_" +date+ ".xls";
+		drawPic(src, targ);
+		System.out.println(targ);*/
+	}
+	
+	public static void drawPic(String src, String targ){
+		try {
+			long start = System.currentTimeMillis();
+			FileInputStream is = new FileInputStream(src);
+            HSSFWorkbook workbook = new HSSFWorkbook(is);
+            
+            int sheetNum = workbook.getNumberOfSheets();
+            for(int i = 0 ; i < sheetNum; i++){
+            	HSSFSheet sheet = workbook.getSheetAt(i);
+            	System.out.println(sheet.getSheetName());
+            	if("fzb7.1".equals(sheet.getSheetName())){
+            		System.out.println("=====start=====");
+            		for(int j = 5; j <= 13; j++ ){
+            			HSSFRow row = sheet.getRow(j); 
+            			for(int k = 1; k <= 6; k++){
+            				HSSFCell cell = row.getCell(k);
+            				cell.setCellValue(k*10 + j);
+            			}
+            		}
+            		//evaluate(workbook, i, "");
+            	}
+            }
+            
+            //执行计算公式
+            //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
+            //循环所有,执行计算公式
+            //evaluate(workbook);
+            
+            FileOutputStream os = new FileOutputStream(targ);
+            workbook.write(os);
+            is.close();
+            os.close();
+            
+            System.out.println("===export excel success!===");
+            long end = System.currentTimeMillis();
+            System.out.println("===整个过程消耗了"+(end-start)+"ms===");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	/**
@@ -89,9 +139,9 @@ public class ExcelUtils {
             System.out.println("===hide column end!===");
             
             //执行计算公式
-            HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
+            //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
             //循环所有,执行计算公式
-            //evaluate(workbook);
+            evaluate(workbook, 0, "");
             
             FileOutputStream os = new FileOutputStream(targ);
             workbook.write(os);
@@ -412,28 +462,62 @@ public class ExcelUtils {
 	
 	/**
 	 * 
+	* @功能描述: 执行workbook的公式
 	* @方法名称: evaluate 
-	* @路径 com.daimeng.excel 
-	* @功能描述: 循环excel,执行所有的公式表格
+	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午3:23:10 
+	* @创建时间 2019年4月25日 下午3:25:21 
 	* @version V1.0   
-	* @param wb 
-	* void
+	* @param wb
+	* @param sheetId 只执行指定sheet的公式
+	* @param sheetName 只执行指定sheet的公式
+	* @return void
 	 */
-	public static void evaluate(HSSFWorkbook wb){
+	public static void evaluate(HSSFWorkbook wb,Integer sheetId, String sheetName){
         FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator();
-        for(int sheetNum = 0; sheetNum < wb.getNumberOfSheets(); sheetNum++) {
-        	HSSFSheet sheet = wb.getSheetAt(sheetNum);
-            for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
-            	HSSFRow row = sheet.getRow(rowid);
-                for(int cid = 0; cid < row.getPhysicalNumberOfCells(); cid++) {
-                	HSSFCell cell = row.getCell(cid);
-                    if(cell.getCellTypeEnum() == CellType.FORMULA) {
-                        evaluator.evaluateFormulaCell(cell);
-                    }
-                }
+        if(sheetId != null){
+        	HSSFSheet sheet = wb.getSheetAt(sheetId);
+        	evalSheet(evaluator, sheet);
+        }
+        else{
+        	for(int sheetNum = 0; sheetNum < wb.getNumberOfSheets(); sheetNum++) {
+            	HSSFSheet sheet = wb.getSheetAt(sheetNum);
+            	if(sheetName != null && !"".equals(sheetName)){
+            		if(sheetName.equals(sheet.getSheetName())){
+            			evalSheet(evaluator, sheet);
+            			break;
+            		}
+            	}else {
+            		evalSheet(evaluator, sheet);
+            	}
             }
+        }
+	}
+	/**
+	 * 
+	* @功能描述: 执行sheet的计算公式
+	* @方法名称: evalSheet 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月25日 下午3:25:03 
+	* @version V1.0   
+	* @param evaluator
+	* @param sheet 
+	* @return void
+	 */
+	public static void evalSheet(FormulaEvaluator evaluator, HSSFSheet sheet){
+		for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
+        	HSSFRow row = sheet.getRow(rowid);
+        	if(row != null){
+        		for(int cid = 0; cid < row.getPhysicalNumberOfCells(); cid++) {
+                	HSSFCell cell = row.getCell(cid);
+                	if(cell != null){
+                		if(cell.getCellTypeEnum() == CellType.FORMULA) {
+                            evaluator.evaluateFormulaCell(cell);
+                        }
+                	}
+                }
+        	}
         }
 	}
 }
