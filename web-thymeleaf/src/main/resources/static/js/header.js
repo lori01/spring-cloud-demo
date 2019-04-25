@@ -314,7 +314,7 @@ function saveuser(uid) {
 	});
 }
 
-/* 写文章 */
+/* 写文章 */ 
 function show() {
 	//hideAll();
 	/*$("#add_div").fadeIn();
