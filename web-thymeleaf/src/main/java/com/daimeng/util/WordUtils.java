@@ -39,18 +39,21 @@ import org.w3c.dom.NodeList;
 public class WordUtils {
 
 	public static void main(String[] args) {
-		ArrayList<String> result = getParamFromDollar("(${no})是一个${name}");
+		/*ArrayList<String> result = getParamFromDollar("(${no})是一个${name}");
 		for(String str : result){
 			System.out.println(str);
-		}
+		}*/
 		
+		long start = System.currentTimeMillis();
 		String templatePath = "D:/java_test/word/Word_Export_Test.docx";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
-		System.out.println(date);
 		String newDocumentPath = "D:/java_test/word/" + date +System.currentTimeMillis()+ ".docx";
 		downDocument(templatePath, newDocumentPath, dataMap);
 		
+		long end = System.currentTimeMillis();
+		System.out.println(newDocumentPath);
+        System.out.println("===整个过程消耗了"+(end-start)+"ms===");
 	}
 	
 	private static HashMap<String,Object> dataMap = new HashMap<String,Object>();
@@ -128,7 +131,8 @@ public class WordUtils {
 			Map<String,Element> totalMap = WordUtils.getAllTableElement(doc,"total");
 			//列表赋值
 			for(Map.Entry<String, Element> entry : totalMap.entrySet()){
-				System.out.println("##################create " +totalMap.entrySet()+ " start###################");
+				long start = System.currentTimeMillis();
+				System.out.println("##################create " +entry.getKey()+ " start###################");
 				Element ele = entry.getValue();
 				ArrayList<HashMap<String,Object>> tableList = new ArrayList<HashMap<String,Object>>();
 				if(dataMap.get(entry.getKey()) != null){
@@ -141,11 +145,13 @@ public class WordUtils {
 					//参数 (table元素，table数据，表名)
 					createTableCycleTwice(ele,tableList ,entry.getKey());
 				}
-				System.out.println("##################create " +totalMap.entrySet()+ " end###################");
+				long end = System.currentTimeMillis();
+				System.out.println("##################create " +entry.getKey()+ " end,cost " +(end-start)+ "ms###################");
 			}
 			Map<String,Element> tableMap = getAllTableElement(doc,"table");
 			for(Map.Entry<String, Element> entry : tableMap.entrySet()){
-				System.out.println("##################create " +tableMap.entrySet()+ " start###################");
+				long start = System.currentTimeMillis();
+				System.out.println("##################create " +entry.getKey()+ " start###################");
 				Element ele = entry.getValue();
 				ArrayList<HashMap<String,Object>> tableList = new ArrayList<HashMap<String,Object>>();
 				if(dataMap.get(entry.getKey()) != null){
@@ -164,12 +170,15 @@ public class WordUtils {
 				else{
 					createTableCycleOnce(ele,tableList ,1,entry.getKey());
 				}
-				System.out.println("##################create " +tableMap.entrySet()+ " end###################");
+				long end = System.currentTimeMillis();
+				System.out.println("##################create " +entry.getKey()+ " end,cost " +(end-start)+ " ms###################");
 			}
 			//替换非table类型的w:p数据
 			System.out.println("##################replace field start###################");
+			long start = System.currentTimeMillis();
 			replaceFiled4Document(doc, dataMap);
-			System.out.println("##################replace field end###################");
+			long end = System.currentTimeMillis();
+			System.out.println("##################replace field end,cost " +(end-start)+ " ms###################");
 			//解析所有非列表的w:p内容
 			//Map<String,Element> fieldMarkEle = WordUtils.getFiledElementByPrex(doc, "w:p");
 			//根据field字段填入value
@@ -391,12 +400,12 @@ public class WordUtils {
 				for(int l = 0; l < wpList.getLength(); l ++){
 					Element wpElement = (Element) wpList.item(l);
 					String value = getWpElementValue(wpElement);
-					System.out.println("列表w:tbl->w:tr->w:tc->w:p->"+value);
+					//System.out.println("列表w:tbl->w:tr->w:tc->w:p->"+value);
 					if(value.contains("${") && value.contains("}") && value.contains(parfix)){
 						int startIndex = value.indexOf("${");
 						int endIndex = value.indexOf("}");
 						String parameter = value.substring(startIndex+2, endIndex);
-						tableName = parameter.substring(parameter.indexOf(parfix),parameter.indexOf(parfix)+(parfix.length()+3));//+3表示后面的 _01
+						tableName = parameter.substring(parameter.indexOf(parfix),parameter.indexOf(parfix)+(parfix.length()+2));//+3表示后面的 _01
 						System.out.println(tableName);
 						break OUT;
 					}
