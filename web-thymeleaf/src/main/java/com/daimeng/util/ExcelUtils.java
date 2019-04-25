@@ -52,25 +52,40 @@ public class ExcelUtils {
             HSSFWorkbook workbook = new HSSFWorkbook(is);
             HSSFSheet sheet = workbook.getSheetAt(0);
             
-            /*System.out.println("===delete row start!===");
-            sheet = delRow(sheet, 12, 160);
-            System.out.println("===delete row end!===");*/
+            //同一类型的操作,删除和隐藏不要同时用,否则会有错乱!!
+            //要么都用删除,要么都用隐藏
+            //可以row用删除,column用隐藏
             
-            /*System.out.println("===delete column start!===");
-            sheet = delColumn(sheet, 15, 120);
+            /*System.out.println("===delete row start!===");
+            sheet = delRow(sheet, 60, 145);
+            sheet = delRow(sheet, 20, 45);
+            System.out.println("===delete row end!===");
+            
+            System.out.println("===delete column start!===");
+            sheet = delColumn(sheet, 30, 40);
+            sheet = delColumn(sheet, 15, 20);
             System.out.println("===delete column end!===");*/
             
             /*System.out.println("===hide row start!===");
-            sheet = hideRow(sheet, 12, 160);
-            System.out.println("===hide row end!===");*/
+            sheet = hideRow(sheet, 170, 180, false);
+            sheet = hideRow(sheet, 50, 160, true);
+            System.out.println("===hide row end!===");
+            
+            System.out.println("===hide column start!===");
+            sheet = hideColumn(sheet, 35, 130, true);
+            sheet = hideColumn(sheet, 30, 34, false);
+            sheet = hideColumn(sheet, 12, 26, true);
+            System.out.println("===hide column end!===");*/
             
             System.out.println("===delete row start!===");
-            sheet = delRow(sheet, 20, 1600);
+            sheet = delRow(sheet, 60, 145);
+            sheet = delRow(sheet, 20, 45);
             System.out.println("===delete row end!===");
             
             System.out.println("===hide column start!===");
-            sheet = hideColumn(sheet, 12, 26);
-            sheet = hideColumn(sheet, 35, 130);
+            sheet = hideColumn(sheet, 35, 130, true);
+            sheet = hideColumn(sheet, 30, 34, false);
+            sheet = hideColumn(sheet, 12, 26, true);
             System.out.println("===hide column end!===");
             
             //执行计算公式
@@ -96,6 +111,7 @@ public class ExcelUtils {
 	* @方法名称: delRow 
 	* @路径 com.daimeng.util 
 	* @功能描述: 删除行,然后将下面未删除的行移动上来
+	* @功能描述: 但不会更改公式的内容
 	* @作者 daimeng@tansun.com.cn
 	* @创建时间 2019年4月19日 下午3:28:22 
 	* @version V1.0   
@@ -149,7 +165,8 @@ public class ExcelUtils {
 	 * 
 	* @方法名称: delColumn 
 	* @路径 com.daimeng.util 
-	* @功能描述: 删除列,然后将后面未删除的列复制到当前删除的列上,然后删除后面所有的列
+	* @功能描述: 删除列,然后将后面未删除的列复制到当前删除的列上,然后删除后面所有的列.
+	* @功能描述: 但不会更改公式的内容
 	* @作者 daimeng@tansun.com.cn
 	* @创建时间 2019年4月19日 下午3:28:49 
 	* @version V1.0   
@@ -270,7 +287,7 @@ public class ExcelUtils {
 	 * 
 	* @方法名称: hideRow 
 	* @路径 com.daimeng.util 
-	* @功能描述: 纯粹隐藏行,并没有删除行的数据,有待改进
+	* @功能描述: 纯粹隐藏行
 	* @作者 daimeng@tansun.com.cn
 	* @创建时间 2019年4月19日 下午3:30:18 
 	* @version V1.0   
@@ -280,7 +297,7 @@ public class ExcelUtils {
 	* @return 
 	* HSSFSheet
 	 */
-	public static HSSFSheet hideRow(HSSFSheet sheet,int start,int end){
+	public static HSSFSheet hideRow(HSSFSheet sheet,int start,int end,boolean delData){
 		int rowNum = sheet.getLastRowNum();
 		int rowCount = rowNum+1;
 		System.out.println("rowCount="+rowCount);
@@ -288,6 +305,9 @@ public class ExcelUtils {
 			end = rowCount;
 		}
 		
+		if(delData){
+			sheet = removeCellDataForRow(sheet, start, end);
+		}
 		//行高为0则隐藏
 		for(int i = start-1; i < end; i++){
 			HSSFRow row = sheet.getRow(i);
@@ -295,9 +315,37 @@ public class ExcelUtils {
 				row.setZeroHeight(true);
         	}
 		}
-		
-		//sheet = removeRowData(sheet, start, end);
 		return sheet;
+	}
+	/**
+	 * 
+	* @功能描述: 一格一格删除cell,为的是不把row变为null
+	* @方法名称: removeCellDataForRow 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月25日 上午10:05:12 
+	* @version V1.0   
+	* @param sheet
+	* @param start
+	* @param end
+	* @return 
+	* @return HSSFSheet
+	 */
+	public static HSSFSheet removeCellDataForRow(HSSFSheet sheet,int start,int end){
+		//删除行内容,但会保留空行
+        for(int i = start-1; i < end; i++){
+        	HSSFRow row = sheet.getRow(i);
+        	if(row != null){
+        		int columnCount = row.getPhysicalNumberOfCells();
+        		for(int j = 0 ; j < columnCount; j++){
+        			HSSFCell cell = row.getCell(j);
+        			if(cell != null){
+        				row.removeCell(cell);
+        			}
+        		}
+        	}
+        }
+        return sheet;
 	}
 	/**
 	 * 
@@ -313,7 +361,7 @@ public class ExcelUtils {
 	* @return 
 	* HSSFSheet
 	 */
-	public static HSSFSheet hideColumn(HSSFSheet sheet,int start,int end){
+	public static HSSFSheet hideColumn(HSSFSheet sheet,int start,int end,boolean delData){
 		HSSFRow row = sheet.getRow(0);
         int columnCount = row.getPhysicalNumberOfCells();
         System.out.println("columnCount="+columnCount);
@@ -325,8 +373,9 @@ public class ExcelUtils {
         if(end > columnCount){
 			end = columnCount;
 		}
-        
-        sheet = removeColumnData(sheet, start, end);
+        if(delData){
+        	sheet = removeCellDataForColumn(sheet, start, end);
+        }
         for(int i = start-1; i < end; i++){
         	sheet.setColumnWidth(i, 0); 
         }
@@ -335,7 +384,7 @@ public class ExcelUtils {
 	/**
 	 * 
 	* @功能描述: 删除column的内容
-	* @方法名称: removeColumnData 
+	* @方法名称: removeCellDataForColumn 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
 	* @创建时间 2019年4月24日 下午3:44:24 
@@ -346,7 +395,7 @@ public class ExcelUtils {
 	* @return 
 	* @return HSSFSheet
 	 */
-	public static HSSFSheet removeColumnData(HSSFSheet sheet,int start,int end){
+	public static HSSFSheet removeCellDataForColumn(HSSFSheet sheet,int start,int end){
 		int rowNum = sheet.getLastRowNum();
 		for(int i = start-1; i < end; i++){
 			for(int j = 0; j <= rowNum; j++){
