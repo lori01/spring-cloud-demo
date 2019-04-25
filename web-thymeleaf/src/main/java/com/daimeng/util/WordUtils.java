@@ -39,7 +39,7 @@ import org.w3c.dom.NodeList;
 public class WordUtils {
 
 	public static void main(String[] args) {
-		ArrayList<String> result = getParamByPattern("(${no})是一个${name}");
+		ArrayList<String> result = getParamFromDollar("(${no})是一个${name}");
 		for(String str : result){
 			System.out.println(str);
 		}
@@ -125,10 +125,10 @@ public class WordUtils {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			Document doc = dbf.newDocumentBuilder().parse(documentXmlIs);
 			//解析列表
-			System.out.println("##################total###################");
 			Map<String,Element> totalMap = WordUtils.getAllTableElement(doc,"total");
 			//列表赋值
 			for(Map.Entry<String, Element> entry : totalMap.entrySet()){
+				System.out.println("##################create " +totalMap.entrySet()+ " start###################");
 				Element ele = entry.getValue();
 				ArrayList<HashMap<String,Object>> tableList = new ArrayList<HashMap<String,Object>>();
 				if(dataMap.get(entry.getKey()) != null){
@@ -141,10 +141,11 @@ public class WordUtils {
 					//参数 (table元素，table数据，表名)
 					createTableCycleTwice(ele,tableList ,entry.getKey());
 				}
+				System.out.println("##################create " +totalMap.entrySet()+ " end###################");
 			}
-			System.out.println("##################table###################");
 			Map<String,Element> tableMap = getAllTableElement(doc,"table");
 			for(Map.Entry<String, Element> entry : tableMap.entrySet()){
+				System.out.println("##################create " +tableMap.entrySet()+ " start###################");
 				Element ele = entry.getValue();
 				ArrayList<HashMap<String,Object>> tableList = new ArrayList<HashMap<String,Object>>();
 				if(dataMap.get(entry.getKey()) != null){
@@ -154,18 +155,21 @@ public class WordUtils {
 				if("".equals(entry.getKey())){
 					
 				}
+				//循环表头在第一行
 				else if("table_03".equals(entry.getKey()) || 
 						"table_04".equals(entry.getKey()) ){
 					createTableCycleOnce(ele,tableList ,0,entry.getKey());
 				}
+				//循环表头在第二行
 				else{
 					createTableCycleOnce(ele,tableList ,1,entry.getKey());
-					
 				}
+				System.out.println("##################create " +tableMap.entrySet()+ " end###################");
 			}
 			//替换非table类型的w:p数据
-			System.out.println("##################field###################");
+			System.out.println("##################replace field start###################");
 			replaceFiled4Document(doc, dataMap);
+			System.out.println("##################replace field end###################");
 			//解析所有非列表的w:p内容
 			//Map<String,Element> fieldMarkEle = WordUtils.getFiledElementByPrex(doc, "w:p");
 			//根据field字段填入value
@@ -217,6 +221,7 @@ public class WordUtils {
 	/**
 	 * 
 	* @功能描述: 替换指定NodeList里面所有w：p元素里面包含${}的内容,如果是表格,这要修改${}里面的字段名称
+	* @功能描述: 如果tableName不为空,则要把${}里面的tableName标识替换掉
 	* @方法名称: replaceFiled4NodeList 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -238,17 +243,98 @@ public class WordUtils {
 				}
 				
 				//获取所有${}字段
-				ArrayList<String> pars = getParamByPattern(value);
+				ArrayList<String> pars = getParamFromDollar(value);
 				for(String parameter : pars){
 					//替换${}内的数据
 					setWpElementValueByParam(wpElement, parameter, dataMap, tableName);
 					if(dataMap.get(parameter) != null){
-						System.out.println("##field##" + value + "-->" + (String)dataMap.get(parameter));
+						System.out.println("##replace field##" + value + " --> " + (String)dataMap.get(parameter));
 					}
 				}
 			}
 		}
 	}
+	
+	/**
+	 * 
+	* @功能描述: 从w:p获取元素值  ${name}可能被拆分到不同的w:t中，所以w:p内所有w:t合并起来才是完整的表达式
+	* @方法名称: getWpElementValue 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月19日 下午4:38:13 
+	* @version V1.0   
+	* @param element
+	* @return 
+	* @return String
+	 */
+	public static String getWpElementValue(Element element){
+		String value = "";
+		//System.out.println(element.getTextContent());
+		NodeList wrNodeList = element.getElementsByTagName("w:r");
+		for(int i = 0; i < wrNodeList.getLength(); i ++){
+			Element ele = (Element) wrNodeList.item(i);
+			NodeList wtNodeList = ele.getElementsByTagName("w:t");
+			for(int j = 0; j < wtNodeList.getLength(); j ++){
+				value += wtNodeList.item(j).getTextContent();
+			}
+		}
+		return value;
+	}
+	
+	/**
+	 * 
+	* @功能描述: 获取${name}字符串里面的name  一个context里面可能有多个
+	* @方法名称: getParamFromDollar 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月19日 下午4:20:04 
+	* @version V1.0   
+	* @param context
+	* @return 
+	* @return ArrayList<String>
+	 */
+	public static ArrayList<String> getParamFromDollar(String context){
+		Pattern p = Pattern.compile("\\$\\{(.*?)\\}");
+		Matcher m = p.matcher(context);
+		ArrayList<String> result=new ArrayList<String>();
+		while(m.find()){
+			result.add(m.group(1));
+		}
+		return result;
+	}
+	
+	/**
+	 * 
+	* @功能描述: 清楚w:t内的所有数据,并往w:t中重新set值
+	* @方法名称: setWpElementValueByParam 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月19日 下午4:38:43 
+	* @version V1.0   
+	* @param element
+	* @param param
+	* @param map
+	* @param tableName 
+	* @return void
+	 */
+	public static void setWpElementValueByParam(Element element,String param,HashMap<String,Object> map, String tableName){
+		NodeList wtNodeList = element.getElementsByTagName("w:t");
+		String nodeValue = "";
+		//循环所有w:t标签，拼成一个字符串，因为${}等数据会被拆分成多个w:t，无法正常替换
+		for (int m = 0; m < wtNodeList.getLength(); m++) {
+			nodeValue += wtNodeList.item(m).getTextContent();
+		}
+		for (int m = 0; m < wtNodeList.getLength(); m++) {
+			wtNodeList.item(m).setTextContent("");
+		}
+		if(tableName != null && !"".equals(tableName)){
+			nodeValue = nodeValue.replace(tableName+"_", "");
+		}
+		nodeValue = nodeValue.replaceAll("\\$|\\{|\\}", "")
+				.replace(param, map.containsKey(param)&&map.get(param)!=null ? (String)map.get(param) : "");
+		wtNodeList.item(0).setTextContent(nodeValue);
+	}
+	
 	
 	/**
 	 * 
@@ -310,7 +396,7 @@ public class WordUtils {
 						int startIndex = value.indexOf("${");
 						int endIndex = value.indexOf("}");
 						String parameter = value.substring(startIndex+2, endIndex);
-						tableName = parameter.substring(parameter.indexOf(parfix),parameter.indexOf(parfix)+8);
+						tableName = parameter.substring(parameter.indexOf(parfix),parameter.indexOf(parfix)+(parfix.length()+3));//+3表示后面的 _01
 						System.out.println(tableName);
 						break OUT;
 					}
@@ -411,6 +497,7 @@ public class WordUtils {
 			Node elementTrClone1 = elementTrCloneTemp1.cloneNode(true);
 			
 			//替换第一层表头里面单个字段${}的数据
+			//目前第一层只有一个cell,可以当成普通文本替换,否则需要按照一个表格的方式替换
 			replaceFiled4Element((Element) elementTrClone1, totalData,tableKey);
 			
 			tblElement.appendChild(elementTrClone1);
@@ -425,85 +512,8 @@ public class WordUtils {
 		}
 	}
 	
-	/**
-	 * 
-	* @功能描述: 获取${name}字符串里面的name  一个context里面可能有多个
-	* @方法名称: getParamByPattern 
-	* @路径 com.daimeng.util 
-	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午4:20:04 
-	* @version V1.0   
-	* @param context
-	* @return 
-	* @return ArrayList<String>
-	 */
-	public static ArrayList<String> getParamByPattern(String context){
-		Pattern p = Pattern.compile("\\$\\{(.*?)\\}");
-		Matcher m = p.matcher(context);
-		ArrayList<String> result=new ArrayList<String>();
-		while(m.find()){
-			result.add(m.group(1));
-		}
-		return result;
-	}
 	
-	/**
-	 * 
-	* @功能描述: 从w:p获取元素值  ${name}可能被拆分到不同的w:t中，所以w:p内所有w:t合并起来才是完整的表达式
-	* @方法名称: getWpElementValue 
-	* @路径 com.daimeng.util 
-	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午4:38:13 
-	* @version V1.0   
-	* @param element
-	* @return 
-	* @return String
-	 */
-	public static String getWpElementValue(Element element){
-		String value = "";
-		//System.out.println(element.getTextContent());
-		NodeList wrNodeList = element.getElementsByTagName("w:r");
-		for(int i = 0; i < wrNodeList.getLength(); i ++){
-			Element ele = (Element) wrNodeList.item(i);
-			NodeList wtNodeList = ele.getElementsByTagName("w:t");
-			for(int j = 0; j < wtNodeList.getLength(); j ++){
-				value += wtNodeList.item(j).getTextContent();
-			}
-		}
-		return value;
-	}
 	
-	/**
-	 * 
-	* @功能描述: 往w:t中重新set值
-	* @方法名称: setWpElementValueByParam 
-	* @路径 com.daimeng.util 
-	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午4:38:43 
-	* @version V1.0   
-	* @param element
-	* @param param
-	* @param map
-	* @param tableName 
-	* @return void
-	 */
-	public static void setWpElementValueByParam(Element element,String param,HashMap<String,Object> map, String tableName){
-		NodeList wtNodeList = element.getElementsByTagName("w:t");
-		String nodeValue = "";
-		//循环所有w:t标签，拼成一个字符串，因为${}等数据会被拆分成多个w:t，无法正常替换
-		for (int m = 0; m < wtNodeList.getLength(); m++) {
-			nodeValue += wtNodeList.item(m).getTextContent();
-		}
-		for (int m = 0; m < wtNodeList.getLength(); m++) {
-			wtNodeList.item(m).setTextContent("");
-		}
-		if(tableName != null && !"".equals(tableName)){
-			nodeValue = nodeValue.replace(tableName+"_", "");
-		}
-		nodeValue = nodeValue.replaceAll("\\$|\\{|\\}", "")
-				.replace(param, map.containsKey(param)&&map.get(param)!=null ? (String)map.get(param) : "");
-		wtNodeList.item(0).setTextContent(nodeValue);
-	}
 	
 	/**
 	 * 
