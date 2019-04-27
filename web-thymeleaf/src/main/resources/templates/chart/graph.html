@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>关系图 - 梦神十夜的小站</title>
+</head>
+<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+<script type="text/javascript" src="/echarts/echarts.min.js" ></script>
+<script type="text/javascript" src="/echarts/js/echarts.js" ></script>
+<script type="text/javascript" src="/echarts/macarons.js" ></script>
+<body>
+<div id="wrap" class="container clearfix">
+	<div th:include="common/header::pagination"></div>
+	
+	<div class="header_wrap">
+		<div id="chart1" class="clearfix" style="width: 100%; height: 320px; margin-top:20px;"></div>
+	</div>
+	<div class="header_wrap">
+		<div id="chart2" class="clearfix" style="width: 100%; height: 320px; margin-top:20px;"></div>
+	</div>
+	<div class="header_wrap">
+		<div id="chart3" class="clearfix" style="width: 100%; height: 320px; margin-top:20px;"></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	chart1();
+	chart2();
+	chart3();
+});
+function chart1(){
+	var chart = echarts.init(document.getElementById('chart1'),'macarons'); 
+	option = {
+		    title: {
+		        text: 'Graph 简单示例'
+		    },
+		    tooltip: {},
+		    animationDurationUpdate: 1500,
+		    animationEasingUpdate: 'quinticInOut',
+		    series : [
+		        {
+		            type: 'graph',
+		            layout: 'none',
+		            symbolSize: 50,
+		            roam: true,
+		            label: {
+		                normal: {
+		                    show: true
+		                }
+		            },
+		            edgeSymbol: ['circle', 'arrow'],
+		            edgeSymbolSize: [4, 10],
+		            edgeLabel: {
+		                normal: {
+		                    textStyle: {
+		                        fontSize: 20
+		                    }
+		                }
+		            },
+		            data: [{
+		                name: '节点1',
+		                x: 300,
+		                y: 300
+		            }, {
+		                name: '节点2',
+		                x: 800,
+		                y: 300
+		            }, {
+		                name: '节点3',
+		                x: 550,
+		                y: 100
+		            }, {
+		                name: '节点4',
+		                x: 550,
+		                y: 500
+		            }],
+		            // links: [],
+		            links: [{
+		                source: 0,
+		                target: 1,
+		                symbolSize: [5, 20],
+		                label: {
+		                    normal: {
+		                        show: true
+		                    }
+		                },
+		                lineStyle: {
+		                    normal: {
+		                        width: 5,
+		                        curveness: 0.2
+		                    }
+		                }
+		            }, {
+		                source: '节点2',
+		                target: '节点1',
+		                label: {
+		                    normal: {
+		                        show: true
+		                    }
+		                },
+		                lineStyle: {
+		                    normal: { curveness: 0.2 }
+		                }
+		            }, {
+		                source: '节点1',
+		                target: '节点3'
+		            }, {
+		                source: '节点2',
+		                target: '节点3'
+		            }, {
+		                source: '节点2',
+		                target: '节点4'
+		            }, {
+		                source: '节点1',
+		                target: '节点4'
+		            }],
+		            lineStyle: {
+		                normal: {
+		                    opacity: 0.9,
+		                    width: 2,
+		                    curveness: 0
+		                }
+		            }
+		        }
+		    ]
+		};
+	chart.setOption(option); 
+}
+function chart2(){
+	var chart = echarts.init(document.getElementById('chart2'),'macarons'); 
+	function createNodes(count) {
+	    var nodes = [];
+	    for (var i = 0; i < count; i++) {
+	        nodes.push({
+	            id: i
+	        });
+	    }
+	    return nodes;
+	}
+
+	function createEdges(count) {
+	    var edges = [];
+	    if (count === 2) {
+	        return [[0, 1]];
+	    }
+	    for (var i = 0; i < count; i++) {
+	        edges.push([i, (i + 1) % count]);
+	    }
+	    return edges;
+	}
+
+	var datas = [];
+	for (var i = 0; i < 16; i++) {
+	    datas.push({
+	        nodes: createNodes(i + 2),
+	        edges: createEdges(i + 2)
+	    });
+	}
+
+	option = {
+	    series: datas.map(function (item, idx) {
+	        return {
+	            type: 'graph',
+	            layout: 'force',
+	            animation: false,
+	            data: item.nodes,
+	            left: (idx % 4) * 25 + '%',
+	            top: Math.floor(idx / 4) * 25 + '%',
+	            width: '25%',
+	            height: '25%',
+	            force: {
+	                // initLayout: 'circular'
+	                // gravity: 0
+	                repulsion: 60,
+	                edgeLength: 2
+	            },
+	            edges: item.edges.map(function (e) {
+	                return {
+	                    source: e[0],
+	                    target: e[1]
+	                };
+	            })
+	        };
+	    })
+	};
+
+	chart.setOption(option); 
+}
+function chart3(){
+	var chart = echarts.init(document.getElementById('chart3'),'macarons'); 
+	var axisData = ['周一','周二','周三','很长很长的周四','周五','周六','周日'];
+	var data = axisData.map(function (item, i) {
+	    return Math.round(Math.random() * 1000 * (i + 1));
+	});
+	var links = data.map(function (item, i) {
+	    return {
+	        source: i,
+	        target: i + 1
+	    };
+	});
+	links.pop();
+	option = {
+	    title: {
+	        text: '笛卡尔坐标系上的 Graph'
+	    },
+	    tooltip: {},
+	    xAxis: {
+	        type : 'category',
+	        boundaryGap : false,
+	        data : axisData
+	    },
+	    yAxis: {
+	        type : 'value'
+	    },
+	    series: [
+	        {
+	            type: 'graph',
+	            layout: 'none',
+	            coordinateSystem: 'cartesian2d',
+	            symbolSize: 40,
+	            label: {
+	                normal: {
+	                    show: true
+	                }
+	            },
+	            edgeSymbol: ['circle', 'arrow'],
+	            edgeSymbolSize: [4, 10],
+	            data: data,
+	            links: links,
+	            lineStyle: {
+	                normal: {
+	                    color: '#2f4554'
+	                }
+	            }
+	        }
+	    ]
+	};
+	chart.setOption(option); 
+}
+</script>
+</body>
+</html>
