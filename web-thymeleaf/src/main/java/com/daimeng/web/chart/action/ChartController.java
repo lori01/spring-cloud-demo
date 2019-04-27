@@ -14,7 +14,6 @@ import com.daimeng.web.common.BaseController;
 public class ChartController extends BaseController {
 	@RequestMapping("/index")
 	public String index(Model model) {
-		setCurrentUser(model);
 		return "chart/index";
 	}
 }

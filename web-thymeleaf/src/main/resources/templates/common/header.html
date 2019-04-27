@@ -44,13 +44,13 @@
 		<!-- END header -->
 		<div id="navigation" class="clearfix">
 			<nav class="nav">
-				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img class="title_img" th:src="${cuser.img}"/></a>
+				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img class="title_img" th:src="${session.user_session.img}"/></a>
 				<ul class="sf-menu">
-					<li id="showmenu_li"><a th:text="欢饮您-+${myname}" href="javascript:void(0)" th:onclick= "'javascript:showmenu()'"></a></li>
+					<li id="showmenu_li"><a th:text="欢饮您-+${session.user_session.realname}" href="javascript:void(0)" th:onclick= "'javascript:showmenu()'"></a></li>
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
-					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${cuser.id})}"></a></li>
-					<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${cuser.id})}"></a></li>
+					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
+					<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 					<li><a th:text="用户" th:href="@{/user/list/1}"></a></li>
 					<li><a th:text="注销" th:href="@{/logout}"></a></li>
 				</ul>
@@ -109,9 +109,9 @@
 			
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancle()'" value=""/>
-				<input type="button" class="btn_yes_public" th:onclick= "'javascript:add('+${cuser.id}+')'" value=""/> -->
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:add('+${session.user_session.id}+')'" value=""/> -->
 				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancle()'" />
-				<input type="button" class="btn_public btn_public_yes_text" th:onclick= "'javascript:add('+${cuser.id}+')'" />
+				<input type="button" class="btn_public btn_public_yes_text" th:onclick= "'javascript:add('+${session.user_session.id}+')'" />
 			</div>
 			
 		</div>
@@ -122,50 +122,50 @@
 		<!-- <h3 class="add_div_title">个人信息<span class="add_div_title_cnl">X</span></h3> -->
 		<div id="me_div_box" class="add_box">
 			<div>
-				<img th:src="${cuser.img}" class="thumb" style="width: 220px;float:left;border-radius: 110px;"/>
+				<img th:src="${session.user_session.img}" class="thumb" style="width: 220px;float:left;border-radius: 110px;"/>
 				<table class="formtable_noborder" style="width:50%;">
 					<thead>
 					</thead>
 					<tbody>
 						<tr>
 							<th width="30%"><span th:text="用户ID"></span></th>
-							<td width="70%"><span th:text="${cuser.id}"></span></td>
+							<td width="70%"><span th:text="${session.user_session.id}"></span></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="登录号"></span></th>
-							<td width="70%"><span th:text="${cuser.loginName}"></span></td>
+							<td width="70%"><span th:text="${session.user_session.loginName}"></span></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="salt"></span></th>
-							<td width="70%"><span th:text="${cuser.salt}"></span></td>
+							<td width="70%"><span th:text="${session.user_session.salt}"></span></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="角色"></span></th>
-							<td width="70%"><span th:text="${cuser.role.description}"></span></td>
+							<td width="70%"><span th:text="${session.user_session.role.description}"></span></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="用户名称"></span></th>
-							<td width="70%"><input class="inputclass" style="width:280px;" type="text" name="realname" id="realname_s" th:value="${cuser.realname}" maxlength="10" placeholder="最多可输入10个字"/></td>
+							<td width="70%"><input class="inputclass" style="width:280px;" type="text" name="realname" id="realname_s" th:value="${session.user_session.realname}" maxlength="10" placeholder="最多可输入10个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="性别"></span></th>
 							<td width="70%">
-								<input class="" type="radio" name="sexCd_s" value="0" id="sexCd_s" th:text="女" th:checked="${cuser.sexCd == '0'}?checked"/>
-								<input class="" type="radio" name="sexCd_s" value="1" id="sexCd_s" th:text="男" th:checked="${cuser.sexCd == '1'}?checked"/>
+								<input class="" type="radio" name="sexCd_s" value="0" id="sexCd_s" th:text="女" th:checked="${session.user_session.sexCd == '0'}?checked"/>
+								<input class="" type="radio" name="sexCd_s" value="1" id="sexCd_s" th:text="男" th:checked="${session.user_session.sexCd == '1'}?checked"/>
 							</td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="e-mail"></span></th>
-							<td width="70%"><input class="inputclass" style="width:280px;" type="text" name="email" id="email_s" th:value="${cuser.email}" maxlength="50" placeholder="最多可输入50个字"/></td>
+							<td width="70%"><input class="inputclass" style="width:280px;" type="text" name="email" id="email_s" th:value="${session.user_session.email}" maxlength="50" placeholder="最多可输入50个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="联系方式"></span></th>
-							<td width="70%"><input class="inputclass" style="width:280px;" type="text" name="phone" id="phone_s" th:value="${cuser.phone}" maxlength="20" placeholder="最多可输入20个字"/></td>
+							<td width="70%"><input class="inputclass" style="width:280px;" type="text" name="phone" id="phone_s" th:value="${session.user_session.phone}" maxlength="20" placeholder="最多可输入20个字"/></td>
 						</tr>
 						<tr>
 							<th width="30%"><span th:text="头像"></span></th>
 							<td width="70%">
-								<textarea name="img" id="img_s" style="width:280px;height: 50px;" th:text="${cuser.img}" maxlength="300" placeholder="最多可输入300个字"></textarea>
+								<textarea name="img" id="img_s" style="width:280px;height: 50px;" th:text="${session.user_session.img}" maxlength="300" placeholder="最多可输入300个字"></textarea>
 							</td>
 						</tr>
 					</tbody>
@@ -173,9 +173,9 @@
 			</div>
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancleme()'" value=""/>
-				<input type="button" class="btn_yes_public" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" value=""/> -->
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:saveuser('+${session.user_session.id}+')'" value=""/> -->
 				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancleme()'" />
-				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:saveuser('+${cuser.id}+')'" />
+				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:saveuser('+${session.user_session.id}+')'" />
 			</div>
 			
 		</div>
@@ -207,9 +207,9 @@
 			</div>
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:canclePwd()'" value=""/>
-				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updPwd('+${cuser.id}+')'" value=""/> -->
+				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updPwd('+${session.user_session.id}+')'" value=""/> -->
 				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:canclePwd()'"/>
-				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:updPwd('+${cuser.id}+')'"/>
+				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:updPwd('+${session.user_session.id}+')'"/>
 			</div>
 			
 		</div>

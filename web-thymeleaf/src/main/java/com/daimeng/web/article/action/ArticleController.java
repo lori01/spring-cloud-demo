@@ -42,7 +42,6 @@ public class ArticleController extends BaseController {
 		Page<ArticleInfo> list = articleService.findAll(page);
 		
 		setPageToModel(model, list, page);
-		setCurrentUser(model);
 		
 		return "article/list";
 	}
@@ -62,7 +61,6 @@ public class ArticleController extends BaseController {
 		Page<CommentInfo> list = commentService.findAllByArticleIdOrderByLayerDesc(id, page);
 		
 		setPageToModel(model, list, page);
-		setCurrentUser(model);
 		
 		model.addAttribute("qid",id);
 		return "article/detail";
@@ -74,7 +72,6 @@ public class ArticleController extends BaseController {
 		Page<ArticleInfo> list = articleService.findByCreateUid(uid,page);
 		
 		setPageToModel(model, list, page);
-		setCurrentUser(model);
 		
 		model.addAttribute("qid",uid);
 		SysUser quser = userService.findSysUser(uid);

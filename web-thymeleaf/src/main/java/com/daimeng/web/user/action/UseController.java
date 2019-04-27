@@ -36,7 +36,6 @@ public class UseController extends BaseController {
 		model.addAttribute("list",users);
 		
 		setPageToModel(model, users, page);
-		setCurrentUser(model);
 		
 		return "user/list";
 	}
@@ -49,7 +48,6 @@ public class UseController extends BaseController {
 		Page<SysUserLog> logs = userService.getUserLogPage(info, page);
 		
 		setPageToModel(model, logs, page);
-		setCurrentUser(model);
 		
 		return "user/log";
 	}

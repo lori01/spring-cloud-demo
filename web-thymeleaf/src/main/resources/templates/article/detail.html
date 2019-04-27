@@ -19,7 +19,7 @@
 					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span> | 
 					作者: <span th:text="${info.createUser.realname}"></span>投稿 | 
 					文章编号: <span th:text="${info.id}"></span> | 
-					<a class="post-title" th:style="${info.createUid != cuser.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:editArticle('+${info.id}+')'" th:text="修改"></a>
+					<a class="post-title" th:style="${info.createUid != session.user_session.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:editArticle('+${info.id}+')'" th:text="修改"></a>
 					<a class="post-title" th:href="@{/article/list/1}" rel="bookmark" >返回</a>
 				</div>
 			
@@ -56,8 +56,8 @@
 					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span> | 
 					评论者: <span th:text="${info.createUser.realname}"></span>评论 | 
 					评论编号: <span th:text="${info.id}"></span> | 
-					<a class="post-title" th:style="${info.createUid != cuser.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:editComment('+${info.id}+')'" th:text="修改"></a>
-					<a class="post-title" th:style="${info.createUid != cuser.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:delComment('+${info.id}+')'" th:text="删除"></a>
+					<a class="post-title" th:style="${info.createUid != session.user_session.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:editComment('+${info.id}+')'" th:text="修改"></a>
+					<a class="post-title" th:style="${info.createUid != session.user_session.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:delComment('+${info.id}+')'" th:text="删除"></a>
 					
 				</div>
 				

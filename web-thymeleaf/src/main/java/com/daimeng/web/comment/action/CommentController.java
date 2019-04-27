@@ -37,7 +37,6 @@ public class CommentController extends BaseController {
 		page = getPageNum(page);
 		Page<CommentInfo> list = commentService.findAllByOrderByIdDesc(page);
 		setPageToModel(model, list, page);
-		setCurrentUser(model);
 		return "comment/list";
 	}
 	
@@ -47,7 +46,6 @@ public class CommentController extends BaseController {
 		Page<CommentInfo> list = commentService.findByCreateUid(uid,page);
 		
 		setPageToModel(model, list, page);
-		setCurrentUser(model);
 		SysUser quser = userService.findSysUser(uid);
 		model.addAttribute("quser",quser);
 		
