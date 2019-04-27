@@ -2,28 +2,35 @@
 <div th:fragment="common-pagination">
 	<div class="page_div">
 		<!-- 循环分页start -->
-		<span class="page_span" th:style="${cpage<=4}? 'display:none':''" >
+		<!-- 当前页码的前面第三页不是第一页，则增加显示第一页 -->
+		<span class="page_span" th:style="${cpage-3<=1}? 'display:none':''" >
 			<a class="btn_public" th:href="@{{page}(page=1)}" th:text="1" />
 		</span>
+		<!-- 当前页码不是第一页，则增加显示第一页 -->
 		<!-- <span class="page_span" th:style="${cpage==1}? 'display:none':''" >
 			<a class="btn_public btn_public_page_s_text" th:href="@{{page}(page=1)}" ></a>
 		</span> -->
-		<span class="page_span" th:style="${cpage<=5}? 'display:none':''" >
+		<!-- 当前页码的前面第四页不是第一页，则显示。。。 -->
+		<span class="page_span" th:style="${cpage-4<=1}? 'display:none':''" >
 			<a class="btn_public" th:href="@{{page}(page=${cpage-4})}" th:text="···" />
 		</span>
+		<!-- 当前页的前3和后3 -->
 		<span th:each="i : ${#numbers.sequence(cpage-3,cpage+3)}" class="page_span" 
 			th:style="${pages < i || i < 1}? 'display:none':''" >
 			<a th:class="${cpage == i}? 'btn_public_cur':'btn_public'"
 			th:href="@{{page}(page=${i})}" 
 			th:text="${i}" />
 		</span>
-		<span class="page_span" th:style="${cpage+5>pages}? 'display:none':''" >
+		<!-- 当前页码的后面第四页不是最后一页，则显示。。。 -->
+		<span class="page_span" th:style="${cpage+4>=pages}? 'display:none':''" >
 			<a class="btn_public" th:href="@{{page}(page=${cpage+4})}" th:text="···" />
 		</span>
+		<!-- 当前页码不是最后一页，则增加显示最后一页-->
 		<!-- <span class="page_span" class="page_span" th:style="${cpage==pages}? 'display:none':''" >
 			<a class="btn_public btn_public_page_e_text" th:href="@{{page}(page=${pages})}" ></a>
 		</span> -->
-		<span class="page_span" th:style="${cpage+4>pages}? 'display:none':''" >
+		<!-- 当前页码的后面第三页不是最后一页，则增加显示最后一页 -->
+		<span class="page_span" th:style="${cpage+3>=pages}? 'display:none':''" >
 			<a class="btn_public" th:href="@{{page}(page=${pages})}" th:text="${pages}" />
 		</span>
 		<!-- 循环分页end -->
