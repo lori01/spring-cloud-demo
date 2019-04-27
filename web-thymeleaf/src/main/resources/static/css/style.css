@@ -830,10 +830,11 @@ ul.sf-menu li li li:hover ul, ul.sf-menu li li li.sfHover ul {
 	left: 10em;
 	top: 0
 }
-
+/* daimeng top 菜单 */
 .sf-menu {
 	float: left;
-	margin-bottom: 1em
+	margin-bottom: 1em;
+	margin-top: 30px;
 }
 
 .sf-menu a {
@@ -2127,9 +2128,10 @@ ul.children {
 	float: left
 }
 
+/* daimeng top 菜单 */
 #navigation {
 	float: right;
-	margin-top: 30px
+	/* margin-top: 30px */
 }
 
 .readmore {

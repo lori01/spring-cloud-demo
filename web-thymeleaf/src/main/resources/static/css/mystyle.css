@@ -20,6 +20,17 @@
 	
 }
 
+.title_img {
+	width: 60px;
+	border-radius: 80px;
+	padding : 3px;
+	float: right;
+    margin-top: 15px;
+    margin-left: 10px;
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
 /* daimeng */
 .t_h {
 	color: #C0C0C0;

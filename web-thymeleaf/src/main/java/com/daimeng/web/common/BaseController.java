@@ -32,4 +32,31 @@ public class BaseController {
 		}else page = 0;
 		return page;
 	}
+	
+	public ResponseVo createSuccess(String desc){
+		ResponseVo vo = new ResponseVo();
+		vo.setStatus(100);
+		vo.setDesc(desc);
+		return vo;
+	}
+	public ResponseVo createSuccess(String desc,Object obj){
+		ResponseVo vo = new ResponseVo();
+		vo.setStatus(100);
+		vo.setDesc(desc);
+		vo.setObj(obj);
+		return vo;
+	}
+	public ResponseVo createError(String desc){
+		ResponseVo vo = new ResponseVo();
+		vo.setStatus(200);
+		vo.setDesc(desc);
+		return vo;
+	}
+	public ResponseVo createError(String desc,Object obj){
+		ResponseVo vo = new ResponseVo();
+		vo.setStatus(200);
+		vo.setDesc(desc);
+		vo.setObj(obj);
+		return vo;
+	}
 }

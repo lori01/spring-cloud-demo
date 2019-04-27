@@ -44,7 +44,7 @@
 		<!-- END header -->
 		<div id="navigation" class="clearfix">
 			<nav class="nav">
-				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img th:src="${cuser.img}" style="width: 60px;border-radius: 80px;"/></a>
+				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img class="title_img" th:src="${cuser.img}"/></a>
 				<ul class="sf-menu">
 					<li id="showmenu_li"><a th:text="欢饮您-+${myname}" href="javascript:void(0)" th:onclick= "'javascript:showmenu()'"></a></li>
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
