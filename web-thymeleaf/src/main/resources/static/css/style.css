@@ -205,8 +205,9 @@ input,textarea,select,.inputclass {
 	visibility: inherit
 }
 
+/* daimeng float left 一行显示 去掉这垂直显示 */
 .sf-menu-2 li {
-	float: left;
+	/* float: left; */
 	position: relative;
 	width : 100%;
 }

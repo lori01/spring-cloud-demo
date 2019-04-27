@@ -67,20 +67,20 @@ function hideAll() {
 }
 /* 菜单 */
 function showmenu() {
-	hideAll();
-	var litop = $('#showmenu_li').offset().top;
-	var lileft = $('#showmenu_li').offset().left;
-	var liright = $('#showmenu_li').offset().right;
-	var width = $('#showmenu_li').width();
-	//$("#menu_me").css("left", lileft+width);
-	//$("#menu_me").css("top", litop);
-	//$("#menu_me").css("width", "100%");
-	$("#menu_me").fadeIn();
-	//$("#menu_me").delay(500).slideDown();
-}
+	/*hideAll();
+	var litop = $('#show_user_menu_drop').offset().top;
+	var lileft = $('#show_user_menu_drop').offset().left;
+	var liright = $('#show_user_menu_drop').offset().right;
+	var width = $('#show_user_menu_drop').width();
+	//$("#user_menu_drop").css("left", lileft+width);
+	//$("#user_menu_drop").css("top", litop);
+	//$("#user_menu_drop").css("width", "100%");
+	$("#user_menu_drop").fadeIn();
+	//$("#user_menu_drop").delay(500).slideDown();
+*/}
 function hidemenu() {
-	$("#menu_me").fadeOut();
-	//$("#menu_me").slideUp();
+	$(".menu_drop").fadeOut();
+	//$("#user_menu_drop").slideUp();
 }
 
 

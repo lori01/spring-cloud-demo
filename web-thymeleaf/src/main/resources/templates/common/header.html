@@ -46,12 +46,13 @@
 			<nav class="nav">
 				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img class="title_img" th:src="${session.user_session.img}"/></a>
 				<ul class="sf-menu">
-					<li id="showmenu_li"><a th:text="欢饮您-+${session.user_session.realname}" href="javascript:void(0)" th:onclick= "'javascript:showmenu()'"></a></li>
+					<li class="show_menu" childid="user_menu_drop" id="show_user_menu_drop"><a th:text="欢饮您-+${session.user_session.realname}" href="javascript:void(0)"></a></li>
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
 					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 					<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 					<li><a th:text="用户" th:href="@{/user/list/1}"></a></li>
+					<li class="show_menu" childid="chart_menu_drop" id="show_chart_menu_drop"><a th:text="表格" href="javascript:void(0)"></a></li>
 					<li><a th:text="注销" th:href="@{/logout}"></a></li>
 				</ul>
 			</nav>
@@ -60,13 +61,23 @@
 		<!-- END navigation -->
 	</div>
 	
-	<div id="menu_me" class="clearfix-menu">
+	<div id="user_menu_drop" class="clearfix-menu menu_drop">
 		<nav class="nav">
-			<ul class="sf-menu-2" id="menu_ul">
+			<ul class="sf-menu-2">
 				<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
 				<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
 				<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
 				<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
+			</ul>
+		</nav>	
+	</div>
+	<div id="chart_menu_drop" class="clearfix-menu menu_drop" >
+		<nav class="nav">
+			<ul class="sf-menu-2">
+				<li><a th:text="测试表格0" th:href="@{/chart/index}"></a></li>
+				<li><a th:text="测试表格1" th:href="@{/chart/index}"></a></li>
+				<li><a th:text="测试表格2" th:href="@{/chart/index}"></a></li>
+				<li><a th:text="测试表格3" th:href="@{/chart/index}"></a></li>
 			</ul>
 		</nav>	
 	</div>
@@ -399,16 +410,34 @@
 			
 			//position是设置元素相对于父元素的偏移，而offset方法是设置元素相对于整个浏览器的位置偏移
 			//position相对left
-			//当menu_me和showmenu_li同处于一个div下时
-			//$("#menu_me").css("left",$("#showmenu_li").position().left);
+			//当user_menu_drop和show_user_menu_drop同处于一个div下时
+			//$("#user_menu_drop").css("left",$("#show_user_menu_drop").position().left);
 			//offset绝对left
-			//当menu_me和showmenu_li不在一个div下时
-			$("#menu_me").css("left",$("#showmenu_li").offset().left);
-			$("#menu_me").css("width",$("#showmenu_li").css('width'));
-			$("#showmenu_li").mouseover(function(e){
-				var flag = $("#menu_me").is(":hidden");
+			//当user_menu_drop和show_user_menu_drop不在一个div下时
+			
+			$(".show_menu").mouseover(function(e){
+				var thisId = $(this).attr('id');
+				var childid = $(this).attr('childid');
+				var flag = $("#"+childid).is(":hidden");
 				if(flag){  
-					showmenu(); 
+					var parentLeft = $("#"+thisId).offset().left;
+					var parentWidth = $("#"+thisId).css('width')
+					var childWidth = $("#"+childid).css("width");
+					//计算parent的中间点，把child放在parent的中间下面
+					var childLeft = parseFloat(parentLeft) + parseFloat(parentWidth)/2 - parseFloat(childWidth)/2;
+					$("#"+childid).css("left",childLeft);
+					if(parseFloat(childWidth) < parseFloat(parentWidth)){
+						//$("#"+childid).css("width",parentWidth);
+					}
+					$("#"+childid).fadeIn();
+					$(".menu_drop").each(function(ii,vv){
+					    //ii 指第几个元素的序列号。
+					    //vv 指遍历得到的元素。
+						var id = $(this).attr('id');
+					    if(id != childid){
+					    	$("#"+id).fadeOut();
+					    }
+					});
 	            }else{  
 	                
 	            }  
@@ -417,16 +446,17 @@
 			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
 				
 			});
-			$("#menu_me").mouseover(function(e){
+			$(".menu_drop").mouseover(function(e){
 				
 			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
 				
 			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
-				var flag = $("#menu_me").is(":hidden");
+				var thisId = $(this).attr('id');
+				var flag = $("#"+thisId).is(":hidden");
 				if(flag){  
 					
 	            }else{  
-	            	hidemenu();
+	            	$("#"+thisId).fadeOut();
 	            }  
 			});
 			
@@ -435,7 +465,7 @@
 				hideAll();
 			}); */
 			
-			var $el = $("#showmenu_li,#menu_me");
+			//var $el = $("#show_user_menu_drop,#user_menu_drop");
 			/* $el.click(function(e) {
 				e.stopPropagation();
 				//$(this).toggleClass('active');
