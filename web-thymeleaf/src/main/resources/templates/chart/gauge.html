@@ -30,8 +30,8 @@ $(document).ready(function() {
 });
 
 function chart1(){
-	var chart = echarts.init(document.getElementById('chart1'),'macarons'); 
-	option = {
+	var chart1 = echarts.init(document.getElementById('chart1'),'macarons'); 
+	var option1 = {
 		    tooltip : {
 		        formatter: "{a} <br/>{c} {b}"
 		    },
@@ -248,17 +248,17 @@ function chart1(){
 		};
 
 		setInterval(function (){
-		    option.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
-		    option.series[1].data[0].value = (Math.random()*7).toFixed(2) - 0;
-		    option.series[2].data[0].value = (Math.random()*2).toFixed(2) - 0;
-		    option.series[3].data[0].value = (Math.random()*2).toFixed(2) - 0;
-		    myChart.setOption(option,true);
+		    option1.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
+		    option1.series[1].data[0].value = (Math.random()*7).toFixed(2) - 0;
+		    option1.series[2].data[0].value = (Math.random()*2).toFixed(2) - 0;
+		    option1.series[3].data[0].value = (Math.random()*2).toFixed(2) - 0;
+		    chart1.setOption(option1,true);
 		},2000);
-	chart.setOption(option); 
+	chart1.setOption(option1); 
 }
 function chart2(){
-	var chart = echarts.init(document.getElementById('chart2'),'macarons'); 
-	option = {
+	var chart2 = echarts.init(document.getElementById('chart2'),'macarons'); 
+	var option2 = {
 		    tooltip : {
 		        formatter: "{a} <br/>{b} : {c}%"
 		    },
@@ -279,15 +279,15 @@ function chart2(){
 		};
 
 		setInterval(function () {
-		    option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-		    myChart.setOption(option, true);
+		    option2.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+		    chart2.setOption(option2, true);
 		},2000);
 
-	chart.setOption(option); 
+	chart2.setOption(option2); 
 }
 function chart3(){
-	var chart = echarts.init(document.getElementById('chart3'),'macarons'); 
-	option = {
+	var chart3 = echarts.init(document.getElementById('chart3'),'macarons'); 
+	var option3 = {
 		    backgroundColor: '#1b1b1b',
 		    tooltip : {
 		        formatter: "{a} <br/>{c} {b}"
@@ -567,14 +567,14 @@ function chart3(){
 		};
 
 		setInterval(function (){
-		    option.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
-		    option.series[1].data[0].value = (Math.random()*7).toFixed(2) - 0;
-		    option.series[2].data[0].value = (Math.random()*2).toFixed(2) - 0;
-		    option.series[3].data[0].value = (Math.random()*2).toFixed(2) - 0;
-		    myChart.setOption(option);
+		    option3.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
+		    option3.series[1].data[0].value = (Math.random()*7).toFixed(2) - 0;
+		    option3.series[2].data[0].value = (Math.random()*2).toFixed(2) - 0;
+		    option3.series[3].data[0].value = (Math.random()*2).toFixed(2) - 0;
+		    chart3.setOption(option3);
 		},2000)
 
-	chart.setOption(option); 
+	chart3.setOption(option3); 
 }
 </script>
 </body>
