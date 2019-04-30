@@ -27,17 +27,7 @@ public class ExcelUtils {
 	
 	
 	public static void main(String[] args) {
-		/*getNumberFromString("F3");
-		getNumberFromString("F30");
-		getNumberFromString("F300");
-		getNumberFromString("FF3");
-		getNumberFromString("FF30");
-		getNumberFromString("FF300");
-		getNumberFromString("FFF3");
-		getNumberFromString("FFF30");
-		getNumberFromString("FFF300");*/
-		
-		String src = "D:/java_test/excel/Excel_Remove_Mod.xls";
+		String src = "D:/java_test/excel/Excel_Remove_Mod_less.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		System.out.println(date);
@@ -95,18 +85,7 @@ public class ExcelUtils {
 		}
 	}
 	
-	/**
-	 * 
-	* @方法名称: delRowAndColumn 
-	* @路径 com.daimeng.util 
-	* @功能描述: 执行删除excel的行和列
-	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午3:27:41 
-	* @version V1.0   
-	* @param src
-	* @param targ 
-	* void
-	 */
+	
 	private static void delRowAndColumn(String src, String targ){
 		try {
 			long start = System.currentTimeMillis();
@@ -140,8 +119,8 @@ public class ExcelUtils {
             System.out.println("===hide column end!===");*/
             
             System.out.println("===hide row start!===");
-            sheet = hideRow(sheet, 60, 145,false);
-            sheet = hideRow(sheet, 20, 45,false);
+            //sheet = hideRow(sheet, 27, 33,false);
+            //sheet = hideRow(sheet, 6, 10,false);
             System.out.println("===hide row end!===");
             
             /*System.out.println("===hide column start!===");
@@ -150,8 +129,8 @@ public class ExcelUtils {
             sheet = hideColumn(sheet, 12, 26, true);
             System.out.println("===hide column end!===");*/
             System.out.println("===delete column start!===");
-            sheet = delColumn(sheet, 31, 141);
-            sheet = delColumn(sheet, 13, 26);
+            sheet = delColumn(sheet, 57, 141);//27-141
+            sheet = delColumn(sheet, 16, 26);//6-26
             System.out.println("===delete column end!===");
             
             //执行计算公式
@@ -159,15 +138,8 @@ public class ExcelUtils {
             //循环所有,执行计算公式
             evaluate(workbook, 0, "");
             
-            /*HSSFRow r = sheet.getRow(2);
-            HSSFCell c = r.getCell(3);
-            System.out.println(c.getCellType());
-            System.out.println(c.getCellTypeEnum());
-            System.out.println(c.getCellFormula());
-            System.out.println(c.getNumericCellValue());*/
-            
-            reWriteFormula(sheet, 31, 141);
-            reWriteFormula(sheet, 13, 26);
+            reWriteFormula(sheet, 57, 141);//27-141
+            reWriteFormula(sheet, 16, 26);//6-26
             
             
             FileOutputStream os = new FileOutputStream(targ);
@@ -183,9 +155,11 @@ public class ExcelUtils {
 		}
 	}
 	
+	
+	
 	/**
 	 * 
-	* @功能描述: 当删除列是，公式需要修改
+	* @功能描述: 当删除列时，公式需要修改
 	* @方法名称: reWriteFormula 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -196,7 +170,7 @@ public class ExcelUtils {
 	* @param delColumnEndIndex 
 	* @return void
 	 */
-	public static void reWriteFormula(HSSFSheet sheet,int delColumnStartIndex,int delColumnEndIndex){
+	public static void reWriteFormula(HSSFSheet sheet,int delStartIndex,int delEndIndex){
 		for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
         	HSSFRow row = sheet.getRow(rowid);
         	if(row != null){
@@ -213,37 +187,40 @@ public class ExcelUtils {
                             	System.out.println("+++create new formal start+++");
                             	if(formula.indexOf("SUM") > -1){
                             		String letters = formula.substring(formula.indexOf("SUM(")+4, formula.indexOf(")"));
-                                	String startLetter = letters.split(":")[0];
-                                	String endLetter = letters.split(":")[1];
+                                	String oriStartLetter = letters.split(":")[0];
+                                	String oriEndLetter = letters.split(":")[1];
                                 	//获取字母中的行数字
-                                	String currRowNum = getNumberFromString(startLetter);
-                                	int startIndex = letterToNumber(startLetter.replace(currRowNum, ""));
-                                	int endIndex = letterToNumber(endLetter.replace(currRowNum, ""));
-                                	System.out.println("原始公式内容=SUM("+startIndex+","+endIndex+"),行数为="+currRowNum);
-                                	String newFormal = "";
-                                	//删除段为自身的后半段
-                                	if(startIndex <= delColumnStartIndex && endIndex >= delColumnEndIndex){
-                                		newFormal += "SUM(";
-                                		newFormal += startLetter;
-                                		newFormal += ":";
-                                		newFormal += numberToLetter(delColumnStartIndex-1) + currRowNum;
-                                		newFormal += ")";
+                                	String currRowNum = getNumberFromString(oriStartLetter);
+                                	int oriStartIndex = letterToNumber(oriStartLetter.replace(currRowNum, ""));
+                                	int oriEndIndex = letterToNumber(oriEndLetter.replace(currRowNum, ""));
+                                	System.out.println("原始公式内容=SUM("+oriStartIndex+","+oriEndIndex+"),行数为="+currRowNum);
+                                	
+                                	String newStartLetter = "";
+                                	String newEndLetter = "";
+                                	//删除段在公式的前面，公式前移
+                                	if(oriStartIndex > delEndIndex){
+                                		newStartLetter = numberToLetter(oriStartIndex-(delEndIndex-delStartIndex+1)) + currRowNum;
                                 	}
-                                	//删除段在自身的外面，并且在前面,这公式往前移
-                                	else if(startIndex > delColumnEndIndex){
-                                		newFormal += "SUM(";
-                                		newFormal += numberToLetter(startIndex-(delColumnEndIndex-delColumnStartIndex+1)) + currRowNum;
-                                		newFormal += ":";
-                                		newFormal += numberToLetter(endIndex-(delColumnEndIndex-delColumnStartIndex+1)) + currRowNum;
-                                		newFormal += ")";
+                                	//删除段包含公式的前部分
+                                	else if(oriStartIndex >= delStartIndex && oriStartIndex <= delEndIndex){
+                                		newStartLetter = numberToLetter(delStartIndex) + currRowNum;
                                 	}
-                                	//删除段在自身的外面，并且在后面,这公式不变
-                                	else if(endIndex < delColumnStartIndex){
-                                		newFormal = formula;
+                                	//删除段在公式开始的后面
+                                	else{
+                                		newStartLetter = oriStartLetter;
                                 	}
-                                	else {
-                                		newFormal = formula;
+                                	
+                                	if(oriEndIndex > delEndIndex){
+                                		newEndLetter = numberToLetter(oriEndIndex-(delEndIndex-delStartIndex+1)) + currRowNum;
                                 	}
+                                	else if(oriEndIndex >= delStartIndex && oriEndIndex <= delEndIndex){
+                                		newEndLetter = numberToLetter(delStartIndex-1) + currRowNum;
+                                	}
+                                	else{
+                                		newEndLetter = oriEndLetter;
+                                	}
+                                	
+                                	String newFormal = "SUM(" + newStartLetter + ":" + newEndLetter + ")";
                                 	
                                 	cell.setCellFormula(newFormal);
                                 	System.out.println("新公式="+newFormal);
@@ -282,7 +259,6 @@ public class ExcelUtils {
 		}
 		
 		sheet = removeRowData(sheet, start, end);
-        //sheet.shiftRows(31, rowCount, -1);
         //删除1-5行,则是把6以下的行数往上移动5格,这样可以达到删除空行的效果  1-5-1
         if(end != rowCount){
         	sheet.shiftRows(end, rowCount, start-end-1);
