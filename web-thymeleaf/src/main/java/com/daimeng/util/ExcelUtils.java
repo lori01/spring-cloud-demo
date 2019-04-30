@@ -133,7 +133,7 @@ public class ExcelUtils {
             sheet = delColumn(sheet, 16, 26);//6-26
             System.out.println("===delete column end!===");
             
-            //执行计算公式
+            //执行计算公式 
             //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
             //循环所有,执行计算公式
             evaluate(workbook, 0, "");
@@ -159,7 +159,7 @@ public class ExcelUtils {
 	
 	/**
 	 * 
-	* @功能描述: 当删除列时，公式需要修改
+	* @功能描述: 当删除列时，公式需要修改，目前只有SUM，并且公式中只有SUM，后续可继续完善
 	* @方法名称: reWriteFormula 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
