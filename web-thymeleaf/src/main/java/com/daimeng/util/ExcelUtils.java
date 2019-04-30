@@ -4,9 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -24,7 +25,18 @@ import org.apache.poi.ss.usermodel.FormulaEvaluator;
  */
 public class ExcelUtils {
 	
+	
 	public static void main(String[] args) {
+		/*getNumberFromString("F3");
+		getNumberFromString("F30");
+		getNumberFromString("F300");
+		getNumberFromString("FF3");
+		getNumberFromString("FF30");
+		getNumberFromString("FF300");
+		getNumberFromString("FFF3");
+		getNumberFromString("FFF30");
+		getNumberFromString("FFF300");*/
+		
 		String src = "D:/java_test/excel/Excel_Remove_Mod.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
@@ -127,21 +139,36 @@ public class ExcelUtils {
             sheet = hideColumn(sheet, 12, 26, true);
             System.out.println("===hide column end!===");*/
             
-            System.out.println("===delete row start!===");
-            sheet = delRow(sheet, 60, 145);
-            sheet = delRow(sheet, 20, 45);
-            System.out.println("===delete row end!===");
+            System.out.println("===hide row start!===");
+            sheet = hideRow(sheet, 60, 145,false);
+            sheet = hideRow(sheet, 20, 45,false);
+            System.out.println("===hide row end!===");
             
-            System.out.println("===hide column start!===");
+            /*System.out.println("===hide column start!===");
             sheet = hideColumn(sheet, 35, 130, true);
             sheet = hideColumn(sheet, 30, 34, false);
             sheet = hideColumn(sheet, 12, 26, true);
-            System.out.println("===hide column end!===");
+            System.out.println("===hide column end!===");*/
+            System.out.println("===delete column start!===");
+            sheet = delColumn(sheet, 31, 141);
+            sheet = delColumn(sheet, 13, 26);
+            System.out.println("===delete column end!===");
             
             //执行计算公式
             //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
             //循环所有,执行计算公式
             evaluate(workbook, 0, "");
+            
+            /*HSSFRow r = sheet.getRow(2);
+            HSSFCell c = r.getCell(3);
+            System.out.println(c.getCellType());
+            System.out.println(c.getCellTypeEnum());
+            System.out.println(c.getCellFormula());
+            System.out.println(c.getNumericCellValue());*/
+            
+            reWriteFormula(sheet, 31, 141);
+            reWriteFormula(sheet, 13, 26);
+            
             
             FileOutputStream os = new FileOutputStream(targ);
             workbook.write(os);
@@ -154,6 +181,81 @@ public class ExcelUtils {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	/**
+	 * 
+	* @功能描述: 当删除列是，公式需要修改
+	* @方法名称: reWriteFormula 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月30日 下午12:03:48 
+	* @version V1.0   
+	* @param sheet
+	* @param delColumnStartIndex
+	* @param delColumnEndIndex 
+	* @return void
+	 */
+	public static void reWriteFormula(HSSFSheet sheet,int delColumnStartIndex,int delColumnEndIndex){
+		for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
+        	HSSFRow row = sheet.getRow(rowid);
+        	if(row != null){
+        		for(int cid = 0; cid < row.getPhysicalNumberOfCells(); cid++) {
+                	HSSFCell cell = row.getCell(cid);
+                	if(cell != null){
+                		if(cell.getCellTypeEnum() == CellType.FORMULA) {
+                			//原始公式
+                			String formula = cell.getCellFormula();
+                            System.out.println(formula);
+                            System.out.println(cell.getNumericCellValue());
+                            //判断SUM公式
+                            if(formula != null){
+                            	System.out.println("+++create new formal start+++");
+                            	if(formula.indexOf("SUM") > -1){
+                            		String letters = formula.substring(formula.indexOf("SUM(")+4, formula.indexOf(")"));
+                                	String startLetter = letters.split(":")[0];
+                                	String endLetter = letters.split(":")[1];
+                                	//获取字母中的行数字
+                                	String currRowNum = getNumberFromString(startLetter);
+                                	int startIndex = letterToNumber(startLetter.replace(currRowNum, ""));
+                                	int endIndex = letterToNumber(endLetter.replace(currRowNum, ""));
+                                	System.out.println("原始公式内容=SUM("+startIndex+","+endIndex+"),行数为="+currRowNum);
+                                	String newFormal = "";
+                                	//删除段为自身的后半段
+                                	if(startIndex <= delColumnStartIndex && endIndex >= delColumnEndIndex){
+                                		newFormal += "SUM(";
+                                		newFormal += startLetter;
+                                		newFormal += ":";
+                                		newFormal += numberToLetter(delColumnStartIndex-1) + currRowNum;
+                                		newFormal += ")";
+                                	}
+                                	//删除段在自身的外面，并且在前面,这公式往前移
+                                	else if(startIndex > delColumnEndIndex){
+                                		newFormal += "SUM(";
+                                		newFormal += numberToLetter(startIndex-(delColumnEndIndex-delColumnStartIndex+1)) + currRowNum;
+                                		newFormal += ":";
+                                		newFormal += numberToLetter(endIndex-(delColumnEndIndex-delColumnStartIndex+1)) + currRowNum;
+                                		newFormal += ")";
+                                	}
+                                	//删除段在自身的外面，并且在后面,这公式不变
+                                	else if(endIndex < delColumnStartIndex){
+                                		newFormal = formula;
+                                	}
+                                	else {
+                                		newFormal = formula;
+                                	}
+                                	
+                                	cell.setCellFormula(newFormal);
+                                	System.out.println("新公式="+newFormal);
+                                	System.out.println(cell.getNumericCellValue());
+                            	}
+                            	System.out.println("+++create new formal end+++");
+                            }
+                        }
+                	}
+                }
+        	}
+        }
 	}
 
 	/**
@@ -541,5 +643,89 @@ public class ExcelUtils {
                 }
         	}
         }
+	}
+	
+	/**
+	 * 
+	* @功能描述: 将EXCEL字母转成数字
+	* @方法名称: letterToNumber 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月30日 上午10:51:54 
+	* @version V1.0   
+	* @param letter
+	* @return 
+	* @return int
+	 */
+	public static int letterToNumber(String letter) {
+	    // 检查字符串是否为空
+	    if (letter == null || letter.isEmpty()) {
+	        return -1;
+	    }
+	    String upperLetter = letter.toUpperCase(); // 转为大写字符串
+	    if (!upperLetter.matches("[A-Z]+")) { // 检查是否符合，不能包含非字母字符
+	        return -1;
+	    }
+	    long num = 0; // 存放结果数值
+	    long base = 1;
+	    // 从字符串尾部开始向头部转换
+	    for (int i = upperLetter.length() - 1; i >= 0; i--) {
+	        char ch = upperLetter.charAt(i);
+	        num += (ch - 'A' + 1) * base;
+	        base *= 26;
+	        if (num > Integer.MAX_VALUE) { // 防止内存溢出
+	            return -1;
+	        }
+	    }
+	    return (int) num;
+	}
+	/**
+	 * 
+	* @功能描述: 将EXCEL数字转成字母
+	* @方法名称: numberToLetter 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月30日 上午10:52:18 
+	* @version V1.0   
+	* @param num
+	* @return 
+	* @return String
+	 */
+	public static String numberToLetter(int num) {
+	    if (num <= 0) { // 检测列数是否正确
+	        return null;
+	    }
+	    StringBuffer letter = new StringBuffer();
+	    do {
+	        --num;
+	        int mod = num % 26; // 取余
+	        letter.append((char) (mod + 'A')); // 组装字符串
+	        num = (num - mod) / 26; // 计算剩下值
+	    } while (num > 0);
+	    return letter.reverse().toString(); // 返回反转后的字符串
+	}
+	/**
+	 * 
+	* @功能描述: 获取cell单元格英文里面的数字，如F10里面的10
+	* @方法名称: getNumberFromString 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月30日 上午11:19:53 
+	* @version V1.0   
+	* @param letter
+	* @return 
+	* @return String
+	 */
+	public static String getNumberFromString(String letter){
+		String reg = "[^0-9]";
+		Pattern p = Pattern.compile(reg);  
+		Matcher m = p.matcher(letter);  
+		if(m.find()){  
+			System.out.println(letter+"->"+m.replaceAll("").trim());
+		    return m.replaceAll("").trim();
+		}else {
+			System.out.println(letter+"->null");
+			return "";
+		}
 	}
 }
