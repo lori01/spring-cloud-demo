@@ -42,7 +42,7 @@ public class ExcelUtils {
 		System.out.println(targ);*/
 	}
 	
-	public static void drawPic(String src, String targ){
+	private static void drawPic(String src, String targ){
 		try {
 			long start = System.currentTimeMillis();
 			FileInputStream is = new FileInputStream(src);
@@ -95,7 +95,7 @@ public class ExcelUtils {
 	* @param targ 
 	* void
 	 */
-	public static void delRowAndColumn(String src, String targ){
+	private static void delRowAndColumn(String src, String targ){
 		try {
 			long start = System.currentTimeMillis();
 			FileInputStream is = new FileInputStream(src);
@@ -462,6 +462,36 @@ public class ExcelUtils {
 	
 	/**
 	 * 
+	* @功能描述: 根据index或name获取sheet
+	* @方法名称: getSheet 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月30日 上午10:35:31 
+	* @version V1.0   
+	* @param wb
+	* @param sheetId
+	* @param sheetName
+	* @return 
+	* @return HSSFSheet
+	 */
+	public static HSSFSheet getSheet(HSSFWorkbook wb,Integer sheetIndex, String sheetName){
+		if(sheetIndex != null){
+			return wb.getSheetAt(sheetIndex);
+		}else if(sheetName != null && !"".equals(sheetName)){
+			for(int sheetNum = 0; sheetNum < wb.getNumberOfSheets(); sheetNum++) {
+            	HSSFSheet sheet = wb.getSheetAt(sheetNum);
+            	if(sheetName != null && !"".equals(sheetName)){
+            		if(sheetName.equals(sheet.getSheetName())){
+            			return sheet; 
+            		}
+            	}
+            }
+		}
+		return null;
+	}
+	
+	/**
+	 * 
 	* @功能描述: 执行workbook的公式
 	* @方法名称: evaluate 
 	* @路径 com.daimeng.util 
@@ -473,23 +503,15 @@ public class ExcelUtils {
 	* @param sheetName 只执行指定sheet的公式
 	* @return void
 	 */
-	public static void evaluate(HSSFWorkbook wb,Integer sheetId, String sheetName){
+	public static void evaluate(HSSFWorkbook wb,Integer sheetIndex, String sheetName){
         FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator();
-        if(sheetId != null){
-        	HSSFSheet sheet = wb.getSheetAt(sheetId);
+        HSSFSheet sheet = getSheet(wb, sheetIndex, sheetName);
+        if(sheet != null){
         	evalSheet(evaluator, sheet);
         }
         else{
         	for(int sheetNum = 0; sheetNum < wb.getNumberOfSheets(); sheetNum++) {
-            	HSSFSheet sheet = wb.getSheetAt(sheetNum);
-            	if(sheetName != null && !"".equals(sheetName)){
-            		if(sheetName.equals(sheet.getSheetName())){
-            			evalSheet(evaluator, sheet);
-            			break;
-            		}
-            	}else {
-            		evalSheet(evaluator, sheet);
-            	}
+        		evalSheet(evaluator, wb.getSheetAt(sheetNum));
             }
         }
 	}
