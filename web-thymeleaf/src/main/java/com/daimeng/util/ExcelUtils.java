@@ -186,42 +186,8 @@ public class ExcelUtils {
                             if(formula != null){
                             	System.out.println("+++create new formal start+++");
                             	if(formula.indexOf("SUM") > -1){
-                            		String letters = formula.substring(formula.indexOf("SUM(")+4, formula.indexOf(")"));
-                                	String oriStartLetter = letters.split(":")[0];
-                                	String oriEndLetter = letters.split(":")[1];
-                                	//获取字母中的行数字
-                                	String currRowNum = getNumberFromString(oriStartLetter);
-                                	int oriStartIndex = letterToNumber(oriStartLetter.replace(currRowNum, ""));
-                                	int oriEndIndex = letterToNumber(oriEndLetter.replace(currRowNum, ""));
-                                	System.out.println("原始公式内容=SUM("+oriStartIndex+","+oriEndIndex+"),行数为="+currRowNum);
-                                	
-                                	String newStartLetter = "";
-                                	String newEndLetter = "";
-                                	//删除段在公式的前面，公式前移
-                                	if(oriStartIndex > delEndIndex){
-                                		newStartLetter = numberToLetter(oriStartIndex-(delEndIndex-delStartIndex+1)) + currRowNum;
-                                	}
-                                	//删除段包含公式的前部分
-                                	else if(oriStartIndex >= delStartIndex && oriStartIndex <= delEndIndex){
-                                		newStartLetter = numberToLetter(delStartIndex) + currRowNum;
-                                	}
-                                	//删除段在公式开始的后面
-                                	else{
-                                		newStartLetter = oriStartLetter;
-                                	}
-                                	
-                                	if(oriEndIndex > delEndIndex){
-                                		newEndLetter = numberToLetter(oriEndIndex-(delEndIndex-delStartIndex+1)) + currRowNum;
-                                	}
-                                	else if(oriEndIndex >= delStartIndex && oriEndIndex <= delEndIndex){
-                                		newEndLetter = numberToLetter(delStartIndex-1) + currRowNum;
-                                	}
-                                	else{
-                                		newEndLetter = oriEndLetter;
-                                	}
-                                	
-                                	String newFormal = "SUM(" + newStartLetter + ":" + newEndLetter + ")";
-                                	
+                            		System.out.println("旧公式="+formula);
+                                	String newFormal = reWriteFormulaForSum(formula, delStartIndex, delEndIndex);
                                 	cell.setCellFormula(newFormal);
                                 	System.out.println("新公式="+newFormal);
                                 	System.out.println(cell.getNumericCellValue());
@@ -233,6 +199,95 @@ public class ExcelUtils {
                 }
         	}
         }
+	}
+	
+	/**
+	 * 
+	* @功能描述: 根据是删除的列，重写sum公式
+	* @方法名称: reWriteFormulaForSum 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月1日 下午1:42:39 
+	* @version V1.0   
+	* @param formula
+	* @param delStartIndex
+	* @param delEndIndex
+	* @return 
+	* @return String
+	 */
+	public static String reWriteFormulaForSum(String formula,int delStartIndex,int delEndIndex){
+		String letters = formula.substring(formula.indexOf("(")+1, formula.indexOf(")"));
+    	String oriStartLetter = letters.split(":")[0];
+    	String oriEndLetter = letters.split(":")[1];
+    	
+    	String newStartLetter = getNewStartLetter(oriStartLetter, delStartIndex, delEndIndex);
+    	String newEndLetter = getNewEndLetter(oriEndLetter, delStartIndex, delEndIndex);
+    	
+    	String newFormal = "SUM(" + newStartLetter + ":" + newEndLetter + ")";
+    	return newFormal;
+	}
+	/**
+	 * 
+	* @功能描述: 根据删除的列，重新定位公式的起始列数
+	* @方法名称: getNewStartLetter 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月1日 下午1:43:03 
+	* @version V1.0   
+	* @param oriStartLetter
+	* @param delStartIndex
+	* @param delEndIndex
+	* @return 
+	* @return String
+	 */
+	private static String getNewStartLetter(String oriStartLetter,int delStartIndex,int delEndIndex){
+		String newStartLetter = "";
+		//获取字母中的行数字
+    	String currRowNum = getNumberFromString(oriStartLetter);
+    	int oriStartIndex = letterToNumber(oriStartLetter.replace(currRowNum, ""));
+		//删除段在公式的前面，公式前移
+    	if(oriStartIndex > delEndIndex){
+    		newStartLetter = numberToLetter(oriStartIndex-(delEndIndex-delStartIndex+1)) + currRowNum;
+    	}
+    	//删除段包含公式的前部分
+    	else if(oriStartIndex >= delStartIndex && oriStartIndex <= delEndIndex){
+    		newStartLetter = numberToLetter(delStartIndex) + currRowNum;
+    	}
+    	//删除段在公式开始的后面
+    	else{
+    		newStartLetter = oriStartLetter;
+    	}
+    	return newStartLetter;
+	}
+	/**
+	 * 
+	* @功能描述: 根据删除的列，重新定位公式的截至列数
+	* @方法名称: getNewEndLetter 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月1日 下午1:43:31 
+	* @version V1.0   
+	* @param oriEndLetter
+	* @param delStartIndex
+	* @param delEndIndex
+	* @return 
+	* @return String
+	 */
+	private static String getNewEndLetter(String oriEndLetter,int delStartIndex,int delEndIndex){
+		String newEndLetter = "";
+		//获取字母中的行数字
+    	String currRowNum = getNumberFromString(oriEndLetter);
+		int oriEndIndex = letterToNumber(oriEndLetter.replace(currRowNum, ""));
+		if(oriEndIndex > delEndIndex){
+    		newEndLetter = numberToLetter(oriEndIndex-(delEndIndex-delStartIndex+1)) + currRowNum;
+    	}
+    	else if(oriEndIndex >= delStartIndex && oriEndIndex <= delEndIndex){
+    		newEndLetter = numberToLetter(delStartIndex-1) + currRowNum;
+    	}
+    	else{
+    		newEndLetter = oriEndLetter;
+    	}
+		return newEndLetter;
 	}
 
 	/**
@@ -459,7 +514,7 @@ public class ExcelUtils {
 	* @return 
 	* @return HSSFSheet
 	 */
-	public static HSSFSheet removeCellDataForRow(HSSFSheet sheet,int start,int end){
+	private static HSSFSheet removeCellDataForRow(HSSFSheet sheet,int start,int end){
 		//删除行内容,但会保留空行
         for(int i = start-1; i < end; i++){
         	HSSFRow row = sheet.getRow(i);
@@ -523,7 +578,7 @@ public class ExcelUtils {
 	* @return 
 	* @return HSSFSheet
 	 */
-	public static HSSFSheet removeCellDataForColumn(HSSFSheet sheet,int start,int end){
+	private static HSSFSheet removeCellDataForColumn(HSSFSheet sheet,int start,int end){
 		int rowNum = sheet.getLastRowNum();
 		for(int i = start-1; i < end; i++){
 			for(int j = 0; j <= rowNum; j++){
