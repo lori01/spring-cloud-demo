@@ -1,64 +1,99 @@
-//提示页面
-function showAlertMessage(type, title, message, _backfunction) {
-	if (type == "error") {
-		$("#alert_message_success_img").hide();
-		$("#alert_message_error_img").show();
-	} else {
-		$("#alert_message_success_img").show();
-		$("#alert_message_error_img").hide();
-	}
-	$("#alert_message_span").html(message);
-	$("#alert_message_btn").click(function(e) {
-		cancleMessageDiv();
-		_backfunction();
-	});
-	$("#alert_message").dialog({
-		title : title,
-		zIndex : 99999,
-		width : 500,
-		height : 300,
-		autoOpen : true,
-		show : {
-			effect : showEffect,
-			duration : animation_time
-		},
-		hide : {
-			effect : hideEffect,
-			duration : animation_time
+(function ($) {
+	
+	/*
+	 * (function ($) {
+	 * *****
+	 * })(jQuery);
+	 * 
+	 * 扩展jquery的方法
+	 * 1.$.myfun = function(){};
+	 * 用法：$.myfun();
+	 * 
+	 * 2.$.fn.myfun = function(){};
+	 * 用法：$("#id").myfun();
+	 * 
+	 * */
+	
+	//var xx = $.getUrlParam('reurl');
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    };
+    
+    //打印日志
+    $.printLog = function(name){            //print1是自己定义的函数名字，括号中的name是参数
+        console.log(name)
+    };
+    
+	//打开弹出框
+    $.showAlertMessage = function(type, title, message, _backfunction) {
+		if (type == "error") {
+			$("#alert_message_success_img").hide();
+			$("#alert_message_error_img").show();
+		} else {
+			$("#alert_message_success_img").show();
+			$("#alert_message_error_img").hide();
 		}
-	});
-}
-function cancleMessageDiv() {
-	//$("#upd_pwd_div").fadeOut();
-	$("#alert_message").dialog("close");
-}
-
-//判断框
-function showConfirmMessage(title, message, _backfunction) {
-	$("#confirm_message_span").html(message);
-	$("#confirm_message_btn").click(function(e) {
-		cancle_confirm_message();
-		_backfunction();
-	});
-	$("#confirm_message").dialog({
-		title : title,
-		zIndex : 99999,
-		width : 500,
-		height : 300,
-		autoOpen : true,
-		show : {
-			effect : showEffect,
-			duration : animation_time
-		},
-		hide : {
-			effect : hideEffect,
-			duration : animation_time
-		}
-	});
-}
-function cancle_confirm_message(){
-	$("#confirm_message").dialog("close");
-}
+		$("#alert_message_span").html(message);
+		$("#alert_message_btn").click(function(e) {
+			$.cancleMessageDiv();
+			_backfunction();
+		});
+		$("#alert_message").dialog({
+			title : title,
+			zIndex : 99999,
+			width : 500,
+			height : 300,
+			autoOpen : true,
+			show : {
+				effect : showEffect,
+				duration : animation_time
+			},
+			hide : {
+				effect : hideEffect,
+				duration : animation_time
+			}
+		});
+	};
+    
+    //关闭弹出框
+    $.cancleMessageDiv = function() {
+    	//$("#upd_pwd_div").fadeOut();
+    	$("#alert_message").dialog("close");
+    };
+    
+	//判断框
+    $.showConfirmMessage = function(title, message, _backfunction) {
+		$("#confirm_message_span").html(message);
+		$("#confirm_message_btn").click(function(e) {
+			$.cancle_confirm_message();
+			_backfunction();
+		});
+		$("#confirm_message").dialog({
+			title : title,
+			zIndex : 99999,
+			width : 500,
+			height : 300,
+			autoOpen : true,
+			show : {
+				effect : showEffect,
+				duration : animation_time
+			},
+			hide : {
+				effect : hideEffect,
+				duration : animation_time
+			}
+		});
+	};
+    
+    //关闭判断框
+    $.cancle_confirm_message = function(){
+    	$("#confirm_message").dialog("close");
+    };
+    
+    
+})(jQuery);
 
 //日期
 function Format(now, mask) {

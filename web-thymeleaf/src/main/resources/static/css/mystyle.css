@@ -125,12 +125,12 @@
     border: 0px;
     background-color: #1661ab;
     border-radius: 20px;
-    /* margin-right: 5px; */
     margin-top: 10px;
     cursor: pointer;
     -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 	float:left;
+	padding: 0px;
 }
 
 .btn_public:hover,
@@ -145,12 +145,16 @@ input.btn_public_cur:hover a:hover{
     width: 40px;
     text-align: center;
     line-height: 40px;
-	color:#fff;
-	border:0px;
+    color: #fff;
+    border: 0px;
 	background-color:#f07c82;
-	border-radius:20px;
-	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	border-radius: 20px;
+	margin-top: 10px;
+    cursor: pointer;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	float:left;
+	padding: 0px;
 }
 .page_div {
 	text-align:center;

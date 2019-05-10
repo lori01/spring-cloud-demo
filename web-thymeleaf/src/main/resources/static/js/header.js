@@ -143,12 +143,12 @@ function updPwd(uid) {
 			if (msgjsonobj.status == 100) {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!");
 				//canclePwd();
-				showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
+				$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
 					canclePwd();
 				});
 			} else {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
-				showAlertMessage("error","保存失败", msgjsonobj.status + "-" + msgjsonobj.desc ,function(){
+				$.showAlertMessage("error","保存失败", msgjsonobj.status + "-" + msgjsonobj.desc ,function(){
 					
 				});
 			}
@@ -156,7 +156,7 @@ function updPwd(uid) {
 		},
 		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+			$.showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -226,12 +226,12 @@ function addUser() {
 			if (msgjsonobj.status == 100) {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 新增成功!");
 				//cancleUser();
-				showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
+				$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
 					cancleUser();
 				});
 			} else {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
-				showAlertMessage("error","保存失败", msgjsonobj.status + "-" + msgjsonobj.desc ,function(){
+				$.showAlertMessage("error","保存失败", msgjsonobj.status + "-" + msgjsonobj.desc ,function(){
 					
 				});
 			}
@@ -239,7 +239,7 @@ function addUser() {
 		},
 		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+			$.showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -294,12 +294,12 @@ function saveuser(uid) {
 			if (msgjsonobj.status == 100) {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!");
 				//cancleme();
-				showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
+				$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
 					cancleme();
 				});
 			} else {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
-				showAlertMessage("error","保存失败", msgjsonobj.status + "-" + msgjsonobj.desc ,function(){
+				$.showAlertMessage("error","保存失败", msgjsonobj.status + "-" + msgjsonobj.desc ,function(){
 					
 				});
 			}
@@ -307,7 +307,7 @@ function saveuser(uid) {
 		},
 		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+			$.showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -377,13 +377,13 @@ function add() {
 				if($("#article_id_s").val() != null && $("#article_id_s").val() != ""){
 					//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!");
 					//location.href = window.location.href;
-					showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!" , function(){
+					$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!" , function(){
 						location.href = window.location.href;
 					});
 				}
 				else if ($("#add_content_replace_div").html() == undefined) {
 					//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 发布成功!");
-					showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!" , function(){
+					$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!" , function(){
 						cancle();
 					});
 				} else {
@@ -397,7 +397,7 @@ function add() {
 				}*/
 			} else {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
-				showAlertMessage("error","保存失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+				$.showAlertMessage("error","保存失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
 					
 				});
 			}
@@ -405,7 +405,7 @@ function add() {
 		},
 		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+			$.showAlertMessage("error","保存失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -427,7 +427,7 @@ function append(obj, date) {
  * 文章/评论操作
  */
 function delArticle(id){
-	showConfirmMessage("确认删除","确认删除吗?",function(e){delArticleAction(id);});
+	$.showConfirmMessage("确认删除","确认删除吗?",function(e){delArticleAction(id);});
 }
 function delArticleAction(id){
 	var check = true;//confirm("确认删除吗?");
@@ -443,12 +443,12 @@ function delArticleAction(id){
 				if (msgjsonobj.status == 100) {
 					//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 删除成功!");
 					//location.href = window.location.href;
-					showAlertMessage("success","删除成功",msgjsonobj.status + "-" + msgjsonobj.desc + " 删除成功!",function(){
+					$.showAlertMessage("success","删除成功",msgjsonobj.status + "-" + msgjsonobj.desc + " 删除成功!",function(){
 						location.href = window.location.href;
 					});
 				} else {
 					//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
-					showAlertMessage("error","删除失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+					$.showAlertMessage("error","删除失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
 						
 					});
 				}
@@ -456,7 +456,7 @@ function delArticleAction(id){
 			},
 			"error" : function(msgjsonobj) {
 				//alert("引发了莫名的错误?");
-				showAlertMessage("error","删除失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+				$.showAlertMessage("error","删除失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 					
 				});
 			}
@@ -480,7 +480,7 @@ function editArticle(id){
 				$("#context_s").val(msgjsonobj.obj.context);
 			} else {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
-				showAlertMessage("error","查询失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+				$.showAlertMessage("error","查询失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
 					
 				});
 			}
@@ -488,14 +488,14 @@ function editArticle(id){
 		},
 		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","查询失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+			$.showAlertMessage("error","查询失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
 	});
 }
 function delComment(id){
-	showConfirmMessage("确认删除","确认删除吗?",function(e){delCommentAction(id);});
+	$.showConfirmMessage("确认删除","确认删除吗?",function(e){delCommentAction(id);});
 }
 function delCommentAction(id){
 	var check = true;//confirm("确认删除吗?");
@@ -511,12 +511,12 @@ function delCommentAction(id){
 				if (msgjsonobj.status == 100) {
 					//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 删除成功!");
 					//location.href = window.location.href;
-					showAlertMessage("success","删除成功",msgjsonobj.status + "-" + msgjsonobj.desc + " 删除成功!",function(){
+					$.showAlertMessage("success","删除成功",msgjsonobj.status + "-" + msgjsonobj.desc + " 删除成功!",function(){
 						location.href = window.location.href;
 					});
 				} else {
 					//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
-					showAlertMessage("error","删除失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+					$.showAlertMessage("error","删除失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
 						
 					});
 				}
@@ -524,7 +524,7 @@ function delCommentAction(id){
 			},
 			"error" : function(msgjsonobj) {
 				//alert("引发了莫名的错误?");
-				showAlertMessage("error","删除失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+				$.showAlertMessage("error","删除失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 					
 				});
 			}
@@ -571,13 +571,13 @@ function updateComment(){
 		"success" : function(msgjsonobj) {
 			if(msgjsonobj.status == 100){
 				//alert(msgjsonobj.status +"-"+ msgjsonobj.desc +" 修改成功!");
-				showAlertMessage("success","修改成功",msgjsonobj.status +"-"+ msgjsonobj.desc +" 修改成功!",function(){
+				$.showAlertMessage("success","修改成功",msgjsonobj.status +"-"+ msgjsonobj.desc +" 修改成功!",function(){
 					location.href = window.location.href;
 				});
 				
 			}else{
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
-				showAlertMessage("error","修改失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+				$.showAlertMessage("error","修改失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
 					
 				});
 			}
@@ -585,7 +585,7 @@ function updateComment(){
 		},
 		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","修改失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+			$.showAlertMessage("error","修改失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
@@ -614,7 +614,7 @@ function selectRole(){
 		},
 		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			showAlertMessage("error","查询角色列表失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+			$.showAlertMessage("error","查询角色列表失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
 			});
 		}
