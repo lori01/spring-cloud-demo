@@ -3,6 +3,7 @@ package com.daimeng.util;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +14,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.springframework.context.annotation.Description;
 
 /**
  * 
@@ -42,8 +44,11 @@ public class ExcelUtils {
 		String targ = "D:/java_test/excel/新设法人房地产模板_new_excel_" +date+ ".xls";
 		drawPic(src, targ);
 		System.out.println(targ);*/
+		
+		//System.out.println(getSumFormulaString("F10:B810+SUM(A10:S10)+B8+SUM(SS14+YY84)"));
+		//System.out.println(getFormulaPositionFromFormula("=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12"));
 	}
-	
+	//测试修改数据后图会不会自动生成-答案是会的
 	private static void drawPic(String src, String targ){
 		try {
 			long start = System.currentTimeMillis();
@@ -85,7 +90,7 @@ public class ExcelUtils {
 		}
 	}
 	
-	
+	//测试删除行列
 	private static void delRowAndColumn(String src, String targ){
 		try {
 			long start = System.currentTimeMillis();
@@ -159,7 +164,7 @@ public class ExcelUtils {
 	
 	/**
 	 * 
-	* @功能描述: 当删除列时，公式需要修改，目前只有SUM，并且公式中只有SUM，后续可继续完善
+	* @功能描述: 当删除列时，修改公式的范围
 	* @方法名称: reWriteFormula 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -182,16 +187,22 @@ public class ExcelUtils {
                 			String formula = cell.getCellFormula();
                             System.out.println(formula);
                             System.out.println(cell.getNumericCellValue());
-                            //判断SUM公式
+                            //判断公式
                             if(formula != null){
                             	System.out.println("+++create new formal start+++");
-                            	if(formula.indexOf("SUM") > -1){
-                            		System.out.println("旧公式="+formula);
-                                	String newFormal = reWriteFormulaForSum(formula, delStartIndex, delEndIndex);
-                                	cell.setCellFormula(newFormal);
-                                	System.out.println("新公式="+newFormal);
-                                	System.out.println(cell.getNumericCellValue());
-                            	}
+                        		System.out.println("旧公式="+formula);
+                        		//获取所有公式内部的计算单元格区间
+                        		ArrayList<String> formualPositionList = getFormulaPositionFromFormula(formula);
+                        		System.out.println(formualPositionList);
+                        		for(String oldFormualPosition : formualPositionList){
+                        			System.out.println("旧公式区间="+oldFormualPosition);
+                                	String newFormalPosition = reWriteFormulaPosition(oldFormualPosition, delStartIndex, delEndIndex);
+                                	formula = formula.replace(oldFormualPosition, newFormalPosition);
+                                	System.out.println("新公式区间="+newFormalPosition);
+                        		}
+                        		cell.setCellFormula(formula);
+                            	System.out.println("新公式="+formula);
+                            	System.out.println(cell.getNumericCellValue());
                             	System.out.println("+++create new formal end+++");
                             }
                         }
@@ -215,6 +226,7 @@ public class ExcelUtils {
 	* @return 
 	* @return String
 	 */
+	@Deprecated
 	public static String reWriteFormulaForSum(String formula,int delStartIndex,int delEndIndex){
 		String letters = formula.substring(formula.indexOf("(")+1, formula.indexOf(")"));
     	String oriStartLetter = letters.split(":")[0];
@@ -224,6 +236,30 @@ public class ExcelUtils {
     	String newEndLetter = getNewEndLetter(oriEndLetter, delStartIndex, delEndIndex);
     	
     	String newFormal = "SUM(" + newStartLetter + ":" + newEndLetter + ")";
+    	return newFormal;
+	}
+	/**
+	 * 
+	* @功能描述: 重写公式区间
+	* @方法名称: reWriteFormulaPosition 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月13日 下午2:57:53 
+	* @version V1.0   
+	* @param formula
+	* @param delStartIndex
+	* @param delEndIndex
+	* @return 
+	* @return String
+	 */
+	public static String reWriteFormulaPosition(String position,int delStartIndex,int delEndIndex){
+    	String oriStartLetter = position.split(":")[0];
+    	String oriEndLetter = position.split(":")[1];
+    	
+    	String newStartLetter = getNewStartLetter(oriStartLetter, delStartIndex, delEndIndex);
+    	String newEndLetter = getNewEndLetter(oriEndLetter, delStartIndex, delEndIndex);
+    	
+    	String newFormal = newStartLetter + ":" + newEndLetter;
     	return newFormal;
 	}
 	/**
@@ -240,7 +276,7 @@ public class ExcelUtils {
 	* @return 
 	* @return String
 	 */
-	private static String getNewStartLetter(String oriStartLetter,int delStartIndex,int delEndIndex){
+	public static String getNewStartLetter(String oriStartLetter,int delStartIndex,int delEndIndex){
 		String newStartLetter = "";
 		//获取字母中的行数字
     	String currRowNum = getNumberFromString(oriStartLetter);
@@ -273,7 +309,7 @@ public class ExcelUtils {
 	* @return 
 	* @return String
 	 */
-	private static String getNewEndLetter(String oriEndLetter,int delStartIndex,int delEndIndex){
+	public static String getNewEndLetter(String oriEndLetter,int delStartIndex,int delEndIndex){
 		String newEndLetter = "";
 		//获取字母中的行数字
     	String currRowNum = getNumberFromString(oriEndLetter);
@@ -292,18 +328,17 @@ public class ExcelUtils {
 
 	/**
 	 * 
+	* @功能描述: 删除行,然后将下面未删除的行移动上来,index从1开始算
 	* @方法名称: delRow 
 	* @路径 com.daimeng.util 
-	* @功能描述: 删除行,然后将下面未删除的行移动上来
-	* @功能描述: 但不会更改公式的内容
 	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午3:28:22 
+	* @创建时间 2019年5月13日 下午3:11:48 
 	* @version V1.0   
 	* @param sheet
 	* @param start
 	* @param end
 	* @return 
-	* HSSFSheet
+	* @return HSSFSheet
 	 */
 	public static HSSFSheet delRow(HSSFSheet sheet,int start,int end){
 		int rowNum = sheet.getLastRowNum();
@@ -313,7 +348,7 @@ public class ExcelUtils {
 			end = rowCount;
 		}
 		
-		sheet = removeRowData(sheet, start, end);
+		sheet = delRowData(sheet, start, end);
         //删除1-5行,则是把6以下的行数往上移动5格,这样可以达到删除空行的效果  1-5-1
         if(end != rowCount){
         	sheet.shiftRows(end, rowCount, start-end-1);
@@ -322,8 +357,8 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
-	* @功能描述: 删除row的数据,但会保留空的row
-	* @方法名称: removeRowData 
+	* @功能描述: 删除row的数据,但会保留空的row,index从1开始算
+	* @方法名称: delRowData 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
 	* @创建时间 2019年4月24日 下午3:19:09 
@@ -334,7 +369,7 @@ public class ExcelUtils {
 	* @return 
 	* @return HSSFSheet
 	 */
-	public static HSSFSheet removeRowData(HSSFSheet sheet,int start,int end){
+	public static HSSFSheet delRowData(HSSFSheet sheet,int start,int end){
 		//删除行内容,但会保留空行
         for(int i = start-1; i < end; i++){
         	HSSFRow row = sheet.getRow(i);
@@ -346,18 +381,17 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
+	* @功能描述: 删除列,然后将后面未删除的列复制到当前删除的列上,然后删除后面所有的列,index从1开始算
 	* @方法名称: delColumn 
 	* @路径 com.daimeng.util 
-	* @功能描述: 删除列,然后将后面未删除的列复制到当前删除的列上,然后删除后面所有的列.
-	* @功能描述: 但不会更改公式的内容
 	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午3:28:49 
+	* @创建时间 2019年5月13日 下午3:13:24 
 	* @version V1.0   
 	* @param sheet
 	* @param start
 	* @param end
 	* @return 
-	* HSSFSheet
+	* @return HSSFSheet
 	 */
 	public static HSSFSheet delColumn(HSSFSheet sheet,int start,int end){
 		HSSFRow firstrow = sheet.getRow(0);
@@ -402,17 +436,17 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
+	* @功能描述: 复制单元格内容
 	* @方法名称: cloneCellFromEnum 
 	* @路径 com.daimeng.util 
-	* @功能描述: 复制单元格内容
 	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午3:29:25 
+	* @创建时间 2019年5月13日 下午3:14:09 
 	* @version V1.0   
 	* @param cNew
 	* @param cOld 
-	* void
+	* @return void
 	 */
-	private static void cloneCellFromEnum(HSSFCell cNew, HSSFCell cOld) {
+	public static void cloneCellFromEnum(HSSFCell cNew, HSSFCell cOld) {
 		cNew.setCellComment(cOld.getCellComment());
 		cNew.setCellStyle(cOld.getCellStyle());
 		if (CellType.BOOLEAN == cNew.getCellTypeEnum()) {
@@ -429,18 +463,18 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
+	* @功能描述: 复制单元格内容-旧版本
 	* @方法名称: cloneCellFromType 
 	* @路径 com.daimeng.util 
-	* @功能描述: 复制单元格内容-旧版本
 	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午3:29:45 
+	* @创建时间 2019年5月13日 下午3:14:24 
 	* @version V1.0   
 	* @param cNew
 	* @param cOld 
-	* void
+	* @return void
 	 */
 	@Deprecated
-	private static void cloneCellFromType(HSSFCell cNew, HSSFCell cOld) {
+	public static void cloneCellFromType(HSSFCell cNew, HSSFCell cOld) {
 		cNew.setCellComment(cOld.getCellComment());
 		cNew.setCellStyle(cOld.getCellStyle());
 		switch (cNew.getCellType()) {
@@ -468,17 +502,18 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
+	* @功能描述: 隐藏行,可选是否删除数据,index从1开始算
 	* @方法名称: hideRow 
 	* @路径 com.daimeng.util 
-	* @功能描述: 纯粹隐藏行
 	* @作者 daimeng@tansun.com.cn
-	* @创建时间 2019年4月19日 下午3:30:18 
+	* @创建时间 2019年5月13日 下午3:14:55 
 	* @version V1.0   
 	* @param sheet
 	* @param start
 	* @param end
+	* @param delData
 	* @return 
-	* HSSFSheet
+	* @return HSSFSheet
 	 */
 	public static HSSFSheet hideRow(HSSFSheet sheet,int start,int end,boolean delData){
 		int rowNum = sheet.getLastRowNum();
@@ -489,7 +524,7 @@ public class ExcelUtils {
 		}
 		
 		if(delData){
-			sheet = removeCellDataForRow(sheet, start, end);
+			sheet = delCellDataForRow(sheet, start, end);
 		}
 		//行高为0则隐藏
 		for(int i = start-1; i < end; i++){
@@ -503,7 +538,7 @@ public class ExcelUtils {
 	/**
 	 * 
 	* @功能描述: 一格一格删除cell,为的是不把row变为null
-	* @方法名称: removeCellDataForRow 
+	* @方法名称: delCellDataForRow 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
 	* @创建时间 2019年4月25日 上午10:05:12 
@@ -514,7 +549,7 @@ public class ExcelUtils {
 	* @return 
 	* @return HSSFSheet
 	 */
-	private static HSSFSheet removeCellDataForRow(HSSFSheet sheet,int start,int end){
+	public static HSSFSheet delCellDataForRow(HSSFSheet sheet,int start,int end){
 		//删除行内容,但会保留空行
         for(int i = start-1; i < end; i++){
         	HSSFRow row = sheet.getRow(i);
@@ -557,7 +592,7 @@ public class ExcelUtils {
 			end = columnCount;
 		}
         if(delData){
-        	sheet = removeCellDataForColumn(sheet, start, end);
+        	sheet = delCellDataForColumn(sheet, start, end);
         }
         for(int i = start-1; i < end; i++){
         	sheet.setColumnWidth(i, 0); 
@@ -578,7 +613,7 @@ public class ExcelUtils {
 	* @return 
 	* @return HSSFSheet
 	 */
-	private static HSSFSheet removeCellDataForColumn(HSSFSheet sheet,int start,int end){
+	public static HSSFSheet delCellDataForColumn(HSSFSheet sheet,int start,int end){
 		int rowNum = sheet.getLastRowNum();
 		for(int i = start-1; i < end; i++){
 			for(int j = 0; j <= rowNum; j++){
@@ -678,7 +713,7 @@ public class ExcelUtils {
 	
 	/**
 	 * 
-	* @功能描述: 将EXCEL字母转成数字
+	* @功能描述: 将EXCEL列字母转成数字
 	* @方法名称: letterToNumber 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -712,7 +747,7 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
-	* @功能描述: 将EXCEL数字转成字母
+	* @功能描述: 将EXCEL数字转成列字母
 	* @方法名称: numberToLetter 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -737,7 +772,7 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
-	* @功能描述: 获取cell单元格英文里面的数字，如F10里面的10
+	* @功能描述: 获取cell单元格公式表达式英文里面的数字，如F10里面的10
 	* @方法名称: getNumberFromString 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -759,4 +794,105 @@ public class ExcelUtils {
 			return "";
 		}
 	}
+	
+	/**
+	 * 
+	* @功能描述: 获取公式表格中的所有SUM公式
+	* @方法名称: getSumFormulaString 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月13日 上午10:11:21 
+	* @version V1.0   
+	* @param formula
+	* @return 
+	* @return ArrayList<String>
+	 */
+	@Deprecated
+	public static ArrayList<String> getSumFormulaString(String formula){
+		ArrayList<String> newFormulaList = new ArrayList<String>();
+		if(formula.indexOf("SUM(") > -1){
+			String[] arr = formula.split("SUM");
+			for(int i = 1; i < arr.length; i ++){
+				String rightStr = arr[i];
+				int rightBracketsPlace = rightStr.indexOf(")")+1;
+				String newFormula = rightStr.substring(0,rightBracketsPlace);
+				newFormulaList.add("SUM"+newFormula);
+			}
+			return newFormulaList;
+		}else return null;
+		
+	}
+	
+	/**
+	 * 
+	* @功能描述: 获取一个公式中，所有的单元格区间表达式
+	* 如=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12
+	* 取出[C34:BL34, C29:BL29, C29:BL29, C29:BL29, C28:BL28, C29:BL29]
+	* @方法名称: getFormulaPositionFromFormula 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月13日 下午2:21:30 
+	* @version V1.0   
+	* @param formula
+	* @return 
+	* @return ArrayList<String>
+	 */
+	public static ArrayList<String> getFormulaPositionFromFormula(String formula){
+		ArrayList<String> formulaList = new ArrayList<String>();
+		String[] array = formula.split(":");
+		for(int i = 1; i < array.length; i++){
+			int firstIndex = 0;
+			int secondIndex = 0;
+			
+			//获取冒号前最近的一个非应为或数字的字符，以此判断冒号前的单元格
+			//将字符串分割为一个个字符
+			char first[] = array[i-1].toCharArray();
+			for(int j = (first.length-1); j >= 0; j--){
+				//判断字符是否为字母或数字
+				if(!Character.isLetterOrDigit(first[j])){
+					firstIndex = j;
+					break;
+				}
+			}
+			//获取冒号后最近的一个非应为或数字的字符，以此判断冒号后的单元格
+			char second[] = array[i].toCharArray();
+			for(int j = 0; j < second.length; j++){
+				if(!Character.isLetterOrDigit(second[j])){
+					secondIndex = j;
+					break;
+				}
+			}
+			
+			String firstLeter = array[i-1].substring(firstIndex + 1, array[i-1].length());
+			String secondLeter = array[i].substring(0, secondIndex);
+			formulaList.add(firstLeter + ":" + secondLeter);
+		}
+		
+		return removeRepeat(formulaList);
+	}
+	/**
+	 * 
+	* @功能描述: 去除list中重复的元素
+	* @方法名称: removeRepeat 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月13日 下午2:46:21 
+	* @version V1.0   
+	* @param list
+	* @return 
+	* @return ArrayList<String>
+	 */
+	public static ArrayList<String> removeRepeat(ArrayList<String> list){
+		for(int i = list.size() -1; i >= 0; i--){
+			for(int j = 0; j < list.size(); j++){
+				if(i != j && list.get(i).equals(list.get(j))){
+					list.remove(i);
+					break;
+				}
+			}
+		}
+		return list;
+	}
+	
+	
 }
