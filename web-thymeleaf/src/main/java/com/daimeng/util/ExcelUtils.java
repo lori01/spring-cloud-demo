@@ -847,7 +847,7 @@ public class ExcelUtils {
 			int firstIndex = 0;
 			int secondIndex = 0;
 			
-			//获取冒号前最近的一个非应为或数字的字符，以此判断冒号前的单元格
+			//获取冒号前最近的一个非英文或数字的字符，以此判断冒号前的单元格
 			//将字符串分割为一个个字符
 			char first[] = array[i-1].toCharArray();
 			for(int j = (first.length-1); j >= 0; j--){
@@ -857,7 +857,7 @@ public class ExcelUtils {
 					break;
 				}
 			}
-			//获取冒号后最近的一个非应为或数字的字符，以此判断冒号后的单元格
+			//获取冒号后最近的一个非英文或数字的字符，以此判断冒号后的单元格
 			char second[] = array[i].toCharArray();
 			for(int j = 0; j < second.length; j++){
 				if(!Character.isLetterOrDigit(second[j])){
