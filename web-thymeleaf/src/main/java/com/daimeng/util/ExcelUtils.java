@@ -281,15 +281,15 @@ public class ExcelUtils {
 		//获取字母中的行数字
     	String currRowNum = getNumberFromString(oriStartLetter);
     	int oriStartIndex = letterToNumber(oriStartLetter.replace(currRowNum, ""));
-		//删除段在公式的前面，公式前移
+		//删除段在公式的前面，公式前移。删除多少列，前移多少列
     	if(oriStartIndex > delEndIndex){
     		newStartLetter = numberToLetter(oriStartIndex-(delEndIndex-delStartIndex+1)) + currRowNum;
     	}
-    	//删除段包含公式的前部分
+    	//删除段包含公式的前部分，则公式从删除段的开始坐标开始
     	else if(oriStartIndex >= delStartIndex && oriStartIndex <= delEndIndex){
     		newStartLetter = numberToLetter(delStartIndex) + currRowNum;
     	}
-    	//删除段在公式开始的后面
+    	//删除段在公式开始的后面，公式不变
     	else{
     		newStartLetter = oriStartLetter;
     	}
@@ -314,12 +314,15 @@ public class ExcelUtils {
 		//获取字母中的行数字
     	String currRowNum = getNumberFromString(oriEndLetter);
 		int oriEndIndex = letterToNumber(oriEndLetter.replace(currRowNum, ""));
+		//删除段在公式的前面，公式前移。删除多少列，前移多少列
 		if(oriEndIndex > delEndIndex){
     		newEndLetter = numberToLetter(oriEndIndex-(delEndIndex-delStartIndex+1)) + currRowNum;
     	}
+		//删除段包含公式的后半部分，则公式的截止坐标在删除段开始坐标的前面一列
     	else if(oriEndIndex >= delStartIndex && oriEndIndex <= delEndIndex){
     		newEndLetter = numberToLetter(delStartIndex-1) + currRowNum;
     	}
+		//删除段在公式截止的后面，公式不变
     	else{
     		newEndLetter = oriEndLetter;
     	}
