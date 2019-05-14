@@ -29,7 +29,7 @@ public class ExcelUtils {
 	
 	
 	public static void main(String[] args) {
-		String src = "D:/java_test/excel/Excel_Remove_Mod_less.xls";
+		String src = "D:/java_test/excel/Excel_Remove_Mod.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		System.out.println(date);
@@ -124,8 +124,8 @@ public class ExcelUtils {
             System.out.println("===hide column end!===");*/
             
             System.out.println("===hide row start!===");
-            //sheet = hideRow(sheet, 27, 33,false);
-            //sheet = hideRow(sheet, 6, 10,false);
+            sheet = hideRow(sheet, 27, 33,false);
+            sheet = hideRow(sheet, 6, 10,false);
             System.out.println("===hide row end!===");
             
             /*System.out.println("===hide column start!===");
@@ -138,13 +138,13 @@ public class ExcelUtils {
             sheet = delColumn(sheet, 16, 26);//6-26
             System.out.println("===delete column end!===");
             
+            reWriteFormula(sheet, 57, 141);//27-141
+            reWriteFormula(sheet, 16, 26);//6-26
+            
             //执行计算公式 
             //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
             //循环所有,执行计算公式
             evaluate(workbook, 0, "");
-            
-            reWriteFormula(sheet, 57, 141);//27-141
-            reWriteFormula(sheet, 16, 26);//6-26
             
             
             FileOutputStream os = new FileOutputStream(targ);
@@ -537,7 +537,7 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
-	* @功能描述: 一格一格删除cell,为的是不把row变为null
+	* @功能描述: 一格一格删除cell,为的是不把row变为null,index从1开始算
 	* @方法名称: delCellDataForRow 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -567,7 +567,7 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
-	* @方法名称: hideColumn 
+	* @方法名称: hideColumn ,index从1开始算
 	* @路径 com.daimeng.util 
 	* @功能描述: 隐藏列,并且清空隐藏列的数据
 	* @作者 daimeng@tansun.com.cn
@@ -601,7 +601,7 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
-	* @功能描述: 删除column的内容
+	* @功能描述: 删除column的内容,index从1开始算
 	* @方法名称: removeCellDataForColumn 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
