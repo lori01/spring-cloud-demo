@@ -188,7 +188,7 @@ public class ExcelUtils {
                             System.out.println(formula);
                             System.out.println(cell.getNumericCellValue());
                             //判断公式
-                            if(formula != null){
+                            if(formula != null && formula.indexOf(":") > -1){
                             	System.out.println("+++create new formal start+++");
                         		System.out.println("旧公式="+formula);
                         		//获取所有公式内部的计算单元格区间
