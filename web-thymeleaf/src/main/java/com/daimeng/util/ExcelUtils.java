@@ -29,13 +29,13 @@ public class ExcelUtils {
 	
 	
 	public static void main(String[] args) {
-		String src = "D:/java_test/excel/Excel_Remove_Mod.xls";
+		/*String src = "D:/java_test/excel/Excel_Remove_Mod.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		System.out.println(date);
 		String targ = "D:/java_test/excel/new_excel_" +date+ ".xls";
 		delRowAndColumn(src, targ);
-		System.out.println(targ);
+		System.out.println(targ);*/
 		
 		/*String src = "D:/java_test/excel/新设法人房地产模板.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -47,6 +47,9 @@ public class ExcelUtils {
 		
 		//System.out.println(getSumFormulaString("F10:B810+SUM(A10:S10)+B8+SUM(SS14+YY84)"));
 		//System.out.println(getFormulaPositionFromFormula("=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12"));
+		System.out.println(getFormulaPositionFromFormula("=IF(E17=0,0,(D47*E18+SUMPRODUCT(D28:D32,E28:E32)+SUMPRODUCT(D34:D38,E34:E38)+SUMPRODUCT(D42:D43,E42:E43))/E17)"));
+	
+	
 	}
 	//测试修改数据后图会不会自动生成-答案是会的
 	private static void drawPic(String src, String targ){
