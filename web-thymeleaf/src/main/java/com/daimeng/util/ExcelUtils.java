@@ -29,13 +29,13 @@ public class ExcelUtils {
 	
 	
 	public static void main(String[] args) {
-		/*String src = "D:/java_test/excel/Excel_Remove_Mod.xls";
+		String src = "D:/java_test/excel/Excel_Remove_Mod_less.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		System.out.println(date);
 		String targ = "D:/java_test/excel/new_excel_" +date+ ".xls";
 		delRowAndColumn(src, targ);
-		System.out.println(targ);*/
+		System.out.println(targ);
 		
 		/*String src = "D:/java_test/excel/新设法人房地产模板.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -47,8 +47,9 @@ public class ExcelUtils {
 		
 		//System.out.println(getSumFormulaString("F10:B810+SUM(A10:S10)+B8+SUM(SS14+YY84)"));
 		//System.out.println(getFormulaPositionFromFormula("=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12"));
-		System.out.println(getFormulaPositionFromFormula("=IF(E17=0,0,(D47*E18+SUMPRODUCT(D28:D32,E28:E32)+SUMPRODUCT(D34:D38,E34:E38)+SUMPRODUCT(D42:D43,E42:E43))/E17)"));
+		//System.out.println(getFormulaPositionFromFormula("=IF(E17=0,0,(D47*E18+SUMPRODUCT(D28:D32,E28:E32)+SUMPRODUCT(D34:D38,E34:E38)+SUMPRODUCT(D42:D43,E42:E43))/E17)"));
 	
+		
 	
 	}
 	//测试修改数据后图会不会自动生成-答案是会的
@@ -126,10 +127,10 @@ public class ExcelUtils {
             sheet = hideColumn(sheet, 12, 26, true);
             System.out.println("===hide column end!===");*/
             
-            System.out.println("===hide row start!===");
+            /*System.out.println("===hide row start!===");
             sheet = hideRow(sheet, 27, 33,false);
             sheet = hideRow(sheet, 6, 10,false);
-            System.out.println("===hide row end!===");
+            System.out.println("===hide row end!===");*/
             
             /*System.out.println("===hide column start!===");
             sheet = hideColumn(sheet, 35, 130, true);
@@ -148,6 +149,13 @@ public class ExcelUtils {
             //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
             //循环所有,执行计算公式
             evaluate(workbook, 0, "");
+            System.out.println("隐藏sheet");
+            HSSFSheet sheet1 = getSheet(workbook, null, "no_sheet");
+            sheet1.createRow(0);
+            HSSFRow row1 = sheet1.getRow(0);
+            row1.createCell(0);
+            HSSFCell cell1 = row1.getCell(0);
+            cell1.setCellValue("no_123456_ss");
             
             
             FileOutputStream os = new FileOutputStream(targ);
@@ -654,11 +662,9 @@ public class ExcelUtils {
 		}else if(sheetName != null && !"".equals(sheetName)){
 			for(int sheetNum = 0; sheetNum < wb.getNumberOfSheets(); sheetNum++) {
             	HSSFSheet sheet = wb.getSheetAt(sheetNum);
-            	if(sheetName != null && !"".equals(sheetName)){
-            		if(sheetName.equals(sheet.getSheetName())){
-            			return sheet; 
-            		}
-            	}
+        		if(sheetName.equals(sheet.getSheetName())){
+        			return sheet; 
+        		}
             }
 		}
 		return null;
