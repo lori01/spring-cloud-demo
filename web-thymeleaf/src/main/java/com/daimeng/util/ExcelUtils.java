@@ -60,21 +60,22 @@ public class ExcelUtils {
             HSSFWorkbook workbook = new HSSFWorkbook(is);
             
             int sheetNum = workbook.getNumberOfSheets();
-            for(int i = 0 ; i < sheetNum; i++){
-            	HSSFSheet sheet = workbook.getSheetAt(i);
-            	System.out.println(sheet.getSheetName());
-            	if("fzb7.1".equals(sheet.getSheetName())){
-            		System.out.println("=====start=====");
-            		for(int j = 5; j <= 13; j++ ){
-            			HSSFRow row = sheet.getRow(j); 
-            			for(int k = 1; k <= 6; k++){
-            				HSSFCell cell = row.getCell(k);
-            				cell.setCellValue(k*10 + j);
-            			}
-            		}
-            		//evaluate(workbook, i, "");
-            	}
-            }
+            long t1 = System.currentTimeMillis();
+            System.out.println(t1);
+        	HSSFSheet sheet = getSheet(workbook, null, "fzb7.1");
+        	long t2 = System.currentTimeMillis();
+        	System.out.println(t2);
+        	System.out.println("获取sheet消耗的时间" + (t2-t1));
+        	System.out.println(sheet.getSheetName());
+    		System.out.println("=====start=====");
+    		for(int j = 5; j <= 13; j++ ){
+    			HSSFRow row = sheet.getRow(j); 
+    			for(int k = 1; k <= 6; k++){
+    				HSSFCell cell = row.getCell(k);
+    				cell.setCellValue(k*10 + j);
+    			}
+    		}
+           //evaluate(workbook, i, "");
             
             //执行计算公式
             //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
@@ -149,13 +150,14 @@ public class ExcelUtils {
             //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
             //循环所有,执行计算公式
             evaluate(workbook, 0, "");
+            
+            
             System.out.println("隐藏sheet");
             HSSFSheet sheet1 = getSheet(workbook, null, "no_sheet");
-            sheet1.createRow(0);
-            HSSFRow row1 = sheet1.getRow(0);
-            row1.createCell(0);
-            HSSFCell cell1 = row1.getCell(0);
-            cell1.setCellValue("no_123456_ss");
+            HSSFCell cell1 = getCell(sheet1, 0, 0);
+            cell1.setCellValue("no_123456_ss22");
+            System.out.println(cell1.getStringCellValue());
+            
             
             
             FileOutputStream os = new FileOutputStream(targ);
@@ -450,7 +452,7 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
-	* @功能描述: 复制单元格内容
+	* @功能描述: 复制单元格内容-仅支持新版本的poi
 	* @方法名称: cloneCellFromEnum 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -477,7 +479,7 @@ public class ExcelUtils {
 	}
 	/**
 	 * 
-	* @功能描述: 复制单元格内容-旧版本
+	* @功能描述: 复制单元格内容-旧版本poi的方法
 	* @方法名称: cloneCellFromType 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -487,7 +489,6 @@ public class ExcelUtils {
 	* @param cOld 
 	* @return void
 	 */
-	@Deprecated
 	public static void cloneCellFromType(HSSFCell cNew, HSSFCell cOld) {
 		cNew.setCellComment(cOld.getCellComment());
 		cNew.setCellStyle(cOld.getCellStyle());
@@ -904,6 +905,37 @@ public class ExcelUtils {
 			}
 		}
 		return list;
+	}
+	
+	/**
+	 * 
+	* @功能描述: 通过row编号和column编号获取单元格，row和column从0开始计数
+	* @方法名称: getHSSFCell 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月17日 上午10:20:02 
+	* @version V1.0   
+	* @param sheet
+	* @param rowId
+	* @param columnId
+	* @return 
+	* @return HSSFCell
+	 */
+	public static HSSFCell getCell(HSSFSheet sheet, int rowId, int columnId){
+		if(sheet != null){
+			HSSFRow row = sheet.getRow(rowId);
+			if(row == null){
+				sheet.createRow(rowId);
+				row = sheet.getRow(rowId);
+			}
+			HSSFCell cell = row.getCell(columnId);
+			if(cell == null){
+				row.createCell(columnId);
+				cell = row.getCell(columnId);
+			}
+			return cell;
+		}
+		return null;
 	}
 	
 	
