@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class SysPermission implements Serializable {
@@ -36,6 +37,11 @@ public class SysPermission implements Serializable {
     /*@ManyToMany
     @JoinTable(name="SysRolePermission",joinColumns={@JoinColumn(name="permissionId")},inverseJoinColumns={@JoinColumn(name="roleId")})
     private List<SysRole> roles;*/
+    
+	//不映射数据库
+  	@Transient
+    private List<SysRole> roles;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -84,5 +90,12 @@ public class SysPermission implements Serializable {
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}
+	public List<SysRole> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<SysRole> roles) {
+		this.roles = roles;
+	}
+	
     
 }

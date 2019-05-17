@@ -49,10 +49,8 @@
 					<li class="show_menu" childid="user_menu_drop" id="show_user_menu_drop"><a th:text="欢饮您-+${session.user_session.realname}" href="javascript:void(0)"></a></li>
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
-					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
-					<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
-					<li><a th:text="用户" th:href="@{/user/list/1}"></a></li>
 					<li class="show_menu" childid="chart_menu_drop" id="show_chart_menu_drop"><a th:text="表格" href="javascript:void(0)"></a></li>
+					<li class="show_menu" childid="sys_menu_drop" id="show_sys_menu_drop"><a th:text="系统管理" href="javascript:void(0)"></a></li>
 					<li><a th:text="注销" th:href="@{/logout}"></a></li>
 				</ul>
 			</nav>
@@ -61,13 +59,25 @@
 		<!-- END navigation -->
 	</div>
 	
+	<div id="sys_menu_drop" class="clearfix-menu menu_drop">
+		<nav class="nav">
+			<ul class="sf-menu-2">
+				<li><a th:text="用户管理" th:href="@{/user/list/1}"></a></li>
+				<li><a th:text="菜单管理" th:href="@{/system/menu/1}"></a></li>
+				<li><a th:text="角色管理" th:href="@{/system/role/1}"></a></li>
+				<li><a th:text="日志管理" th:href="@{/user/alllog/1}"></a></li>
+				<li><a th:text="我的信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
+				<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
+				<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
+			</ul>
+		</nav>	
+	</div>
 	<div id="user_menu_drop" class="clearfix-menu menu_drop">
 		<nav class="nav">
 			<ul class="sf-menu-2">
+				<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
+				<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 				<li><a th:text="写文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
-				<li><a th:text="个人信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
-				<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
-				<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
 			</ul>
 		</nav>	
 	</div>

@@ -24,6 +24,8 @@ public class SysUserLog implements Serializable{
 	@Column(nullable = false, unique = true)
 	private String url;
 	@Column(nullable = false, unique = true)
+	private String ip;
+	@Column(nullable = false, unique = true)
 	private String parameter;
 	@Column(nullable = false, unique = true)
 	private String comment;
@@ -83,6 +85,12 @@ public class SysUserLog implements Serializable{
 	}
 	public void setSysUser(SysUser sysUser) {
 		this.sysUser = sysUser;
+	}
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 	
 	

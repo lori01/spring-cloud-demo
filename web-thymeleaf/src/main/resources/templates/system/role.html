@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>用户列表 - 梦神十夜的小站</title>
+</head>
+
+<body>
+<div id="wrap" class="container clearfix">
+	<!-- 引入导航栏 -->
+	<div th:include="common/header::pagination"></div>
+    
+    <div id="main" class="container">
+    	<div class="content alpha" id="content_main_apl">
+    		<!-- 循环咨询列表start -->
+    		<div class="entry clearfix" th:each="info:${list}">
+				<h1><a class="post-title"  rel="bookmark" th:text="${info.role}"></a></h1>
+			
+				<div class="clear"></div>
+				<div class="entry-content ">
+					<div id="me_div_box" class="add_box">	
+						<table class="formtable_noborder" style="width:100%;font-size: 16px;float: left;">
+							<thead>
+							</thead>
+							<tbody>
+								<tr>
+									<th width="13%"><span th:text="ID"></span></th>
+									<td width="20%"><span th:text="${info.id}"></span></td>
+									<th width="13%"><span th:text="名称"></span></th>
+									<td width="20%">
+										<input class="inputclass" type="text" name="role" th:id="role_+${info.id}" th:value="${info.role}" />
+									</td>
+									<th width="13%"><span th:text="描述"></span></th>
+									<td width="20%">
+										<input class="inputclass" type="text" name="description" th:id="description_+${info.id}" th:value="${info.description}" />
+									</td>
+								</tr>
+								<tr>
+									<th width="13%"><span th:text="状态"></span></th>
+									<td width="20%">
+										<select name="available" th:id="available_+${info.id}">
+											<option value="true" th:selected="${info.available == true}?selected">生效</option>
+											<option value="false" th:selected="${info.available == false}?selected">失效</option>
+										</select>
+									</td>
+									<th width="13%"><span th:text="修改"></span></th>
+									<td width="20%">
+										<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:updRole('+${info.id}+')'"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					<!-- </p> -->
+					</div>
+				</div>
+				
+				<h1><a class="post-title"  rel="bookmark" th:text="权限"></a></h1>
+						<table class="formtable_noborder" style="width:100%;font-size: 16px;float: left;">
+							<thead>
+								<th width="20%" style="text-align: left;"><span th:text="ID"></span></th>
+								<th width="20%" style="text-align: left;"><span th:text="名称"></span></th>
+								<th width="20%" style="text-align: left;"><span th:text="URL"></span></th>
+								<th width="20%" style="text-align: left;"><span th:text="permission"></span></th>
+								<th width="20%" style="text-align: left;"><span th:text="类型"></span></th>
+							</thead>
+							<tbody>
+								<tr th:each="per:${info.permissions}">
+									<td><span th:text="${per.id}"></span></td>
+									<td><span th:text="${per.name}"></span></td>
+									<td><span th:text="${per.url}"></span></td>
+									<td><span th:text="${per.permission}"></span></td>
+									<td><span th:text="${per.resourceType}"></span></td>
+								</tr>
+							</tbody>
+						</table>
+				<!-- END post-bottom -->
+			</div>
+			<!-- 循环咨询列表end -->
+			
+			<!-- 引入分页 -->
+			<div th:include="common/page::common-pagination"></div>
+			
+    	</div>
+    </div>
+</div>
+<!-- 引入底部 -->
+<div th:include="common/footer::common-pagination"></div>
+</body>
+</html>

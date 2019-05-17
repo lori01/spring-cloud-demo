@@ -32,6 +32,7 @@ table {
     padding-right: 10px;
 }
 .formtable_noborder tr td {
+	vertical-align: middle;
     padding: 4px 0;
 }
 

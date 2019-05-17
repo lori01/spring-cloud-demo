@@ -51,6 +51,17 @@ public class UseController extends BaseController {
 		
 		return "user/log";
 	}
+	
+	@RequestMapping("/alllog/{page}")
+	public String alllog(Model model,@PathVariable Integer page) {
+		page = getPageNum(page);
+		SysUserLog info = new SysUserLog();
+		Page<SysUserLog> logs = userService.getUserLogPage(info, page);
+		
+		setPageToModel(model, logs, page);
+		
+		return "user/log";
+	}
 
 	@RequestMapping(value="/update",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody

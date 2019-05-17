@@ -21,12 +21,12 @@ public class LoginController {
 
 	@RequestMapping({"/","/favicon"})
     public String main(Model model){
-        return"redirect:/article/list/1";
+        return"redirect:article/list/1";
     }
 	@RequestMapping({"/index"})
 	public String index(Model model){
 		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
-		return"/index";
+		return"index";
 	}
 	
 	@RequestMapping("/login")
@@ -60,7 +60,7 @@ public class LoginController {
         }
         map.put("msg", msg);
         // 此方法不处理登录成功,由shiro进行处理
-        return "/login";
+        return "login";
     }
 
     @RequestMapping("/403")
