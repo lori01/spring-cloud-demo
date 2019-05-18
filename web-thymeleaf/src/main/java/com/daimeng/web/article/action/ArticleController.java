@@ -102,7 +102,8 @@ public class ArticleController extends BaseController {
 			vo.setStatus(100);
 			vo.setDesc(DateUtils.getDateStrFormat(info.getUpdateTm(), "yyyy年MM月dd日 HH:mm"));
 			vo.setObj(info);
-			if(info.getIsSendMail() != null && "1".equals(info.getIsSendMail())){
+			if(info.getIsSendMail() != null && "1".equals(info.getIsSendMail()) 
+					&& cuser.getEmail() != null && !"".equals(cuser.getEmail())){
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("title", info.getTitle());
 				map.put("createTm", DateUtils.getDateStrFormat(new Date(), DateUtils.YYYY_MM_DDHH_MM_SS));
