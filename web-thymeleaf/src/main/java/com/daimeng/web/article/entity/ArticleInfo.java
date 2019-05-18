@@ -56,6 +56,10 @@ public class ArticleInfo  implements Serializable{
 	//@Column(columnDefinition="enum('0','1')")
 	@Column(nullable = false, unique = true)
     private Integer statusCd;
+	
+	//不映射数据库
+	@Transient
+	private String isSendMail;
 
 	public Integer getId() {
 		return id;
@@ -143,6 +147,14 @@ public class ArticleInfo  implements Serializable{
 
 	public void setStatusCd(Integer statusCd) {
 		this.statusCd = statusCd;
+	}
+
+	public String getIsSendMail() {
+		return isSendMail;
+	}
+
+	public void setIsSendMail(String isSendMail) {
+		this.isSendMail = isSendMail;
 	}
 
 	

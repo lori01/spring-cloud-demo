@@ -362,6 +362,10 @@ function add() {
 		alert("请输入内容!");
 		return;
 	}
+	var isSendMail = "0";
+	if (document.getElementsByName("isSendMail")[0].checked) {
+		isSendMail = "1";
+	}
 	$.ajax({
 		"url" : "/article/add",
 		"type" : "POST",
@@ -370,7 +374,8 @@ function add() {
 			id : $("#article_id_s").val(),
 			title : $("#title_s").val(),
 			shortContext : $("#shortContext_s").val(),
-			context : $("#context_s").val()
+			context : $("#context_s").val(),
+			isSendMail : isSendMail
 		},
 		"success" : function(msgjsonobj) {
 			if (msgjsonobj.status == 100) {

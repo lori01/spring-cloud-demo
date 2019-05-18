@@ -1,6 +1,7 @@
 package com.daimeng.web.article.action;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.daimeng.web.comment.entity.CommentInfo;
 import com.daimeng.web.comment.service.CommentService;
 import com.daimeng.web.common.BaseController;
 import com.daimeng.web.common.ResponseVo;
+import com.daimeng.web.mail.service.MailService;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.service.UserService;
 
@@ -35,6 +37,9 @@ public class ArticleController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private MailService mailService;
 	
 	@RequestMapping("/list/{page}")
 	public String list(Model model,@PathVariable Integer page) {
@@ -97,6 +102,19 @@ public class ArticleController extends BaseController {
 			vo.setStatus(100);
 			vo.setDesc(DateUtils.getDateStrFormat(info.getUpdateTm(), "yyyy年MM月dd日 HH:mm"));
 			vo.setObj(info);
+			if(info.getIsSendMail() != null && "1".equals(info.getIsSendMail())){
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("title", info.getTitle());
+				map.put("createTm", DateUtils.getDateStrFormat(new Date(), DateUtils.YYYY_MM_DDHH_MM_SS));
+				map.put("realname", cuser.getRealname());
+				map.put("id", String.valueOf(info.getId()));
+				map.put("uid", String.valueOf(cuser.getId()));
+				map.put("img", cuser.getImg());
+				map.put("context", info.getContext());
+				map.put("title", info.getTitle());
+				
+				mailService.sendTemplateMail(cuser.getEmail(), info.getTitle(), "/mail/articleTemplate", map);
+			}
 			return vo;
 		} catch (Exception e) {
 			vo.setStatus(200);
