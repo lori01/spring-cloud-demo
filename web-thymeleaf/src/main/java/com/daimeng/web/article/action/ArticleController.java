@@ -61,6 +61,9 @@ public class ArticleController extends BaseController {
 			System.out.println(newContext);*/
 		}
 		model.addAttribute("info",info);
+		if(info == null){
+			return"redirect:/500";
+		}
 		
 		page = getPageNum(page);
 		Page<CommentInfo> list = commentService.findAllByArticleIdOrderByLayerDesc(id, page);

@@ -21,7 +21,7 @@ public class LoginController {
 
 	@RequestMapping({"/","/favicon"})
     public String main(Model model){
-        return"redirect:article/list/1";
+        return"redirect:/article/list/1";
     }
 	@RequestMapping({"/index"})
 	public String index(Model model){
@@ -68,5 +68,11 @@ public class LoginController {
     	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
         System.out.println("------没有权限-------");
         return "403";
+    }
+    @RequestMapping("/500")
+    public String unauthorizedResource(Model model){
+    	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
+    	System.out.println("------没有权限-------");
+    	return "500";
     }
 }
