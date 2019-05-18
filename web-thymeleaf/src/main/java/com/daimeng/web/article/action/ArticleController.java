@@ -114,7 +114,7 @@ public class ArticleController extends BaseController {
 				map.put("context", info.getContext());
 				map.put("title", info.getTitle());
 				
-				mailService.sendTemplateMail(cuser.getEmail(), info.getTitle(), "/mail/articleTemplate", map);
+				mailService.sendTemplateMail(cuser.getEmail(), info.getTitle(), "mail/articleTemplate", map);
 			}
 			return vo;
 		} catch (Exception e) {
