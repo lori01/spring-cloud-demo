@@ -3,6 +3,8 @@ package com.daimeng.web.article.action;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -90,7 +92,7 @@ public class ArticleController extends BaseController {
 	
 	@RequestMapping(value="/add",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	public ResponseVo add(ArticleInfo info) {
+	public ResponseVo add(ArticleInfo info,HttpServletRequest req) {
 		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
 		if(info.getId() == null){
 			info.setCreateUser(cuser);
@@ -107,6 +109,9 @@ public class ArticleController extends BaseController {
 			vo.setObj(info);
 			if(info.getIsSendMail() != null && "1".equals(info.getIsSendMail()) 
 					&& cuser.getEmail() != null && !"".equals(cuser.getEmail())){
+				//basePath--->http://localhost:80/
+				String basePath = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath()+"/";
+				
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("title", info.getTitle());
 				map.put("createTm", DateUtils.getDateStrFormat(new Date(), DateUtils.YYYY_MM_DDHH_MM_SS));
@@ -116,6 +121,7 @@ public class ArticleController extends BaseController {
 				map.put("img", cuser.getImg());
 				map.put("context", info.getContext());
 				map.put("title", info.getTitle());
+				map.put("ip", basePath);
 				
 				mailService.sendTemplateMail(cuser.getEmail(), info.getTitle(), "mail/articleTemplate", map);
 			}

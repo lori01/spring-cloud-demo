@@ -27,7 +27,7 @@
     font-style: normal;
     text-transform: uppercase;
     letter-spacing: 2px;">
-					<a href="http://47.111.105.20" title="梦神十夜的小站" rel="home bookmark" style="color: #5d3d21;
+					<a th:href="@{${ip}}" title="梦神十夜的小站" rel="home bookmark" style="color: #5d3d21;
     text-decoration: none;">梦神十夜的小站</a>
 				</h2><h3>🐷这是一个有理想-有抱负的站长，在百无聊赖中搭建的小站🐷</h3>
 				</div></div></div>
@@ -46,7 +46,7 @@
     -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     position: relative;zoom: 1;">
 				<h1>
-				<a class="post-title" th:href="@{http://47.111.105.20/article/detail/{id}/1(id=${id})}" rel="bookmark" th:text="${title}"></a>
+				<a class="post-title" th:href="@{${ip}+'article/detail/'+${id}}+'/1'" rel="bookmark" th:text="${title}"></a>
 				</h1>	
 				<div class="post-meta" style="font-size: 14px;
     color: #000;
