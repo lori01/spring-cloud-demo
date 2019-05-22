@@ -5,7 +5,8 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<!-- <version>2.1.2.RELEASE</version> -->
-		<version>1.5.3.RELEASE</version>
+		<!-- <version>1.5.3.RELEASE</version> -->
+		<version>1.5.9.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.daimeng</groupId>
@@ -26,6 +27,7 @@
 		<module>api-server-mybatis</module>
 		<module>api-server-jpa</module>
 		<module>web-thymeleaf</module>
+		<module>admin</module>
 	</modules>
 
 	<properties>
