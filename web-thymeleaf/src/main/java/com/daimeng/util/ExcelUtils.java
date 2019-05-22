@@ -29,21 +29,21 @@ public class ExcelUtils {
 	
 	
 	public static void main(String[] args) {
-		String src = "D:/java_test/excel/Excel_Remove_Mod_less.xls";
+		/*String src = "D:/java_test/excel/Excel_Remove_Mod_less.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		System.out.println(date);
 		String targ = "D:/java_test/excel/new_excel_" +date+ ".xls";
 		delRowAndColumn(src, targ);
-		System.out.println(targ);
+		System.out.println(targ);*/
 		
-		/*String src = "D:/java_test/excel/新设法人房地产模板.xls";
+		String src = "D:/java_test/excel/新设法人房地产模板.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		System.out.println(date);
 		String targ = "D:/java_test/excel/新设法人房地产模板_new_excel_" +date+ ".xls";
 		drawPic(src, targ);
-		System.out.println(targ);*/
+		System.out.println(targ);
 		
 		//System.out.println(getSumFormulaString("F10:B810+SUM(A10:S10)+B8+SUM(SS14+YY84)"));
 		//System.out.println(getFormulaPositionFromFormula("=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12"));
@@ -70,6 +70,10 @@ public class ExcelUtils {
     		System.out.println("=====start=====");
     		for(int j = 5; j <= 13; j++ ){
     			HSSFRow row = sheet.getRow(j); 
+    			//excel可能从中间开始才有数据，row.getPhysicalNumberOfCells()获取不为空的列个数
+        		//getLastCellNum()是获取最后一个不为空的列是第几个
+    			System.out.println("row.getPhysicalNumberOfCells()" + row.getPhysicalNumberOfCells());
+    			System.out.println("row.getLastCellNum()" + row.getLastCellNum());
     			for(int k = 1; k <= 6; k++){
     				HSSFCell cell = row.getCell(k);
     				cell.setCellValue(k*10 + j);
