@@ -192,7 +192,7 @@ public class ExcelUtils {
 		for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
         	HSSFRow row = sheet.getRow(rowid);
         	if(row != null){
-        		for(int cid = 0; cid < row.getPhysicalNumberOfCells(); cid++) {
+        		for(int cid = 0; cid < row.getLastCellNum(); cid++) {
                 	HSSFCell cell = row.getCell(cid);
                 	if(cell != null){
                 		if(cell.getCellTypeEnum() == CellType.FORMULA) {
@@ -411,7 +411,7 @@ public class ExcelUtils {
 	 */
 	public static HSSFSheet delColumn(HSSFSheet sheet,int start,int end){
 		HSSFRow firstrow = sheet.getRow(0);
-        int columnCount = firstrow.getPhysicalNumberOfCells();
+        int columnCount = firstrow.getLastCellNum();
         System.out.println("columnCount="+columnCount);
         
         int rowNum = sheet.getLastRowNum();
@@ -569,7 +569,7 @@ public class ExcelUtils {
         for(int i = start-1; i < end; i++){
         	HSSFRow row = sheet.getRow(i);
         	if(row != null){
-        		int columnCount = row.getPhysicalNumberOfCells();
+        		int columnCount = row.getLastCellNum();
         		for(int j = 0 ; j < columnCount; j++){
         			HSSFCell cell = row.getCell(j);
         			if(cell != null){
@@ -596,7 +596,7 @@ public class ExcelUtils {
 	 */
 	public static HSSFSheet hideColumn(HSSFSheet sheet,int start,int end,boolean delData){
 		HSSFRow row = sheet.getRow(0);
-        int columnCount = row.getPhysicalNumberOfCells();
+        int columnCount = row.getLastCellNum();
         System.out.println("columnCount="+columnCount);
         
         int rowNum = sheet.getLastRowNum();
@@ -712,7 +712,9 @@ public class ExcelUtils {
 		for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
         	HSSFRow row = sheet.getRow(rowid);
         	if(row != null){
-        		for(int cid = 0; cid < row.getPhysicalNumberOfCells(); cid++) {
+        		//excel可能从中间开始才有数据，row.getPhysicalNumberOfCells()获取不为空的列个数
+        		//getLastCellNum()是获取最后一个不为空的列是第几个
+        		for(int cid = 0; cid < row.getLastCellNum(); cid++) {
                 	HSSFCell cell = row.getCell(cid);
                 	if(cell != null){
                 		if(cell.getCellTypeEnum() == CellType.FORMULA) {
