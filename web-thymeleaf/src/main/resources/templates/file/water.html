@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>上传文件 - 梦神十夜的小站</title>
+    <title>水印 - 梦神十夜的小站</title>
 </head>
 <body>
 <div id="wrap" class="container clearfix">
@@ -14,6 +14,7 @@
     	<div class="content alpha" id="content_main_apl">
     		<div class="entry clearfix">
 				<form method="POST" action="/file/doUpload" enctype="multipart/form-data">
+				<input type="hidden" name="type" value="water">
 					<table class="formtable_noborder" style="width:100%;">
 						<thead>
 						</thead>
@@ -23,7 +24,14 @@
 									<input type="file" name="file" style="height: 25px;"/>
 								</th>
 								<td width="50%">
-									<input type="submit" value="Submit" class="btn_square_public" value="上传"/>
+									输入水印文字：<input class="inputclass" style="width:280px;" type="text" name="context" />
+								</td>
+							</tr>
+							<tr>
+								<th width="50%">
+								</th>
+								<td width="50%">
+									<input type="submit" value="Submit" class="btn_square_public" value="确定"/>
 								</td>
 							</tr>
 						</tbody>

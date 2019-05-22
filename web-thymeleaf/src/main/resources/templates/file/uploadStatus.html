@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>上传文件结果 - 梦神十夜的小站</title>
+</head>
 <body>
-<h1>Spring Boot - 上传结果</h1>
-<div th:if="${message}">
-    <h2 th:text="${message}"/>
+<div id="wrap" class="container clearfix">
+	<!-- 引入导航栏 -->
+	<div th:include="common/header::pagination"></div>
+    
+    <div id="main" class="container">
+    	<div id="add_content_replace_div"></div>
+    	<div class="content alpha" id="content_main_apl">
+    		<div class="entry clearfix">
+				<div th:if="${message}"  style="text-align:center; ">
+				    <h2 th:text="${message}"/>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>

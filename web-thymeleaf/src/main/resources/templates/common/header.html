@@ -50,6 +50,7 @@
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
 					<li class="show_menu" childid="chart_menu_drop" id="show_chart_menu_drop"><a th:text="表格" href="javascript:void(0)"></a></li>
+					<li class="show_menu" childid="file_menu_drop" id="show_file_menu_drop"><a th:text="文件" href="javascript:void(0)"></a></li>
 					<li class="show_menu" childid="sys_menu_drop" id="show_sys_menu_drop"><a th:text="系统管理" href="javascript:void(0)"></a></li>
 					<li><a th:text="注销" th:href="@{/logout}"></a></li>
 				</ul>
@@ -91,6 +92,14 @@
 				<li><a th:text="关系图" th:href="@{/chart/graph}"></a></li>
 				<li><a th:text="仪表盘图" th:href="@{/chart/gauge}"></a></li>
 				<li><a th:text="漏斗图" th:href="@{/chart/funnel}"></a></li>
+			</ul>
+		</nav>	
+	</div>
+	<div id="file_menu_drop" class="clearfix-menu menu_drop" >
+		<nav class="nav">
+			<ul class="sf-menu-2">
+				<li><a th:text="上传文件" th:href="@{/file/upload}"></a></li>
+				<li><a th:text="添加水印" th:href="@{/file/water}"></a></li>
 			</ul>
 		</nav>	
 	</div>
