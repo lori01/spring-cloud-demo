@@ -50,7 +50,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
- 
+
 
 feign:
   hystrix:
