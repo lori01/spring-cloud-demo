@@ -2,30 +2,28 @@ package com.daimeng.interceptor;
 
 import java.lang.reflect.Method;
 import java.time.Instant;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.daimeng.util.Constants;
-import com.daimeng.web.user.entity.SysUser;
-import com.daimeng.web.user.entity.SysUserLog;
-import com.daimeng.web.user.repository.SysUserLogRepository;
 import com.daimeng.web.user.service.UserService;
 
 @Component
 public class LogInterceptor extends HandlerInterceptorAdapter{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LogInterceptor.class);
+	
+	@Value("${user.trans.log.flag}")
+	private boolean userTransLogFlag;
 	
 	@Autowired
 	private UserService userService;
@@ -60,25 +58,27 @@ public class LogInterceptor extends HandlerInterceptorAdapter{
                            ModelAndView modelAndView) throws Exception {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
-        Instant startTime = (Instant) request.getAttribute("logrequestStartTime");
+        if(userTransLogFlag){
+        	Instant startTime = (Instant) request.getAttribute("logrequestStartTime");
 
-        Instant endTime = Instant.now();
-        long executeTime = endTime.toEpochMilli()- startTime.toEpochMilli();
+            Instant endTime = Instant.now();
+            long executeTime = endTime.toEpochMilli()- startTime.toEpochMilli();
 
-        // log it
-        if (executeTime > 1000) {
-            LOGGER.info("[" + method.getDeclaringClass().getName() + "." + method.getName() + "] 执行耗时 : "
-                    + executeTime + "ms");
-        } else {
-            LOGGER.info("[" + method.getDeclaringClass().getSimpleName() + "." + method.getName() + "] 执行耗时 : "
-                    + executeTime + "ms");
+            // log it
+            if (executeTime > 1000) {
+                LOGGER.info("[" + method.getDeclaringClass().getName() + "." + method.getName() + "] 执行耗时 : "
+                        + executeTime + "ms");
+            } else {
+                LOGGER.info("[" + method.getDeclaringClass().getSimpleName() + "." + method.getName() + "] 执行耗时 : "
+                        + executeTime + "ms");
+            }
+            
+            try {
+            	userService.saveSysUserLog(request, executeTime);
+    		} catch (Exception e) {
+    			System.out.println(e.getMessage());
+    		}
         }
-        
-        try {
-        	userService.saveSysUserLog(request, executeTime);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
 
     }
     
