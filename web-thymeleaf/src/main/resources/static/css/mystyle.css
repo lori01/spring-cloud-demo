@@ -440,3 +440,32 @@ input.btn_square_public_cur:hover a:hover{
 	padding: 0px;
 }
 
+.header-logo-span {
+	border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin-right: 5px;
+    /* background: #5a1f1b;  #b6a476
+    color:#eef7f2; */
+    background: #5d3d21;
+    color:white;
+	text-align: center;
+    line-height: 40px;
+    /* -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); */
+}
+.header-logo-span-b {
+	/* width: 40px; */
+    height: 40px;
+    float: left;
+	/* background:#bdaead;
+	color:#5a1f1b; #b6a476 */
+	background: white;
+    color: #5d3d21;
+    text-align: center;
+    line-height: 40px;
+    /* -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); */
+}
+
