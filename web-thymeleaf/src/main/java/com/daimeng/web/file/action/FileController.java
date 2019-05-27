@@ -41,9 +41,9 @@ public class FileController {
 		return "file/water";
 	}
 	
-	@GetMapping("/uploadStatus")
+	@GetMapping("/pageStatus")
 	public String list(Model model,RedirectAttributes redirectAttributes) {
-		return "file/uploadStatus";
+		return "file/pageStatus";
 	}
 	
 	@PostMapping("/doUpload") 
@@ -52,7 +52,7 @@ public class FileController {
             RedirectAttributes redirectAttributes,HttpServletResponse response) {
 		if (file.isEmpty()) {
 	        redirectAttributes.addFlashAttribute("message", "请选择一个文件进行上传！");
-	        return "redirect:/file/uploadStatus";
+	        return "redirect:/file/pageStatus";
 	    }
 
 	    try {
@@ -60,7 +60,7 @@ public class FileController {
 	        byte[] bytes = file.getBytes();
 	        if(uploadPath == null || "".equals(uploadPath)){
 	        	redirectAttributes.addFlashAttribute("message", "路径不存在！");
-		        return "redirect:/file/uploadStatus";
+		        return "redirect:/file/pageStatus";
 	        }
 	        Path path = Paths.get(uploadPath + file.getOriginalFilename());
 	        Files.write(path, bytes);
@@ -76,7 +76,7 @@ public class FileController {
 	        e.printStackTrace();
 	    }
 
-	    return "redirect:/file/uploadStatus";
+	    return "redirect:/file/pageStatus";
 	}
 	
 	public void down(HttpServletResponse response, String filePath){

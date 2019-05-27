@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>文章详情 - 梦神十夜的小站</title>
+</head>
+<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+
+<script language="javascript" charset="utf-8" type="text/javascript" src="/ueditor/ueditor.config.js"></script>
+<script language="javascript" charset="utf-8" type="text/javascript" src="/ueditor/ueditor.all.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="/ueditor/themes/default/css/ueditor.min.css" />
+
+<body>
+<div id="wrap" class="container clearfix">
+	<div th:include="common/header::pagination"></div>
+    
+    <div id="main" class="container">
+    	<form method="post" action="/article/addUeditor" id="form" onsubmit="return check()">
+	    	<div class="content alpha">
+	    		<div class="entry clearfix">
+					<input type="hidden" name="article_id" id="article_id_ue" value=""/>
+					<table class="formtable_noborder" style="">
+						<thead>
+						</thead>
+						<tbody>
+							<tr>
+								<th width="10%"><span th:text="标题"></span></th>
+								<td width="90%">
+									<input class="inputclass textarea_count" style="width: 700px;" type="text" name="title" id="title_ue" maxlength="100" placeholder="最多可输入100个字"/>
+									<span class="t_h"><i>0</i>/100</span>
+								</td>
+							</tr>
+							<tr>
+								<th width="10%"><span th:text="简介"></span></th>
+								<td width="90%">
+									<textarea class="textarea_count" name="shortContext" id="shortContext_ue" style="width:700px;" maxlength="300" placeholder="最多可输入300个字"></textarea>
+									<span class="t_h"><i>0</i>/300</span>
+								</td>
+							</tr>
+							<tr>
+								<th width="10%"><span th:text="内容"></span></th>
+								<td width="90%">
+									<textarea class="textarea_count" name="context" id="context_ue" style="width:700px;height:430px;" maxlength="3000" placeholder="最多可输入3000个字"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<th width="15%"><span th:text="发送EMAIL"></span></th>
+								<td width="85%">
+									<input type="checkbox" name="isSendMail" id="isSendMail" value="1"/>同步发送到E-MAIL
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div class="page_div">
+						<span class="page_span">
+							<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancle()'" value=""/>
+							<input type="button" class="btn_yes_public" th:onclick= "'javascript:add('+${session.user_session.id}+')'" value=""/> -->
+							<input type="submit" class="btn_public btn_public_yes_text" th:onclick= "'javascript:submitForm('+${session.user_session.id}+')'" />
+						</span>
+					</div>
+							
+				</div>
+	    	</div>
+    	</form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var editor = new baidu.editor.ui.Editor();
+		editor.render("context_ue");
+		$("form").submit(function(msgjsonobj){
+			$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
+				
+			});	
+		});
+	});
+	function check(){
+		if ($("#title_ue").val() == null || $("#title_ue").val() == "") {
+			alert("请输入标题!");
+			return false;
+		}
+		if ($("#shortContext_ue").val() == null || $("#shortContext_ue").val() == "") {
+			alert("请输入简介!");
+			return false;
+		}
+		return true;
+	}
+</script>
+	
+	
+</body>
+</html>

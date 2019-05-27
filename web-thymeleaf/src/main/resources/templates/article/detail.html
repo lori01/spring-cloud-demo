@@ -26,7 +26,7 @@
 				<div class="clear"></div>
 				<div class="entry-content">
 					<a th:href="@{/article/user/{uid}/1(uid=${info.createUser.id})}" rel="tag"><img th:src="${info.createUser.img}" class="thumb"/></a>
-						<span th:text="${info.context}"></span>
+						<span th:utext="${info.context}"></span>
 						<p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"></p>
 				</div>
 				<!-- END post-bottom -->

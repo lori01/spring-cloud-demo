@@ -25,7 +25,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	    */  
 	    @Override  
 	    public String getParameter(String name) {
-	        Boolean flag = ("content".equals(name) || name.endsWith("WithHtml"));
+	        Boolean flag = ("context".equals(name) || name.endsWith("WithHtml"));
 	        if( flag && !isIncludeRichText){
 	            return super.getParameter(name);
 	        }

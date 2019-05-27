@@ -382,13 +382,13 @@ function add() {
 				if($("#article_id_s").val() != null && $("#article_id_s").val() != ""){
 					//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!");
 					//location.href = window.location.href;
-					$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!" , function(){
+					$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
 						location.href = window.location.href;
 					});
 				}
 				else if ($("#add_content_replace_div").html() == undefined) {
 					//alert(msgjsonobj.status + "-" + msgjsonobj.desc + " 发布成功!");
-					$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 修改成功!" , function(){
+					$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
 						cancle();
 					});
 				} else {

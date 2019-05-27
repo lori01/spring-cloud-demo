@@ -31,8 +31,10 @@ public class JsoupUtil {
 	    	//去掉两端的空格
 	        content = content.trim();
         }
-	    content = xssEncode(content);
-	    //content = Jsoup.clean(content, "", whitelist, outputSettings);
+	    if(!(content.indexOf("</p>") > -1 && content.indexOf("<p") > -1)){
+	    	content = xssEncode(content);
+		    //content = Jsoup.clean(content, "", whitelist, outputSettings);
+	    }
         return content;
 	}
 	

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.daimeng.util.Constants;
 import com.daimeng.util.DateUtils;
@@ -51,6 +52,11 @@ public class ArticleController extends BaseController {
 		setPageToModel(model, list, page);
 		
 		return "article/list";
+	}
+	
+	@RequestMapping("/ueditor")
+	public String add(Model model) {
+		return "article/ueditor";
 	}
 	
 	@RequestMapping("/detail/{id}/{page}")
@@ -130,6 +136,20 @@ public class ArticleController extends BaseController {
 			vo.setStatus(200);
 			vo.setDesc(e.getMessage());
 			return vo;
+		}
+		
+	}
+	
+	@RequestMapping(value="/addUeditor",method = {RequestMethod.POST,RequestMethod.GET})
+	//@ResponseBody
+	public String addUeditor(ArticleInfo info,HttpServletRequest req,RedirectAttributes redirectAttributes) {
+		ResponseVo vo = add(info, req);
+		if(vo.getStatus() == 100){
+			redirectAttributes.addFlashAttribute("message", "保存富文本内容成功！");
+	        return "redirect:/file/pageStatus";
+		}else{
+			redirectAttributes.addFlashAttribute("message", "保存富文本内容失败！");
+	        return "redirect:/file/pageStatus";
 		}
 		
 	}
