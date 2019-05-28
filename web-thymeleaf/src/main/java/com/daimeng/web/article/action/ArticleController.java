@@ -155,6 +155,7 @@ public class ArticleController extends BaseController {
 		ResponseVo vo = add(info, req);
 		if(vo.getStatus() == 100){
 			redirectAttributes.addFlashAttribute("message", "保存富文本内容成功！");
+			redirectAttributes.addFlashAttribute("jumpUrl", "/article/detail/" +((ArticleInfo) vo.getObj()).getId()+ "/1");
 	        return "redirect:/file/pageStatus";
 		}else{
 			redirectAttributes.addFlashAttribute("message", "保存富文本内容失败！");

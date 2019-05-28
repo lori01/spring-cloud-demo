@@ -10,15 +10,42 @@
 	<div th:include="common/header::pagination"></div>
     
     <div id="main" class="container">
+    	<input type="hidden" name="jump_url" id="jump_url" th:value="${jumpUrl}"/>
+    
     	<div id="add_content_replace_div"></div>
     	<div class="content alpha" id="content_main_apl">
     		<div class="entry clearfix">
-				<div th:if="${message}"  style="text-align:center; ">
+				<div style="text-align:center; ">
 				    <h2 th:text="${message}"/>
 				</div>
+				<div style="text-align:center; ">
+					<span id="timertext" style="display:none;" th:text="3"></span>
+				    <span id="timespan" style="display:none;">秒后跳转到新页面...</span>
+			    </div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	var jumpUrl = $("#jump_url").val();
+	if(jumpUrl != undefined && jumpUrl != null && jumpUrl != ""){
+		$("#timertext").show();
+		$("#timespan").show();
+		setInterval("timer()",1000);
+		//setTimeout(function(){location.href=jumpUrl}, 3000);
+	}
+});
+function timer(){
+	var time = parseInt($("#timertext").text());
+	time = time -1;
+	$("#timertext").text(time);
+	if(time == 0){
+		var jumpUrl = $("#jump_url").val();
+		location.href=jumpUrl;
+	}
+}
+</script>
 </body>
 </html>
