@@ -23,6 +23,7 @@
 .entry-content span p img {
 	-moz-box-shadow: 0 0 0px rgba(0, 0, 0, 0) !important;
     -webkit-box-shadow: 0 0 0px rgba(0, 0, 0, 0) !important;
+    max-width: 900px;
 }
 
 .title_img {
