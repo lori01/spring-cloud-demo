@@ -469,7 +469,6 @@ function delArticleAction(id){
 	}
 }
 function editArticle(id){
-	show();
 	$.ajax({
 		"url" : "/article/findOne",
 		"type" : "POST",
@@ -479,10 +478,16 @@ function editArticle(id){
 		},
 		"success" : function(msgjsonobj) {
 			if (msgjsonobj.status == 100) {
-				$("#article_id_s").val(id);
-				$("#title_s").val(msgjsonobj.obj.title);
-				$("#shortContext_s").val(msgjsonobj.obj.shortContext);
-				$("#context_s").val(msgjsonobj.obj.context);
+				if(msgjsonobj.obj.contextType == '02'){
+					var url = "/article/ueditor/" + id;
+					location.href = url;
+				}else{
+					show();
+					$("#article_id_s").val(id);
+					$("#title_s").val(msgjsonobj.obj.title);
+					$("#shortContext_s").val(msgjsonobj.obj.shortContext);
+					$("#context_s").val(msgjsonobj.obj.context);
+				}
 			} else {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc);
 				$.showAlertMessage("error","查询失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){

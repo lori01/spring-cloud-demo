@@ -34,6 +34,9 @@ public class ArticleInfo  implements Serializable{
 	private String shortContext;
 	
 	@Column(nullable = false, unique = true)
+	private String contextType;
+	
+	@Column(nullable = false, unique = true)
 	private Date createTm;
 	
 	@Column(nullable = false, unique = true)
@@ -155,6 +158,14 @@ public class ArticleInfo  implements Serializable{
 
 	public void setIsSendMail(String isSendMail) {
 		this.isSendMail = isSendMail;
+	}
+
+	public String getContextType() {
+		return contextType;
+	}
+
+	public void setContextType(String contextType) {
+		this.contextType = contextType;
 	}
 
 	

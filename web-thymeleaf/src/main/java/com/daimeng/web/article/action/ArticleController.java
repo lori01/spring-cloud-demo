@@ -54,8 +54,13 @@ public class ArticleController extends BaseController {
 		return "article/list";
 	}
 	
-	@RequestMapping("/ueditor")
-	public String add(Model model) {
+	@RequestMapping("/ueditor/{id}")
+	public String add(Model model,@PathVariable Integer id) {
+		ArticleInfo info = new ArticleInfo();
+		if(id != null && id >0){
+			info = articleService.findOne(id);
+		}
+		model.addAttribute("info",info);
 		return "article/ueditor";
 	}
 	
@@ -107,6 +112,9 @@ public class ArticleController extends BaseController {
 		}
 		info.setUpdateTm(new Date());
 		info.setUpdateUser(cuser);
+		if(info.getContextType() == null || "".equals(info.getContextType())){
+			info.setContextType("01");
+		}
 		ResponseVo vo = new ResponseVo();
 		try {
 			info = articleService.addArticle(info);
@@ -143,6 +151,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value="/addUeditor",method = {RequestMethod.POST,RequestMethod.GET})
 	//@ResponseBody
 	public String addUeditor(ArticleInfo info,HttpServletRequest req,RedirectAttributes redirectAttributes) {
+		info.setContextType("02");
 		ResponseVo vo = add(info, req);
 		if(vo.getStatus() == 100){
 			redirectAttributes.addFlashAttribute("message", "保存富文本内容成功！");

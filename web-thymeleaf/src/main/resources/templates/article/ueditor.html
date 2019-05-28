@@ -18,7 +18,7 @@
     	<form method="post" action="/article/addUeditor" id="form" onsubmit="return check()">
 	    	<div class="content alpha">
 	    		<div class="entry clearfix">
-					<input type="hidden" name="article_id" id="article_id_ue" value=""/>
+					<input type="hidden" name="id" id="id_ue" th:value="${info.id}"/>
 					<table class="formtable_noborder" style="">
 						<thead>
 						</thead>
@@ -26,21 +26,21 @@
 							<tr>
 								<th width="10%"><span th:text="标题"></span></th>
 								<td width="90%">
-									<input class="inputclass textarea_count" style="width: 700px;" type="text" name="title" id="title_ue" maxlength="100" placeholder="最多可输入100个字"/>
+									<input class="inputclass textarea_count" style="width: 700px;" type="text" name="title" id="title_ue" maxlength="100" placeholder="最多可输入100个字" th:value="${info.title}"/>
 									<span class="t_h"><i>0</i>/100</span>
 								</td>
 							</tr>
 							<tr>
 								<th width="10%"><span th:text="简介"></span></th>
 								<td width="90%">
-									<textarea class="textarea_count" name="shortContext" id="shortContext_ue" style="width:700px;height:160px;" maxlength="300" placeholder="最多可输入300个字"></textarea>
+									<textarea class="textarea_count" name="shortContext" id="shortContext_ue" style="width:700px;height:160px;" maxlength="300" placeholder="最多可输入300个字" th:text="${info.shortContext}"></textarea>
 									<span class="t_h"><i>0</i>/300</span>
 								</td>
 							</tr>
 							<tr>
 								<th width="10%"><span th:text="内容"></span></th>
 								<td width="90%">
-									<textarea class="textarea_count" name="context" id="context_ue" style="width:700px;height:430px;" maxlength="3000" placeholder="最多可输入3000个字"></textarea>
+									<textarea class="textarea_count" name="context" id="context_ue" style="width:700px;height:430px;" maxlength="3000" placeholder="最多可输入3000个字" th:text="${info.context}"></textarea>
 								</td>
 							</tr>
 							<tr>
