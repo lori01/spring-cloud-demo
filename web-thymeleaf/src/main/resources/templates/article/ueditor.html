@@ -70,8 +70,9 @@
 <div th:include="common/footer::common-pagination"></div>
 
 <script type="text/javascript">
+var editor;
 	$(document).ready(function() {
-		var editor = new baidu.editor.ui.Editor();
+		editor = new baidu.editor.ui.Editor();
 		editor.render("context_ue");
 		$("form").submit(function(msgjsonobj){
 			$.showAlertMessage("success","保存成功", msgjsonobj.status + "-" + msgjsonobj.desc + " 保存成功!" , function(){
@@ -86,6 +87,10 @@
 		}
 		if ($("#shortContext_ue").val() == null || $("#shortContext_ue").val() == "") {
 			alert("请输入简介!");
+			return false;
+		}
+		if (editor.getContent() == null || editor.getContent() == "") {
+			alert("请输入内容!");
 			return false;
 		}
 		return true;
