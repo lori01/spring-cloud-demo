@@ -20,6 +20,11 @@
 	
 }
 
+.entry-content span p img {
+	-moz-box-shadow: 0 0 0px rgba(0, 0, 0, 0) !important;
+    -webkit-box-shadow: 0 0 0px rgba(0, 0, 0, 0) !important;
+}
+
 .title_img {
 	width: 60px;
 	border-radius: 80px;

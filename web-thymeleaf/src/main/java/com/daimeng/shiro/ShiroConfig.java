@@ -67,6 +67,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/js/**", "anon");
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/ueditor/**", "anon");
+		filterChainDefinitionMap.put("/config", "anon");
 		
 		//spring boot自带监控页面
 		filterChainDefinitionMap.put("/health", "anon");
