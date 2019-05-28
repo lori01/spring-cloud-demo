@@ -70,11 +70,11 @@ public class ArticleController extends BaseController {
 		}
 		model.addAttribute("info",info);
 		if(info == null){
-			return"redirect:/500";
+			//return"redirect:/500";
 		}
 		
 		page = getPageNum(page);
-		Page<CommentInfo> list = commentService.findAllByArticleIdOrderByLayerDesc(id, page);
+		Page<CommentInfo> list = commentService.findAllByArticleIdOrderByLayerDesc(info.getId(), page);
 		
 		setPageToModel(model, list, page);
 		

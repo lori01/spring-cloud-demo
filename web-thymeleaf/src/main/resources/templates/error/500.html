@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>≡(▔﹏▔)≡ 500错误 - 梦神十夜的小站</title>
+</head>
+<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+<link re
+<body>
+<div id="wrap" class="container clearfix">
+	<div th:include="common/header::pagination"></div>
+	<div class="header_wrap">
+		<div id="header_login" class="clearfix">
+			<div id="logo_login" style="text-align:center; ">
+				<h2><a href="/" title="500" rel="home bookmark">≡(▔﹏▔)≡</a></h2>
+				<h3><a href="/" title="500" rel="home bookmark">糟糕，发生了500内部错误，报错信息如下：</a></h3>
+				<div class="entry-content" style="text-align: left !important;">
+					<span th:utext="${errorMsg}"></span>
+					<p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"></p>
+				</div>
+			</div><!-- END logo --> 
+		</div>
+	</div>
+</div>
+</body>
+</html>

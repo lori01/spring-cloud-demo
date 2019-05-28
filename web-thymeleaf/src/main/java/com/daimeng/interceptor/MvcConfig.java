@@ -28,6 +28,7 @@ public class MvcConfig implements WebMvcConfigurer{
 	@Autowired
 	private LogInterceptor logInterceptor;
 	
+	//MVC拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry interceptor) {
 		interceptor.addInterceptor(logInterceptor).addPathPatterns("/**");

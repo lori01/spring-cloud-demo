@@ -67,12 +67,12 @@ public class LoginController {
     public String unauthorizedRole(Model model){
     	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
         System.out.println("------没有权限-------");
-        return "403";
+        return "error/403";
     }
     @RequestMapping("/500")
-    public String unauthorizedResource(Model model){
+    public String codeError(Model model){
     	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
-    	System.out.println("------没有权限-------");
-    	return "500";
+    	System.out.println("------内部错误-------");
+    	return "error/500";
     }
 }
