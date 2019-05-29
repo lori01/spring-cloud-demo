@@ -227,7 +227,7 @@ input.btn_square_public_cur:hover a:hover{
 
 .page_div {
 	text-align:center;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 }
 .page_span {
 	display: inline-block;

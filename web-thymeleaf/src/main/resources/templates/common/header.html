@@ -54,7 +54,7 @@
 			<nav class="nav">
 				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img class="title_img" th:src="${session.user_session.img}"/></a>
 				<ul class="sf-menu">
-					<li class="show_menu" childid="user_menu_drop" id="show_user_menu_drop"><a th:text="欢饮您-+${session.user_session.realname}" href="javascript:void(0)"></a></li>
+					<li class="show_menu" childid="user_menu_drop" id="show_user_menu_drop"><a th:text="欢迎您-+${session.user_session.realname}" href="javascript:void(0)"></a></li>
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
 					<li class="show_menu" childid="chart_menu_drop" id="show_chart_menu_drop"><a th:text="表格" href="javascript:void(0)"></a></li>
@@ -112,6 +112,14 @@
 			</ul>
 		</nav>	
 	</div>
+	
+	<!-- <div class="header_wrap" style="z-index:99999;text-align: center;align-items: center;padding-left: 0px;position: fixed;left: 0;bottom: 0;width: 100%;height: 15px;">
+		<div id="header_login" class="clearfix" style="margin-top: 3px;">
+			<div>
+				<a class="post-title" href="http://www.beian.miit.gov.cn/" target="_blank">闽ICP备19010695号</a>
+			</div>END logo 
+		</div>
+	</div> -->
 	
 	 
 	
