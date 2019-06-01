@@ -14,8 +14,43 @@ public class AnnotationUtils {
 		vo.setFirst(true);
 		vo.setPoint(35.25);
 		vo.setStudentNo(2007813015l);
-		System.out.println(obj2xml(vo));
+		//System.out.println(obj2xml(vo));
+		
+		TestHead head = new TestHead();
+		head.setAppNo(1);
+		head.setTranNo("001");
+		head.setTranTime("2019-05-31");
+		System.out.println(getEcifEsbXml(head, vo));
 
+	}
+	
+	/**
+	 * 
+	* @功能描述: 最终报文
+	* @方法名称: getEcifEsbXml 
+	* @路径 com.daimeng.annotation 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年6月1日 下午1:22:50 
+	* @version V1.0   
+	* @param sysHead
+	* @param appHead
+	* @param body
+	* @return 
+	* @return String
+	 */
+	public static String getEcifEsbXml(Object head,Object body){
+		StringBuilder xml = new StringBuilder();
+		xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		xml.append("<transaction>");
+		xml.append("<sys_head>");
+		xml.append(obj2xml(head));
+		xml.append("</sys_head>");
+		
+		xml.append("<body>");
+		xml.append(obj2xml(body));
+		xml.append("</body>");
+		xml.append("</transaction>");
+		return xml.toString();
 	}
 	/**
 	 * 
