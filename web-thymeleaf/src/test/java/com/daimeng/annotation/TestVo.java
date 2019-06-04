@@ -1,5 +1,7 @@
 package com.daimeng.annotation;
 
+import java.util.ArrayList;
+
 @XmlAnnotation
 public class TestVo {
 	
@@ -17,6 +19,8 @@ public class TestVo {
 	private Double point;
 	@XmlAnnotation("is_first")
 	private boolean isFirst;
+	@XmlAnnotation("head_list")
+	private ArrayList<TestHead> headList;
 
 	public String getUserName() {
 		return userName;
@@ -73,6 +77,12 @@ public class TestVo {
 	public void setFirst(boolean isFirst) {
 		this.isFirst = isFirst;
 	}
-	
-	
+
+	public ArrayList<TestHead> getHeadList() {
+		return headList;
+	}
+
+	public void setHeadList(ArrayList<TestHead> headList) {
+		this.headList = headList;
+	}
 }

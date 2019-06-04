@@ -2,6 +2,8 @@ package com.daimeng.annotation;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnnotationUtils {
 
@@ -20,6 +22,21 @@ public class AnnotationUtils {
 		head.setAppNo(1);
 		head.setTranNo("001");
 		head.setTranTime("2019-05-31");
+
+		ArrayList<TestHead> list = new ArrayList<TestHead>();
+		TestHead h1 = new TestHead();
+		TestHead h2 = new TestHead();
+		h1.setAppNo(1);
+		h1.setTranNo("001");
+		h1.setTranTime("2019-05-31");
+		h2.setAppNo(2);
+		h2.setTranNo("002");
+		h2.setTranTime("2019-06-05");
+
+		list.add(h1);
+		list.add(h2);
+		vo.setHeadList(list);
+
 		System.out.println(getEcifEsbXml(head, vo));
 
 	}
@@ -78,7 +95,7 @@ public class AnnotationUtils {
 					xmlName = xmlAnnotation.value();
 				}
 			}
-			xml += "<" + xmlName + ">";
+
 			try {
 				String methodName = field.getName();
 				if(!"is".equals(methodName.subSequence(0, 2))){
@@ -91,13 +108,30 @@ public class AnnotationUtils {
 					if(field.getType().getName().indexOf("java.lang.") > -1 || field.getType().getName().indexOf(".") == -1){
 						Object val = m.invoke(object);
 						if(val != null){
+							xml += "<" + xmlName + ">";
 							xml += String.valueOf(val);
+							xml += "</" + xmlName + ">";
 						}
 					}
 					else if(field.getType().getName().indexOf("com.daimeng.") > -1){
 						Object obj = m.invoke(object);
 						if(obj != null){
+							xml += "<" + xmlName + ">";
 							xml += obj2xml(obj);
+							xml += "</" + xmlName + ">";
+						}
+					}
+
+					else if(field.getType().getName().indexOf("java.util.List") > -1 || field.getType().getName().indexOf("java.util.ArrayList") > -1){
+						List list = (List) m.invoke(object);
+						if(list != null){
+							xml += "<array>";
+							for(Object obj : list){
+								xml += "<" + xmlName + ">";
+								xml += obj2xml(obj);
+								xml += "</" + xmlName + ">";
+							}
+							xml += "</array>";
 						}
 					}
 				}
@@ -105,7 +139,7 @@ public class AnnotationUtils {
 				e.printStackTrace();
 				System.out.println(e.getMessage());
 			}
-			xml += "</" + xmlName + ">";
+
 		}
 		return xml;
 	}
