@@ -58,15 +58,15 @@ public class AnnotationUtils {
 	public static String getEcifEsbXml(Object head,Object body){
 		StringBuilder xml = new StringBuilder();
 		xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		xml.append("<transaction>");
-		xml.append("<sys_head>");
+		xml.append("<service>");
+		xml.append("<Head>");
 		xml.append(obj2xml(head));
-		xml.append("</sys_head>");
+		xml.append("</Head>");
 		
-		xml.append("<body>");
+		xml.append("<Body>");
 		xml.append(obj2xml(body));
-		xml.append("</body>");
-		xml.append("</transaction>");
+		xml.append("</Body>");
+		xml.append("</service>");
 		return xml.toString();
 	}
 	/**
