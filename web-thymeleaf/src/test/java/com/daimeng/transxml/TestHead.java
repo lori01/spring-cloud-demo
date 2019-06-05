@@ -1,4 +1,4 @@
-package com.daimeng.annotation;
+package com.daimeng.transxml;
 
 @XmlAnnotation
 public class TestHead {

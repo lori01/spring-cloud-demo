@@ -1,4 +1,4 @@
-package com.daimeng.annotation;
+package com.daimeng.transxml;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
