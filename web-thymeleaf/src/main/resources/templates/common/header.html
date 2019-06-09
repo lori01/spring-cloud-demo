@@ -54,9 +54,11 @@
 			<nav class="nav">
 				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img class="title_img" th:src="${session.user_session.img}"/></a>
 				<ul class="sf-menu">
-					<li class="show_menu" childid="user_menu_drop" id="show_user_menu_drop"><a th:text="欢迎您-+${session.user_session.realname}" href="javascript:void(0)"></a></li>
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
+					<li><a th:text="速记" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
+					<li><a th:text="富本" th:href="@{/article/ueditor/0}"></a></li>
+					<li class="show_menu" childid="user_menu_drop" id="show_user_menu_drop"><a th:text="我的" href="javascript:void(0)"></a></li>
 					<li class="show_menu" childid="chart_menu_drop" id="show_chart_menu_drop"><a th:text="表格" href="javascript:void(0)"></a></li>
 					<li class="show_menu" childid="file_menu_drop" id="show_file_menu_drop"><a th:text="文件" href="javascript:void(0)"></a></li>
 					<li class="show_menu" childid="sys_menu_drop" id="show_sys_menu_drop"><a th:text="系统管理" href="javascript:void(0)"></a></li>
@@ -86,8 +88,6 @@
 			<ul class="sf-menu-2">
 				<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 				<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
-				<li><a th:text="创建快速文章" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
-				<li><a th:text="创建富文本文章" th:href="@{/article/ueditor/0}"></a></li>
 			</ul>
 		</nav>	
 	</div>

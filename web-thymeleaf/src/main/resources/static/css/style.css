@@ -766,12 +766,15 @@ p.w {
 	line-height: 40px
 }
 
+/* 导航栏 li 宽度 间隔 */
 #navigation a {
 	-webkit-transition: background 0.2s ease-in-out;
 	-moz-transition: background 0.2s ease-in-out;
 	-o-transition: background 0.2s ease-in-out;
 	-ms-transition: background 0.2s ease-in-out;
-	transition: background 0.2s ease-in-out
+	transition: background 0.2s ease-in-out;
+	padding-left: 7px;
+    padding-right: 7px;
 }
 
 .sf-menu, .sf-menu * {
@@ -800,7 +803,8 @@ p.w {
 
 .sf-menu li {
 	float: left;
-	position: relative
+	position: relative；
+	font-size: 16px;
 }
 
 .sf-menu a {
