@@ -200,12 +200,22 @@ public class ExcelUtils {
                 	HSSFCell cell = row.getCell(cid);
                 	if(cell != null){
                 		if(cell.getCellTypeEnum() == CellType.FORMULA) {
-                			//原始公式
-                			String formula = cell.getCellFormula();
+							String formula = "";
+							boolean formulaError = false;
+                			try {
+								//原始公式
+								formula = cell.getCellFormula();
+							}catch (Exception e){
+                				System.out.println("error");
+								System.out.println(e.getMessage());
+								formulaError = true;
+								formula = cell.getStringCellValue();
+							}
+
                             System.out.println(formula);
                             System.out.println(cell.getNumericCellValue());
                             //判断公式
-                            if(formula != null && formula.indexOf(":") > -1){
+                            if(formula != null && !"".equals(formula) && formula.indexOf(":") > -1){
                             	System.out.println("+++create new formal start+++");
                         		System.out.println("旧公式="+formula);
                         		//获取所有公式内部的计算单元格区间
@@ -221,7 +231,13 @@ public class ExcelUtils {
                             	System.out.println("新公式="+formula);
                             	System.out.println(cell.getNumericCellValue());
                             	System.out.println("+++create new formal end+++");
-                            }
+                            }else{
+                            	if(formulaError){
+									System.out.println("rewrite forlmula");
+									cell.setCellFormula(formula);
+									System.out.println("+++create new formal end+++");
+								}
+							}
                         }
                 	}
                 }
