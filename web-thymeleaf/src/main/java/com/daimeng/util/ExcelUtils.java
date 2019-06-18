@@ -12,9 +12,13 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.formula.eval.FunctionEval;
+import org.apache.poi.ss.formula.eval.NumberEval;
+import org.apache.poi.ss.formula.eval.OperandResolver;
+import org.apache.poi.ss.formula.eval.ValueEval;
+import org.apache.poi.ss.formula.functions.Function;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.springframework.context.annotation.Description;
 
 /**
  * 
@@ -36,14 +40,32 @@ public class ExcelUtils {
 		String targ = "D:/java_test/excel/new_excel_" +date+ ".xls";
 		delRowAndColumn(src, targ);
 		System.out.println(targ);*/
+		initFormula();
+		try {
+			String src = "D:/java_test/excel/新公式.xls";
+			FileInputStream is = new FileInputStream(src);
+            HSSFWorkbook workbook = new HSSFWorkbook(is);
+            HSSFSheet sheet = getSheet(workbook, 0, "");
+            HSSFRow row = sheet.getRow(0);
+            HSSFCell cell = row.getCell(1);
+            cell.setCellValue(270d);
+            evaluate(workbook, 0, null);
+            System.out.println(row.getCell(0).getNumericCellValue());
+            FileOutputStream os = new FileOutputStream(src);
+            workbook.write(os);
+            is.close();
+            os.close();
+		}catch (Exception e){
+			
+		}
 		
-		String src = "D:/java_test/excel/新设法人房地产模板.xls";
+		/*String src = "D:/java_test/excel/新设法人房地产模板.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		System.out.println(date);
 		String targ = "D:/java_test/excel/新设法人房地产模板_new_excel_" +date+ ".xls";
 		drawPic(src, targ);
-		System.out.println(targ);
+		System.out.println(targ);*/
 		
 		//System.out.println(getSumFormulaString("F10:B810+SUM(A10:S10)+B8+SUM(SS14+YY84)"));
 		//System.out.println(getFormulaPositionFromFormula("=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12"));
@@ -260,7 +282,7 @@ public class ExcelUtils {
 	* @return String
 	 */
 	@Deprecated
-	public static String reWriteFormulaForSum(String formula,int delStartIndex,int delEndIndex){
+	private static String reWriteFormulaForSum(String formula,int delStartIndex,int delEndIndex){
 		String letters = formula.substring(formula.indexOf("(")+1, formula.indexOf(")"));
     	String oriStartLetter = letters.split(":")[0];
     	String oriEndLetter = letters.split(":")[1];
@@ -285,7 +307,7 @@ public class ExcelUtils {
 	* @return 
 	* @return String
 	 */
-	public static String reWriteFormulaPosition(String position,int delStartIndex,int delEndIndex){
+	private static String reWriteFormulaPosition(String position,int delStartIndex,int delEndIndex){
     	String oriStartLetter = position.split(":")[0];
     	String oriEndLetter = position.split(":")[1];
     	
@@ -309,7 +331,7 @@ public class ExcelUtils {
 	* @return 
 	* @return String
 	 */
-	public static String getNewStartLetter(String oriStartLetter,int delStartIndex,int delEndIndex){
+	private static String getNewStartLetter(String oriStartLetter,int delStartIndex,int delEndIndex){
 		String newStartLetter = "";
 		//获取字母中的行数字
     	String currRowNum = getNumberFromString(oriStartLetter);
@@ -342,7 +364,7 @@ public class ExcelUtils {
 	* @return 
 	* @return String
 	 */
-	public static String getNewEndLetter(String oriEndLetter,int delStartIndex,int delEndIndex){
+	private static String getNewEndLetter(String oriEndLetter,int delStartIndex,int delEndIndex){
 		String newEndLetter = "";
 		//获取字母中的行数字
     	String currRowNum = getNumberFromString(oriEndLetter);
@@ -728,7 +750,7 @@ public class ExcelUtils {
 	* @param sheet 
 	* @return void 
 	 */
-	public static void evalSheet(FormulaEvaluator evaluator, HSSFSheet sheet){
+	private static void evalSheet(FormulaEvaluator evaluator, HSSFSheet sheet){
 		for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
         	HSSFRow row = sheet.getRow(rowid);
         	if(row != null){
@@ -744,6 +766,41 @@ public class ExcelUtils {
                 }
         	}
         }
+	}
+	
+	/**
+	 * 
+	* @功能描述: 初始化poi未实现的公式
+	* @方法名称: initFormula 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年6月18日 下午8:10:25 
+	* @version V1.0    
+	* @return void
+	 */
+	public static void initFormula(){
+		Function slnf = new Function() {
+			@Override
+			public ValueEval evaluate(ValueEval[] arg0, int arg1, int arg2) {
+				try {
+					if(arg0.length != 3){
+						return null;
+					}
+					ValueEval v1 = OperandResolver.getSingleValue(arg0[0], arg1, arg2);
+					ValueEval v2 = OperandResolver.getSingleValue(arg0[1], arg1, arg2);
+					ValueEval v3 = OperandResolver.getSingleValue(arg0[2], arg1, arg2);
+					Double d1 = OperandResolver.coerceValueToDouble(v1);
+					Double d2 = OperandResolver.coerceValueToDouble(v2);
+					Double d3 = OperandResolver.coerceValueToDouble(v3);
+					Double result = (d1-d2)/d3;
+					return new NumberEval(result);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				return null;
+			}
+		};
+		FunctionEval.registerFunction("SLN", slnf);
 	}
 	
 	/**
@@ -843,7 +900,7 @@ public class ExcelUtils {
 	* @return ArrayList<String>
 	 */
 	@Deprecated
-	public static ArrayList<String> getSumFormulaString(String formula){
+	private static ArrayList<String> getSumFormulaString(String formula){
 		ArrayList<String> newFormulaList = new ArrayList<String>();
 		if(formula.indexOf("SUM(") > -1){
 			String[] arr = formula.split("SUM");
@@ -872,7 +929,7 @@ public class ExcelUtils {
 	* @return 
 	* @return ArrayList<String>
 	 */
-	public static ArrayList<String> getFormulaPositionFromFormula(String formula){
+	private static ArrayList<String> getFormulaPositionFromFormula(String formula){
 		ArrayList<String> formulaList = new ArrayList<String>();
 		String[] array = formula.split(":");
 		for(int i = 1; i < array.length; i++){
@@ -917,7 +974,7 @@ public class ExcelUtils {
 	* @return 
 	* @return ArrayList<String>
 	 */
-	public static ArrayList<String> removeRepeat(ArrayList<String> list){
+	private static ArrayList<String> removeRepeat(ArrayList<String> list){
 		for(int i = list.size() -1; i >= 0; i--){
 			for(int j = 0; j < list.size(); j++){
 				if(i != j && list.get(i).equals(list.get(j))){
