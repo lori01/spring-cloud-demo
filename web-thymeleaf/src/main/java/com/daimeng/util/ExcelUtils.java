@@ -78,6 +78,7 @@ public class ExcelUtils {
 		//System.out.println(getFormulaAllCoordinate("A1+B1+c3+SUM(A1:B1)+(AA44*BB55+SS66)/C78+PGB1!A1+$C$3+$C4+C$5"));
 		
 		String formula = "K1+K2+H1+J2+M1+O2+PGB11!K8+$A$1+B$2+$C3+SUM(H1:M1)+SUM(A10:D10)+SUM(M5:O5)";
+		//System.out.println(getFormulaAllSection(formula));
 		//System.out.println(reWriteFormulaWithSection(formula, 5, 10));
 		//System.out.println(reWriteFormulaWithoutSection(formula, 5, 10));
 		System.out.println(reWriteFormulaWithoutSection(reWriteFormulaWithSection(formula, 5, 10), 5, 10));
@@ -364,15 +365,23 @@ public class ExcelUtils {
 	 */
 	private static String reWriteFormulaWithSection(String formula,int delStartIndex,int delEndIndex){
 		//获取所有公式内部的计算单元格区间
-		ArrayList<String> formualPositionList = getFormulaSection(formula);
+		//ArrayList<String> formualPositionList = getFormulaSection(formula);
+		ArrayList<String> formualPositionList = getFormulaAllSection(formula);
+		System.out.println(formualPositionList);
+		String newFormula = "";
 		System.out.println(formualPositionList);
 		for(String oldFormualPosition : formualPositionList){
-			System.out.println("旧公式区间="+oldFormualPosition);
-        	String newFormalPosition = reWriteFormulaPosition(oldFormualPosition, delStartIndex, delEndIndex);
-        	formula = formula.replace(oldFormualPosition, newFormalPosition);
-        	System.out.println("新公式区间="+newFormalPosition);
+			if(oldFormualPosition.indexOf(":") > -1){
+				System.out.println("旧公式区间="+oldFormualPosition);
+	        	String newFormalPosition = reWriteFormulaPosition(oldFormualPosition, delStartIndex, delEndIndex);
+	        	newFormula += newFormalPosition;
+	        	System.out.println("新公式区间="+newFormalPosition);
+			}else{
+				newFormula += oldFormualPosition;
+			}
+			
 		}
-		return formula;
+		return newFormula;
 	}
 	/**
 	 * 
@@ -1084,6 +1093,7 @@ public class ExcelUtils {
 	* @return 
 	* @return ArrayList<String>
 	 */
+	@Deprecated
 	private static ArrayList<String> getFormulaSection(String formula){
 		ArrayList<String> formulaList = new ArrayList<String>();
 		String[] array = formula.split(":");
@@ -1116,6 +1126,51 @@ public class ExcelUtils {
 		}
 		
 		return removeRepeat(formulaList);
+	}
+	/**
+	 * 
+	* @功能描述: 获取一个公式中，所有的区间表达式
+	* @方法名称: getFormulaAllSection 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年6月20日 下午10:47:14 
+	* @version V1.0   
+	* @param formula
+	* @return 
+	* @return ArrayList<String>
+	 */
+	private static ArrayList<String> getFormulaAllSection(String formula){
+		ArrayList<String> formulaList = new ArrayList<String>();
+		char array[] = formula.toCharArray();
+		boolean hasStartLetter = false;
+		int startIndex = 0;
+		int endIndex = 0;
+		
+		for(int i = 0; i < array.length; i++){
+			if(Character.isLetterOrDigit(array[i]) || array[i] == ':'){
+				if(!hasStartLetter){
+					startIndex = i;
+					hasStartLetter = true;
+				}else if(i == (array.length - 1)){
+					String coordinate = formula.substring(startIndex, i+1);
+					formulaList.add(coordinate);
+				}
+				
+			}else{
+				if(hasStartLetter){
+					endIndex = i;
+					String coordinate = formula.substring(startIndex, endIndex);
+					formulaList.add(coordinate);
+					hasStartLetter = false;
+					
+				}
+				String symbol = formula.substring(i, i+1);
+				formulaList.add(symbol);
+			}
+		}
+		
+		
+		return formulaList;
 	}
 	
 	/**
