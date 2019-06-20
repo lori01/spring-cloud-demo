@@ -249,21 +249,16 @@ public class ExcelUtils {
                             System.out.println(cell.getNumericCellValue());
                             //判断公式
                             if(formula != null && !"".equals(formula) && formula.indexOf(":") > -1){
-                            	System.out.println("+++create new formal start+++");
+                            	System.out.println("+++create new formal start 1+++");
                         		System.out.println("旧公式="+formula);
-                        		//获取所有公式内部的计算单元格区间
-                        		ArrayList<String> formualPositionList = getFormulaSection(formula);
-                        		System.out.println(formualPositionList);
-                        		for(String oldFormualPosition : formualPositionList){
-                        			System.out.println("旧公式区间="+oldFormualPosition);
-                                	String newFormalPosition = reWriteFormulaPosition(oldFormualPosition, delStartIndex, delEndIndex);
-                                	formula = formula.replace(oldFormualPosition, newFormalPosition);
-                                	System.out.println("新公式区间="+newFormalPosition);
-                        		}
+                        		//处理区间公式
+                        		formula = reWriteFormulaWithSection(formula, delStartIndex, delEndIndex);
+                        		//处理非区间的公式
+                        		formula = reWriteFormulaWithoutSection(formula, delStartIndex, delEndIndex);
                         		cell.setCellFormula(formula);
                             	System.out.println("新公式="+formula);
                             	System.out.println(cell.getNumericCellValue());
-                            	System.out.println("+++create new formal end+++");
+                            	System.out.println("+++create new formal end 1+++");
                             }else{
                             	if(formulaError){
 									System.out.println("rewrite forlmula");
@@ -1130,6 +1125,8 @@ public class ExcelUtils {
 	/**
 	 * 
 	* @功能描述: 获取一个公式中，所有的区间表达式
+	* * 如=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12
+	* 取出[C34:BL34, C29:BL29, C29:BL29, C29:BL29, C28:BL28, C29:BL29]
 	* @方法名称: getFormulaAllSection 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
