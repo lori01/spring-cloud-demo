@@ -214,7 +214,7 @@ public class ExcelUtils {
 	
 	/**
 	 * 
-	* @功能描述: 当删除列时，修改公式的范围
+	* @功能描述: 当删除末尾列时，修改区间公式
 	* @方法名称: reWriteFormula 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -253,8 +253,6 @@ public class ExcelUtils {
                         		System.out.println("旧公式="+formula);
                         		//处理区间公式
                         		formula = reWriteFormulaWithSection(formula, delStartIndex, delEndIndex);
-                        		//处理非区间的公式
-                        		formula = reWriteFormulaWithoutSection(formula, delStartIndex, delEndIndex);
                         		cell.setCellFormula(formula);
                             	System.out.println("新公式="+formula);
                             	System.out.println(cell.getNumericCellValue());
@@ -275,7 +273,7 @@ public class ExcelUtils {
 	
 	/**
 	 * 
-	* @功能描述: 当删除中间列时，修改公式的范围和修改公式的坐标
+	* @功能描述: 当删除中间列时，修改区间公式和非区间公式
 	* @方法名称: reWriteFormulaForDelMiddleColumn 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
