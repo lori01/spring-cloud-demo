@@ -33,6 +33,7 @@ public class ExcelUtils {
 	
 	
 	public static void main(String[] args) {
+		//删除等
 		/*String src = "D:/java_test/excel/Excel_Remove_Mod_less.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
@@ -40,7 +41,9 @@ public class ExcelUtils {
 		String targ = "D:/java_test/excel/new_excel_" +date+ ".xls";
 		delRowAndColumn(src, targ);
 		System.out.println(targ);*/
-		initFormula();
+		
+		//自定义公式
+		/*initFormula();
 		try {
 			String src = "D:/java_test/excel/新公式.xls";
 			FileInputStream is = new FileInputStream(src);
@@ -57,8 +60,9 @@ public class ExcelUtils {
             os.close();
 		}catch (Exception e){
 			
-		}
+		}*/
 		
+		//图
 		/*String src = "D:/java_test/excel/新设法人房地产模板.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
@@ -71,6 +75,12 @@ public class ExcelUtils {
 		//System.out.println(getFormulaPositionFromFormula("=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12"));
 		//System.out.println(getFormulaPositionFromFormula("=IF(E17=0,0,(D47*E18+SUMPRODUCT(D28:D32,E28:E32)+SUMPRODUCT(D34:D38,E34:E38)+SUMPRODUCT(D42:D43,E42:E43))/E17)"));
 	
+		//System.out.println(getFormulaAllCoordinate("A1+B1+c3+SUM(A1:B1)+(AA44*BB55+SS66)/C78+PGB1!A1+$C$3+$C4+C$5"));
+		
+		String formula = "K1+K2+H1+J2+M1+O2+PGB11!K8+$A$1+B$2+$C3+SUM(H1:M1)+SUM(A10:D10)+SUM(M5:O5)";
+		//System.out.println(reWriteFormulaWithSection(formula, 5, 10));
+		//System.out.println(reWriteFormulaWithoutSection(formula, 5, 10));
+		System.out.println(reWriteFormulaWithoutSection(reWriteFormulaWithSection(formula, 5, 10), 5, 10));
 		
 	
 	}
@@ -169,8 +179,8 @@ public class ExcelUtils {
             sheet = delColumn(sheet, 16, 26);//6-26
             System.out.println("===delete column end!===");
             
-            reWriteFormula(sheet, 57, 141);//27-141
-            reWriteFormula(sheet, 16, 26);//6-26
+            reWriteFormulaForDelEndColumn(sheet, 57, 141);//27-141
+            reWriteFormulaForDelEndColumn(sheet, 16, 26);//6-26
             
             //执行计算公式 
             //HSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
@@ -214,7 +224,7 @@ public class ExcelUtils {
 	* @param delColumnEndIndex 
 	* @return void
 	 */
-	public static void reWriteFormula(HSSFSheet sheet,int delStartIndex,int delEndIndex){
+	public static void reWriteFormulaForDelEndColumn(HSSFSheet sheet,int delStartIndex,int delEndIndex){
 		for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
         	HSSFRow row = sheet.getRow(rowid);
         	if(row != null){
@@ -241,7 +251,7 @@ public class ExcelUtils {
                             	System.out.println("+++create new formal start+++");
                         		System.out.println("旧公式="+formula);
                         		//获取所有公式内部的计算单元格区间
-                        		ArrayList<String> formualPositionList = getFormulaPositionFromFormula(formula);
+                        		ArrayList<String> formualPositionList = getFormulaSection(formula);
                         		System.out.println(formualPositionList);
                         		for(String oldFormualPosition : formualPositionList){
                         			System.out.println("旧公式区间="+oldFormualPosition);
@@ -265,6 +275,151 @@ public class ExcelUtils {
                 }
         	}
         }
+	}
+	
+	/**
+	 * 
+	* @功能描述: 当删除中间列时，修改公式的范围和修改公式的坐标
+	* @方法名称: reWriteFormulaForDelMiddleColumn 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年6月20日 下午8:13:48 
+	* @version V1.0   
+	* @param sheet
+	* @param delStartIndex
+	* @param delEndIndex 
+	* @return void
+	 */
+	public static void reWriteFormulaForDelMiddleColumn(HSSFSheet sheet,int delStartIndex,int delEndIndex){
+		for(int rowid = 0; rowid <= sheet.getLastRowNum(); rowid++) {
+        	HSSFRow row = sheet.getRow(rowid);
+        	if(row != null){
+        		for(int cid = 0; cid < row.getLastCellNum(); cid++) {
+                	HSSFCell cell = row.getCell(cid);
+                	if(cell != null){
+                		if(cell.getCellTypeEnum() == CellType.FORMULA) {
+							String formula = "";
+							boolean formulaError = false;
+                			try {
+								//原始公式
+								formula = cell.getCellFormula();
+							}catch (Exception e){
+                				System.out.println("error");
+								System.out.println(e.getMessage());
+								formulaError = true;
+								formula = cell.getStringCellValue();
+							}
+
+                            System.out.println(formula);
+                            System.out.println(cell.getNumericCellValue());
+                            //判断公式
+                            if(formula != null && !"".equals(formula) && formula.indexOf(":") > -1){
+                            	System.out.println("+++create new formal start 1+++");
+                        		System.out.println("旧公式="+formula);
+                        		//处理区间公式
+                        		formula = reWriteFormulaWithSection(formula, delStartIndex, delEndIndex);
+                        		//处理非区间的公式
+                        		formula = reWriteFormulaWithoutSection(formula, delStartIndex, delEndIndex);
+                        		cell.setCellFormula(formula);
+                            	System.out.println("新公式="+formula);
+                            	System.out.println(cell.getNumericCellValue());
+                            	System.out.println("+++create new formal end 1+++");
+                            }
+                            else if(formula != null && !"".equals(formula) && formula.indexOf(":") == -1){
+                            	System.out.println("+++create new formal start 2+++");
+                        		System.out.println("旧公式="+formula);
+                        		//处理非区间的公式
+                        		formula = reWriteFormulaWithoutSection(formula, delStartIndex, delEndIndex);
+                            	cell.setCellFormula(formula);
+                            	System.out.println("新公式="+formula);
+                            	System.out.println(cell.getNumericCellValue());
+                            	System.out.println("+++create new formal end 2+++");
+                            }
+                            else{
+                            	if(formulaError){
+									System.out.println("rewrite forlmula");
+									cell.setCellFormula(formula);
+									System.out.println("+++create new formal end+++");
+								}
+							}
+                        }
+                	}
+                }
+        	}
+        }
+	}
+	/**
+	 * 
+	* @功能描述: 处理区间公式
+	* @方法名称: reWriteFormulaWithSection 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年6月20日 下午10:31:56 
+	* @version V1.0   
+	* @param formula
+	* @param delStartIndex
+	* @param delEndIndex
+	* @return 
+	* @return String
+	 */
+	private static String reWriteFormulaWithSection(String formula,int delStartIndex,int delEndIndex){
+		//获取所有公式内部的计算单元格区间
+		ArrayList<String> formualPositionList = getFormulaSection(formula);
+		System.out.println(formualPositionList);
+		for(String oldFormualPosition : formualPositionList){
+			System.out.println("旧公式区间="+oldFormualPosition);
+        	String newFormalPosition = reWriteFormulaPosition(oldFormualPosition, delStartIndex, delEndIndex);
+        	formula = formula.replace(oldFormualPosition, newFormalPosition);
+        	System.out.println("新公式区间="+newFormalPosition);
+		}
+		return formula;
+	}
+	/**
+	 * 
+	* @功能描述: 处理非区间的公式
+	* @方法名称: reWriteFormulaWithoutSection 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年6月20日 下午10:31:32 
+	* @version V1.0   
+	* @param formula
+	* @param delStartIndex
+	* @param delEndIndex
+	* @return 
+	* @return String
+	 */
+	private static String reWriteFormulaWithoutSection(String formula,int delStartIndex,int delEndIndex){
+		//获取所有公式内部的计算单元格区间
+		ArrayList<String> formualPositionList = getFormulaAllCoordinate(formula);
+		System.out.println(formualPositionList);
+		String newFormula = "";
+		for(String oldFormualPosition : formualPositionList){
+			char array[] = oldFormualPosition.toCharArray();
+			if(Character.isLetter(array[0]) && Character.isDigit(array[array.length-1]) 
+					&& oldFormualPosition.indexOf("!") == -1 && oldFormualPosition.indexOf("$") == -1
+					&& oldFormualPosition.indexOf(":") == -1){
+				System.out.println("旧坐标="+oldFormualPosition);
+				//获取字母中的行数字
+		    	String rowNum = getNumberFromString(oldFormualPosition);
+		    	String columnLetter = oldFormualPosition.replace(rowNum, "");
+		    	int columnIndex = letterToNumber(columnLetter);
+		    	if(columnIndex > delEndIndex){
+		    		int newColumnIndex = columnIndex - (delEndIndex - delStartIndex + 1);
+		    		String newColumnLetter = numberToLetter(newColumnIndex);
+		    		String newFormalPosition = newColumnLetter + rowNum;
+		    		newFormula += newFormalPosition;
+		    		System.out.println("新坐标="+newFormalPosition);
+		    	}else{
+		    		System.out.println("新坐标="+oldFormualPosition);
+		    		newFormula += oldFormualPosition;
+		    	}
+			}else{
+				newFormula += oldFormualPosition;
+			}
+			
+		}
+		return newFormula;
+		
 	}
 	
 	/**
@@ -920,7 +1075,7 @@ public class ExcelUtils {
 	* @功能描述: 获取一个公式中，所有的单元格区间表达式
 	* 如=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12
 	* 取出[C34:BL34, C29:BL29, C29:BL29, C29:BL29, C28:BL28, C29:BL29]
-	* @方法名称: getFormulaPositionFromFormula 
+	* @方法名称: getFormulaSection 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
 	* @创建时间 2019年5月13日 下午2:21:30 
@@ -929,7 +1084,7 @@ public class ExcelUtils {
 	* @return 
 	* @return ArrayList<String>
 	 */
-	private static ArrayList<String> getFormulaPositionFromFormula(String formula){
+	private static ArrayList<String> getFormulaSection(String formula){
 		ArrayList<String> formulaList = new ArrayList<String>();
 		String[] array = formula.split(":");
 		for(int i = 1; i < array.length; i++){
@@ -962,6 +1117,55 @@ public class ExcelUtils {
 		
 		return removeRepeat(formulaList);
 	}
+	
+	/**
+	 * 
+	* @功能描述: 获取一个公式中，所有的单元格坐标表达式
+	* 如=A1+B1+c3+(AA44*BB55+SS66)/C78+PGB1!A1+$C$3+$C4+C$5
+	* 取出[C34:BL34, C29:BL29, C29:BL29, C29:BL29, C28:BL28, C29:BL29]
+	* @方法名称: getFormulaAllCoordinate 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年5月13日 下午2:21:30 
+	* @version V1.0   
+	* @param formula
+	* @return 
+	* @return ArrayList<String>
+	 */
+	private static ArrayList<String> getFormulaAllCoordinate(String formula){
+		ArrayList<String> formulaList = new ArrayList<String>();
+		char array[] = formula.toCharArray();
+		boolean hasStartLetter = false;
+		int startIndex = 0;
+		int endIndex = 0;
+		
+		for(int i = 0; i < array.length; i++){
+			if(Character.isLetterOrDigit(array[i]) || array[i] == '!' || array[i] == '$' || array[i] == ':'){
+				if(!hasStartLetter){
+					startIndex = i;
+					hasStartLetter = true;
+				}else if(i == (array.length - 1)){
+					String coordinate = formula.substring(startIndex, i+1);
+					formulaList.add(coordinate);
+				}
+				
+			}else{
+				if(hasStartLetter){
+					endIndex = i;
+					String coordinate = formula.substring(startIndex, endIndex);
+					formulaList.add(coordinate);
+					hasStartLetter = false;
+					
+				}
+				String symbol = formula.substring(i, i+1);
+				formulaList.add(symbol);
+			}
+		}
+		
+		
+		return formulaList;
+	}
+	
 	/**
 	 * 
 	* @功能描述: 去除list中重复的元素
