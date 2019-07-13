@@ -88,5 +88,47 @@
 </div>
 <!-- 引入底部 -->
 <div th:include="common/footer::common-pagination"></div>
+
+<script type="text/javascript">
+	function updRole(id){
+		var data = {
+				id : id,
+				role : $("#role_"+id).val(),
+				description : $("#description_"+id).val(),
+				available : $("#available_"+id).val()
+		};
+		if(data.role == null || data.role == ""){
+			alert("请输入名称!");
+			return;
+		}
+		if(data.description == null || data.description == ""){
+			alert("请输入描述!");
+			return;
+		}
+		$.ajax({
+			"url" : "/system/saveSysRole",
+			"type" : "POST",
+			"dataType" : "json",
+			"data" : data,
+			"success" : function(msgjsonobj) {
+				if(msgjsonobj.status == 100){
+					$.showAlertMessage("success","保存成功",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+						location.href = window.location.href;
+					});
+				}else{
+					$.showAlertMessage("success","保存失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+						
+					});
+				}
+				
+			},
+			"error" : function() {
+				$.showAlertMessage("error","保存失败","引发了莫名的错误?",function(){
+					
+				});
+			}
+		});
+	}
+</script>
 </body>
 </html>

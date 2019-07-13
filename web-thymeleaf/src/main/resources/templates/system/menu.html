@@ -89,5 +89,63 @@
 </div>
 <!-- 引入底部 -->
 <div th:include="common/footer::common-pagination"></div>
+
+<script type="text/javascript">
+	function updPermission(id){
+		var data = {
+				id : id,
+				name : $("#name_"+id).val(),
+				url : $("#url_"+id).val(),
+				available : $("#available_"+id).val(),
+				parentId : $("#parentId_"+id).val(),
+				parentIds : $("#parentIds_"+id).val(),
+				permission : $("#permission_"+id).val(),
+				resourceType : $("#resourceType_"+id).val()
+		};
+		if(data.name == null || data.name == ""){
+			alert("请输入名称!");
+			return;
+		}
+		if(data.url == null || data.url == ""){
+			alert("请输入url!");
+			return;
+		}
+		if(data.parentId == null || data.parentId == ""){
+			alert("请输入父ID，默认0!");
+			return;
+		}
+		if(data.parentIds == null || data.parentIds == ""){
+			alert("请输入父IDs，默认0/!");
+			return;
+		}
+		if(data.name == null || data.name == ""){
+			alert("请输入permission!");
+			return;
+		}
+		$.ajax({
+			"url" : "/system/saveSysPermission",
+			"type" : "POST",
+			"dataType" : "json",
+			"data" : data,
+			"success" : function(msgjsonobj) {
+				if(msgjsonobj.status == 100){
+					$.showAlertMessage("success","保存成功",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+						location.href = window.location.href;
+					});
+				}else{
+					$.showAlertMessage("success","保存失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+						
+					});
+				}
+				
+			},
+			"error" : function() {
+				$.showAlertMessage("error","保存失败","引发了莫名的错误?",function(){
+					
+				});
+			}
+		});
+	}
+</script>
 </body>
 </html>

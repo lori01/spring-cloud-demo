@@ -149,14 +149,14 @@
 					append_com(msgjsonobj.obj,msgjsonobj.desc);
 					//cancle();
 				}else{
-					showAlertMessage("success","评论失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
+					$.showAlertMessage("success","评论失败",msgjsonobj.status + "-" + msgjsonobj.desc,function(){
 						
 					});
 				}
 				
 			},
 			"error" : function() {
-				showAlertMessage("error","评论失败","引发了莫名的错误?",function(){
+				$.showAlertMessage("error","评论失败","引发了莫名的错误?",function(){
 					
 				});
 			}

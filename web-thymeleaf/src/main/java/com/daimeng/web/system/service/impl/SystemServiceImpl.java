@@ -12,6 +12,7 @@ import com.daimeng.web.system.service.SystemService;
 import com.daimeng.web.user.entity.SysPermission;
 import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysRolePermission;
+import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.entity.SysUserRole;
 import com.daimeng.web.user.repository.SysPermissionRepository;
 import com.daimeng.web.user.repository.SysRolePermissionRepository;
@@ -46,14 +47,59 @@ public class SystemServiceImpl implements SystemService{
 
 	@Override
 	public ResponseVo saveSysPermission(SysPermission permission) {
-		// TODO Auto-generated method stub
-		return null;
+		ResponseVo vo = new ResponseVo();
+		if(permission != null){
+			SysPermission cur = permissionRepository.findOne(permission.getId());
+			if(cur != null){
+				cur.setAvailable(permission.getAvailable());
+				cur.setName(permission.getName());
+				cur.setParentId(permission.getParentId());
+				cur.setParentIds(permission.getParentIds());
+				cur.setPermission(permission.getPermission());
+				cur.setResourceType(permission.getResourceType());
+				cur.setUrl(permission.getUrl());
+				permissionRepository.save(cur);
+				vo.setObj(permission);
+			}else{
+				permissionRepository.save(permission);
+				vo.setObj(permission);
+			}
+			
+			
+			vo.setStatus(100);
+			vo.setDesc("更新成功!");
+			
+			return vo;
+		}
+		vo.setStatus(200);
+		vo.setDesc("更新失败!");
+		return vo;
 	}
 
 	@Override
 	public ResponseVo saveSysRole(SysRole role) {
-		// TODO Auto-generated method stub
-		return null;
+		ResponseVo vo = new ResponseVo();
+		if(role != null){
+			SysRole cur = roleRepository.findOne(role.getId());
+			if(cur != null){
+				cur.setAvailable(role.getAvailable());
+				cur.setDescription(role.getDescription());
+				cur.setRole(role.getRole());
+				roleRepository.save(cur);
+				vo.setObj(cur);
+			}else{
+				roleRepository.save(role);
+				vo.setObj(role);
+			}
+			
+			
+			vo.setStatus(100);
+			vo.setDesc("更新成功!");
+			return vo;
+		}
+		vo.setStatus(200);
+		vo.setDesc("更新失败!");
+		return vo;
 	}
 
 	@Override
