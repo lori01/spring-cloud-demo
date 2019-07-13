@@ -435,6 +435,7 @@
 			//offset绝对left
 			//当user_menu_drop和show_user_menu_drop不在一个div下时
 			
+			//菜单事件
 			$(".show_menu").mouseover(function(e){
 				var thisId = $(this).attr('id');
 				var childid = $(this).attr('childid');
@@ -520,6 +521,12 @@
 				textCount(this);
 			});
 			
+			//列表块点击事件
+			//阻止事件冒泡
+			//点击a不触发div的click事件
+			$("a").click(function(){
+			    event.stopPropagation();
+			})
 			$(".click_jump_div").mouseover(function(e){
 				$(this).css("-webkit-box-shadow","0 0 30px rgba(0, 0, 0, 0.5)");
 			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
