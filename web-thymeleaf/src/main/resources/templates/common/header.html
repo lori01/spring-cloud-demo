@@ -441,7 +441,7 @@
 				var flag = $("#"+childid).is(":hidden");
 				if(flag){  
 					var parentLeft = $("#"+thisId).offset().left;
-					var parentWidth = $("#"+thisId).css('width')
+					var parentWidth = $("#"+thisId).css('width');
 					var childWidth = $("#"+childid).css("width");
 					//计算parent的中间点，把child放在parent的中间下面
 					var childLeft = parseFloat(parentLeft) + parseFloat(parentWidth)/2 - parseFloat(childWidth)/2;
@@ -518,6 +518,17 @@
 				textCount(this);
 			}).click(function(){
 				textCount(this);
+			});
+			
+			$(".click_jump_div").mouseover(function(e){
+				$(this).css("-webkit-box-shadow","0 0 30px rgba(0, 0, 0, 0.5)");
+			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
+				$(this).css("-webkit-box-shadow","0 0 20px rgba(0, 0, 0, 0.2)");
+			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
+				$(this).css("-webkit-box-shadow","0 0 20px rgba(0, 0, 0, 0.2)");
+			});
+			$(".click_jump_div").on('click', function(e) {
+				location.href = $(this).attr("href");
 			});
 		});
 		

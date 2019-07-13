@@ -13,7 +13,7 @@
     <div id="main" class="container">
     	<div class="content alpha" id="content_main_apl">
     		<!-- 循环咨询列表start -->
-    		<div class="entry clearfix" th:each="info:${list}">
+    		<div class="entry clearfix click_jump_div" th:each="info:${list}" th:href="@{/article/detail/{id}/1(id=${info.articleId})}">
 				<h1><a class="post-title" th:href="@{/article/detail/{id}/1(id=${info.articleId})}" rel="bookmark" th:text="${info.articleInfo.title}"></a></h1>	
 				<div class="post-meta">
 					<span th:text="${info.layer}"></span>楼 |  

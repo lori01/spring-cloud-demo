@@ -14,7 +14,7 @@
     	<div id="add_content_replace_div"></div>
     	<div class="content alpha" id="content_main_apl">
     		<!-- 循环咨询列表start -->
-    		<div class="entry clearfix" th:each="info:${list}">
+    		<div class="entry clearfix click_jump_div" th:each="info:${list}" th:href="@{/article/detail/{id}/1(id=${info.id})}">
 				<h1><a class="post-title" th:href="@{/article/detail/{id}/1(id=${info.id})}" rel="bookmark" th:text="${info.title}"></a></h1>	
 				<div class="post-meta">
 					<!-- <span th:text="${info.createTm}"></span> |  -->
