@@ -1,0 +1,222 @@
+<div th:fragment="pagination">
+<!-- 
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+				佛祖保佑       永无BUG
+ -->
+ 	<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+ 	<link rel="stylesheet" type="text/css" media="all" href="/css/mystyle.css"/>
+ 	<link rel="stylesheet" type="text/css" media="all" href="/css/jquery-ui.min.css"/>
+ 	
+	<script type="text/javascript" src="/js/jquery.js" ></script>
+	<script type="text/javascript" src="/js/jquery-ui.min.js" ></script>
+	<script type="text/javascript" src="/js/jquery-common.js" ></script>
+	<script type="text/javascript" src="/js/header.js" ></script>
+	
+	
+		
+	<div class="header_wrap" id="top_banner">
+		<div id="header" class="clearfix">
+			<div id="logo">
+				<h2>
+					<a href="/" title="梦神十夜的小站" rel="home bookmark">
+					<span class="header-logo-span" style="">梦</span>
+					<span class="header-logo-span" style="">神</span>
+					<span class="header-logo-span" style="border-radius: 20px;">十</span>
+					<span class="header-logo-span" style="">夜</span>
+					<span class="header-logo-span" style="">的</span>
+					<span class="header-logo-span" style="border-radius: 20px;">小</span>
+					<span class="header-logo-span" style="">站</span>
+					</a>
+				</h2>
+			</div>
+			<!-- END logo -->
+		</div>
+		<!-- END header -->
+		<div id="navigation" class="clearfix">
+			<nav class="nav">
+				<ul class="sf-menu">
+					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
+					<li><a th:text="登录" th:href="@{/logins}"></a></li>
+				</ul>
+			</nav>
+		</div>
+		
+		<!-- END navigation -->
+	</div>
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//document.execCommand("BackgroundImageCache", false, true);
+			drawBtn();
+			selectRole();
+			//position是设置元素相对于父元素的偏移，而offset方法是设置元素相对于整个浏览器的位置偏移
+			//position相对left
+			//当user_menu_drop和show_user_menu_drop同处于一个div下时
+			//$("#user_menu_drop").css("left",$("#show_user_menu_drop").position().left);
+			//offset绝对left
+			//当user_menu_drop和show_user_menu_drop不在一个div下时
+			
+			//菜单事件
+			$(".show_menu").mouseover(function(e){
+				var thisId = $(this).attr('id');
+				var childid = $(this).attr('childid');
+				var flag = $("#"+childid).is(":hidden");
+				if(flag){  
+					var parentLeft = $("#"+thisId).offset().left;
+					var parentWidth = $("#"+thisId).css('width');
+					var childWidth = $("#"+childid).css("width");
+					//计算parent的中间点，把child放在parent的中间下面
+					var childLeft = parseFloat(parentLeft) + parseFloat(parentWidth)/2 - parseFloat(childWidth)/2;
+					$("#"+childid).css("left",childLeft);
+					if(parseFloat(childWidth) < parseFloat(parentWidth)){
+						//$("#"+childid).css("width",parentWidth);
+					}
+					$("#"+childid).fadeIn();
+					$(".menu_drop").each(function(ii,vv){
+					    //ii 指第几个元素的序列号。
+					    //vv 指遍历得到的元素。
+						var id = $(this).attr('id');
+					    if(id != childid){
+					    	$("#"+id).fadeOut();
+					    }
+					});
+	            }else{  
+	                
+	            }  
+			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
+				
+			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
+				/* setTimeout(function () { 
+					if($(this).hasClass('menu_drop') == false){
+						hidemenu();
+					} 
+				}, 1000); */
+			});
+			$(".menu_drop").mouseover(function(e){
+				
+			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
+				
+			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
+				var thisId = $(this).attr('id');
+				var flag = $("#"+thisId).is(":hidden");
+				if(flag){  
+					
+	            }else{  
+	            	$("#"+thisId).fadeOut();
+	            }  
+			});
+			
+			/* 弹出框的关闭按钮绑定 */
+			/* $(".add_div_title_cnl").click(function(){
+				hideAll();
+			}); */
+			
+			//var $el = $("#show_user_menu_drop,#user_menu_drop");
+			/* $el.click(function(e) {
+				e.stopPropagation();
+				//$(this).toggleClass('active');
+			}); */
+			//点击任何地方都关闭菜单条
+			$(document).on('click', function(e) {
+				hidemenu();
+				/* var inEl = false;
+				for(var i = 0; i < $el.length; i++){
+					if($(e.target) == $el[i]){
+						inEl = true;
+					}
+				}
+				if (!inEl) {
+					hidemenu();
+				} */
+			});
+			
+			
+			//textarea字数统计
+			$(".textarea_count").change(function(){
+				textCount(this);
+			}).keydown(function(){
+				textCount(this);
+			}).keyup(function(){
+				textCount(this);
+			}).click(function(){
+				textCount(this);
+			});
+			
+			//列表块点击事件
+			//阻止事件冒泡
+			//点击a不触发div的click事件
+			$("a").click(function(){
+			    event.stopPropagation();
+			})
+			$(".click_jump_div").mouseover(function(e){
+				$(this).css("-webkit-box-shadow","0 0 30px rgba(0, 0, 0, 0.5)");
+			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
+				$(this).css("-webkit-box-shadow","0 0 20px rgba(0, 0, 0, 0.2)");
+			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
+				$(this).css("-webkit-box-shadow","0 0 20px rgba(0, 0, 0, 0.2)");
+			});
+			$(".click_jump_div").on('click', function(e) {
+				location.href = $(this).attr("href");
+			});
+		});
+		
+		function textCount(obj){
+			var num = $(obj).parent().find (".t_h i");
+			num.html($(obj).val().length);
+		}
+		
+		function drawBtn(){
+			//批量给确定,取消按钮设置text
+			//$(".btn_public_no_text").val("✂");
+			$(".btn_public_no_text").val("否");
+			$(".btn_public_no_text").attr("title","取消");
+			//$(".btn_public_yes_text").val("🖍");
+			$(".btn_public_yes_text").val("是");
+			$(".btn_public_yes_text").attr("title","确定");
+			
+			//$(".btn_public_edit_text").val("✒");
+			$(".btn_public_edit_text").val("是");
+			$(".btn_public_edit_text").attr("title","确定");
+			//$(".btn_public_save_text").val("✉");
+			$(".btn_public_save_text").val("存");
+			$(".btn_public_save_text").attr("title","保存");
+			//✏  ✒  🖋  🖊  🖌  🖍
+			
+			//批量给顶部,底部,评论按钮设置text
+			//🚀  🛫   🛬   🚁    🚢  ✍
+			$(".btn_public_up_text").html("顶");
+			$(".btn_public_up_text").attr("title","回到顶部");
+			$(".btn_public_down_text").html("底");
+			$(".btn_public_down_text").attr("title","回到底部");
+			//$(".btn_public_comment_text").html("🖊");
+			//$(".btn_public_comment_text").val("🖊");
+			$(".btn_public_comment_text").html("评");
+			$(".btn_public_comment_text").val("评");
+			$(".btn_public_comment_text").attr("title","评论");
+			//批量给分页按钮设置text  👈  👉
+			$(".btn_public_page_s_text").html("首");
+			$(".btn_public_page_s_text").attr("title","首页");
+			$(".btn_public_page_e_text").html("末");
+			$(".btn_public_page_e_text").attr("title","末页");
+		}
+	</script>
+</div>

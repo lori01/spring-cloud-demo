@@ -68,6 +68,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/ueditor/**", "anon");
 		filterChainDefinitionMap.put("/config", "anon");
+		filterChainDefinitionMap.put("/index", "anon");
+		filterChainDefinitionMap.put("/", "anon");
 		
 		//spring boot自带监控页面
 		filterChainDefinitionMap.put("/health", "anon");
@@ -96,7 +98,7 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setLoginUrl("/login");
 		// 登录成功后要跳转的链接
 		//shiroFilterFactoryBean.setSuccessUrl("/index");
-		shiroFilterFactoryBean.setSuccessUrl("/");
+		shiroFilterFactoryBean.setSuccessUrl("/article/list/1");
 
 		//未授权界面;
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
