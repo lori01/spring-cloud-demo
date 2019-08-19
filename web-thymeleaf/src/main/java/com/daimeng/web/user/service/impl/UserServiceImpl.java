@@ -127,6 +127,9 @@ public class UserServiceImpl implements UserService{
 				cur.setRealname(user.getRealname());
 				cur.setImg(user.getImg());
 				cur.setSexCd(user.getSexCd());
+				if(cur.getImg() == null || "".equals(cur.getImg())){
+					cur.setImg(Constants.DEFAULT_USER_IMG);
+				}
 				userRepository.save(cur);
 				
 				/*UserVO uvo = new UserVO();
@@ -202,6 +205,7 @@ public class UserServiceImpl implements UserService{
 				String newpd = getNewPassword(user.getLoginName(), user.getPassword(), salt);
 				user.setSalt(salt);
 				user.setPassword(newpd);
+				user.setImg(Constants.DEFAULT_USER_IMG);
 				userRepository.save(user);
 				
 				SysUserRole role = new SysUserRole();
