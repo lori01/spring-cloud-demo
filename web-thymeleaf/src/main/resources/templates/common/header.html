@@ -316,14 +316,23 @@
 			<div class="content alpha">
 				<div class="entry clearfix">
 					<h1><a class="post-title" rel="bookmark" href="/article/detail/{id}/1">{title}</a></h1>	
-					<div class="post-meta">
+					<!-- <div class="post-meta">
 						<span>{createTm}</span> | 
 						作者: <span>{realname}</span>投稿 | 
 						文章编号: <span>{id}</span> | 
 						<a class="post-title" href="javascript:void(0)" onclick= "javascript:editArticle({id})" >修改</a>
 						<a class="post-title" href="javascript:void(0)" onclick= "javascript:delArticle({id})" >删除</a>
 						<a class="post-title" rel="bookmark" href="/article/detail/{id}/1">阅读全文​...</a>
+					</div> -->
+					<div class="post-meta">
+					<span>{realname}</span>在
+					<span>{createTm}</span>投稿 
+					<div style="float:right;margin-right: 10px;">
+						<a class="post-title" href="javascript:void(0)" onclick= "javascript:editArticle({id})" >修改</a>
+						<a class="post-title" href="javascript:void(0)" onclick= "javascript:delArticle({id})" >删除</a>
+						<a class="post-title" rel="bookmark" href="/article/detail/{id}/1">阅读全文​...</a>
 					</div>
+				</div>
 				
 					<div class="clear"></div>
 					<div class="entry-content">
