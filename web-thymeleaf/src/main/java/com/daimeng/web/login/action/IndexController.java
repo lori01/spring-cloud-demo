@@ -42,6 +42,7 @@ public class IndexController extends BaseController{
 		page = getPageNum(page);
 		ArticleInfo inf = new ArticleInfo();
 		inf.setContextType("02");
+		inf.setStatusCd(1);
 		Page<ArticleInfo> list = articleService.findAllBySpecification(inf,page);
 		setPageToModel(model, list, page);
 		return "index/list";
@@ -53,6 +54,7 @@ public class IndexController extends BaseController{
 		ArticleInfo inf = new ArticleInfo();
 		inf.setContextType("02");
 		inf.setCreateUid(uid);
+		inf.setStatusCd(1);
 		Page<ArticleInfo> list = articleService.findAllBySpecification(inf,page);
 		setPageToModel(model, list, page);
 		
