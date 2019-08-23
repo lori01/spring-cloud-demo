@@ -44,6 +44,12 @@
 								</td>
 							</tr>
 							<tr>
+								<th width="15%"><span th:text="是否发布外网"></span></th>
+								<td width="85%">
+									<input type="checkbox" name="contextType" id="contextType" value="02" th:checked="${info.contextType == '02'}"/>是
+								</td>
+							</tr>
+							<tr>
 								<th width="15%"><span th:text="发送EMAIL"></span></th>
 								<td width="85%">
 									<input type="checkbox" name="isSendMail" id="isSendMail" value="1"/>同步发送到E-MAIL

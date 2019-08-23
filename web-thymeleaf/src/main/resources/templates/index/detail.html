@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>文章详情 - 梦神十夜的小站</title>
+</head>
+
+<body>
+<div id="wrap" class="container clearfix">
+	<div th:include="common/header-whitout-login::pagination"></div>
+    
+    <div id="main" class="container">
+    	<div class="content alpha">
+    		<div class="entry clearfix">
+				<h1 th:text="${info.title}"></h1>	
+				<div class="post-meta">
+					<span th:text="${info.createUser.realname}"></span>在
+					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span>投稿 
+					<div style="float:right;margin-right: 10px;">
+						<a class="post-title" th:href="@{/index/list/1}" rel="bookmark" >返回</a>
+					</div>
+				</div>
+			
+				<div class="clear"></div>
+				<div class="entry-content">
+					<a th:href="@{/index/user/{uid}/1(uid=${info.createUser.id})}" rel="tag"><img th:src="${info.createUser.img}" class="thumb"/></a>
+						<span th:utext="${info.context}"></span>
+						<p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"></p>
+				</div>
+				<!-- END post-bottom -->
+			</div>
+    	</div>
+    	
+    	<div class="content alpha" >
+    		<div class="entry clearfix">
+				<h1><a class="post-title"  rel="bookmark" th:text="评论区" name="comment_point" id="comment_point"></a></h1>	
+			</div>
+		</div>
+    	
+    	<div class="content alpha" id="comment_main_apl">
+    		<!-- 循环咨询列表start -->
+    		<div class="entry clearfix" th:each="info:${list}">
+    			<div class="post-meta" style="background:white;margin-top: 0px;">
+					<span th:text="${info.createUser.realname}"></span> 在
+					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span>评论
+					<div style="float:right;margin-right: 10px;" th:text="${info.layer}+楼"></div>
+				</div>
+			
+				<div class="clear"></div>
+				<div class="entry-content">
+					<a th:href="@{/index/user/{uid}/1(uid=${info.createUser.id})}" rel="tag">
+						<img th:src="${info.createUser.img}" style="width:100px;float: left;" class="thumb"/>
+					</a>
+					<span th:text="${info.context}" th:id="comment_contxt_id_+${info.id}"></span>
+					<p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"></p>
+				</div>
+				<!-- END post-bottom -->
+			</div>
+			<!-- 循环咨询列表end -->
+			
+			<!-- 引入分页 -->
+			<div th:include="common/page::common-pagination"></div>
+			
+    	</div>
+    </div>
+    
+    <!-- 引入备案 -->
+	<div th:include="common/footer::common-beian"></div>
+</div>
+
+<!-- 引入底部 -->
+<div th:include="common/footer::comment-pagination"></div>
+
+<div style="display:none;">
+	<div id="content_com_main_append">
+		<div class="content alpha" >
+			<div class="entry clearfix">
+				<!-- <div class="post-meta">
+					<span>{layer}</span>楼 |  
+					评论者: <span>{realname}</span>评论 | 
+					<span>{createTm}</span> | 
+					评论编号: <span>{id}</span> | 
+					<a class="post-title" href="javascript:void(0)" onclick= "javascript:editComment({id})" >修改</a>
+					<a class="post-title" href="javascript:void(0)" onclick= "javascript:delComment({id})" >删除</a>
+					
+				</div> -->
+				<div class="post-meta" style="background:white;margin-top: 0px;">
+					<span>{realname}</span> 在
+					<span>{createTm}</span>评论
+					<div style="float:right;margin-right: 10px;">{layer}楼</div>
+					<div style="float:right;margin-right: 10px;">
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="entry-content">
+					<a th:href="@{/index/user/{uid}/1}" rel="tag">
+						<img src="{img}" style="width:100px;float: left;" class="thumb"/>
+					</a>
+					<span id="comment_contxt_id_{id}">{context}</span>
+					<p style="display:none;" class="cloudreamHelperLink" codetype="postmulti" entryid="5655"></p>
+				</div>
+				<!-- END post-bottom -->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var jumpComment = getUrlParString("jump");
+		if(jumpComment != undefined){
+			$('#sco_comment').click();
+		}
+	});
+</script>
+	
+	
+</body>
+</html>

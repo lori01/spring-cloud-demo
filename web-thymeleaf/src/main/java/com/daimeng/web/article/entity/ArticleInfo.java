@@ -37,6 +37,9 @@ public class ArticleInfo  implements Serializable{
 	private String contextType;
 	
 	@Column(nullable = false, unique = true)
+	private String subType;
+	
+	@Column(nullable = false, unique = true)
 	private Date createTm;
 	
 	@Column(nullable = false, unique = true)
@@ -166,6 +169,14 @@ public class ArticleInfo  implements Serializable{
 
 	public void setContextType(String contextType) {
 		this.contextType = contextType;
+	}
+
+	public String getSubType() {
+		return subType;
+	}
+
+	public void setSubType(String subType) {
+		this.subType = subType;
 	}
 
 	

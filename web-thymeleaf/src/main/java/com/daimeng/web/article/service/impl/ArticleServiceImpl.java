@@ -51,6 +51,9 @@ public class ArticleServiceImpl implements ArticleService{
 				if(info.getContext() != null && !"".equals(info.getContext())){
 					list.add(cb.like((Expression) root.get("context"), "%" +info.getContext()+ "%"));
 				}
+				if(info.getContextType() != null && !"".equals(info.getContextType())){
+					list.add(cb.equal(root.get("contextType"), info.getContextType()));
+				}
 				if(info.getTitle() != null && !"".equals(info.getTitle())){
 					list.add(cb.like((Expression) root.get("title"), "%" +info.getTitle()+ "%"));
 				}
@@ -104,6 +107,7 @@ public class ArticleServiceImpl implements ArticleService{
 			cur.setTitle(info.getTitle());
 			cur.setShortContext(info.getShortContext());
 			cur.setContext(info.getContext());
+			cur.setContextType(info.getContextType());
 			cur.setUpdateTm(info.getUpdateTm());
 			cur.setUpdateUid(info.getUpdateUid());
 			cur.setUpdateUser(info.getUpdateUser());

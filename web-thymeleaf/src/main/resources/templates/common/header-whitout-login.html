@@ -47,14 +47,16 @@
 					</a>
 				</h2>
 			</div>
+			<span style="padding-left: 30px;font-size: 16px;">(￣︶￣)↗[GO!]</span>
 			<!-- END logo -->
 		</div>
 		<!-- END header -->
 		<div id="navigation" class="clearfix">
 			<nav class="nav">
+				<a href="javascript:void(0)" th:href="@{/logins}"><img class="title_img" th:src="${session.user_session!=null}?${session.user_session.img}:'/ico/logo-250.png'"/></a>
 				<ul class="sf-menu">
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
-					<li><a th:text="登录" th:href="@{/logins}"></a></li>
+					<li th:style="${session.user_session!=null}? 'display:none':''" ><a th:text="登录" th:href="@{/logins}"></a></li>
 				</ul>
 			</nav>
 		</div>

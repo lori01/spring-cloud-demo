@@ -359,6 +359,7 @@ function cancle() {
 	$("#title_s").val("");
 	$("#shortContext_s").val("");
 	$("#context_s").val("");
+	document.getElementsByName("contextType")[0].checked = false;
 	//$("#add_div").fadeOut();
 	$("#add_div").dialog("close");  
 }
@@ -379,6 +380,10 @@ function add() {
 	if (document.getElementsByName("isSendMail")[0].checked) {
 		isSendMail = "1";
 	}
+	var contextType = "01";
+	if (document.getElementsByName("contextType")[0].checked) {
+		contextType = "02";
+	}
 	$.ajax({
 		"url" : "/article/add",
 		"type" : "POST",
@@ -388,6 +393,8 @@ function add() {
 			title : $("#title_s").val(),
 			shortContext : $("#shortContext_s").val(),
 			context : $("#context_s").val(),
+			contextType : contextType,
+			subType : "01",
 			isSendMail : isSendMail
 		},
 		"success" : function(msgjsonobj) {
@@ -491,7 +498,7 @@ function editArticle(id){
 		},
 		"success" : function(msgjsonobj) {
 			if (msgjsonobj.status == 100) {
-				if(msgjsonobj.obj.contextType == '02'){
+				if(msgjsonobj.obj.subType == '02'){
 					var url = "/article/ueditor/" + id;
 					location.href = url;
 				}else{
@@ -500,6 +507,11 @@ function editArticle(id){
 					$("#title_s").val(msgjsonobj.obj.title);
 					$("#shortContext_s").val(msgjsonobj.obj.shortContext);
 					$("#context_s").val(msgjsonobj.obj.context);
+					if(msgjsonobj.obj.contextType == "02"){
+						document.getElementsByName("contextType")[0].checked=true;
+					}else{
+						document.getElementsByName("contextType")[0].checked=false;
+					}
 				}
 			} else {
 				//alert(msgjsonobj.status + "-" + msgjsonobj.desc);

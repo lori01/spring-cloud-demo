@@ -21,13 +21,9 @@ public class LoginController {
 
 	@RequestMapping({"/","/favicon"})
     public String main(Model model){
-        return"redirect:/index";
+        return"redirect:/index/list/1";
     }
-	@RequestMapping({"/index"})
-	public String index(Model model){
-		SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
-		return"index";
-	}
+	
 	@RequestMapping({"/logins"})
     public String logins(Model model){
 		if(SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER) != null){

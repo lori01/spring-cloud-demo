@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>文章列表 - 梦神十夜的小站</title>
+    <title th:text="${quser!=null}?${quser.realname}+'的文章列表-梦神十夜的小站':'文章列表-梦神十夜的小站'"></title>
 </head>
 
 <body>

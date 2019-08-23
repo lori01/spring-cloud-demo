@@ -44,12 +44,13 @@ public class CommentController extends BaseController {
 	public String user(Model model,@PathVariable Integer uid,@PathVariable Integer page) {
 		page = getPageNum(page);
 		Page<CommentInfo> list = commentService.findByCreateUid(uid,page);
-		
 		setPageToModel(model, list, page);
+		
 		SysUser quser = userService.findSysUser(uid);
 		model.addAttribute("quser",quser);
 		
-		return "comment/user";
+		return "comment/list";
+		//return "comment/user";
 	}
 	
 	

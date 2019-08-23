@@ -48,10 +48,22 @@ public class ArticleController extends BaseController {
 	public String list(Model model,@PathVariable Integer page) {
 		page = getPageNum(page);
 		Page<ArticleInfo> list = articleService.findAll(page);
-		
+		setPageToModel(model, list, page);
+		return "article/list";
+	}
+	
+	@RequestMapping("/user/{uid}/{page}")
+	public String user(Model model,@PathVariable Integer uid,@PathVariable Integer page) {
+		page = getPageNum(page);
+		Page<ArticleInfo> list = articleService.findByCreateUid(uid,page);
 		setPageToModel(model, list, page);
 		
+		model.addAttribute("qid",uid);
+		SysUser quser = userService.findSysUser(uid);
+		model.addAttribute("quser",quser);
+		
 		return "article/list";
+		//return "article/user";
 	}
 	
 	@RequestMapping("/ueditor/{id}")
@@ -87,20 +99,6 @@ public class ArticleController extends BaseController {
 		return "article/detail";
 	}
 	
-	@RequestMapping("/user/{uid}/{page}")
-	public String user(Model model,@PathVariable Integer uid,@PathVariable Integer page) {
-		page = getPageNum(page);
-		Page<ArticleInfo> list = articleService.findByCreateUid(uid,page);
-		
-		setPageToModel(model, list, page);
-		
-		model.addAttribute("qid",uid);
-		SysUser quser = userService.findSysUser(uid);
-		model.addAttribute("quser",quser);
-		
-		return "article/user";
-	}
-	
 	@RequestMapping(value="/add",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public ResponseVo add(ArticleInfo info,HttpServletRequest req) {
@@ -114,6 +112,9 @@ public class ArticleController extends BaseController {
 		info.setUpdateUser(cuser);
 		if(info.getContextType() == null || "".equals(info.getContextType())){
 			info.setContextType("01");
+		}
+		if(info.getSubType() == null || "".equals(info.getSubType())){
+			info.setSubType("01");
 		}
 		ResponseVo vo = new ResponseVo();
 		try {
@@ -151,7 +152,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value="/addUeditor",method = {RequestMethod.POST,RequestMethod.GET})
 	//@ResponseBody
 	public String addUeditor(ArticleInfo info,HttpServletRequest req,RedirectAttributes redirectAttributes) {
-		info.setContextType("02");
+		info.setSubType("02");
 		ResponseVo vo = add(info, req);
 		if(vo.getStatus() == 100){
 			redirectAttributes.addFlashAttribute("message", "保存富文本内容成功！");
