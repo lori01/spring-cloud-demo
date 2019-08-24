@@ -2136,6 +2136,18 @@ ul.children {
 	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	position: relative
 }
+/* 戴猛daimeng修改create */
+.header_wrap_2 {
+	overflow: hidden;
+	margin-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	background: #FFF;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	position: relative
+}
 
 #header {
 	float: left

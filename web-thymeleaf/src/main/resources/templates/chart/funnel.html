@@ -11,6 +11,26 @@
 <div id="wrap" class="container clearfix">
 	<div th:include="common/header::pagination"></div>
 	
+	<div class="header_wrap_2">
+		<!-- END header -->
+		<div class="clearfix">
+			<nav class="nav">
+				<ul class="sf-menu" style="float:left;margin-bottom: 0px;margin-top:0px;">
+					<li><a th:text="上传文件" th:href="@{/file/upload}"></a></li>
+					<li><a th:text="添加水印" th:href="@{/file/water}"></a></li>
+					<li><a th:text="折线图" th:href="@{/chart/line}"></a></li>
+					<li><a th:text="柱状图" th:href="@{/chart/bar}"></a></li>
+					<li><a th:text="饼图" th:href="@{/chart/pie}"></a></li>
+					<li><a th:text="雷达图" th:href="@{/chart/radar}"></a></li>
+					<li><a th:text="关系图" th:href="@{/chart/graph}"></a></li>
+					<li><a th:text="仪表盘图" th:href="@{/chart/gauge}"></a></li>
+					<li><a style="background: #5d3d21;color:white;" th:text="漏斗图" th:href="@{/chart/funnel}"></a></li>
+				</ul>
+			</nav>
+		</div>
+		<!-- END navigation -->
+	</div>
+	
 	<div class="header_wrap">
 		<div id="chart1" class="clearfix" style="width: 100%; height: 320px; margin-top:20px;"></div>
 	</div>

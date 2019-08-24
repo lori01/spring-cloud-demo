@@ -60,6 +60,7 @@
 					<li><a th:text="发布详情" th:href="@{/article/ueditor/0}"></a></li>
 					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 					<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
+					<li><a th:text="TEST" th:href="@{/file/upload}"></a></li>
 					<li><a th:text="系统管理" th:href="@{/user/list/1}"></a></li>
 					<!-- <li class="show_menu" childid="user_menu_drop" id="show_user_menu_drop"><a th:text="MY" href="javascript:void(0)"></a></li> -->
 					<!--<li class="show_menu" childid="chart_menu_drop" id="show_chart_menu_drop" th:style="${session.user_session.role.id != 100001}? 'display:none':''">

@@ -9,6 +9,24 @@
 <div id="wrap" class="container clearfix">
 	<!-- 引入导航栏 -->
 	<div th:include="common/header::pagination"></div>
+	
+	<div class="header_wrap_2">
+		<!-- END header -->
+		<div class="clearfix">
+			<nav class="nav">
+				<ul class="sf-menu" style="float:left;margin-bottom: 0px;margin-top:0px;">
+					<li><a th:text="用户管理" th:href="@{/user/list/1}"></a></li>
+					<li><a style="background: #5d3d21;color:white;" th:text="菜单管理" th:href="@{/system/menu/1}"></a></li>
+					<li><a th:text="角色管理" th:href="@{/system/role/1}"></a></li>
+					<li><a th:text="日志管理" th:href="@{/user/alllog/1}"></a></li>
+					<li><a th:text="我的信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
+					<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
+					<li><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
+				</ul>
+			</nav>
+		</div>
+		<!-- END navigation -->
+	</div>
     
     <div id="main" class="container">
     	<div class="content alpha" id="content_main_apl">
