@@ -63,8 +63,6 @@
 		<div class="clearfix">
 			<nav class="nav">
 				<ul class="sf-menu" style="float:left;margin-bottom: 0px;margin-top:0px;">
-					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/file/upload')}? 'background:#5d3d21;color:white;':''" th:text="上传文件" th:href="@{/file/upload}"></a></li>
-					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/file/water')}? 'background:#5d3d21;color:white;':''" th:text="添加水印" th:href="@{/file/water}"></a></li>
 					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/chart/line')}? 'background:#5d3d21;color:white;':''" th:text="折线图" th:href="@{/chart/line}"></a></li>
 					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/chart/bar')}? 'background:#5d3d21;color:white;':''" th:text="柱状图" th:href="@{/chart/bar}"></a></li>
 					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/chart/pie')}? 'background:#5d3d21;color:white;':''" th:text="饼图" th:href="@{/chart/pie}"></a></li>
@@ -72,6 +70,8 @@
 					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/chart/graph')}? 'background:#5d3d21;color:white;':''" th:text="关系图" th:href="@{/chart/graph}"></a></li>
 					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/chart/gauge')}? 'background:#5d3d21;color:white;':''" th:text="仪表盘图" th:href="@{/chart/gauge}"></a></li>
 					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/chart/funnel')}? 'background:#5d3d21;color:white;':''" th:text="漏斗图" th:href="@{/chart/funnel}"></a></li>
+					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/file/upload')}? 'background:#5d3d21;color:white;':''" th:text="上传文件" th:href="@{/file/upload}"></a></li>
+					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/file/water')}? 'background:#5d3d21;color:white;':''" th:text="添加水印" th:href="@{/file/water}"></a></li>
 				</ul>
 			</nav>
 		</div>
