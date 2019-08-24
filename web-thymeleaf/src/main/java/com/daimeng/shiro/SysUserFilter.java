@@ -63,7 +63,7 @@ public class SysUserFilter extends AccessControlFilter {
         	System.out.println(path);
         	
         	if(!"/403".equals(path) && !"/".equals(path) && !"/index".equals(path)
-        			&& !"daimeng".equals(suser.getLoginName())){
+        			&& suser.getRole().getId() != 100001){
         		SysRole role = suser.getRole();
         		if(role != null){
         			if(role.getPermissions() != null && role.getPermissions().size() > 0){
