@@ -59,7 +59,11 @@ public class ShiroConfig {
 		//修复登录成功后跳转/favicon.ico页面的问题
 		//因为如果ico没有anon权限,这注销后可能还会请求/favicon.ico,所以登录后直接跳转到/favicon.ico
 		filterChainDefinitionMap.put("/favicon.ico", "anon");
+		filterChainDefinitionMap.put("/", "anon");
+		//登录跳转判断，为了判断是否登录，登录则跳转首页，未登录则跳转登录页面
+		filterChainDefinitionMap.put("/logins", "anon");
 		
+		//静态资源
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/echarts/**", "anon");
 		filterChainDefinitionMap.put("/images/**", "anon");
@@ -69,10 +73,11 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/ueditor/**", "anon");
 		filterChainDefinitionMap.put("/config", "anon");
-		filterChainDefinitionMap.put("/logins", "anon");
+		
+		//未登录的首页
 		filterChainDefinitionMap.put("/index", "anon");
 		filterChainDefinitionMap.put("/index/**", "anon");
-		filterChainDefinitionMap.put("/", "anon");
+		
 		
 		//spring boot自带监控页面
 		filterChainDefinitionMap.put("/health", "anon");

@@ -1,4 +1,4 @@
-package com.daimeng.filter;
+package com.daimeng.xssfilter;
 
 import java.util.regex.Pattern;
 

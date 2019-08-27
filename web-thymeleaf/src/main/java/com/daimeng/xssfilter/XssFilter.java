@@ -1,4 +1,4 @@
-package com.daimeng.filter;
+package com.daimeng.xssfilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
