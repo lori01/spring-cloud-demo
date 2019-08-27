@@ -1,5 +1,7 @@
 package com.daimeng.shiro;
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +14,10 @@ import com.daimeng.util.Constants;
 import com.daimeng.web.user.entity.SysPermission;
 import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
-import com.daimeng.web.user.vo.UserVO;
 
 public class SysUserFilter extends AccessControlFilter {
+	
+	private final static String[] whiteList = new String[]{"/403","/404","/401","/500"};
 
 	@Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
@@ -62,8 +65,7 @@ public class SysUserFilter extends AccessControlFilter {
         	String path = req.getRequestURI();
         	System.out.println(path);
         	
-        	if(!"/403".equals(path) && !"/".equals(path) && !"/index".equals(path)
-        			&& suser.getRole().getId() != 100001){
+        	if(!inWhiteList(path) && suser.getRole().getId() != 100001){
         		SysRole role = suser.getRole();
         		if(role != null){
         			if(role.getPermissions() != null && role.getPermissions().size() > 0){
@@ -92,6 +94,15 @@ public class SysUserFilter extends AccessControlFilter {
         }
         
 		return true;
+	}
+	
+	private boolean inWhiteList(String url){
+		for(String white : whiteList){
+			if(url.indexOf(white) > -1){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override

@@ -62,7 +62,6 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/", "anon");
 		//登录跳转判断，为了判断是否登录，登录则跳转首页，未登录则跳转登录页面
 		filterChainDefinitionMap.put("/logins", "anon");
-		
 		//静态资源
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/echarts/**", "anon");
@@ -71,19 +70,20 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/js/**", "anon");
 		filterChainDefinitionMap.put("/ico/**", "anon");
 		filterChainDefinitionMap.put("/static/**", "anon");
+		//百度富文本，资源保存地址
 		filterChainDefinitionMap.put("/ueditor/**", "anon");
-		filterChainDefinitionMap.put("/config", "anon");
-		
+		filterChainDefinitionMap.put("/ueditor.config.js", "anon");
+		filterChainDefinitionMap.put("/themes/default/css/ueditor.min.css", "anon");
 		//未登录的首页
 		filterChainDefinitionMap.put("/index", "anon");
 		filterChainDefinitionMap.put("/index/**", "anon");
-		
-		
 		//spring boot自带监控页面
 		filterChainDefinitionMap.put("/health", "anon");
 		filterChainDefinitionMap.put("/info", "anon");
+		filterChainDefinitionMap.put("/config", "anon");
 		
 		filterChainDefinitionMap.put("/api/**", "anon");
+		//阿里巴巴数据连接监控
 		filterChainDefinitionMap.put("/druid/**", "anon");
 		//配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
 		filterChainDefinitionMap.put("/logout", "logout");

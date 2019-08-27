@@ -27,7 +27,14 @@ public final class Base64Uploader {
 				(String) conf.get("filename"));
 		
 		savePath = savePath + suffix;
-		String physicalPath = (String) conf.get("rootPath") + savePath;
+		
+		//百度缺陷，此处是bashPath，不是rootPath
+		//bashPath:C:/Users/Sephy/AppData/Local/Temp/tomcat-docbase.6279166846519789172.80/
+		//rootPath:D:/java_test/upload/
+		//String physicalPath = (String) conf.get("rootPath") + savePath;
+		System.out.println(conf.get("rootPath"));
+		System.out.println(conf.get("basePath"));
+		String physicalPath = (String) conf.get("basePath") + savePath;
 
 		State storageState = StorageManager.saveBinaryFile(data, physicalPath);
 
