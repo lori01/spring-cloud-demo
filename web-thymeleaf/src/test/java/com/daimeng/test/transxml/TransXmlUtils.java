@@ -1,9 +1,11 @@
-package com.daimeng.transxml;
+package com.daimeng.test.transxml;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.daimeng.util.XmlTransMappingAnnotation;
 
 public class TransXmlUtils {
 
@@ -85,14 +87,14 @@ public class TransXmlUtils {
 		String xml = "";
 		Class<?> clz = object.getClass(); 
 		//判断clz是不是使用了EsbXmlAnnotation的注解接口
-		boolean hasAnnotation = clz.isAnnotationPresent(com.daimeng.transxml.XmlAnnotation.class);
+		boolean hasAnnotation = clz.isAnnotationPresent(com.daimeng.util.XmlTransMappingAnnotation.class);
 		Field[] fields = clz.getDeclaredFields(); 
 		for (Field field : fields) {
 			String xmlName = field.getName();
 			if(hasAnnotation){
-				XmlAnnotation xmlAnnotation = field.getAnnotation(com.daimeng.transxml.XmlAnnotation.class);
-				if(xmlAnnotation != null){
-					xmlName = xmlAnnotation.value();
+				XmlTransMappingAnnotation xmlTransMappingAnnotation = field.getAnnotation(com.daimeng.util.XmlTransMappingAnnotation.class);
+				if(xmlTransMappingAnnotation != null){
+					xmlName = xmlTransMappingAnnotation.value();
 				}
 			}
 

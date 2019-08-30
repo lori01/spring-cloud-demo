@@ -1,4 +1,4 @@
-package com.daimeng.proxy;
+package com.daimeng.test.proxy;
 
 import java.lang.reflect.Proxy;
 

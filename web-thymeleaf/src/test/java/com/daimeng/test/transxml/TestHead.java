@@ -1,13 +1,15 @@
-package com.daimeng.transxml;
+package com.daimeng.test.transxml;
 
-@XmlAnnotation
+import com.daimeng.util.XmlTransMappingAnnotation;
+
+@XmlTransMappingAnnotation
 public class TestHead {
 	
-	//@XmlAnnotation("tran_no")
+	//@XmlTransMappingAnnotation("tran_no")
 	private String tranNo;
-	//@XmlAnnotation("app_no")
+	//@XmlTransMappingAnnotation("app_no")
 	private Integer appNo;
-	//@XmlAnnotation("tran_time")
+	//@XmlTransMappingAnnotation("tran_time")
 	private String tranTime;
 	public String getTranNo() {
 		return tranNo;

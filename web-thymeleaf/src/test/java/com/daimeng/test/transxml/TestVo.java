@@ -1,25 +1,27 @@
-package com.daimeng.transxml;
+package com.daimeng.test.transxml;
 
 import java.util.ArrayList;
 
-@XmlAnnotation
+import com.daimeng.util.XmlTransMappingAnnotation;
+
+@XmlTransMappingAnnotation
 public class TestVo {
 	
-	@XmlAnnotation("user_name")
+	@XmlTransMappingAnnotation("user_name")
 	private String userName;
-	@XmlAnnotation("user_age")
+	@XmlTransMappingAnnotation("user_age")
 	private Integer uaerAge;
-	@XmlAnnotation("local_address")
+	@XmlTransMappingAnnotation("local_address")
 	private String localAddress;
-	@XmlAnnotation("sex_cd")
+	@XmlTransMappingAnnotation("sex_cd")
 	private String sexCd;
-	@XmlAnnotation("student_no")
+	@XmlTransMappingAnnotation("student_no")
 	private Long studentNo;
-	@XmlAnnotation("point")
+	@XmlTransMappingAnnotation("point")
 	private Double point;
-	@XmlAnnotation("is_first")
+	@XmlTransMappingAnnotation("is_first")
 	private boolean isFirst;
-	@XmlAnnotation("head_list")
+	@XmlTransMappingAnnotation("head_list")
 	private ArrayList<TestHead> headList;
 
 	public String getUserName() {

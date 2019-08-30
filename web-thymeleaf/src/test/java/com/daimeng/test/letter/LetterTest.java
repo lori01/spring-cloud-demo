@@ -1,4 +1,4 @@
-package com.daimeng.letter;
+package com.daimeng.test.letter;
 
 public class LetterTest {
 
