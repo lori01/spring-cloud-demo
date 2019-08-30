@@ -7,9 +7,11 @@ import javax.servlet.Filter;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.util.ByteSource;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -134,6 +136,12 @@ public class ShiroConfig {
         credentialsMatcher.setStoredCredentialsHexEncoded(true);
         return credentialsMatcher;
     }
+    
+    public String getNewPassword(String login, String passwd, String salt){
+		String newPassword = new SimpleHash(algorithmName,passwd,ByteSource.Util.bytes(login+salt),hashIterations).toHex();
+		Constants.println(newPassword);
+		return newPassword;
+	}
 
 
     /**

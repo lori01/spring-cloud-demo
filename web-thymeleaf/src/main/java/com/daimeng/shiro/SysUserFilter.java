@@ -1,15 +1,25 @@
 package com.daimeng.shiro;
 
-import java.util.ArrayList;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.daimeng.interceptor.DruidConfiguration;
 import com.daimeng.util.Constants;
 import com.daimeng.web.user.entity.SysPermission;
 import com.daimeng.web.user.entity.SysRole;
@@ -17,8 +27,10 @@ import com.daimeng.web.user.entity.SysUser;
 
 public class SysUserFilter extends AccessControlFilter {
 	
+	private static final Logger log = LoggerFactory.getLogger(SysUserFilter.class);
+	
 	private final static String[] whiteList = new String[]{"/403","/404","/401","/500"};
-
+	
 	@Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
 		Constants.println("------->SysUserFilter.preHandle------>执行<------");
@@ -79,9 +91,6 @@ public class SysUserFilter extends AccessControlFilter {
             	}
         	}
         	else hasAuth = true;
-        	//idea修改测试git
-			//idea修改测试git2
-			//idea修改测试git3
         	
         	if(!hasAuth){
         		((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/403"); 
@@ -103,6 +112,56 @@ public class SysUserFilter extends AccessControlFilter {
 			}
 		}
 		return false;
+	}
+	
+	private void login(ServletRequest request, ServletResponse response){
+		// 获取当前用户
+		Subject currentUser = getSubject(request, response);
+		// 操作会话
+		Session session = currentUser.getSession();
+		session.setAttribute("someKey", "aValue");
+		String value = (String) session.getAttribute("someKey");
+		if (value.equals("aValue")) {
+		    log.info("Retrieved the correct value! [" + value + "]");
+		}
+
+		// 执行登录
+		if (!currentUser.isAuthenticated()) {
+		    UsernamePasswordToken token = new UsernamePasswordToken("username", "password");
+		    token.setRememberMe(true);
+		    try {
+		        currentUser.login(token);
+		    } catch (UnknownAccountException uae) {
+		        log.info("There is no user with username of " + token.getPrincipal());
+		    } catch (IncorrectCredentialsException ice) {
+		        log.info("Password for account " + token.getPrincipal() + " was incorrect!");
+		    } catch (LockedAccountException lae) {
+		        log.info("The account for username " + token.getPrincipal() + " is locked. "
+		                + "Please contact your administrator to unlock it.");
+		    } catch (AuthenticationException ae) {
+		        // unexpected condition? error?
+		    }
+		}
+
+		// 输出用户信息
+		log.info("User [" + currentUser.getPrincipal() + "] logged in successfully.");
+
+		// 检查角色
+		if (currentUser.hasRole("schwartz")) {
+		    log.info("May the Schwartz be with you!");
+		} else {
+		    log.info("Hello, mere mortal.");
+		}
+
+		// 检查权限
+		if (currentUser.isPermitted("lightsaber:weild")) {
+		    log.info("You may use a lightsaber ring. Use it wisely.");
+		} else {
+		    log.info("Sorry, lightsaber rings are for schwartz masters only.");
+		}
+
+		// 结束，执行注销
+		currentUser.logout();
 	}
 	
 	@Override
