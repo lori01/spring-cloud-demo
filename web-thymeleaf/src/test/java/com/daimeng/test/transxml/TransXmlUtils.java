@@ -103,7 +103,10 @@ public class TransXmlUtils {
 				if(!"is".equals(methodName.subSequence(0, 2))){
 					methodName = "get" + getMethodName(field.getName());
 				}
-				Method m = (Method) object.getClass().getMethod(methodName);  
+				Method m = null;  
+				if(object.getClass().getMethod(methodName) != null){
+					m = (Method) object.getClass().getMethod(methodName);  
+				}
 				if(m != null){
 					//判断是否是java.lang.*里面的基本变量的对象 
 					//判断是否是基本变量,基本变量的类型即为int long float boolean,没有包路劲

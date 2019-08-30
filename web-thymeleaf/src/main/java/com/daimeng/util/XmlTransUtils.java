@@ -6,41 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.daimeng.test.transxml.TestHead;
-import com.daimeng.test.transxml.TestVo;
+import com.daimeng.web.article.entity.ArticleInfo;
+import com.daimeng.web.comment.entity.CommentInfo;
 
 public class XmlTransUtils {
 	
 	public static void main(String[] args) {
-		TestVo vo = new TestVo();
-		vo.setLocalAddress("中山街345号");
-		vo.setSexCd("01");
-		vo.setUaerAge(25);
-		vo.setUserName("张三");
-		vo.setFirst(true);
-		vo.setPoint(35.25);
-		vo.setStudentNo(2007813015l);
-		//System.out.println(obj2xml(vo));
-		
-		TestHead head = new TestHead();
-		head.setAppNo(1);
-		head.setTranNo("001");
-		head.setTranTime("2019-05-31");
+		ArticleInfo a = new ArticleInfo();
+		a.setContext("内容");
+		a.setContextType("01");
+		a.setTitle("标题");
 
-		ArrayList<TestHead> list = new ArrayList<TestHead>();
-		TestHead h1 = new TestHead();
-		TestHead h2 = new TestHead();
-		h1.setAppNo(1);
-		h1.setTranNo("001");
-		h1.setTranTime("2019-05-31");
-		h2.setAppNo(2);
-		h2.setTranNo("002");
-		h2.setTranTime("2019-06-05");
+		ArrayList<CommentInfo> list = new ArrayList<CommentInfo>();
+		CommentInfo h1 = new CommentInfo();
+		CommentInfo h2 = new CommentInfo();
+		h1.setContext("11");
+		h2.setContext("22");
 
 		list.add(h1);
 		list.add(h2);
-		vo.setHeadList(list);
 
-		System.out.println(tranXmlFromObject(head, vo));
+		System.out.println(tranXmlFromObject(a, list));
 
 	}
 	
@@ -105,6 +91,9 @@ public class XmlTransUtils {
 					methodName = "get" + getMethodName(field.getName());
 				}
 				Method m = (Method) object.getClass().getMethod(methodName);  
+				/*if(object.getClass().getMethod(methodName) != null){
+					m = (Method) object.getClass().getMethod(methodName);  
+				}*/
 				if(m != null){
 					//判断是否是java.lang.*里面的基本变量的对象 
 					//判断是否是基本变量,基本变量的类型即为int long float boolean,没有包路劲
