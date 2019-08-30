@@ -31,6 +31,10 @@ import org.apache.poi.ss.usermodel.FormulaEvaluator;
  */
 public class ExcelUtils {
 	
+	{
+		initFormula();
+	}
+	
 	
 	public static void main(String[] args) {
 		//删除等
@@ -406,7 +410,7 @@ public class ExcelUtils {
 	private static String reWriteFormulaWithSection(String formula,int delStartIndex,int delEndIndex){
 		//获取所有公式内部的计算单元格区间
 		//ArrayList<String> formualPositionList = getFormulaSection(formula);
-		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:");
+		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:.");
 		System.out.println(formualPositionList);
 		String newFormula = "";
 		System.out.println(formualPositionList);
@@ -440,7 +444,7 @@ public class ExcelUtils {
 	 */
 	private static String reWriteFormulaWithoutSection(String formula,int delStartIndex,int delEndIndex){
 		//获取所有公式内部的计算单元格区间
-		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:");
+		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:.");
 		System.out.println(formualPositionList);
 		String newFormula = "";
 		for(String oldFormualPosition : formualPositionList){
@@ -492,7 +496,7 @@ public class ExcelUtils {
 	 */
 	private static String reWriteFormulaWithRelation(String formula,String currSheetName, int delStartIndex,int delEndIndex){
 		//获取所有公式内部的计算单元格区间
-		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:");
+		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:.");
 		System.out.println(formualPositionList);
 		String newFormula = "";
 		for(String oldFormualPosition : formualPositionList){
@@ -1011,11 +1015,75 @@ public class ExcelUtils {
                 	if(cell != null){
                 		if(cell.getCellTypeEnum() == CellType.FORMULA) {
                             evaluator.evaluateFormulaCell(cell);
+                            String formular = cell.getCellFormula();
+                            if(formular.indexOf("SLN") > -1){
+                            	String newformular = reWriteSln(formular);
+                            	cell.setCellFormula(newformular);
+                            	cell.getNumericCellValue();
+                            }
                         }
                 	}
                 }
         	}
         }
+	}
+	
+	/**
+	 * 
+	* @功能描述: 获取对应右括号的index
+	* @方法名称: getRightBrackerIndex 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年8月29日 下午9:08:01 
+	* @version V1.0   
+	* @param formular
+	* @return 
+	* @return int
+	 */
+	public static int getRightBrackerIndex(String formular){
+		char[] letters = formular.toCharArray();
+		int leftBrack = 0;
+		for(int i=0; i < letters.length; i ++){
+			if(letters[i] == '('){
+				leftBrack ++;
+			}else if(letters[i] == ')'){
+				leftBrack --;
+			}
+			if(leftBrack == 0){
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	/**
+	 * 
+	* @功能描述: 重写SLN公式，替换到cell中
+	* @方法名称: reWriteSln 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年8月29日 下午9:16:53 
+	* @version V1.0   
+	* @param formular
+	* @return 
+	* @return String
+	 */
+	public static String reWriteSln(String formular){
+		//(d1-d2)/d3
+		formular = formular.replace(" ", "");
+		String[] slns = formular.split("SLN");
+		if(slns.length == 2){
+			String sln = slns[1].substring(1, getRightBrackerIndex(slns[1]));
+			String[] forms = sln.split(",");
+			if(forms.length == 3){
+				String d1 = forms[0];
+				String d2 = forms[1];
+				String d3 = forms[2];
+				String newformul = "(("+d1+"-"+d2+")/"+d3+")";
+				return formular.replace("SLN("+sln+")", newformul);
+			}
+		}
+		return formular;
 	}
 	
 	/**
