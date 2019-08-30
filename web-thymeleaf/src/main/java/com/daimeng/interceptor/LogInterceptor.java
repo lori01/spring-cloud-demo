@@ -15,6 +15,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.daimeng.util.Constants;
 import com.daimeng.web.user.service.UserService;
 
 @Component
@@ -76,7 +77,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter{
             try {
             	userService.saveSysUserLog(request, executeTime);
     		} catch (Exception e) {
-    			System.out.println(e.getMessage());
+    			Constants.println(e.getMessage());
     		}
         }
 

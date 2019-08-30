@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.daimeng.util.Constants;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInterceptor;
 
@@ -36,13 +37,13 @@ public class PageConfiguration {
 		properties.setProperty("reasonable", reasonable);
 		properties.setProperty("supportMethodsArguments", supportMethodsArguments);
 		properties.setProperty("dialect", dialect); // 配置mysql数据库的方言
-		System.out.println("######################pageHelper#########################");
-		System.out.println("dialect="+dialect);
-		System.out.println("offsetAsPageNum="+offsetAsPageNum);
-		System.out.println("rowBoundsWithCount="+rowBoundsWithCount);
-		System.out.println("reasonable="+reasonable);
-		System.out.println("supportMethodsArguments="+supportMethodsArguments);
-		System.out.println("######################pageHelper#########################");
+		Constants.println("######################pageHelper#########################");
+		Constants.println("dialect="+dialect);
+		Constants.println("offsetAsPageNum="+offsetAsPageNum);
+		Constants.println("rowBoundsWithCount="+rowBoundsWithCount);
+		Constants.println("reasonable="+reasonable);
+		Constants.println("supportMethodsArguments="+supportMethodsArguments);
+		Constants.println("######################pageHelper#########################");
 		pageHelper.setProperties(properties);
 		return pageHelper;
 	}
@@ -54,9 +55,9 @@ public class PageConfiguration {
 	public PageInterceptor pageInterceptor() {
 		PageInterceptor pageInterceptor = new PageInterceptor();
 		Properties properties = new Properties();
-		System.out.println("######################pageInterceptor#########################");
-		System.out.println("dialect="+dialect);
-		System.out.println("######################pageInterceptor#########################");
+		Constants.println("######################pageInterceptor#########################");
+		Constants.println("dialect="+dialect);
+		Constants.println("######################pageInterceptor#########################");
 		properties.setProperty("helperDialect", dialect); // 配置mysql数据库的方言
 		pageInterceptor.setProperties(properties);
 		return pageInterceptor;

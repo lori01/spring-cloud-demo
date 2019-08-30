@@ -1,8 +1,10 @@
 package com.daimeng.interceptor;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.druid.support.http.WebStatFilter;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,9 +14,10 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.support.http.StatViewServlet;
+import com.alibaba.druid.support.http.WebStatFilter;
+import com.daimeng.util.Constants;
 
 /**
  * druid有一个Servlet和Filter,这里采用编程注入的方式
@@ -41,10 +44,10 @@ public class DruidConfiguration {
 		servletRegistrationBean.setServlet(new StatViewServlet());
 		servletRegistrationBean.addUrlMappings("/druid/*");
 		Map<String, String> initParameters = new HashMap<String, String>();
-		System.out.println("######################druidServlet#########################");
-		System.out.println("#############druid-name="+userName);
-		System.out.println("#############druid-password="+password);
-		System.out.println("#############druid-resetEnable="+resetEnable);
+		Constants.println("######################druidServlet#########################");
+		Constants.println("#############druid-name="+userName);
+		Constants.println("#############druid-password="+password);
+		Constants.println("#############druid-resetEnable="+resetEnable);
 		initParameters.put("loginUsername", userName);// 用户名
 		initParameters.put("loginPassword", password);// 密码
 		initParameters.put("resetEnable", resetEnable);// 禁用HTML页面上的“Reset All”功能

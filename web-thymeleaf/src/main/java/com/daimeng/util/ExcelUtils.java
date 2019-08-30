@@ -41,10 +41,10 @@ public class ExcelUtils {
 		/*String src = "D:/java_test/excel/Excel_Remove_Mod_less.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
-		System.out.println(date);
+		Constants.println(date);
 		String targ = "D:/java_test/excel/new_excel_" +date+ ".xls";
 		delRowAndColumn(src, targ);
-		System.out.println(targ);*/
+		Constants.println(targ);*/
 		
 		//自定义公式
 		/*initFormula();
@@ -57,7 +57,7 @@ public class ExcelUtils {
             HSSFCell cell = row.getCell(1);
             cell.setCellValue(270d);
             evaluate(workbook, 0, null);
-            System.out.println(row.getCell(0).getNumericCellValue());
+            Constants.println(row.getCell(0).getNumericCellValue());
             FileOutputStream os = new FileOutputStream(src);
             workbook.write(os);
             is.close();
@@ -70,23 +70,23 @@ public class ExcelUtils {
 		/*String src = "D:/java_test/excel/新设法人房地产模板.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
-		System.out.println(date);
+		Constants.println(date);
 		String targ = "D:/java_test/excel/新设法人房地产模板_new_excel_" +date+ ".xls";
 		drawPic(src, targ);
-		System.out.println(targ);*/
+		Constants.println(targ);*/
 		
-		//System.out.println(getSumFormulaString("F10:B810+SUM(A10:S10)+B8+SUM(SS14+YY84)"));
-		//System.out.println(getFormulaPositionFromFormula("=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12"));
-		//System.out.println(getFormulaPositionFromFormula("=IF(E17=0,0,(D47*E18+SUMPRODUCT(D28:D32,E28:E32)+SUMPRODUCT(D34:D38,E34:E38)+SUMPRODUCT(D42:D43,E42:E43))/E17)"));
+		//Constants.println(getSumFormulaString("F10:B810+SUM(A10:S10)+B8+SUM(SS14+YY84)"));
+		//Constants.println(getFormulaPositionFromFormula("=INDEX(C34:BL34,MATCH(0,C29:BL29,1))-INDEX(C29:BL29,MATCH(0,C29:BL29,1))/INDEX(C28:BL28,MATCH(0,C29:BL29,1)+1)-1+fzb1!$C$4/12"));
+		//Constants.println(getFormulaPositionFromFormula("=IF(E17=0,0,(D47*E18+SUMPRODUCT(D28:D32,E28:E32)+SUMPRODUCT(D34:D38,E34:E38)+SUMPRODUCT(D42:D43,E42:E43))/E17)"));
 	
-		//System.out.println(getFormulaAllCoordinate("A1+B1+c3+SUM(A1:B1)+(AA44*BB55+SS66)/C78+PGB1!A1+$C$3+$C4+C$5"));
+		//Constants.println(getFormulaAllCoordinate("A1+B1+c3+SUM(A1:B1)+(AA44*BB55+SS66)/C78+PGB1!A1+$C$3+$C4+C$5"));
 		
 		String formula = "K2+H1+J2+M1+O2+PGB11!K8+$A$1+B$2+$C3+$K$2+$K2+K$2+SUM(H1:M1)+SUM($H$1:$M1)+SUM(A10:D10)+SUM(M5:O5)+SUM(M$5:O5)";
-		//System.out.println(getFormulaAllSection(formula));
-		//System.out.println(reWriteFormulaWithSection(formula, 5, 10));
-		//System.out.println(reWriteFormulaWithoutSection(formula, 5, 10));
-		System.out.println(reWriteFormulaWithoutSection(reWriteFormulaWithSection(formula, 5, 10), 5, 10));
-		//System.out.println(reWriteFormulaWithRelation("PGB2!$K$2+PGB2!$K2+PGB2!K$2+PGB2!K2", "PGB2", 5, 10));
+		//Constants.println(getFormulaAllSection(formula));
+		//Constants.println(reWriteFormulaWithSection(formula, 5, 10));
+		//Constants.println(reWriteFormulaWithoutSection(formula, 5, 10));
+		Constants.println(reWriteFormulaWithoutSection(reWriteFormulaWithSection(formula, 5, 10), 5, 10));
+		//Constants.println(reWriteFormulaWithRelation("PGB2!$K$2+PGB2!$K2+PGB2!K$2+PGB2!K2", "PGB2", 5, 10));
 	
 	}
 	//测试修改数据后图会不会自动生成-答案是会的
@@ -98,19 +98,19 @@ public class ExcelUtils {
             
             int sheetNum = workbook.getNumberOfSheets();
             long t1 = System.currentTimeMillis();
-            System.out.println(t1);
+            Constants.println(t1);
         	HSSFSheet sheet = getSheet(workbook, null, "fzb7.1");
         	long t2 = System.currentTimeMillis();
-        	System.out.println(t2);
-        	System.out.println("获取sheet消耗的时间" + (t2-t1));
-        	System.out.println(sheet.getSheetName());
-    		System.out.println("=====start=====");
+        	Constants.println(t2);
+        	Constants.println("获取sheet消耗的时间" + (t2-t1));
+        	Constants.println(sheet.getSheetName());
+    		Constants.println("=====start=====");
     		for(int j = 5; j <= 13; j++ ){
     			HSSFRow row = sheet.getRow(j); 
     			//excel可能从中间开始才有数据，row.getPhysicalNumberOfCells()获取不为空的列个数
         		//getLastCellNum()是获取最后一个不为空的列是第几个
-    			System.out.println("row.getPhysicalNumberOfCells()" + row.getPhysicalNumberOfCells());
-    			System.out.println("row.getLastCellNum()" + row.getLastCellNum());
+    			Constants.println("row.getPhysicalNumberOfCells()" + row.getPhysicalNumberOfCells());
+    			Constants.println("row.getLastCellNum()" + row.getLastCellNum());
     			for(int k = 1; k <= 6; k++){
     				HSSFCell cell = row.getCell(k);
     				cell.setCellValue(k*10 + j);
@@ -128,11 +128,11 @@ public class ExcelUtils {
             is.close();
             os.close();
             
-            System.out.println("===export excel success!===");
+            Constants.println("===export excel success!===");
             long end = System.currentTimeMillis();
-            System.out.println("===整个过程消耗了"+(end-start)+"ms===");
+            Constants.println("===整个过程消耗了"+(end-start)+"ms===");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			Constants.println(e.getMessage());
 		}
 	}
 	
@@ -148,41 +148,41 @@ public class ExcelUtils {
             //要么都用删除,要么都用隐藏
             //可以row用删除,column用隐藏
             
-            /*System.out.println("===delete row start!===");
+            /*Constants.println("===delete row start!===");
             sheet = delRow(sheet, 60, 145);
             sheet = delRow(sheet, 20, 45);
-            System.out.println("===delete row end!===");
+            Constants.println("===delete row end!===");
             
-            System.out.println("===delete column start!===");
+            Constants.println("===delete column start!===");
             sheet = delColumn(sheet, 30, 40);
             sheet = delColumn(sheet, 15, 20);
-            System.out.println("===delete column end!===");*/
+            Constants.println("===delete column end!===");*/
             
-            /*System.out.println("===hide row start!===");
+            /*Constants.println("===hide row start!===");
             sheet = hideRow(sheet, 170, 180, false);
             sheet = hideRow(sheet, 50, 160, true);
-            System.out.println("===hide row end!===");
+            Constants.println("===hide row end!===");
             
-            System.out.println("===hide column start!===");
+            Constants.println("===hide column start!===");
             sheet = hideColumn(sheet, 35, 130, true);
             sheet = hideColumn(sheet, 30, 34, false);
             sheet = hideColumn(sheet, 12, 26, true);
-            System.out.println("===hide column end!===");*/
+            Constants.println("===hide column end!===");*/
             
-            /*System.out.println("===hide row start!===");
+            /*Constants.println("===hide row start!===");
             sheet = hideRow(sheet, 27, 33,false);
             sheet = hideRow(sheet, 6, 10,false);
-            System.out.println("===hide row end!===");*/
+            Constants.println("===hide row end!===");*/
             
-            /*System.out.println("===hide column start!===");
+            /*Constants.println("===hide column start!===");
             sheet = hideColumn(sheet, 35, 130, true);
             sheet = hideColumn(sheet, 30, 34, false);
             sheet = hideColumn(sheet, 12, 26, true);
-            System.out.println("===hide column end!===");*/
-            System.out.println("===delete column start!===");
+            Constants.println("===hide column end!===");*/
+            Constants.println("===delete column start!===");
             sheet = delColumn(sheet, 57, 141);//27-141
             sheet = delColumn(sheet, 16, 26);//6-26
-            System.out.println("===delete column end!===");
+            Constants.println("===delete column end!===");
             
             reWriteFormulaForDelEndColumn(sheet, 57, 141);//27-141
             reWriteFormulaForDelEndColumn(sheet, 16, 26);//6-26
@@ -193,11 +193,11 @@ public class ExcelUtils {
             evaluate(workbook, 0, "");
             
             
-            System.out.println("隐藏sheet");
+            Constants.println("隐藏sheet");
             HSSFSheet sheet1 = getSheet(workbook, null, "no_sheet");
             HSSFCell cell1 = getCell(sheet1, 0, 0);
             cell1.setCellValue("no_123456_ss22");
-            System.out.println(cell1.getStringCellValue());
+            Constants.println(cell1.getStringCellValue());
             
             
             
@@ -206,11 +206,11 @@ public class ExcelUtils {
             is.close();
             os.close();
             
-            System.out.println("===export excel success!===");
+            Constants.println("===export excel success!===");
             long end = System.currentTimeMillis();
-            System.out.println("===整个过程消耗了"+(end-start)+"ms===");
+            Constants.println("===整个过程消耗了"+(end-start)+"ms===");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			Constants.println(e.getMessage());
 		}
 	}
 	
@@ -244,8 +244,8 @@ public class ExcelUtils {
 								//原始公式
 								formula = cell.getCellFormula();
 							}catch (Exception e){
-                				System.out.println("error");
-								System.out.println(e.getMessage());
+                				Constants.println("error");
+								Constants.println(e.getMessage());
 								formulaError = true;
 								formula = cell.getStringCellValue();
 							}
@@ -261,8 +261,8 @@ public class ExcelUtils {
                 			else if(type == 3){
                 				setFormulaForRelationColumn(cell, currSheetName, formula, delStartIndex, delEndIndex, formulaError);
                 			}
-                            System.out.println(formula);
-                            System.out.println(cell.getNumericCellValue());
+                            Constants.println(formula);
+                            Constants.println(cell.getNumericCellValue());
                         }
                 	}
                 }
@@ -273,19 +273,19 @@ public class ExcelUtils {
 	private static void setFormulaForDelEndColumn(HSSFCell cell,String formula,int delStartIndex,int delEndIndex,boolean formulaError){
 		//判断公式
         if(formula != null && !"".equals(formula) && formula.indexOf(":") > -1){
-        	System.out.println("+++create new formal start 1+++");
-    		System.out.println("旧公式="+formula);
+        	Constants.println("+++create new formal start 1+++");
+    		Constants.println("旧公式="+formula);
     		//处理区间公式
     		formula = reWriteFormulaWithSection(formula, delStartIndex, delEndIndex);
     		cell.setCellFormula(formula);
-        	System.out.println("新公式="+formula);
-        	System.out.println(cell.getNumericCellValue());
-        	System.out.println("+++create new formal end 1+++");
+        	Constants.println("新公式="+formula);
+        	Constants.println(cell.getNumericCellValue());
+        	Constants.println("+++create new formal end 1+++");
         }else{
         	if(formulaError){
-				System.out.println("rewrite forlmula");
+				Constants.println("rewrite forlmula");
 				cell.setCellFormula(formula);
-				System.out.println("+++create new formal end+++");
+				Constants.println("+++create new formal end+++");
 			}
 		}
 	}
@@ -293,51 +293,51 @@ public class ExcelUtils {
 	private static void setFormulaForDelMiddleColumn(HSSFCell cell,String formula,int delStartIndex,int delEndIndex,boolean formulaError){
 		//判断公式
         if(formula != null && !"".equals(formula) && formula.indexOf(":") > -1){
-        	System.out.println("+++create new formal start 1+++");
-    		System.out.println("旧公式="+formula);
+        	Constants.println("+++create new formal start 1+++");
+    		Constants.println("旧公式="+formula);
     		//处理区间公式
     		formula = reWriteFormulaWithSection(formula, delStartIndex, delEndIndex);
     		//处理非区间的公式
     		formula = reWriteFormulaWithoutSection(formula, delStartIndex, delEndIndex);
     		cell.setCellFormula(formula);
-        	System.out.println("新公式="+formula);
-        	System.out.println(cell.getNumericCellValue());
-        	System.out.println("+++create new formal end 1+++");
+        	Constants.println("新公式="+formula);
+        	Constants.println(cell.getNumericCellValue());
+        	Constants.println("+++create new formal end 1+++");
         }
         else if(formula != null && !"".equals(formula) && formula.indexOf(":") == -1){
-        	System.out.println("+++create new formal start 2+++");
-    		System.out.println("旧公式="+formula);
+        	Constants.println("+++create new formal start 2+++");
+    		Constants.println("旧公式="+formula);
     		//处理非区间的公式
     		formula = reWriteFormulaWithoutSection(formula, delStartIndex, delEndIndex);
         	cell.setCellFormula(formula);
-        	System.out.println("新公式="+formula);
-        	System.out.println(cell.getNumericCellValue());
-        	System.out.println("+++create new formal end 2+++");
+        	Constants.println("新公式="+formula);
+        	Constants.println(cell.getNumericCellValue());
+        	Constants.println("+++create new formal end 2+++");
         }
         else{
         	if(formulaError){
-				System.out.println("rewrite forlmula");
+				Constants.println("rewrite forlmula");
 				cell.setCellFormula(formula);
-				System.out.println("+++create new formal end+++");
+				Constants.println("+++create new formal end+++");
 			}
 		}
 	}
 	
 	private static void setFormulaForRelationColumn(HSSFCell cell,String currSheetName, String formula,int delStartIndex,int delEndIndex,boolean formulaError){
 		if(formula != null && !"".equals(formula) && formula.indexOf(":") > -1){
-        	System.out.println("+++create new formal start 1+++");
-    		System.out.println("旧公式="+formula);
+        	Constants.println("+++create new formal start 1+++");
+    		Constants.println("旧公式="+formula);
     		//处理区间公式
     		formula = reWriteFormulaWithRelation(formula, currSheetName, delStartIndex, delEndIndex);
     		cell.setCellFormula(formula);
-        	System.out.println("新公式="+formula);
-        	System.out.println(cell.getNumericCellValue());
-        	System.out.println("+++create new formal end 1+++");
+        	Constants.println("新公式="+formula);
+        	Constants.println(cell.getNumericCellValue());
+        	Constants.println("+++create new formal end 1+++");
         }else{
         	if(formulaError){
-				System.out.println("rewrite forlmula");
+				Constants.println("rewrite forlmula");
 				cell.setCellFormula(formula);
-				System.out.println("+++create new formal end+++");
+				Constants.println("+++create new formal end+++");
 			}
 		}
 	}
@@ -411,15 +411,15 @@ public class ExcelUtils {
 		//获取所有公式内部的计算单元格区间
 		//ArrayList<String> formualPositionList = getFormulaSection(formula);
 		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:.");
-		System.out.println(formualPositionList);
+		Constants.println(formualPositionList);
 		String newFormula = "";
-		System.out.println(formualPositionList);
+		Constants.println(formualPositionList);
 		for(String oldFormualPosition : formualPositionList){
 			if(oldFormualPosition.indexOf(":") > -1 && oldFormualPosition.indexOf("!") == -1){
-				System.out.println("旧公式区间="+oldFormualPosition);
+				Constants.println("旧公式区间="+oldFormualPosition);
 	        	String newFormalPosition = reWriteFormulaPosition(oldFormualPosition, delStartIndex, delEndIndex);
 	        	newFormula += newFormalPosition;
-	        	System.out.println("新公式区间="+newFormalPosition);
+	        	Constants.println("新公式区间="+newFormalPosition);
 			}else{
 				newFormula += oldFormualPosition;
 			}
@@ -445,7 +445,7 @@ public class ExcelUtils {
 	private static String reWriteFormulaWithoutSection(String formula,int delStartIndex,int delEndIndex){
 		//获取所有公式内部的计算单元格区间
 		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:.");
-		System.out.println(formualPositionList);
+		Constants.println(formualPositionList);
 		String newFormula = "";
 		for(String oldFormualPosition : formualPositionList){
 			char array[] = oldFormualPosition.toCharArray();
@@ -453,7 +453,7 @@ public class ExcelUtils {
 					&& Character.isDigit(array[array.length-1]) 
 					&& oldFormualPosition.indexOf("!") == -1
 					&& oldFormualPosition.indexOf(":") == -1){
-				System.out.println("旧坐标="+oldFormualPosition);
+				Constants.println("旧坐标="+oldFormualPosition);
 				//获取字母中的行数字
 		    	String rowNum = getNumberFromString(oldFormualPosition);
 		    	String columnLetterCur = oldFormualPosition.replace(rowNum, "");
@@ -465,9 +465,9 @@ public class ExcelUtils {
 		    		//String newFormalPosition = newColumnLetter + rowNum;
 		    		String newFormalPosition = oldFormualPosition.replace(columnLetter, newColumnLetter);
 		    		newFormula += newFormalPosition;
-		    		System.out.println("新坐标="+newFormalPosition);
+		    		Constants.println("新坐标="+newFormalPosition);
 		    	}else{
-		    		System.out.println("新坐标="+oldFormualPosition);
+		    		Constants.println("新坐标="+oldFormualPosition);
 		    		newFormula += oldFormualPosition;
 		    	}
 			}else{
@@ -497,11 +497,11 @@ public class ExcelUtils {
 	private static String reWriteFormulaWithRelation(String formula,String currSheetName, int delStartIndex,int delEndIndex){
 		//获取所有公式内部的计算单元格区间
 		ArrayList<String> formualPositionList = getFormulaSpecifiedReference(formula,"$!:.");
-		System.out.println(formualPositionList);
+		Constants.println(formualPositionList);
 		String newFormula = "";
 		for(String oldFormualPosition : formualPositionList){
 			if(oldFormualPosition.indexOf("!") > -1 && formula.startsWith(currSheetName)){
-				System.out.println("旧坐标="+oldFormualPosition);
+				Constants.println("旧坐标="+oldFormualPosition);
 				//获取字母中的行数字
 				String rowNum = getNumberFromString(oldFormualPosition.split("!")[1]);
 				String columnLetterCur = oldFormualPosition.split("!")[1].replace(rowNum, "");
@@ -513,9 +513,9 @@ public class ExcelUtils {
 					//String newFormalPosition = newColumnLetter + rowNum;
 					String newFormalPosition = oldFormualPosition.replace(columnLetter, newColumnLetter);
 					newFormula += newFormalPosition;
-					System.out.println("新坐标="+newFormalPosition);
+					Constants.println("新坐标="+newFormalPosition);
 				}else{
-					System.out.println("新坐标="+oldFormualPosition);
+					Constants.println("新坐标="+oldFormualPosition);
 					newFormula += oldFormualPosition;
 				}
 			}else{
@@ -646,7 +646,7 @@ public class ExcelUtils {
 	public static HSSFSheet delRow(HSSFSheet sheet,int start,int end){
 		int rowNum = sheet.getLastRowNum();
 		int rowCount = rowNum+1;
-		System.out.println("rowCount="+rowCount);
+		Constants.println("rowCount="+rowCount);
 		if(end > rowCount){
 			end = rowCount;
 		}
@@ -701,11 +701,11 @@ public class ExcelUtils {
 	public static HSSFSheet delColumn(HSSFSheet sheet,int start,int end){
 		HSSFRow firstrow = sheet.getRow(0);
         int columnCount = firstrow.getLastCellNum();
-        System.out.println("columnCount="+columnCount);
+        Constants.println("columnCount="+columnCount);
         
         int rowNum = sheet.getLastRowNum();
 		int rowCount = rowNum+1;
-		System.out.println("new rowCount="+rowCount);
+		Constants.println("new rowCount="+rowCount);
 		
         if(end > columnCount){
 			end = columnCount;
@@ -825,7 +825,7 @@ public class ExcelUtils {
 	public static HSSFSheet hideRow(HSSFSheet sheet,int start,int end,boolean delData){
 		int rowNum = sheet.getLastRowNum();
 		int rowCount = rowNum+1;
-		System.out.println("rowCount="+rowCount);
+		Constants.println("rowCount="+rowCount);
 		if(end > rowCount){
 			end = rowCount;
 		}
@@ -891,11 +891,11 @@ public class ExcelUtils {
 	public static HSSFSheet hideColumn(HSSFSheet sheet,int start,int end,boolean delData){
 		HSSFRow row = sheet.getRow(0);
         int columnCount = row.getLastCellNum();
-        System.out.println("columnCount="+columnCount);
+        Constants.println("columnCount="+columnCount);
         
         int rowNum = sheet.getLastRowNum();
 		int rowCount = rowNum+1;
-		System.out.println("rowCount="+rowCount);
+		Constants.println("rowCount="+rowCount);
 		
         if(end > columnCount){
 			end = columnCount;
@@ -1199,10 +1199,10 @@ public class ExcelUtils {
 		Pattern p = Pattern.compile(reg);  
 		Matcher m = p.matcher(letter);  
 		if(m.find()){  
-			System.out.println(letter+"->"+m.replaceAll("").trim());
+			Constants.println(letter+"->"+m.replaceAll("").trim());
 		    return m.replaceAll("").trim();
 		}else {
-			System.out.println(letter+"->null");
+			Constants.println(letter+"->null");
 			return "";
 		}
 	}

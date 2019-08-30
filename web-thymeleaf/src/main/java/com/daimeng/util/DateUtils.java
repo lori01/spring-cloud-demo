@@ -51,12 +51,12 @@ public class DateUtils {
 
 	public static void main(String[] args) {
 		Date date = new Date();
-		System.out.println(getDateStrFormat(date, YYYY_MM_DD));
-		System.out.println(getDateStrFormat(date, YYYYMMDD));
-		System.out.println(getDateStrFormat(date, DDMMYYYY));
-		System.out.println(getDateStrFormat(date, YYYY_MM_DDHH_MM_SS));
-		System.out.println(getDateStrFormat(date, YYYY_MM_DDHH_MM_SSS));
-		System.out.println(getDateStrFormat(date, HH_MM_SS));
+		Constants.println(getDateStrFormat(date, YYYY_MM_DD));
+		Constants.println(getDateStrFormat(date, YYYYMMDD));
+		Constants.println(getDateStrFormat(date, DDMMYYYY));
+		Constants.println(getDateStrFormat(date, YYYY_MM_DDHH_MM_SS));
+		Constants.println(getDateStrFormat(date, YYYY_MM_DDHH_MM_SSS));
+		Constants.println(getDateStrFormat(date, HH_MM_SS));
 	}
 	
 	public static String getDateStrFormat(Date date,String formate){

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.daimeng.util.Constants;
 import com.daimeng.util.WaterMarkUtils;
 
 @Controller
@@ -102,10 +103,10 @@ public class FileController {
 	                    os.write(buffer, 0, i);
 	                    i = bis.read(buffer);
 	                }
-	                System.out.println("Download the song successfully!");
+	                Constants.println("Download the song successfully!");
 	            }
 	            catch (Exception e) {
-	                System.out.println("Download the song failed!");
+	                Constants.println("Download the song failed!");
 	            }
 	            finally {
 	                if (bis != null) {
@@ -125,7 +126,7 @@ public class FileController {
 	            }
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			Constants.println(e.getMessage());
 		}
 	}
 	

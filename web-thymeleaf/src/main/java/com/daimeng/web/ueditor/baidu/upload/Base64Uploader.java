@@ -1,13 +1,15 @@
 package com.daimeng.web.ueditor.baidu.upload;
 
+import java.util.Map;
+
+import org.apache.commons.codec.binary.Base64;
+
+import com.daimeng.util.Constants;
 import com.daimeng.web.ueditor.baidu.PathFormat;
 import com.daimeng.web.ueditor.baidu.define.AppInfo;
 import com.daimeng.web.ueditor.baidu.define.BaseState;
 import com.daimeng.web.ueditor.baidu.define.FileType;
 import com.daimeng.web.ueditor.baidu.define.State;
-import org.apache.commons.codec.binary.Base64;
-
-import java.util.Map;
 
 public final class Base64Uploader {
 
@@ -32,8 +34,8 @@ public final class Base64Uploader {
 		//bashPath:C:/Users/Sephy/AppData/Local/Temp/tomcat-docbase.6279166846519789172.80/
 		//rootPath:D:/java_test/upload/
 		//String physicalPath = (String) conf.get("rootPath") + savePath;
-		System.out.println(conf.get("rootPath"));
-		System.out.println(conf.get("basePath"));
+		Constants.println(conf.get("rootPath"));
+		Constants.println(conf.get("basePath"));
 		String physicalPath = (String) conf.get("basePath") + savePath;
 
 		State storageState = StorageManager.saveBinaryFile(data, physicalPath);

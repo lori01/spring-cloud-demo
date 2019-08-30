@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService{
 	
 	public static String getNewPassword(String login, String passwd, String salt){
 		String newPassword = new SimpleHash("md5",passwd,ByteSource.Util.bytes(login+salt),1).toHex();
-		System.out.println(newPassword);
+		Constants.println(newPassword);
 		return newPassword;
 	}
 

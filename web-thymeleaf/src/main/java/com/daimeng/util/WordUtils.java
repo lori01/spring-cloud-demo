@@ -41,7 +41,7 @@ public class WordUtils {
 	public static void main(String[] args) {
 		/*ArrayList<String> result = getParamFromDollar("(${no})是一个${name}");
 		for(String str : result){
-			System.out.println(str);
+			Constants.println(str);
 		}*/
 		
 		long start = System.currentTimeMillis();
@@ -52,8 +52,8 @@ public class WordUtils {
 		downDocument(templatePath, newDocumentPath, dataMap);
 		
 		long end = System.currentTimeMillis();
-		System.out.println(newDocumentPath);
-        System.out.println("===整个过程消耗了"+(end-start)+"ms===");
+		Constants.println(newDocumentPath);
+        Constants.println("===整个过程消耗了"+(end-start)+"ms===");
 	}
 	
 	private static HashMap<String,Object> dataMap = new HashMap<String,Object>();
@@ -132,7 +132,7 @@ public class WordUtils {
 			//列表赋值
 			for(Map.Entry<String, Element> entry : totalMap.entrySet()){
 				long start = System.currentTimeMillis();
-				System.out.println("##################create " +entry.getKey()+ " start###################");
+				Constants.println("##################create " +entry.getKey()+ " start###################");
 				Element ele = entry.getValue();
 				ArrayList<HashMap<String,Object>> tableList = new ArrayList<HashMap<String,Object>>();
 				if(dataMap.get(entry.getKey()) != null){
@@ -146,12 +146,12 @@ public class WordUtils {
 					createTableCycleTwice(ele,tableList ,entry.getKey());
 				}
 				long end = System.currentTimeMillis();
-				System.out.println("##################create " +entry.getKey()+ " end,cost " +(end-start)+ "ms###################");
+				Constants.println("##################create " +entry.getKey()+ " end,cost " +(end-start)+ "ms###################");
 			}
 			Map<String,Element> tableMap = getAllTableElement(doc,"table");
 			for(Map.Entry<String, Element> entry : tableMap.entrySet()){
 				long start = System.currentTimeMillis();
-				System.out.println("##################create " +entry.getKey()+ " start###################");
+				Constants.println("##################create " +entry.getKey()+ " start###################");
 				Element ele = entry.getValue();
 				ArrayList<HashMap<String,Object>> tableList = new ArrayList<HashMap<String,Object>>();
 				if(dataMap.get(entry.getKey()) != null){
@@ -171,14 +171,14 @@ public class WordUtils {
 					createTableCycleOnce(ele,tableList ,1,entry.getKey());
 				}
 				long end = System.currentTimeMillis();
-				System.out.println("##################create " +entry.getKey()+ " end,cost " +(end-start)+ " ms###################");
+				Constants.println("##################create " +entry.getKey()+ " end,cost " +(end-start)+ " ms###################");
 			}
 			//替换非table类型的w:p数据
-			System.out.println("##################replace field start###################");
+			Constants.println("##################replace field start###################");
 			long start = System.currentTimeMillis();
 			replaceFiled4Document(doc, dataMap);
 			long end = System.currentTimeMillis();
-			System.out.println("##################replace field end,cost " +(end-start)+ " ms###################");
+			Constants.println("##################replace field end,cost " +(end-start)+ " ms###################");
 			//解析所有非列表的w:p内容
 			//Map<String,Element> fieldMarkEle = WordUtils.getFiledElementByPrex(doc, "w:p");
 			//根据field字段填入value
@@ -186,7 +186,7 @@ public class WordUtils {
 			
 			
 			createNewDocFile(doc,zipTemplatefile,zipOutput);
-			System.out.println("##################word导出成功###################");
+			Constants.println("##################word导出成功###################");
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -257,7 +257,7 @@ public class WordUtils {
 					//替换${}内的数据
 					setWpElementValueByParam(wpElement, parameter, dataMap, tableName);
 					if(dataMap.get(parameter) != null){
-						System.out.println("##replace field##" + value + " --> " + (String)dataMap.get(parameter));
+						Constants.println("##replace field##" + value + " --> " + (String)dataMap.get(parameter));
 					}
 				}
 			}
@@ -278,7 +278,7 @@ public class WordUtils {
 	 */
 	public static String getWpElementValue(Element element){
 		String value = "";
-		//System.out.println(element.getTextContent());
+		//Constants.println(element.getTextContent());
 		NodeList wrNodeList = element.getElementsByTagName("w:r");
 		for(int i = 0; i < wrNodeList.getLength(); i ++){
 			Element ele = (Element) wrNodeList.item(i);
@@ -400,13 +400,13 @@ public class WordUtils {
 				for(int l = 0; l < wpList.getLength(); l ++){
 					Element wpElement = (Element) wpList.item(l);
 					String value = getWpElementValue(wpElement);
-					//System.out.println("列表w:tbl->w:tr->w:tc->w:p->"+value);
+					//Constants.println("列表w:tbl->w:tr->w:tc->w:p->"+value);
 					if(value.contains("${") && value.contains("}") && value.contains(parfix)){
 						int startIndex = value.indexOf("${");
 						int endIndex = value.indexOf("}");
 						String parameter = value.substring(startIndex+2, endIndex);
 						tableName = parameter.substring(parameter.indexOf(parfix),parameter.indexOf(parfix)+(parfix.length()+2));//+3表示后面的 _01
-						System.out.println(tableName);
+						Constants.println(tableName);
 						break OUT;
 					}
 				}
@@ -491,15 +491,15 @@ public class WordUtils {
 		String tableName = getTableNameForElement(tblElement,"table");
 		//复制第一个表头和第二个表头
 		Element elementTr1 = ((Element) (tblElement.getElementsByTagName("w:tr").item(0)));
-		System.out.println(elementTr1.getTextContent());
+		Constants.println(elementTr1.getTextContent());
 		Element elementTr2 = ((Element) (tblElement.getElementsByTagName("w:tr").item(1)));
-		System.out.println(elementTr2.getTextContent());
+		Constants.println(elementTr2.getTextContent());
 		Node elementTrCloneTemp1 = elementTr1.cloneNode(true);
 		Node elementTrCloneTemp2 = elementTr2.cloneNode(true);
 		//当删除一个表头后,下一行表头即变成了第一个,所以此处删除2个item(0)
 		tblElement.removeChild(tblElement.getElementsByTagName("w:tr").item(0));
 		tblElement.removeChild(tblElement.getElementsByTagName("w:tr").item(0));
-		System.out.println(tblElement.getTextContent());
+		Constants.println(tblElement.getTextContent());
 		//循环第一层数据
 		for (int i = 0; i < dataList.size(); i ++) {
 			HashMap<String,Object> totalData = dataList.get(i);
@@ -510,7 +510,7 @@ public class WordUtils {
 			replaceFiled4Element((Element) elementTrClone1, totalData,tableKey);
 			
 			tblElement.appendChild(elementTrClone1);
-			System.out.println(tblElement.getTextContent());
+			Constants.println(tblElement.getTextContent());
 			
 			elementTrClone1 = null;
 			ArrayList<HashMap<String,Object>> tableList = (ArrayList<HashMap<String,Object>>) totalData.get(tableName);
@@ -562,7 +562,7 @@ public class WordUtils {
 			Enumeration enumera = zipTemplatefile.entries();
 			while (enumera.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) enumera.nextElement();
-				System.out.println(entry.getName());
+				Constants.println(entry.getName());
 				//如果格式是word/document.xml，将根据模板生成的有数据的document替换模板的内容
 				if (entry.getName().equals("word/document.xml")) {
 					byte[] data = byteoutput.toByteArray();
@@ -584,7 +584,7 @@ public class WordUtils {
 			zipoutput.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Constants.println(e.getMessage());
 		} 
 	}
 	

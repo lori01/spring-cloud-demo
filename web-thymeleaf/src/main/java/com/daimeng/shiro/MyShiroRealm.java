@@ -1,8 +1,5 @@
 package com.daimeng.shiro;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -19,11 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import com.daimeng.util.Constants;
-import com.daimeng.web.user.entity.SysPermission;
-import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.service.UserService;
-import com.daimeng.web.user.vo.UserVO;
 
 
 
@@ -43,7 +37,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 	 */
 	@Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
+        Constants.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         /*UserEntity user  = (UserEntity)principals.getPrimaryPrincipal();
         if(user.getId() > 0){
@@ -85,13 +79,13 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
             throws AuthenticationException {
-        System.out.println("登陆认证配置-->MyShiroRealm.doGetAuthenticationInfo()");
+        Constants.println("登陆认证配置-->MyShiroRealm.doGetAuthenticationInfo()");
         //获取用户的输入的账号.
         String username = (String)token.getPrincipal();
         if(username == null || "".equals(username)){
         	throw new UnknownAccountException();
         }
-        System.out.println(token.getCredentials());
+        Constants.println(token.getCredentials());
         if(token.getCredentials() == null || "".equals(token.getCredentials())){
         	throw new IncorrectCredentialsException();
         }
@@ -115,11 +109,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         	throw new UnknownAccountException();
         }
         
-        System.out.println("----->>userInfo="+userList.getSize());
+        Constants.println("----->>userInfo="+userList.getSize());
         user = userList.getContent().get(0);
-        System.out.println("----->>loginname="+user.getLoginName());
-        System.out.println("----->>password="+user.getPassword());
-        System.out.println("----->>salt="+user.getSalt());
+        Constants.println("----->>loginname="+user.getLoginName());
+        Constants.println("----->>password="+user.getPassword());
+        Constants.println("----->>salt="+user.getSalt());
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
         		user.getLoginName(), //用户名
         		user.getPassword(), //密码

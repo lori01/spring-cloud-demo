@@ -93,14 +93,14 @@ public class ReflectHelper {
                 Object user = cls.newInstance();
                 // 调用根据字段名得到字段的方法
                 field = ReflectHelper.getFieldByFieldName(user, "loginname");
-                System.out.println(field.getName());
+                Constants.println(field.getName());
                 
                  // 根据字段名给字段赋值
                 ReflectHelper.setValueByFieldName(user, "loginname","admin");
                  
                 // 根据字段名获取到字段值
                 Object nameValue = ReflectHelper.getValueByFieldName(user, "loginname");
-                System.out.println(nameValue);
+                Constants.println(nameValue);
                 
             } catch (Exception e) {
                 // TODO Auto-generated catch block

@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.commons.lang.StringUtils;
-import org.owasp.esapi.ESAPI;
 
+import com.daimeng.util.Constants;
 import com.daimeng.util.JsoupUtil;
 
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
@@ -103,7 +103,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	public static void main(String[] args) {
 		String value = "<script>function a=function(){}</script>";
-		System.out.println(cleanXSS(value));
+		Constants.println(cleanXSS(value));
 	}
 
 	private static String cleanXSS(String value) {

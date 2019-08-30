@@ -48,35 +48,35 @@ public class JsoupUtil {
                 switch (c) {  
                 case '>':  
                     sb.append("＞");// 转义大于号  
-                    //System.out.println("转义大于号");
+                    //Constants.println("转义大于号");
                     break;  
                 case '<':  
                     sb.append("＜");// 转义小于号  
-                    //System.out.println("转义小于号");
+                    //Constants.println("转义小于号");
                     break;  
                 case '\'':  
                     sb.append("＇");// 转义单引号  
-                    //System.out.println("转义单引号");
+                    //Constants.println("转义单引号");
                     break;  
                 case '\"':  
                     sb.append("＂");// 转义双引号  
-                    //System.out.println("转义双引号  ");
+                    //Constants.println("转义双引号  ");
                     break;  
                 /*case '&':  
                     sb.append("＆");// 转义&  
-                    System.out.println("转义&");
+                    Constants.println("转义&");
                     break;*/
                 case '#':  
                     sb.append("＃");// 转义#  
-                    //System.out.println("转义# ");
+                    //Constants.println("转义# ");
                     break;  
                 case '(':  
                     sb.append("（");// 转义(  
-                    //System.out.println("转义( ");
+                    //Constants.println("转义( ");
                     break;
                 case ')':  
                     sb.append("）");// 转义)  
-                    //System.out.println("转义) ");
+                    //Constants.println("转义) ");
                     break;
                 default:  
                     sb.append(c);  
@@ -89,7 +89,7 @@ public class JsoupUtil {
 	
 	public static void main(String[] args) throws IOException {
 		String text = "   <a href=\"http://www.baidu.com/a\" onclick=\"alert(1);\">sss</a><script>alert(0);</script>sss   ";
-		System.out.println(clean(text,true));
+		Constants.println(clean(text,true));
 	}
 	
 }

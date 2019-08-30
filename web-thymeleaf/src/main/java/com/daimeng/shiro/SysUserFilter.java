@@ -21,31 +21,31 @@ public class SysUserFilter extends AccessControlFilter {
 
 	@Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-		System.out.println("------->SysUserFilter.preHandle------>执行<------");
+		Constants.println("------->SysUserFilter.preHandle------>执行<------");
 		request.setAttribute("basePath", ((HttpServletRequest)request).getContextPath());
         Subject subject = getSubject(request, response);
         if (subject == null) {
-        	System.out.println("------->SysUserFilter.preHandle------>subject空<------");
+        	Constants.println("------->SysUserFilter.preHandle------>subject空<------");
             return true;
         }
         
         if(subject.getPrincipal()==null){
-        	System.out.println("------->SysUserFilter.preHandle------>subject.getPrincipal()空<------");
+        	Constants.println("------->SysUserFilter.preHandle------>subject.getPrincipal()空<------");
         	return true;
         }
         
         SysUser suser = (SysUser) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER);
         if(suser != null){
-        	System.out.println("------->SysUserFilter.preHandle------>user=" + suser.getRealname());
+        	Constants.println("------->SysUserFilter.preHandle------>user=" + suser.getRealname());
         	boolean hasAuth = false;
         	HttpServletRequest req = (HttpServletRequest)request;
-        	System.out.println("-------->getContextPath()--->" + req.getContextPath());
-        	System.out.println("-------->getRemoteAddr()--->" + req.getRemoteAddr());
-        	System.out.println("-------->getServletPath()--->" + req.getServletPath());
-        	System.out.println("-------->getRequestURL()--->" + req.getRequestURL().toString());
-        	System.out.println("-------->getRequestURI()--->" + req.getRequestURI());
-        	System.out.println("-------->getQueryString()--->" + req.getQueryString());
-        	System.out.println("-------->getRemoteUser()--->" + req.getRemoteUser());
+        	Constants.println("-------->getContextPath()--->" + req.getContextPath());
+        	Constants.println("-------->getRemoteAddr()--->" + req.getRemoteAddr());
+        	Constants.println("-------->getServletPath()--->" + req.getServletPath());
+        	Constants.println("-------->getRequestURL()--->" + req.getRequestURL().toString());
+        	Constants.println("-------->getRequestURI()--->" + req.getRequestURI());
+        	Constants.println("-------->getQueryString()--->" + req.getQueryString());
+        	Constants.println("-------->getRemoteUser()--->" + req.getRemoteUser());
         	/*-------->getContextPath()--->
         	-------->getRemoteAddr()--->0:0:0:0:0:0:0:1
         	-------->getServletPath()--->/article/list/{img}
@@ -58,12 +58,12 @@ public class SysUserFilter extends AccessControlFilter {
         	/article/list/%7Bimg%7D*/
         	
         	String basePath = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath()+"/";
-        	System.out.println("-------->basePath--->" + basePath);
+        	Constants.println("-------->basePath--->" + basePath);
         	String realPath =req.getServletContext().getRealPath("/");
-        	System.out.println("-------->realPath--->" + realPath);
+        	Constants.println("-------->realPath--->" + realPath);
         	
         	String path = req.getRequestURI();
-        	System.out.println(path);
+        	Constants.println(path);
         	
         	if(!inWhiteList(path) && suser.getRole().getId() != 100001){
         		SysRole role = suser.getRole();
@@ -88,7 +88,7 @@ public class SysUserFilter extends AccessControlFilter {
 				return false;
         	}
         }else{
-        	System.out.println("------->SysUserFilter.preHandle------>user空空空空<------");
+        	Constants.println("------->SysUserFilter.preHandle------>user空空空空<------");
         	//加载用户session
         	
         }
@@ -107,10 +107,10 @@ public class SysUserFilter extends AccessControlFilter {
 	
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
-		System.out.println("------->SysUserFilter.isAccessAllowed------>执行<------");
+		Constants.println("------->SysUserFilter.isAccessAllowed------>执行<------");
 		SysUser sysUser = (SysUser) ((HttpServletRequest)request).getSession().getAttribute(Constants.CURRENT_USER);
         if (sysUser == null) {
-        	System.out.println("------->SysUserFilter.isAccessAllowed------>user空空空空");
+        	Constants.println("------->SysUserFilter.isAccessAllowed------>user空空空空");
             return true;
         }else return false;
 
@@ -119,7 +119,7 @@ public class SysUserFilter extends AccessControlFilter {
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response)
 			throws Exception {
-		System.out.println("------->SysUserFilter.onAccessDenied------>执行<------");
+		Constants.println("------->SysUserFilter.onAccessDenied------>执行<------");
 		getSubject(request, response).logout();
         saveRequestAndRedirectToLogin(request, response);
         return true;

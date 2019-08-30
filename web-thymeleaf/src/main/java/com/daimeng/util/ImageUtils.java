@@ -16,7 +16,7 @@ public class ImageUtils {
 		String base64 = file2Base64(file);
 		base64ToFile(base64, "D:/java_test/base64/7dbed655c1f2491fdcbb1d89bdf309ec_r4444.jpg");
 		long t2 = System.currentTimeMillis();
-		System.out.println(t2-t1);
+		Constants.println(t2-t1);
 	}
 
 	public static String file2Base64(File file) {
@@ -43,7 +43,7 @@ public class ImageUtils {
                 }
             }
         }
-        System.out.println(base64.length());
+        Constants.println(base64.length());
         return base64;
     }
 	

@@ -22,7 +22,7 @@ public class WaterMarkUtils {
         String waterMarkContent="亲爱的乌云元：\n        您好！\n        今日是您的生日！\n        金圆集团特此献上美好的祝福！\n        祝您生日快乐！\n此致！\n         敬礼！";  //水印内容
         //Color color=new Color(255,255,255,255);                               //水印图片色彩以及透明度
         //new WaterMarkUtils().addWaterMark(srcImgPath, tarImgPath, waterMarkContent, null,null);
-        System.out.println(WaterMarkUtils.addWaterMark(srcImgPath, waterMarkContent));
+        Constants.println(WaterMarkUtils.addWaterMark(srcImgPath, waterMarkContent));
 
     }
 	/**
@@ -73,15 +73,15 @@ public class WaterMarkUtils {
         	}
         	if(font == null){
         		size = srcImgWidth * FONT_DEF_SIZE / PIC_DEF_WIDTH;
-        		System.out.println(size);
+        		Constants.println(size);
         		font = new Font("微软雅黑", Font.PLAIN, size);
         	}
         	String suffix = srcImgPath.substring(srcImgPath.lastIndexOf(".")+1, srcImgPath.length());
         	if(tarImgPath == null || "".equals(tarImgPath)){
         		tarImgPath = srcImgPath.substring(0, srcImgPath.lastIndexOf(".")) + "_wm_" + System.currentTimeMillis() + "." + suffix;
         	}
-        	//System.out.println(suffix);
-        	//System.out.println(tarImgPath);
+        	//Constants.println(suffix);
+        	//Constants.println(tarImgPath);
             
             // 加水印
             BufferedImage bufImg = new BufferedImage(srcImgWidth, srcImgHeight, BufferedImage.TYPE_INT_RGB);
@@ -119,7 +119,7 @@ public class WaterMarkUtils {
             // 输出图片  
             FileOutputStream outImgStream = new FileOutputStream(tarImgPath);  
             ImageIO.write(bufImg, suffix, outImgStream);
-            System.out.println("添加水印完成");  
+            Constants.println("添加水印完成");  
             outImgStream.flush();  
             outImgStream.close();  
             return tarImgPath;

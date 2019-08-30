@@ -83,7 +83,7 @@ public class ArticleController extends BaseController {
 			info = articleService.findOne(id);
 			/*String newContext = CommonUtils.replaceEnter(info.getContext());
 			info.setContext(newContext);
-			System.out.println(newContext);*/
+			Constants.println(newContext);*/
 		}
 		model.addAttribute("info",info);
 		if(info == null){
