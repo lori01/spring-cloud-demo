@@ -66,6 +66,10 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/", "anon");
 		//登录跳转判断，为了判断是否登录，登录则跳转首页，未登录则跳转登录页面
 		filterChainDefinitionMap.put("/logins", "anon");
+		filterChainDefinitionMap.put("/login", "anon");
+		filterChainDefinitionMap.put("/dologin", "anon");
+		//验证码
+		filterChainDefinitionMap.put("/Captcha.jpg", "anon");
 		//静态资源
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/echarts/**", "anon");

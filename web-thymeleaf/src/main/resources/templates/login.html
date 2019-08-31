@@ -9,30 +9,14 @@
 <link rel="stylesheet" type="text/css" media="all" href="/css/mystyle.css"/>
 <body>
 <div id="wrap" class="container clearfix">
-	<div class="header_wrap" id="top_banner">
-		<div id="header" class="clearfix">
-			<div id="logo">
-				<!-- <h2><a href="/" title="登录" rel="home bookmark">登录</a></h2> -->
-				<h2>
-					<a href="/" title="梦神十夜的小站" rel="home bookmark">
-					<span class="header-logo-span" style="">梦</span>
-					<span class="header-logo-span" style="">神</span>
-					<span class="header-logo-span" style="border-radius: 20px;">十</span>
-					<span class="header-logo-span" style="">夜</span>
-					<span class="header-logo-span" style="">的</span>
-					<span class="header-logo-span" style="border-radius: 20px;">小</span>
-					<span class="header-logo-span" style="">站</span>
-					</a>
-				</h2>
-			</div><!-- END logo --> 
-			<span style="padding-left: 30px;font-size: 16px;">这是一个有理想&有抱负的站长在百无聊赖中搭建的小站(￣︶￣)↗[GO!]</span>
-		</div>
-	</div>
+	<div th:include="common/header-whitout-login::pagination"></div>
+	
 	<div class="header_wrap">
 		<div id="header_login" class="clearfix">
 			<div id="logo_login">
-				<h4 th:text="${msg}" class="login_error"></h4>
-				<form action="" method="post" style="text-align:center; ">
+				<h4 th:text="${message}" class="login_error"></h4>
+				<!-- <form action="" method="post" style="text-align:center; "> -->
+				<form action="/dologin" method="post" style="text-align:center; ">
 					<table class="formtable_noborder" style="">
 						<thead>
 						</thead>
@@ -44,6 +28,22 @@
 							<tr>
 								<th width="45%"><span th:text="密码"></span></th>
 								<td width="55%"><input class="inputclass" type="password" name="password" /></td>
+							</tr>
+							<tr>
+								<th width="45%"><span th:text="验证码"></span></th>
+								<td width="55%">
+									<input type="text" name="captcha"/>
+									<a href="javascript:void(0)" onclick="javascript:refreshCaptcha()">
+										<img alt="验证码" th:src="@{/Captcha.jpg}" title="点击更换" id="captcha_img"/>
+									</a>
+    								<a href="javascript:void(0)" onclick="javascript:refreshCaptcha()" th:text="看不清换一张"></a><br/>
+								</td>
+							</tr>
+							<tr style="display:none;">
+								<th width="45%"><span></span></th>
+								<td width="55%">
+									<span><input type="checkbox" name="rememberMe" />记住我</span>
+								</td>
 							</tr>
 					</table>
 					    <!-- <p>账号：</p>
@@ -61,4 +61,9 @@
 	<div th:include="common/footer::common-beian"></div>
 </div>
 </body>
+<script type="text/javascript">
+function refreshCaptcha(){
+    $("#captcha_img").attr("src","/Captcha.jpg?id=" + new Date() + Math.floor(Math.random()*24));
+}
+</script>
 </html>
