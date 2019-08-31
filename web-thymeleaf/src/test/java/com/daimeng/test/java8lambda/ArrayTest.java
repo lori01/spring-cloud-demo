@@ -14,7 +14,7 @@ public class ArrayTest {
 		list.add("A");
 		list.add("Z");
 		list.add("a");
-		list.forEach(System.out :: println);
+		//list.forEach(System.out :: println);
 		//Optional.ofNullable(list).orElse(new ArrayList<String>()).stream().sorted(Comparator.comparing());
 	}
 }

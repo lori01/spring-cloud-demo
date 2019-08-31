@@ -69,7 +69,7 @@ public class LoginController {
     }
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request, Model model,RedirectAttributes redirectAttributes) throws Exception{
-		return LOGIN_HOME_PAGE;
+		return "login";
 	}
 	
 	@RequestMapping("/dologin")
