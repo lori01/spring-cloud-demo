@@ -100,6 +100,7 @@ public class CaptchaUtils {
         return String.valueOf(RANDOM_STRS.charAt(num));
     }
 
+    
     public static void main(String[] args) {
         CaptchaUtils tool = new CaptchaUtils();
         StringBuffer code = new StringBuffer();
