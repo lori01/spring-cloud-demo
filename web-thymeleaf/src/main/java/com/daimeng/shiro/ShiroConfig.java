@@ -57,19 +57,19 @@ public class ShiroConfig {
         filtersMap.put("userFilter", new SysUserFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
         
-		//url拦截器 
+		//url拦截器
 		Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 		// 配置不会被拦截的链接 顺序判断
 		//修复登录成功后跳转/favicon.ico页面的问题
 		//因为如果ico没有anon权限,这注销后可能还会请求/favicon.ico,所以登录后直接跳转到/favicon.ico
 		filterChainDefinitionMap.put("/favicon.ico", "anon");
 		filterChainDefinitionMap.put("/", "anon");
-		//登录跳转判断，为了判断是否登录，登录则跳转首页，未登录则跳转登录页面
+		//登录跳转判断，为了判断是否登录，登录则跳转首页，未登录则跳转登录页面 
 		filterChainDefinitionMap.put("/logins", "anon");
-		filterChainDefinitionMap.put("/login", "anon");
-		filterChainDefinitionMap.put("/dologin", "anon");
-		//验证码
-		filterChainDefinitionMap.put("/Captcha.jpg", "anon");
+        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/dologin", "anon");
+        //验证码
+        filterChainDefinitionMap.put("/Captcha.jpg", "anon");
 		//静态资源
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/echarts/**", "anon");
