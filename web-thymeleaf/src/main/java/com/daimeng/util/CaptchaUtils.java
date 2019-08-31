@@ -107,7 +107,7 @@ public class CaptchaUtils {
         BufferedImage image = tool.genRandomCodeImage(code);
         System.out.println("random code = " + code);
         try {
-            // 将内存中的图片通过流动形式输出到客户端 
+            // 将内存中的图片通过流动形式输出到客户端
             ImageIO.write(image, "JPEG", new FileOutputStream(new File("D:/java_test/captcha/random-code.jpg")));
         } catch (Exception e) {
             e.printStackTrace();

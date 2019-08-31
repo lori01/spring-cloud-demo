@@ -103,7 +103,7 @@ public class LoginController {
         Constants.println("----->>salt="+user.getSalt());
         password = new SimpleHash(algorithmName, password, ByteSource.Util.bytes(username + user.getSalt()),hashIterations).toHex();*/
         
-        //如果有点击  记住我  
+        //如果有点击  记住我 
         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password,rememberMe);
         //UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
         Subject subject = SecurityUtils.getSubject();

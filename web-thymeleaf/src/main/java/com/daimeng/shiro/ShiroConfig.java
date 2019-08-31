@@ -64,7 +64,7 @@ public class ShiroConfig {
 		//因为如果ico没有anon权限,这注销后可能还会请求/favicon.ico,所以登录后直接跳转到/favicon.ico
 		filterChainDefinitionMap.put("/favicon.ico", "anon");
 		filterChainDefinitionMap.put("/", "anon");
-		//登录跳转判断，为了判断是否登录，登录则跳转首页，未登录则跳转登录页面 
+		//登录跳转判断，为了判断是否登录，登录则跳转首页，未登录则跳转登录页面
 		filterChainDefinitionMap.put("/logins", "anon");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/dologin", "anon");
