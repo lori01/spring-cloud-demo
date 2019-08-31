@@ -87,7 +87,7 @@ public class LoginController {
             return "redirect:" + LOGIN_HOME_PAGE;
         }
         
-        //对密码进行加密
+        //对密码进行加密 此处无需加密，因为reaml会加密
         /*SysUser user = new SysUser();
         user.setLoginName(username);
         Page<SysUser> userList = userService.findAllBySpecification(user, 0);

@@ -57,7 +57,7 @@ public class ShiroConfig {
         filtersMap.put("userFilter", new SysUserFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
         
-		//url拦截器
+		//url拦截器 
 		Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 		// 配置不会被拦截的链接 顺序判断
 		//修复登录成功后跳转/favicon.ico页面的问题
