@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html xmlns:wb="http://open.weibo.com/wb">
-<head>
+<!-- 1,th:inssert:保留当前主标签，保留th:fragment主标签；
+2,th:replace:舍弃当前主标签，保留th:fragment主标签；
+3,th:include:保留当前主标签，舍弃th:fragment主标签。 -->
+<head th:inssert="common/meta :: common-meta">
     <meta charset="UTF-8" />
     <title th:text="文章列表-梦神十夜的小站"></title>
-    
-    <!--必填-->
-	<meta property="og:type" content="webpage" />
-	<meta property="og:url" content="http://www.daimeng.fun" />
-	<meta property="og:title" content="梦神十夜的小站" />
-	<meta property="og:description" content="梦神十夜的小站" />
-	<!--选填-->
-	<!-- <meta property="og:image" content="网页的显示图片" />
-	<meta name="weibo:webpage:create_at" content="网页的创建时间" />
-	<meta name="weibo:webpage:update_at" content="网页的更新时间" /> -->
 </head>
 
 <body>
