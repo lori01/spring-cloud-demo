@@ -30,7 +30,7 @@
 	<script type="text/javascript" src="/js/jquery-common.js" ></script>
 	<script type="text/javascript" src="/js/header.js" ></script>
 	
-	
+	<script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 		
 	<div class="header_wrap" id="top_banner">
 		<div id="header" class="clearfix">
@@ -47,9 +47,11 @@
 					</a>
 				</h2>
 			</div>
-			<span style="padding-left: 30px;font-size: 16px;">(￣︶￣)↗[GO!]</span>
-			<span>
-				<wb:share-button appkey="3373602181" addition="number" type="button" default_text="%E6%A2%A6%E7%A5%9E%E5%8D%81%E5%A4%9C%E7%9A%84%E5%B0%8F%E7%AB%99" ralateUid="2251868104" pic="http%3A%2F%2Fwww.daimeng.fun%2Fico%2Flogo-250.png"></wb:share-button>
+			<!-- <span style="padding-left: 30px;font-size: 16px;">(￣︶￣)↗[GO!]</span> -->
+			<span style="width: 500px;float: left;">
+				<wb:share-button appkey="3373602181" addition="number" type="button"></wb:share-button>
+				<wb:follow-button uid="2251868104" type="red_2" width="136" height="24" ></wb:follow-button>
+				<wb:like appkey="5rf75H"></wb:like>
 			</span>
 			<!-- END logo -->
 		</div>
@@ -72,99 +74,6 @@
 		$(document).ready(function() {
 			//document.execCommand("BackgroundImageCache", false, true);
 			drawBtn();
-			//selectRole();
-			//position是设置元素相对于父元素的偏移，而offset方法是设置元素相对于整个浏览器的位置偏移
-			//position相对left
-			//当user_menu_drop和show_user_menu_drop同处于一个div下时
-			//$("#user_menu_drop").css("left",$("#show_user_menu_drop").position().left);
-			//offset绝对left
-			//当user_menu_drop和show_user_menu_drop不在一个div下时
-			
-			//菜单事件
-			$(".show_menu").mouseover(function(e){
-				var thisId = $(this).attr('id');
-				var childid = $(this).attr('childid');
-				var flag = $("#"+childid).is(":hidden");
-				if(flag){  
-					var parentLeft = $("#"+thisId).offset().left;
-					var parentWidth = $("#"+thisId).css('width');
-					var childWidth = $("#"+childid).css("width");
-					//计算parent的中间点，把child放在parent的中间下面
-					var childLeft = parseFloat(parentLeft) + parseFloat(parentWidth)/2 - parseFloat(childWidth)/2;
-					$("#"+childid).css("left",childLeft);
-					if(parseFloat(childWidth) < parseFloat(parentWidth)){
-						//$("#"+childid).css("width",parentWidth);
-					}
-					$("#"+childid).fadeIn();
-					$(".menu_drop").each(function(ii,vv){
-					    //ii 指第几个元素的序列号。
-					    //vv 指遍历得到的元素。
-						var id = $(this).attr('id');
-					    if(id != childid){
-					    	$("#"+id).fadeOut();
-					    }
-					});
-	            }else{  
-	                
-	            }  
-			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
-				
-			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
-				/* setTimeout(function () { 
-					if($(this).hasClass('menu_drop') == false){
-						hidemenu();
-					} 
-				}, 1000); */
-			});
-			$(".menu_drop").mouseover(function(e){
-				
-			}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
-				
-			}).mouseleave(function(e){//只有在鼠标指针离开指定元素时，才会触发 mouseleave 事件
-				var thisId = $(this).attr('id');
-				var flag = $("#"+thisId).is(":hidden");
-				if(flag){  
-					
-	            }else{  
-	            	$("#"+thisId).fadeOut();
-	            }  
-			});
-			
-			/* 弹出框的关闭按钮绑定 */
-			/* $(".add_div_title_cnl").click(function(){
-				hideAll();
-			}); */
-			
-			//var $el = $("#show_user_menu_drop,#user_menu_drop");
-			/* $el.click(function(e) {
-				e.stopPropagation();
-				//$(this).toggleClass('active');
-			}); */
-			//点击任何地方都关闭菜单条
-			$(document).on('click', function(e) {
-				hidemenu();
-				/* var inEl = false;
-				for(var i = 0; i < $el.length; i++){
-					if($(e.target) == $el[i]){
-						inEl = true;
-					}
-				}
-				if (!inEl) {
-					hidemenu();
-				} */
-			});
-			
-			
-			//textarea字数统计
-			$(".textarea_count").change(function(){
-				textCount(this);
-			}).keydown(function(){
-				textCount(this);
-			}).keyup(function(){
-				textCount(this);
-			}).click(function(){
-				textCount(this);
-			});
 			
 			//列表块点击事件
 			//阻止事件冒泡
@@ -183,11 +92,6 @@
 				location.href = $(this).attr("href");
 			});
 		});
-		
-		function textCount(obj){
-			var num = $(obj).parent().find (".t_h i");
-			num.html($(obj).val().length);
-		}
 		
 		function drawBtn(){
 			//批量给确定,取消按钮设置text
