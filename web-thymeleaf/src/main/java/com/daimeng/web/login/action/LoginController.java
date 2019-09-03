@@ -15,9 +15,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -26,23 +24,49 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alibaba.fastjson.JSONObject;
 import com.daimeng.shiro.exception.NullAccountException;
 import com.daimeng.shiro.exception.NullCredentialsException;
 import com.daimeng.util.CaptchaUtils;
 import com.daimeng.util.Constants;
+import com.daimeng.util.HttpUtils;
+import com.daimeng.web.common.BaseController;
+import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysUser;
 import com.daimeng.web.user.service.UserService;
 
 @Controller
-public class LoginController {
+public class LoginController extends BaseController{
 	
 	@Value("${shiro.password.algorithmName}")
     private String algorithmName;//设置算法
+	
 	@Value("${shiro.password.hashIterations}")
     private int hashIterations;//生成Hash值的迭代次数
 	
+	//APP KEY
+	@Value("${Weibo_App_Key}")
+    private String weiboAppKey;
+	//APP SECRET
+	@Value("${Weibo_App_Secret}")
+    private String weiboAppSecret;
+	//本站回调URL
+	@Value("${Weibo_redirect_uri}")
+    private String weiboredirecturi;
+	//authorize URL
+	@Value("${Weibo_authorize_url}")
+	private String weiboauthorizeurl;
+	//access_token URL
+	@Value("${Weibo_access_token_url}")
+	private String weiboAccessTokenUrl;
+	//获取用户信息URL
+	@Value("${Weibo_get_token_info_url}")
+	private String weiboGetTokenInfoUrl;
+	
 	@Autowired
 	private UserService userService;
+	
+	public static final String KEY_CAPTCHA = "KEY_CAPTCHA";
 	
 	private static String USER_HOME_PAGE = "/article/list/1";
 	private static String GUEST_HOME_PAGE = "/index/list/1";
@@ -58,6 +82,47 @@ public class LoginController {
         
     }
 	
+	@RequestMapping("/403")
+    public String unauthorizedRole(Model model){
+    	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
+        Constants.println("------没有权限-------");
+        return "error/403";
+    }
+    @RequestMapping("/500")
+    public String codeError(Model model){
+    	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
+    	Constants.println("------内部错误-------");
+    	return "error/500";
+    }
+
+    @RequestMapping("/Captcha.jpg")
+    public void getCaptcha(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        // 设置相应类型,告诉浏览器输出的内容为图片
+        response.setContentType("image/jpeg");
+        // 不缓存此内容
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expire", 0);
+        try {
+
+            HttpSession session = request.getSession();
+
+            CaptchaUtils tool = new CaptchaUtils();
+            StringBuffer code = new StringBuffer();
+            BufferedImage image = tool.genRandomCodeImage(code);
+            session.removeAttribute(KEY_CAPTCHA);
+            session.setAttribute(KEY_CAPTCHA, code.toString());
+
+            // 将内存中的图片通过流动形式输出到客户端
+            ImageIO.write(image, "JPEG", response.getOutputStream());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+	
+    
 	@RequestMapping({"/logins"})
     public String logins(Model model){
 		if(SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER) != null){
@@ -71,7 +136,6 @@ public class LoginController {
 	public String login(HttpServletRequest request, Model model,RedirectAttributes redirectAttributes) throws Exception{
 		return "login";
 	}
-	
 	@RequestMapping("/dologin")
     public String dologin(HttpServletRequest request, Model model, Map<String, Object> map, RedirectAttributes redirectAttributes,
     		String username, String password,boolean rememberMe,String captcha) throws Exception{
@@ -170,46 +234,81 @@ public class LoginController {
         // 此方法不处理登录成功,由shiro进行处理
         return "redirect:" + LOGIN_HOME_PAGE;
     }
+	
+	
+	@RequestMapping("/weiboLoginReturn")
+	public String weiboLoginReturn(HttpServletRequest request,String code) throws Exception{
+		//authorize回调，返回code
+		if(code != null && !"".equals(code)){
+			String basePath = getBashPathWithoutPort(request);
+			//使用code去请求access_token
+			String ajson = HttpUtils.sendPost(weiboAccessTokenUrl, getToken(weiboAppKey, weiboAppSecret, basePath+weiboredirecturi, code));
+			Map amap = (Map) JSONObject.parse(ajson);
+			if(amap != null && amap.get("access_token") != null){
+				String accessToken = (String) amap.get("access_token");
+				String username = "";
+				String password = "";
+				//通过access_token获取微博用户信息
+				String tjson = HttpUtils.sendPost(weiboGetTokenInfoUrl, "access_token="+accessToken);
+				Map tmap = (Map) JSONObject.parse(tjson);
+				if(tmap != null && tmap.get("uid") != null){
+					/*{
+					       "uid": 1073880650,
+					       "appkey": 1352222456,
+					       "scope": null,
+					       "create_at": 1352267591,
+					       "expire_in": 157679471
+					 }*/
+					Long weiboUid = (Long) tmap.get("uid");
+					String weiboUidStr = String.valueOf(weiboUid);
+					SysUser quser = new SysUser();
+					quser.setWeiboUid(weiboUidStr);
+					Page<SysUser> page = userService.findAllBySpecification(quser, 0);
+					if(page != null && page.getContent().size() > 0){
+						quser = page.getContent().get(0);
+						username = quser.getLoginName();
+						password = quser.getWeiboUid();
+					}else{
+						SysUser newuser = new SysUser();
+						newuser.setAccessToken(accessToken);
+						newuser.setLoginName(weiboUidStr);
+						newuser.setWeiboUid(weiboUidStr);
+						newuser.setPassword(weiboUidStr);
+						newuser.setRealname("微博用户"+weiboUid);
+						newuser.setPermission("100002");
+						ResponseVo vo = userService.addUser(newuser);
+						username = weiboUidStr;
+						password = weiboUidStr;
+					}
+				}else return "login";
+				UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password,false);
+		        //UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
+		        Subject subject = SecurityUtils.getSubject();
+		        
+		        try {
+		            //登录操作
+		            subject.login(usernamePasswordToken);
+		            return"redirect:" + USER_HOME_PAGE;
+		        } catch(Exception e) {
+		        	return "login";
+		        }
+			}
+		}
+		//access_token回调，返回access_token
+		return "login";
+	}
+	public String getAuth(String key,String uri){
+		return "client_id=" +key+ "&response_type=code&redirect_uri=" +uri;
+	}
+	public String getToken(String key,String secret,String uri,String code){
+		return "client_id=" +key+ "&client_secret=" +secret+ "&grant_type=authorization_code&redirect_uri=" +uri+ "&code=" +code;
+	}
+	@RequestMapping("/doWeiboLogin")
+	public String doWeiboLogin(HttpServletRequest request, Model model,RedirectAttributes redirectAttributes) throws Exception{
+		String basePath = getBashPathWithoutPort(request);
+		String weiboAuthUrl = weiboauthorizeurl + "?" + getAuth(weiboAppKey, basePath+weiboredirecturi);
+		return"redirect:" + weiboAuthUrl;
+	}
 
-    @RequestMapping("/403")
-    public String unauthorizedRole(Model model){
-    	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
-        Constants.println("------没有权限-------");
-        return "error/403";
-    }
-    @RequestMapping("/500")
-    public String codeError(Model model){
-    	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
-    	Constants.println("------内部错误-------");
-    	return "error/500";
-    }
     
-    public static final String KEY_CAPTCHA = "KEY_CAPTCHA";
-
-    @RequestMapping("/Captcha.jpg")
-    public void getCaptcha(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        // 设置相应类型,告诉浏览器输出的内容为图片
-        response.setContentType("image/jpeg");
-        // 不缓存此内容
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expire", 0);
-        try {
-
-            HttpSession session = request.getSession();
-
-            CaptchaUtils tool = new CaptchaUtils();
-            StringBuffer code = new StringBuffer();
-            BufferedImage image = tool.genRandomCodeImage(code);
-            session.removeAttribute(KEY_CAPTCHA);
-            session.setAttribute(KEY_CAPTCHA, code.toString());
-
-            // 将内存中的图片通过流动形式输出到客户端
-            ImageIO.write(image, "JPEG", response.getOutputStream());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 }

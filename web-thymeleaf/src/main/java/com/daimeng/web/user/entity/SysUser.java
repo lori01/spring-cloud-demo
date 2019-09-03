@@ -39,6 +39,10 @@ public class SysUser implements Serializable{
 	private String salt;
 	@Column(nullable = false, unique = true)
 	private String img;
+	@Column(nullable = false, unique = true)
+	private String accessToken;
+	@Column(nullable = false, unique = true)
+	private String weiboUid;
 	
 	//@Column(columnDefinition="enum('male','female')")
 	@Column(nullable = false, unique = true)
@@ -142,6 +146,18 @@ public class SysUser implements Serializable{
 
 	public void setRole(SysRole role) {
 		this.role = role;
+	}
+	public String getAccessToken() {
+		return accessToken;
+	}
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+	public String getWeiboUid() {
+		return weiboUid;
+	}
+	public void setWeiboUid(String weiboUid) {
+		this.weiboUid = weiboUid;
 	}
 
 	

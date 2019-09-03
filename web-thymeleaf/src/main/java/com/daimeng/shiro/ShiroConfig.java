@@ -68,6 +68,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/logins", "anon");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/dologin", "anon");
+        filterChainDefinitionMap.put("/doWeiboLogin", "anon");
+        filterChainDefinitionMap.put("/weiboLoginReturn", "anon");
         //验证码
         filterChainDefinitionMap.put("/Captcha.jpg", "anon");
 		//静态资源

@@ -63,9 +63,15 @@
 					    <!-- <p>账号：</p>
 					    <p>密码：</p> -->
 				    <p style="display: inline-block;">
+				    	<div class="add_btn">
 				    	<!-- <input type="submit" class="btn_yes_public" style="font-size: 14px;" value=""/> -->
-				    	<input type="submit" class="btn_public" style="font-size: 14px;" title="登录" value="✈"/>
+				    		<input type="button" class="btn_public" th:onclick= "'javascript:weiboLogin()'" style="font-size: 14px;" title="微博登录" value="👁"/>
+				    		<input type="submit" class="btn_public" style="font-size: 14px;" title="登录" value="✈"/>
+				    	</div>
 				    </p>
+				</form>
+				<form action="/doWeiboLogin" id="weibo_login_form" method="post" style="display:none;">
+					<input type="submit" style="display:none;" id="doWeiboLogin_btn"/>
 				</form>
 			</div><!-- END logo --> 
 		</div>
@@ -76,8 +82,17 @@
 </div>
 </body>
 <script type="text/javascript">
+	$(document).ready(function() {
+		
+	});
 	function refreshCaptcha(){
 	    $("#captcha_img").attr("src","/Captcha.jpg?id=" + new Date() + Math.floor(Math.random()*24));
+	}
+	function weiboLogin(){
+		$('#doWeiboLogin_btn').click();
+		/* $("#weibo_login_form").submit(function(e){
+			  alert("Submitted");
+			}); */
 	}
 </script>
 </html>

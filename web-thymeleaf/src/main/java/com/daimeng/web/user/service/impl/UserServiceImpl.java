@@ -77,6 +77,12 @@ public class UserServiceImpl implements UserService{
 				if(info.getPhone() != null && !"".equals(info.getPhone())){
 					list.add(cb.equal(root.get("phone"), info.getPhone()));
 				}
+				if(info.getAccessToken() != null && !"".equals(info.getAccessToken())){
+					list.add(cb.equal(root.get("accessToken"), info.getAccessToken()));
+				}
+				if(info.getWeiboUid() != null && !"".equals(info.getWeiboUid())){
+					list.add(cb.equal(root.get("weiboUid"), info.getWeiboUid()));
+				}
 				if(info.getRealname() != null && !"".equals(info.getRealname())){
 					list.add(cb.like((Expression) root.get("realname"), "%" +info.getRealname()+ "%"));
 				}

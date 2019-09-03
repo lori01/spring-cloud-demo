@@ -1,5 +1,7 @@
 package com.daimeng.web.common;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
@@ -58,5 +60,14 @@ public class BaseController {
 		vo.setDesc(desc);
 		vo.setObj(obj);
 		return vo;
+	}
+	
+	public String getBashPathWithPort(HttpServletRequest request){
+		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+		return basePath;
+	}
+	public String getBashPathWithoutPort(HttpServletRequest request){
+		String basePath = request.getScheme()+"://"+request.getServerName()+request.getContextPath()+"/";
+		return basePath;
 	}
 }
