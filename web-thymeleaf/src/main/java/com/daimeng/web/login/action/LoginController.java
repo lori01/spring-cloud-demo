@@ -304,7 +304,7 @@ public class LoginController extends BaseController{
 	}
 	@RequestMapping("/doWeiboLogin")
 	public String doWeiboLogin(HttpServletRequest request, Model model,RedirectAttributes redirectAttributes) throws Exception{
-		String weiboAuthUrl = weiboauthorizeurl + "?" + getAuth(weiboAppKey, weiboredirecturi);
+		String weiboAuthUrl = weiboauthorizeurl + "?" + getAuth(weiboAppKey,weiboredirecturi);
 		return"redirect:" + weiboAuthUrl;
 	}
 
