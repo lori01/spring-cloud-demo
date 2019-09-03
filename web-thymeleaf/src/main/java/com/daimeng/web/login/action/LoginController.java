@@ -240,9 +240,8 @@ public class LoginController extends BaseController{
 	public String weiboLoginReturn(HttpServletRequest request,String code) throws Exception{
 		//authorize回调，返回code
 		if(code != null && !"".equals(code)){
-			String basePath = getBashPathWithoutPort(request);
 			//使用code去请求access_token
-			String ajson = HttpUtils.sendPost(weiboAccessTokenUrl, getToken(weiboAppKey, weiboAppSecret, basePath+weiboredirecturi, code));
+			String ajson = HttpUtils.sendPost(weiboAccessTokenUrl, getToken(weiboAppKey, weiboAppSecret, weiboredirecturi, code));
 			Map amap = (Map) JSONObject.parse(ajson);
 			if(amap != null && amap.get("access_token") != null){
 				String accessToken = (String) amap.get("access_token");
@@ -305,8 +304,7 @@ public class LoginController extends BaseController{
 	}
 	@RequestMapping("/doWeiboLogin")
 	public String doWeiboLogin(HttpServletRequest request, Model model,RedirectAttributes redirectAttributes) throws Exception{
-		String basePath = getBashPathWithoutPort(request);
-		String weiboAuthUrl = weiboauthorizeurl + "?" + getAuth(weiboAppKey, basePath+weiboredirecturi);
+		String weiboAuthUrl = weiboauthorizeurl + "?" + getAuth(weiboAppKey, weiboredirecturi);
 		return"redirect:" + weiboAuthUrl;
 	}
 
