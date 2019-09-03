@@ -212,12 +212,16 @@ public class UserServiceImpl implements UserService{
 				user.setSalt(salt);
 				user.setPassword(newpd);
 				user.setImg(Constants.DEFAULT_USER_IMG);
+				
+				SysRole role = roleRepository.findOne(Integer.valueOf(user.getPermission()));
+				user.setRole(role);
+				
 				userRepository.save(user);
 				
-				SysUserRole role = new SysUserRole();
+				/*SysUserRole role = new SysUserRole();
 				role.setRoleId(Integer.valueOf(user.getPermission()));
 				role.setUid(user.getId());
-				role = userRoleRepository.save(role);
+				role = userRoleRepository.save(role);*/
 				
 				vo.setStatus(100);
 				vo.setDesc("新增成功!");
