@@ -104,6 +104,11 @@
     background-position: 43px 43px;
 }
 
+.btn_public_weibo_login {
+    background-image: url(/ico/weibo.png);
+    background-size: 100% 100%;
+}
+
 .btn_public {
     height: 40px;
     width: 40px;
