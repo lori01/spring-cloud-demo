@@ -173,8 +173,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancle()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:add('+${session.user_session.id}+')'" value=""/> -->
-				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancle()'" />
 				<input type="button" class="btn_public btn_public_yes_text" th:onclick= "'javascript:add('+${session.user_session.id}+')'" />
+				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancle()'" />
 			</div>
 			
 		</div>
@@ -237,8 +237,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancleme()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:saveuser('+${session.user_session.id}+')'" value=""/> -->
-				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancleme()'" />
 				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:saveuser('+${session.user_session.id}+')'" />
+				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancleme()'" />
 			</div>
 			
 		</div>
@@ -271,8 +271,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:canclePwd()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:updPwd('+${session.user_session.id}+')'" value=""/> -->
+				<input type="button" class="btn_public btn_public_yes_text" th:onclick= "'javascript:updPwd('+${session.user_session.id}+')'"/>
 				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:canclePwd()'"/>
-				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:updPwd('+${session.user_session.id}+')'"/>
 			</div>
 			
 		</div>
@@ -317,8 +317,8 @@
 			<div class="add_btn">
 				<!-- <input type="button" class="btn_no_public" th:onclick= "'javascript:cancleUser()'" value=""/>
 				<input type="button" class="btn_yes_public" th:onclick= "'javascript:addUser()'" value=""/> -->
-				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancleUser()'"/>
 				<input type="button" class="btn_public btn_public_save_text" th:onclick= "'javascript:addUser()'" />
+				<input type="button" class="btn_public btn_public_no_text" th:onclick= "'javascript:cancleUser()'"/>
 			</div>
 			
 		</div>
@@ -563,17 +563,17 @@
 		function drawBtn(){
 			//批量给确定,取消按钮设置text
 			//$(".btn_public_no_text").val("✂");
-			$(".btn_public_no_text").val("否");
+			$(".btn_public_no_text").val("取消");
 			$(".btn_public_no_text").attr("title","取消");
 			//$(".btn_public_yes_text").val("🖍");
-			$(".btn_public_yes_text").val("是");
+			$(".btn_public_yes_text").val("确定");
 			$(".btn_public_yes_text").attr("title","确定");
 			
 			//$(".btn_public_edit_text").val("✒");
-			$(".btn_public_edit_text").val("是");
+			$(".btn_public_edit_text").val("确定");
 			$(".btn_public_edit_text").attr("title","确定");
 			//$(".btn_public_save_text").val("✉");
-			$(".btn_public_save_text").val("存");
+			$(".btn_public_save_text").val("保存");
 			$(".btn_public_save_text").attr("title","保存");
 			//✏  ✒  🖋  🖊  🖌  🖍
 			
@@ -585,8 +585,8 @@
 			$(".btn_public_down_text").attr("title","回到底部");
 			//$(".btn_public_comment_text").html("🖊");
 			//$(".btn_public_comment_text").val("🖊");
-			$(".btn_public_comment_text").html("评");
-			$(".btn_public_comment_text").val("评");
+			$(".btn_public_comment_text").html("评论");
+			$(".btn_public_comment_text").val("评论");
 			$(".btn_public_comment_text").attr("title","评论");
 			//批量给分页按钮设置text  👈  👉
 			$(".btn_public_page_s_text").html("首");
