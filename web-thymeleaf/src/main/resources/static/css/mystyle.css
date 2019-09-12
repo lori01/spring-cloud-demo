@@ -104,6 +104,15 @@
     background-position: 43px 43px;
 }
 
+
+.btn_public_gou {
+    background-image: url(/ico/gou-40.png);
+    background-size: 100% 100%;
+}
+.btn_public_cha {
+    background-image: url(/ico/cha-40.png);
+    background-size: 100% 100%;
+}
 .btn_public_weibo_login {
     background-image: url(/ico/weibo-orig.png);
     background-size: 100% 100%;
