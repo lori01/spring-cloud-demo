@@ -134,7 +134,10 @@ public class UserServiceImpl implements UserService{
 				cur.setImg(user.getImg());
 				cur.setSexCd(user.getSexCd());
 				if(cur.getImg() == null || "".equals(cur.getImg())){
-					cur.setImg(Constants.DEFAULT_USER_IMG);
+					if(cur.getSexCd() != null && "0".equals(cur.getSexCd())){
+						cur.setImg(Constants.DEFAULT_USER_IMG_F);
+					}else cur.setImg(Constants.DEFAULT_USER_IMG_M);
+					
 				}
 				userRepository.save(cur);
 				
@@ -211,7 +214,9 @@ public class UserServiceImpl implements UserService{
 				String newpd = getNewPassword(user.getLoginName(), user.getPassword(), salt);
 				user.setSalt(salt);
 				user.setPassword(newpd);
-				user.setImg(Constants.DEFAULT_USER_IMG);
+				if(user.getSexCd() != null && "0".equals(user.getSexCd())){
+					user.setImg(Constants.DEFAULT_USER_IMG_F);
+				}else user.setImg(Constants.DEFAULT_USER_IMG_M);
 				
 				SysRole role = roleRepository.findOne(Integer.valueOf(user.getPermission()));
 				user.setRole(role);

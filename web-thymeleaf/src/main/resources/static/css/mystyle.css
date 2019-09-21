@@ -29,7 +29,7 @@
 .title_img {
 	width: 60px;
 	border-radius: 80px;
-	padding : 3px;
+	/* padding : 3px; *//* 白色框框 */
 	float: right;
     margin-top: 15px;
     margin-left: 10px;
@@ -486,7 +486,8 @@ input.btn_square_public_cur:hover a:hover{
     margin-right: 5px;
     /* background: #5a1f1b;  #b6a476
     color:#eef7f2; */
-    background: #5d3d21;
+    /* background: #5d3d21; */
+    background: #2c9678;
     color:white;
 	text-align: right;/* center; */
     /* border-radius: 50px;

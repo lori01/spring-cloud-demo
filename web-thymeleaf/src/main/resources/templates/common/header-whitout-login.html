@@ -39,7 +39,7 @@
 					<a href="/" title="梦神十夜的小站" rel="home bookmark">
 					<span class="header-logo-span" style="">梦</span>
 					<span class="header-logo-span" style="">神</span>
-					<span class="header-logo-span" style="border-radius: 20px;">十</span>
+					<span class="header-logo-span" style="border-radius: 20px;background: #ed556a;">十</span>
 					<span class="header-logo-span" style="">夜</span>
 					<span class="header-logo-span" style="">的</span>
 					<span class="header-logo-span" style="border-radius: 20px;">小</span>
@@ -53,7 +53,7 @@
 		<!-- END header -->
 		<div id="navigation" class="clearfix">
 			<nav class="nav">
-				<a href="javascript:void(0)" th:href="@{/logins}"><img class="title_img" th:src="${session.user_session!=null}?${session.user_session.img}:'/ico/logo-250.png'"/></a>
+				<a href="javascript:void(0)" th:href="@{/logins}"><img class="title_img" th:src="${session.user_session!=null}?${session.user_session.img}:'/ico/ed556a.png'"/></a>
 				<ul class="sf-menu">
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li th:style="${session.user_session!=null}? 'display:none':''" ><a th:text="登录" th:href="@{/logins}"></a></li>

@@ -357,8 +357,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
 	outline: 0
 }
 
+/* 纹理 daimeng 戴猛 */
 body {
 	background: #F0ECE0;
+	background-image: url(/ico/wenli.png);
 	line-height: 1
 }
 
@@ -465,7 +467,7 @@ em {
 #main a img {
 	max-width: 95%;
 	height: auto;
-	padding: 5px;
+	/* padding: 5px; *//* 白色框框 */
 	width: 150px;/* daimeng */
 	border-radius: 80px;
 }
@@ -854,7 +856,8 @@ ul.sf-menu li li li:hover ul, ul.sf-menu li li li.sfHover ul {
 
 .sf-menu a:focus, .sf-menu a:hover {
 	color: #FFF;
-	background: #5d3d21
+	/* background: #5d3d21; */
+	background: #2c9678;
 }
 
 li.sfHover {

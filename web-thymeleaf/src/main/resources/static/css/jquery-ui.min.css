@@ -951,11 +951,12 @@ body .ui-tooltip {
 }
 /* 戴猛daimeng */
 .ui-widget-header {
-	border: 1px solid #e78f08;
+	/* border: 1px solid #e78f08; */
 	/* background: #f6a828
 		url("../../images/jquery_images/ui-bg_gloss-wave_35_f6a828_500x100.png")
 		50% 50% repeat-x; */
-	background-color : #5d3d21;
+	/* background-color : #5d3d21; */
+	background-color : #2c9678;
 	color: #fff;
 	font-weight: bold
 }
@@ -974,7 +975,8 @@ body .ui-tooltip {
 		50% repeat-x; */
 	font-weight: bold;
 	color: #1c94c4;
-	background-color: #12A182 !important;
+	/* background-color: #12A182 !important; */
+	background-color: #ed556a !important;
     border-radius: 20px;
 }
 
