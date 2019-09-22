@@ -106,35 +106,47 @@
 
 
 .btn_public_gou {
-    background-image: url(/ico/gou-40.png);
-    background-size: 100% 100%;
+    background-image: url(/ico/gou-40-2.png);
+    background-position:0px 0px;
+}
+.btn_public_gou:hover {
+    background-image: url(/ico/gou-40-2.png);
+    background-position:40px 0px;
 }
 .btn_public_cha {
-    background-image: url(/ico/cha-40.png);
-    background-size: 100% 100%;
+    background-image: url(/ico/cha-40-2.png);
+    background-position:0px 0px;
+}
+.btn_public_cha:hover {
+    background-image: url(/ico/cha-40-2.png);
+    background-position:40px 0px;
 }
 .btn_public_weibo_login {
-    background-image: url(/ico/weibo-orig.png);
-    background-size: 100% 100%;
+    background-image: url(/ico/weibo.png);
+    background-position:0px 0px;
+}
+.btn_public_weibo_login:hover {
+    background-image: url(/ico/weibo.png);
+    background-position:40px 0px;
 }
 .btn_public_normal_login {
     background-image: url(/ico/linked-orig.png);
     background-size: 100% 100%;
 }
 .btn_public_gray{
-	-webkit-filter: grayscale(100%);
+	/* -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
     -o-filter: grayscale(100%);
     filter: grayscale(100%);
-    filter: gray;
+    filter: gray; */
 }
 .btn_public_gray:hover{
-	-webkit-filter: grayscale(0%);
+	/* -webkit-filter: grayscale(0%);
     -moz-filter: grayscale(0%);
     -ms-filter: grayscale(0%);
     -o-filter: grayscale(0%);
-    filter: grayscale(0%);
+    filter: grayscale(0%); */
 }
 
 .btn_public {
