@@ -2,7 +2,7 @@ package com.daimeng.test.transxml;
 
 import java.util.ArrayList;
 
-import com.daimeng.util.XmlTransMappingAnnotation;
+import com.daimeng.util.annotation.XmlTransMappingAnnotation;
 
 @XmlTransMappingAnnotation
 public class TestVo {

@@ -1,6 +1,6 @@
 package com.daimeng.test.transxml;
 
-import com.daimeng.util.XmlTransMappingAnnotation;
+import com.daimeng.util.annotation.XmlTransMappingAnnotation;
 
 @XmlTransMappingAnnotation
 public class TestHead {
