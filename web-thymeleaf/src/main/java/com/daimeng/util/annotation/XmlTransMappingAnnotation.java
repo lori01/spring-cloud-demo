@@ -1,4 +1,4 @@
-package com.daimeng.util;
+package com.daimeng.util.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
