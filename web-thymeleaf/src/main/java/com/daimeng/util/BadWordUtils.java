@@ -63,12 +63,23 @@ public class BadWordUtils {
     }
 	/**
      * 检查文字中是否包含敏感字符，检查规则如下：<br>
+     * 从map中查询第一个字，如果存在，则查找第二个字，如果不存在，则不是敏感字
+     * 查找第二个字，如果存在，并且isend=1，则整个敏感词找到，不过不存在，则不是敏感字，如果isend！=1，则继续查找下个字，知道isend=1或为空
      * @param txt
      * @param beginIndex
      * @param matchType
      * @return，如果存在，则返回敏感词字符的长度，不存在返回0
      * @version 1.0
      */
+	/**
+	 * {红={客={isEnd=1}, isEnd=0}, 联={isEnd=0, 盟={isEnd=1}}, 
+	 * 法={isEnd=0, 轮={isEnd=0, 功={isEnd=1}}}, 
+	 * 粉={饰={太={平={isEnd=1}, isEnd=0}, isEnd=0}, isEnd=0}, 
+	 * 三={级={片={isEnd=1}, isEnd=0}, isEnd=0}, 
+	 * 自={杀={isEnd=1}, isEnd=0}, 
+	 * 基={地={isEnd=1}, isEnd=0}, 
+	 * 个={人={崇={拜={isEnd=1}, isEnd=0}, isEnd=0}, isEnd=0}}
+	 */
     @SuppressWarnings({ "rawtypes"})
     public static int checkBadWord(String txt,int beginIndex,int matchType){
         boolean  flag = false;    //敏感词结束标识位：用于敏感词只有1位的情况
@@ -184,6 +195,16 @@ public class BadWordUtils {
 	 * @author yqwang0907
 	 * @date 2018年2月28日下午5:28:08
 	 */
+	/**
+	 * {红={客={isEnd=1}, isEnd=0}, 联={isEnd=0, 盟={isEnd=1}}, 
+	 * 法={isEnd=0, 轮={isEnd=0, 功={isEnd=1}}}, 
+	 * 粉={饰={太={平={isEnd=1}, isEnd=0}, isEnd=0}, isEnd=0}, 
+	 * 三={级={片={isEnd=1}, isEnd=0}, isEnd=0}, 
+	 * 自={杀={isEnd=1}, isEnd=0}, 
+	 * 基={地={isEnd=1}, isEnd=0}, 
+	 * 个={人={崇={拜={isEnd=1}, isEnd=0}, isEnd=0}, isEnd=0}}
+	 */
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static void addBadWordToHashMap(Set<String> keyWordSet) {
         wordMap = new HashMap(keyWordSet.size());     //初始化敏感词容器，减少扩容操作
@@ -214,6 +235,9 @@ public class BadWordUtils {
                 }
             }
         }
+        System.out.println("=====wordMap=====");
+        System.out.println(wordMap);
+        System.out.println("=====wordMap=====");
     }
 	
 	
