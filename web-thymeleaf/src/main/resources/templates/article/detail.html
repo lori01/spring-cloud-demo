@@ -22,6 +22,10 @@
 						<a class="post-title" th:href="@{/article/list/1}" rel="bookmark" >返回</a>
 					</div>
 				</div>
+				
+				<div class="post-meta entry-content">
+					<span th:text="${info.shortContext}"></span>
+				</div>
 				<!-- <div class="post-meta">
 					<span th:text="${info.createTm}"></span> | 
 					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span> | 
