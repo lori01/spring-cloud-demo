@@ -968,14 +968,14 @@ body .ui-tooltip {
 /* daimeng 关闭按钮颜色修改 */
 .ui-state-default, .ui-widget-content .ui-state-default,
 	.ui-widget-header .ui-state-default {
-	/* border: 1px solid #ccc; */
-	border: 1px solid #12A182;
+	/* border: 1px solid #ccc;  #12A182*/
+	border: 1px solid #2c9678;
 	/* background: #f6f6f6
 		url("../../images/jquery_images/ui-bg_glass_100_f6f6f6_1x400.png") 50%
 		50% repeat-x; */
 	font-weight: bold;
 	color: #1c94c4;
-	/* background-color: #12A182 !important; */
+	/* background-color: #2c9678 !important; */
 	background-color: #ed556a !important;
     border-radius: 20px;
 }
