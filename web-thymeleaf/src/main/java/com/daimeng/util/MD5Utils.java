@@ -19,8 +19,7 @@ public class MD5Utils {
 		String md51 = getMD5One("D:/Picture/HP/5a1f9f4fe323e.jpg");
 		String md52 = getMD5Two("D:/Picture/HP/5a1f9f4fe323e.jpg");
 		String md53 = getMD5Two("D:/Picture/HP/5a1f9f4fe323e.jpg");
-		String md54 = DigestUtils.md5Hex(new FileInputStream(
-				"D:/Picture/HP/5a1f9f4fe323e.jpg"));
+		String md54 = DigestUtils.md5Hex(new FileInputStream("D:/Picture/HP/5a1f9f4fe323e.jpg"));
 		System.out.println(md51);
 		System.out.println(md52);
 		System.out.println(md53);
