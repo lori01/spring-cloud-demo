@@ -75,62 +75,80 @@ public class XmlTransUtils {
 		Class<?> clz = object.getClass(); 
 		//判断clz是不是使用了EsbXmlAnnotation的注解接口
 		boolean hasAnnotation = clz.isAnnotationPresent(com.daimeng.util.annotation.XmlTransMappingAnnotation.class);
-		Field[] fields = clz.getDeclaredFields(); 
-		for (Field field : fields) {
-			String xmlName = field.getName();
-			if(hasAnnotation){
-				XmlTransMappingAnnotation xmlTransMappingAnnotation = field.getAnnotation(com.daimeng.util.annotation.XmlTransMappingAnnotation.class);
-				if(xmlTransMappingAnnotation != null){
-					xmlName = xmlTransMappingAnnotation.value();
-				}
+		if(clz.getTypeName().indexOf("java.util.List") > -1 || clz.getTypeName().indexOf("java.util.ArrayList") > -1){
+			xml += "<array>";
+			for(Object obj : (List)object){
+				String xmlName = obj.getClass().getSimpleName();
+				xml += "<" + xmlName + ">";
+				xml += obj2xml(obj);
+				xml += "</" + xmlName + ">";
 			}
-
-			try {
-				String methodName = field.getName();
-				if(!"is".equals(methodName.subSequence(0, 2))){
-					methodName = "get" + getMethodName(field.getName());
+			xml += "</array>";
+		}else{
+			Field[] fields = clz.getDeclaredFields(); 
+			for (Field field : fields) {
+				String xmlName = field.getName();
+				if("serialVersionUID".equals(xmlName)){
+					continue;
 				}
-				Method m = (Method) object.getClass().getMethod(methodName);  
-				/*if(object.getClass().getMethod(methodName) != null){
-					m = (Method) object.getClass().getMethod(methodName);  
-				}*/
-				if(m != null){
-					//判断是否是java.lang.*里面的基本变量的对象 
-					//判断是否是基本变量,基本变量的类型即为int long float boolean,没有包路劲
-					if(field.getType().getName().indexOf("java.lang.") > -1 || field.getType().getName().indexOf(".") == -1){
-						Object val = m.invoke(object);
-						if(val != null){
-							xml += "<" + xmlName + ">";
-							xml += String.valueOf(val);
-							xml += "</" + xmlName + ">";
+				if(hasAnnotation){
+					XmlTransMappingAnnotation xmlTransMappingAnnotation = field.getAnnotation(com.daimeng.util.annotation.XmlTransMappingAnnotation.class);
+					if(xmlTransMappingAnnotation != null){
+						xmlName = xmlTransMappingAnnotation.value();
+					}
+				}
+
+				try {
+					String methodName = field.getName();
+					if(!"is".equals(methodName.subSequence(0, 2))){
+						methodName = "get" + getMethodName(field.getName());
+					}else{
+						if(field.getType().getName().indexOf("boolean") < 0){
+							methodName = "get" + getMethodName(field.getName());
 						}
 					}
-					else if(field.getType().getName().indexOf("com.daimeng.") > -1){
-						Object obj = m.invoke(object);
-						if(obj != null){
-							xml += "<" + xmlName + ">";
-							xml += obj2xml(obj);
-							xml += "</" + xmlName + ">";
+					Method m = (Method) object.getClass().getMethod(methodName);  
+					/*if(object.getClass().getMethod(methodName) != null){
+						m = (Method) object.getClass().getMethod(methodName);  
+					}*/
+					if(m != null){
+						//判断是否是java.lang.*里面的基本变量的对象 
+						//判断是否是基本变量,基本变量的类型即为int long float boolean,没有包路劲
+						if(field.getType().getName().indexOf("java.lang.") > -1 || field.getType().getName().indexOf(".") == -1){
+							Object val = m.invoke(object);
+							if(val != null){
+								xml += "<" + xmlName + ">";
+								xml += String.valueOf(val);
+								xml += "</" + xmlName + ">";
+							}
 						}
-					}
-					else if(field.getType().getName().indexOf("java.util.List") > -1 || field.getType().getName().indexOf("java.util.ArrayList") > -1){
-						List list = (List) m.invoke(object);
-						if(list != null){
-							xml += "<array>";
-							for(Object obj : list){
+						else if(field.getType().getName().indexOf("com.daimeng.") > -1){
+							Object obj = m.invoke(object);
+							if(obj != null){
 								xml += "<" + xmlName + ">";
 								xml += obj2xml(obj);
 								xml += "</" + xmlName + ">";
 							}
-							xml += "</array>";
+						}
+						else if(field.getType().getName().indexOf("java.util.List") > -1 || field.getType().getName().indexOf("java.util.ArrayList") > -1){
+							List list = (List) m.invoke(object);
+							if(list != null){
+								xml += "<array>";
+								for(Object obj : list){
+									xml += "<" + xmlName + ">";
+									xml += obj2xml(obj);
+									xml += "</" + xmlName + ">";
+								}
+								xml += "</array>";
+							}
 						}
 					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println(e.getMessage());
-			}
 
+			}
 		}
 		return xml;
 	}
