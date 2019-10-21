@@ -3,6 +3,7 @@ package com.daimeng.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.daimeng.util.annotation.XmlTransMappingAnnotation;
@@ -16,13 +17,22 @@ public class XmlTransUtils {
 		a.setContext("内容");
 		a.setContextType("01");
 		a.setTitle("标题");
+		a.setShortContext("简写");
+		a.setCreateTm(new Date());
 
 		ArrayList<CommentInfo> list = new ArrayList<CommentInfo>();
 		CommentInfo h1 = new CommentInfo();
 		CommentInfo h2 = new CommentInfo();
-		h1.setContext("11");
-		h2.setContext("22");
-
+		h1.setContext("评论11");
+		h1.setId(11);
+		h1.setCreateTm(new Date());
+		h1.setArticleId(1);
+		
+		h2.setContext("评论22");
+		h2.setId(22);
+		h2.setCreateTm(new Date());
+		h1.setArticleId(2);
+		
 		list.add(h1);
 		list.add(h2);
 
@@ -118,7 +128,19 @@ public class XmlTransUtils {
 							Object val = m.invoke(object);
 							if(val != null){
 								xml += "<" + xmlName + ">";
+								xml += "<![CDATA[";
 								xml += String.valueOf(val);
+								xml += "]]>";
+								xml += "</" + xmlName + ">";
+							}
+						}
+						else if(field.getType().getName().indexOf("java.util.Date") > -1){
+							Date val = (Date) m.invoke(object);
+							if(val != null){
+								xml += "<" + xmlName + ">";
+								xml += "<![CDATA[";
+								xml += DateUtils.getDateStrFormat(val, DateUtils.YYYY_MM_DDHH_MM_SS);
+								xml += "]]>";
 								xml += "</" + xmlName + ">";
 							}
 						}
