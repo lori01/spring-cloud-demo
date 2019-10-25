@@ -38,69 +38,6 @@ import org.w3c.dom.NodeList;
  */
 public class WordUtils {
 
-	public static void main(String[] args) {
-		/*ArrayList<String> result = getParamFromDollar("(${no})是一个${name}");
-		for(String str : result){
-			Constants.println(str);
-		}*/
-		
-		long start = System.currentTimeMillis();
-		String templatePath = "D:/java_test/word/Word_Export_Test.docx";
-		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
-		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
-		String newDocumentPath = "D:/java_test/word/" + date +System.currentTimeMillis()+ ".docx";
-		downDocument(templatePath, newDocumentPath, dataMap);
-		
-		long end = System.currentTimeMillis();
-		Constants.println(newDocumentPath);
-        Constants.println("===整个过程消耗了"+(end-start)+"ms===");
-	}
-	
-	private static HashMap<String,Object> dataMap = new HashMap<String,Object>();
-	static{
-		dataMap.put("project_name", "厦门公司金融服务方案");
-		dataMap.put("cst_name", "厦门海洋运输集团");
-		dataMap.put("inst_name", "中国建设银行厦门分行");
-		dataMap.put("date", "2018年10月15号");
-		dataMap.put("other_pro", "其他章节信息其他章节信息其他章节信息其他章节信息其他章节信息其他章节信息其他章节信息其他章节信息");
-		//双循环
-		ArrayList<HashMap<String,Object>> total01 = new ArrayList<HashMap<String,Object>>();
-		for(int i = 0; i < 10 ; i++){
-			HashMap<String,Object> pt = new HashMap<String,Object>();
-			pt.put("ch_no", "大类产品"+i);
-			pt.put("ch_tp", "大类产品类型:类型"+i);
-			ArrayList<HashMap<String,String>> table01 = new ArrayList<HashMap<String,String>>();
-			for(int j = 0; j < 10; j++){
-				HashMap<String,String> ptt = new HashMap<String,String>();
-				ptt.put("pro_no", ""+j);
-				ptt.put("pro_name", "小类产品"+i+j);
-				ptt.put("pro_action", "产品的功能是"+i+j);
-				ptt.put("pro_object", "产品的服务对象是"+i+j);
-				ptt.put("pro_spot", "产品的优点是"+i+j);
-				ptt.put("pro_struct", "产品的交易结构为结构"+i+j);
-				ptt.put("pro_stuff", "客户需要提供身份证件、营业执照等相关信息.");
-				table01.add(ptt);
-			}
-			pt.put("table_01", table01);
-			total01.add(pt);
-		}
-		dataMap.put("total_01", total01);
-		
-		//单循环
-		for(int i = 2; i < 10; i++){
-			ArrayList<HashMap<String,String>> table = new ArrayList<HashMap<String,String>>();
-			for(int j = 0; j < 10; j++){
-				HashMap<String,String> ptt = new HashMap<String,String>();
-				ptt.put("index", ""+j);
-				ptt.put("demand", "需求方案"+j);
-				ptt.put("mod_name", "产品名字"+j);
-				table.add(ptt);
-			}
-			dataMap.put("table_0"+i, table);
-		}
-		
-	}
-	
 	/**
 	 * 
 	* @功能描述: 将数据写入模板总并导出成新的excel
