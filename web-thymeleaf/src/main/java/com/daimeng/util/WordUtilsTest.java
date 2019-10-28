@@ -133,11 +133,39 @@ public class WordUtilsTest {
 		ArrayList<HashMap<String,Object>> answerList5 = new ArrayList<HashMap<String,Object>>();
 		quest5.put("table_01", answerList5);
 		
+		HashMap<String,Object> quest6 = new HashMap<String,Object>();
+		quest6.put("no", "6");
+		quest6.put("title", "第6个问题的答案是什么?");
+		quest6.put("ans", "E-这里是其他答案的描述");
+		ArrayList<HashMap<String,Object>> answerList6 = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> ans6_1 = new HashMap<String,Object>();
+		ans6_1.put("no", "A");
+		ans6_1.put("desc", "这个是第6个问题的第一个答案");
+		HashMap<String,Object> ans6_2 = new HashMap<String,Object>();
+		ans6_2.put("no", "B");
+		ans6_2.put("desc", "这个是第6个问题的第二个答案");
+		HashMap<String,Object> ans6_3 = new HashMap<String,Object>();
+		ans6_3.put("no", "C");
+		ans6_3.put("desc", "这个是第6个问题的第三个答案");
+		HashMap<String,Object> ans6_4 = new HashMap<String,Object>();
+		ans6_4.put("no", "D");
+		ans6_4.put("desc", "这个是第6个问题的第4个答案");
+		HashMap<String,Object> ans6_5 = new HashMap<String,Object>();
+		ans6_5.put("no", "E");
+		ans6_5.put("desc", "其他");
+		answerList6.add(ans6_1);
+		answerList6.add(ans6_2);
+		answerList6.add(ans6_3);
+		answerList6.add(ans6_4);
+		answerList6.add(ans6_5);
+		quest6.put("table_01", answerList6);
+		
 		quests.add(quest1);
 		quests.add(quest2);
 		quests.add(quest3);
 		quests.add(quest4);
 		quests.add(quest5);
+		quests.add(quest6);
 		dataMap2.put("total_01", quests);
 	}
 	
