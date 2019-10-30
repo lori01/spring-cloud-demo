@@ -54,7 +54,9 @@
 		<!-- END header -->
 		<div id="navigation" class="clearfix">
 			<nav class="nav">
-				<a href="javascript:void(0)" th:href="@{/logins}"><img class="title_img" th:src="${session.user_session!=null}?${session.user_session.img}:'/ico/ed556a.png'"/></a>
+				<a href="javascript:void(0)" th:href="@{/logins}">
+					<img class="title_img" th:src="${session.user_session!=null} ? ${session.user_session.img} : (${new java.util.Date().getTime() % 2 == 0} ? '/ico/ed556a.png' : '/ico/2c9678.png')"/>
+				</a>
 				<ul class="sf-menu">
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li th:style="${session.user_session!=null}? 'display:none':''" ><a th:text="登录" th:href="@{/logins}"></a></li>
