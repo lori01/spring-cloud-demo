@@ -93,6 +93,10 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/config", "anon");
 		
 		filterChainDefinitionMap.put("/api/**", "anon");
+		filterChainDefinitionMap.put("/401", "anon");
+		filterChainDefinitionMap.put("/403", "anon");
+		filterChainDefinitionMap.put("/404", "anon");
+		filterChainDefinitionMap.put("/500", "anon");
 		//阿里巴巴数据连接监控
 		filterChainDefinitionMap.put("/druid/**", "anon");
 		//配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
