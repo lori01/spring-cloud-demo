@@ -3,9 +3,17 @@ package com.daimeng.test.letter;
 public class LetterTest {
 
 	public static void main(String[] args) {
-		String word = "abcarsbcebrefgfghsth";
+		/*String word = "abcarsbcebrefgfghsth";
 		System.out.println(getNoRepeatLetter(word));
-		System.out.println(getNoRepeatLetter2(word));
+		System.out.println(getNoRepeatLetter2(word));*/
+		String stttt = "中azAZ";
+		System.out.println(stttt.length());
+		byte[]  buff = stttt.getBytes();
+		int i = buff.length;
+		System.out.println(i);
+		for(byte b : buff){
+			System.out.println(b);
+		}
 	}
 	//获取单词内第一个不重复的字母
 	public static String getNoRepeatLetter(String word){
