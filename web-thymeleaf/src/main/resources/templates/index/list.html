@@ -6,7 +6,7 @@
 3,th:include:保留当前主标签，舍弃th:fragment主标签。 -->
 <head>
     <meta charset="UTF-8" />
-    <title th:text="文章列表-梦神十夜的小站"></title>
+    <title th:text="梦神十夜的小站"></title>
        <!--必填-->
 	<meta property="og:type" content="webpage" />
 	<meta property="og:url" content="http://www.daimeng.fun" />
@@ -33,7 +33,7 @@
 					<span th:text="${info.createUser.realname}"></span>在
 					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span>投稿 
 					<div style="float:right;margin-right: 10px;">
-						<a class="post-title" th:href="@{/index/detail/{id}/1(id=${info.id})}" rel="bookmark" th:text="阅读全文..."></a>
+						<!-- <a class="post-title" th:href="@{/index/detail/{id}/1(id=${info.id})}" rel="bookmark" th:text="阅读全文..."></a> -->
 					</div>
 				</div>
 				

@@ -338,7 +338,7 @@ input.btn_square_public_cur:hover a:hover{
 .up_down_main {
 	position: fixed;
     bottom: 40px;
-    right: 50px;
+    right: 20px;
     font-size: 20px;
 }
 .up_down_div {

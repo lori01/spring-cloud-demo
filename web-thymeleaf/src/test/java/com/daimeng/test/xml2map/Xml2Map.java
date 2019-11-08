@@ -1,5 +1,6 @@
 package com.daimeng.test.xml2map;
 
+import java.util.Date;
 import java.util.Map;
 
 import net.sf.json.xml.XMLSerializer;
@@ -20,6 +21,12 @@ public class Xml2Map {
         System.out.println(result);
         Map maps = (Map)JSON.parse(result);  
         System.out.println(((Map)maps.get("Head")).get("contextType"));
+        
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(JSON.toJSON(date));
+        java.sql.Date d2 = new java.sql.Date(System.currentTimeMillis());
+        System.out.println(JSON.toJSON(d2));
+        String datestr = "Fri Nov 08 18:04:07 GMT+08:00 2019";
 	}
 	
 	
