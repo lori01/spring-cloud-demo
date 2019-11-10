@@ -76,6 +76,16 @@ public class ArticleController extends BaseController {
 		return "article/ueditor";
 	}
 	
+	@RequestMapping("/fastEdit/{id}")
+	public String fastEdit(Model model,@PathVariable Integer id) {
+		ArticleInfo info = new ArticleInfo();
+		if(id != null && id >0){
+			info = articleService.findOne(id);
+		}
+		model.addAttribute("info",info);
+		return "article/fastEdit";
+	}
+	
 	@RequestMapping("/detail/{id}/{page}")
 	public String detail(Model model,@PathVariable Integer id,@PathVariable Integer page) {
 		ArticleInfo info = new ArticleInfo();

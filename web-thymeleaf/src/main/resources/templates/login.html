@@ -25,56 +25,58 @@
 <div id="wrap" class="container clearfix">
 	<div th:include="common/header-whitout-login::pagination"></div>
 	
-	<div class="header_wrap">
-		<div id="header_login" class="clearfix">
-			<div id="logo_login">
-				<h4 th:text="${message}" class="login_error"></h4>
-				<!-- <form action="" method="post" style="text-align:center; "> -->
-				<form action="/dologin" method="post" style="text-align:center; ">
-					<table class="formtable_noborder" style="">
-						<thead>
-						</thead>
-						<tbody>
-							<tr>
-								<th width="45%"><span th:text="账号"></span></th>
-								<td width="55%"><input class="inputclass" type="text" name="username" /></td>
-							</tr>
-							<tr>
-								<th width="45%"><span th:text="密码"></span></th>
-								<td width="55%"><input class="inputclass" type="password" name="password" /></td>
-							</tr>
-							<tr>
-								<th width="45%"><span th:text="验证码"></span></th>
-								<td width="55%">
-									<input type="text" name="captcha" id="captcha_input"/>
-									<a href="javascript:void(0)" onclick="javascript:refreshCaptcha()">
-										<img alt="验证码" th:src="@{/Captcha.jpg}" title="点击更换" id="captcha_img"/>
-									</a>
-    								<a href="javascript:void(0)" onclick="javascript:refreshCaptcha()" th:text="看不清换一张"></a><br/>
-								</td>
-							</tr>
-							<tr style="display:none;">
-								<th width="45%"><span></span></th>
-								<td width="55%">
-									<span><input type="checkbox" name="rememberMe" />记住我</span>
-								</td>
-							</tr>
-					</table>
-					    <!-- <p>账号：</p>
-					    <p>密码：</p> -->
-				    <p style="display: inline-block;">
-				    	<div class="add_btn">
-				    	<!-- <input type="submit" class="btn_yes_public" style="font-size: 14px;" value=""/> -->
-				    		<input type="button" class="btn_public btn_public_weibo_login btn_public_gray" th:onclick= "'javascript:weiboLogin()'" title="微博登录" value=""/>
-				    		<input type="submit" class="btn_public btn_public_gou btn_public_gray" style="font-size: 14px;" title="登录" value=""/>
-				    	</div>
-				    </p>
-				</form>
-				<form action="/doWeiboLogin" id="weibo_login_form" method="post" style="display:none;">
-					<input type="submit" style="display:none;" id="doWeiboLogin_btn"/>
-					<input type="hidden" id="captcha_hidden" name="captcha">
-				</form>
-			</div><!-- END logo --> 
+	<div id="main" class="container">
+		<div class="alpha">
+			<div id="content_main_apl" class="entry clearfix">
+				<div id="logo_login">
+					<h4 th:text="${message}" class="login_error"></h4>
+					<!-- <form action="" method="post" style="text-align:center; "> -->
+					<form action="/dologin" method="post" style="text-align:center; ">
+						<table class="formtable_noborder" style="">
+							<thead>
+							</thead>
+							<tbody>
+								<tr>
+									<th width="45%"><span th:text="账号"></span></th>
+									<td width="55%"><input class="inputclass" type="text" name="username" /></td>
+								</tr>
+								<tr>
+									<th width="45%"><span th:text="密码"></span></th>
+									<td width="55%"><input class="inputclass" type="password" name="password" /></td>
+								</tr>
+								<tr>
+									<th width="45%"><span th:text="验证码"></span></th>
+									<td width="55%">
+										<input type="text" name="captcha" id="captcha_input"/>
+										<a href="javascript:void(0)" onclick="javascript:refreshCaptcha()">
+											<img alt="验证码" th:src="@{/Captcha.jpg}" title="点击更换" id="captcha_img"/>
+										</a>
+	    								<a href="javascript:void(0)" onclick="javascript:refreshCaptcha()" th:text="看不清换一张"></a><br/>
+									</td>
+								</tr>
+								<tr style="display:none;">
+									<th width="45%"><span></span></th>
+									<td width="55%">
+										<span><input type="checkbox" name="rememberMe" />记住我</span>
+									</td>
+								</tr>
+						</table>
+						    <!-- <p>账号：</p>
+						    <p>密码：</p> -->
+					    <p style="display: inline-block;">
+					    	<div class="add_btn">
+					    	<!-- <input type="submit" class="btn_yes_public" style="font-size: 14px;" value=""/> -->
+					    		<input type="button" class="btn_public btn_public_weibo_login btn_public_gray" th:onclick= "'javascript:weiboLogin()'" title="微博登录" value=""/>
+					    		<input type="submit" class="btn_public btn_public_gou btn_public_gray" style="font-size: 14px;" title="登录" value=""/>
+					    	</div>
+					    </p>
+					</form>
+					<form action="/doWeiboLogin" id="weibo_login_form" method="post" style="display:none;">
+						<input type="submit" style="display:none;" id="doWeiboLogin_btn"/>
+						<input type="hidden" id="captcha_hidden" name="captcha">
+					</form>
+				</div><!-- END logo --> 
+			</div>
 		</div>
 	</div>
 	

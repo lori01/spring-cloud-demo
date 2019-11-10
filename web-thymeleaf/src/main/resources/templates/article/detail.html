@@ -68,8 +68,8 @@
 					<span th:text="${#dates.format(info.createTm, 'yyyy年MM月dd日 HH:mm')}"></span>评论
 					<div style="float:right;margin-right: 10px;" th:text="${info.layer}+楼"></div>
 					<div style="float:right;margin-right: 10px;">
-						<a class="post-title" th:style="${info.createUid != session.user_session.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:editComment('+${info.id}+')'" th:text="修改"></a>
-						<a class="post-title" th:style="${info.createUid != session.user_session.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:delComment('+${info.id}+')'" th:text="删除"></a>
+						<a class="post-title mobile_hide_flag" th:style="${info.createUid != session.user_session.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:editComment('+${info.id}+')'" th:text="修改"></a>
+						<a class="post-title mobile_hide_flag" th:style="${info.createUid != session.user_session.id}?'display:none'" href="javascript:void(0)" th:onclick= "'javascript:delComment('+${info.id}+')'" th:text="删除"></a>
 					</div>
 				</div>
 				

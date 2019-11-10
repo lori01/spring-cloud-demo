@@ -54,12 +54,13 @@
 		<!-- END header -->
 		<div id="navigation" class="clearfix">
 			<nav class="nav">
-				<a href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img class="title_img" th:src="${session.user_session.img}"/></a>
+				<a class="mobile_hide_flag" href="javascript:void(0)" th:onclick= "'javascript:showme()'"><img class="title_img" th:src="${session.user_session.img}"/></a>
 				<ul class="sf-menu">
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
-					<li><a th:text="发布速记" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
-					<li><a th:text="发布详情" th:href="@{/article/ueditor/0}"></a></li>
+					<li class="mobile_hide_flag"><a th:text="发布速记" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
+					<li class="mobile_hide_flag"><a th:text="发布详情" th:href="@{/article/ueditor/0}"></a></li>
+					<li class="mobile_show_flag"><a th:text="发布" th:href="@{/article/fastEdit/0}"></a></li>
 					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 					<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 					<li th:style="${session.user_session.role.id==100001}? '':'display:none'"><a th:text="TEST" th:href="@{/chart/line}"></a></li>
@@ -443,6 +444,20 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Opera Mobi|Windows CE|Symbian|Windows Phone|POLARIS|lgtelecom|nokia|SonyEricsson|LG|SAMSUNG|Samsung/i
+					.test(navigator.userAgent)) {
+				//移动端浏览器
+				$(".mobile_hide_flag").hide();
+				$(".mobile_show_flag").show();
+				$("#main a img").attr("style","width:80px");
+				$("#navigation").attr("style","float:left");
+				//alert("Mobile");
+			} else {
+				//PC浏览器
+				$(".mobile_show_flag").hide();
+				//alert("PC");
+			}
+			
 			//document.execCommand("BackgroundImageCache", false, true);
 			drawBtn();
 			selectRole();

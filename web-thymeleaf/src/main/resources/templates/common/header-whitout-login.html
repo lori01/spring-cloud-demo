@@ -23,6 +23,7 @@
 				心外无法	法外无心
  -->
  	<meta name="viewport" content="width=width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0">
+ 	
  	<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
  	<link rel="stylesheet" type="text/css" media="all" href="/css/mystyle.css"/>
  	<link rel="stylesheet" type="text/css" media="all" href="/css/jquery-ui.min.css"/>
@@ -49,13 +50,13 @@
 					</a>
 				</h2>
 			</div>
-			<span style="padding-left: 30px;font-size: 16px;">(￣︶￣)↗[GO!]</span>
+			<span class="mobile_hide_flag" style="padding-left: 30px;font-size: 16px;">(￣︶￣)↗[GO!]</span>
 			<!-- END logo -->
 		</div>
 		<!-- END header -->
 		<div id="navigation" class="clearfix">
 			<nav class="nav">
-				<a href="javascript:void(0)" th:href="@{/logins}">
+				<a class="mobile_hide_flag" href="javascript:void(0)" th:href="@{/logins}">
 					<img class="title_img" th:src="${session.user_session!=null} ? ${session.user_session.img} : (${new java.util.Date().getTime() % 2 == 0} ? '/ico/ed556a.png' : '/ico/2c9678.png')"/>
 				</a>
 				<ul class="sf-menu">
@@ -82,6 +83,17 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Opera Mobi|Windows CE|Symbian|Windows Phone|POLARIS|lgtelecom|nokia|SonyEricsson|LG|SAMSUNG|Samsung/i
+					.test(navigator.userAgent)) {
+				//移动端浏览器
+				$(".mobile_hide_flag").hide();
+				$("#main a img").attr("style","width:80px");
+				//alert("Mobile");
+			} else {
+				//PC浏览器
+				//alert("PC");
+			}
+			
 			//document.execCommand("BackgroundImageCache", false, true);
 			drawBtn();
 			

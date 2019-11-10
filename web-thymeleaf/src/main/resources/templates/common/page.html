@@ -44,12 +44,12 @@
 			<nav class="nav">
 				<ul class="sf-menu" style="float:left;margin-bottom: 0px;margin-top:0px;">
 					<li><a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/user/list')}? 'background:#2c9678;color:white;':''" th:text="用户管理" th:href="@{/user/list/1}"></a></li>
-					<li th:style="${session.user_session.role.id != 100001}? 'display:none':''" >
+					<li class="mobile_hide_flag" th:style="${session.user_session.role.id != 100001}? 'display:none':''" >
 						<a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/system/menu')}? 'background:#2c9678;color:white;':''" 
 							th:text="菜单管理" th:href="@{/system/menu/1}">
 						</a>
 					</li>
-					<li th:style="${session.user_session.role.id != 100001}? 'display:none':''">
+					<li class="mobile_hide_flag" th:style="${session.user_session.role.id != 100001}? 'display:none':''">
 						<a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/system/role')}? 'background:#2c9678;color:white;':''" 
 							th:text="角色管理" th:href="@{/system/role/1}">
 						</a>
@@ -61,7 +61,7 @@
 					</li>
 					<li><a th:text="我的信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
 					<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
-					<li th:style="${session.user_session.role.id != 100001}? 'display:none':''" ><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
+					<li class="mobile_hide_flag" th:style="${session.user_session.role.id != 100001}? 'display:none':''" ><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
 				</ul>
 			</nav>
 		</div>
