@@ -61,6 +61,7 @@
 				</a>
 				<ul class="sf-menu">
 					<li><a th:text="文章" th:href="@{/article/list/1}"></a></li>
+					<li><a th:text="浏览器信息" th:href="@{/index/info}"></a></li>
 					<li th:style="${session.user_session!=null}? 'display:none':''" ><a th:text="登录" th:href="@{/logins}"></a></li>
 				</ul>
 			</nav>

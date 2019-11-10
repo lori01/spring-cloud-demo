@@ -7,8 +7,8 @@
 3,th:include:保留当前主标签，舍弃th:fragment主标签。 -->
 <head>
     <meta charset="UTF-8"/>
-    <title>梦神十夜的小站 - 首页</title>
-       <!--必填-->
+    <title>信息 - 梦神十夜的小站</title>
+    <!--必填-->
 	<meta property="og:type" content="webpage" />
 	<meta property="og:url" content="http://www.daimeng.fun" />
 	<meta property="og:title" content="梦神十夜的小站" />
@@ -18,19 +18,117 @@
 	<meta name="weibo:webpage:create_at" content="网页的创建时间" />
 	<meta name="weibo:webpage:update_at" content="网页的更新时间" /> -->
 </head>
+<!-- <link rel="shortcut icon" href="/ico/logo-32.ico"> -->
+<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+<link rel="stylesheet" type="text/css" media="all" href="/css/mystyle.css"/>
 <body>
 <div id="wrap" class="container clearfix">
 	<div th:include="common/header-whitout-login::pagination"></div>
 	
-	<div class="header_wrap">
-		<div id="header_login" class="clearfix">
-			<div id="logo_login" style="text-align:center; ">
-				<h2><a href="/" title="登录成功" rel="home bookmark">梦神首页</a></h2>
-			</div><!-- END logo --> 
+	<div id="main" class="container">
+		<div class="alpha">
+			<div id="content_main_apl" class="entry clearfix">
+				<div id="logo_login">
+					<table class="formtable_noborder" style="">
+						<thead>
+						</thead>
+						<tbody>
+							<tr>
+								<th width="45%"><span th:text="浏览器内容"></span></th>
+								<td width="55%"><span id="userAgent"></span></td>
+							</tr>
+							<tr>
+								<th width="45%"><span th:text="是否为移动端"></span></th>
+								<td width="55%"><span id="mobile"></span></td>
+							</tr>
+							<tr>
+								<th width="45%"><span th:text="是否IOS"></span></th>
+								<td width="55%"><span id="ios"></span></td>
+							</tr>
+							<tr>
+								<th width="45%"><span th:text="是否Android"></span></th>
+								<td width="55%"><span id="android"></span></td>
+							</tr>
+							<tr>
+								<th width="45%"><span th:text="当前端浏览器"></span></th>
+								<td width="55%"><span id="bua"></span></td>
+							</tr>
+					</table>
+				</div><!-- END logo --> 
+			</div>
 		</div>
 	</div>
+	
 	<!-- 引入备案 -->
 	<div th:include="common/footer::common-beian"></div>
 </div>
 </body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var browser = {
+		        versions: function() {
+		            var u = navigator.userAgent,
+		            app = navigator.appVersion;
+		            return {
+		                mobile: !!u.match(/AppleWebKit.*Mobile.*/),
+		                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+		                android: u.indexOf("Android") > -1 || u.indexOf("Linux") > -1,
+		                iPhone: u.indexOf("iPhone") > -1,
+		                iPad: u.indexOf("iPad") > -1
+		            };
+		        } (),
+		        language: (navigator.browserLanguage || navigator.language).toLowerCase()
+		    };
+		    $("#userAgent").append(/* "userAgent 内容: <BR/>" +  */navigator.userAgent);
+		    
+		    $("#mobile").append(/* "是否为移动终端: " +  */browser.versions.mobile);
+		    if(browser.versions.mobile == null || browser.versions.mobile == ""){
+		    	$("#mobile").append("false");
+		    }
+		    
+		    $("#ios").append(/* "是否 ios: " +  */browser.versions.ios);
+		    if(browser.versions.ios == null || browser.versions.ios == ""){
+		    	$("#ios").append("false");
+		    }
+		    
+		    $("#android").append(/* "是否 android: " +  */browser.versions.android);
+		    if(browser.versions.android == null || browser.versions.android == ""){
+		    	$("#android").append("false");
+		    }
+		    
+		    //判断 浏览器 类型
+		    var ex = navigator.userAgent,
+		    bUA;
+		    if (ex.indexOf("MSIE") >= 0) {
+		        bUA = "Internet Explorer 10  Or Earlier"; //IE
+		    } else if (ex.indexOf("Firefox") >= 0) {
+		        bUA = "Firefox";
+		    } else if (ex.indexOf("Chrome") >= 0) {
+		        bUA = "Chrome";
+		        if (ex.indexOf("360SE") >= 0) { //360安全浏览器
+		            bUA = "360SE";
+		        } else if (ex.indexOf("360EE") >= 0) { //360急速浏览器
+		            bUA = "360EE";
+		        } else if (ex.indexOf("SE") >= 0 && ex.indexOf("360SE") == -1) { //搜狗浏览器
+		            bUA = "SouGou";
+		        } else if (ex.indexOf("Maxthon") >= 0) { //遨游浏览器
+		            bUA = "Maxthon";
+		        }
+		    } else if (ex.indexOf("UCBrowser") >= 0 || ex.indexOf("UCWEB") >= 0) { // UC浏览器
+		        bUA = "UCBrowser";
+		    } else if (ex.indexOf("Opera") >= 0) {
+		        bUA = "Opera";
+		    } else if (ex.indexOf("Safari") >= 0) { // 苹果浏览器
+		        bUA = "Safari";
+		    } else if (ex.indexOf("Netscape") >= 0) {
+		        bUA = "Netscape";
+		    } else if (ex.indexOf("like Gecko") >= 0 && ex.indexOf("Trident") >= 0) {
+		        bUA = "Internet Explorer 11 Or Later"; //IE11 以后，不再用 MSIE
+		    } else {
+		        bUA = "Other Broswer";
+		    }
+
+		    $("#bua").append(/* "当前浏览器: " +  */bUA);
+	});
+</script>
 </html>

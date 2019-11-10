@@ -36,6 +36,11 @@ public class IndexController extends BaseController{
 	
 	@Autowired
 	private UserService userService;
+	
+	@RequestMapping({"/info"})
+	public String info(Model model){
+		return "index";
+	}
 
 	@RequestMapping({"/list/{page}"})
 	public String index(Model model,@PathVariable Integer page){

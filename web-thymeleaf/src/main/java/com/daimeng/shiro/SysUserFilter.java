@@ -11,16 +11,14 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.daimeng.interceptor.DruidConfiguration;
 import com.daimeng.util.Constants;
+import com.daimeng.util.UAgentInfo;
 import com.daimeng.web.user.entity.SysPermission;
 import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
@@ -33,6 +31,22 @@ public class SysUserFilter extends AccessControlFilter {
 	
 	@Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+		HttpServletRequest hrequest = (HttpServletRequest) request;
+		String userAgent = hrequest.getHeader("User-Agent");
+		String httpAccept = hrequest.getHeader("Accept");
+		UAgentInfo detector = new UAgentInfo(userAgent, httpAccept);
+		if (detector.detectMobileQuick()) {
+			//移动端浏览器
+			//response.sendRedirect("http://www.baidu.com");
+			//((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/m"); 
+			//return false;
+			Constants.println("------->SysUserFilter.user-agent------>移动端浏览器<------");
+		} else {
+			//PC浏览器
+			//response.sendRedirect("http://cn.bing.com/");
+			Constants.println("------->SysUserFilter.user-agent------>PC浏览器<------");
+		}
+			
 		Constants.println("------->SysUserFilter.preHandle------>执行<------");
 		request.setAttribute("basePath", ((HttpServletRequest)request).getContextPath());
         Subject subject = getSubject(request, response);
