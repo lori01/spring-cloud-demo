@@ -97,7 +97,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/403", "anon");
 		filterChainDefinitionMap.put("/404", "anon");
 		filterChainDefinitionMap.put("/500", "anon");
-		//阿里巴巴数据连接监控
+		//阿里巴巴数据连接监控,为了安全，不允许未登录
 		//filterChainDefinitionMap.put("/druid/**", "anon");
 		//配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
 		filterChainDefinitionMap.put("/logout", "logout");
