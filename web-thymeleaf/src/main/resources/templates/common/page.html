@@ -63,10 +63,10 @@
 					<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
 					<li class="mobile_hide_flag" th:style="${session.user_session.role.id != 100001}? 'display:none':''" ><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
 					<li th:style="${session.user_session.role.id != 100001}? 'display:none':''">
-						<a th:text="Druid" th:href="@{/druid}" target="view_window" />
+						<a th:text="Druid" th:href="@{/druid}" target="_blank" />
 					</li>
 					<li th:style="${session.user_session.role.id != 100001}? 'display:none':''">
-						<a th:text="Eureka" th:href="${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':8000'}" target="view_window" />
+						<a th:text="Eureka" th:href="${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':8000'}" target="_blank"/>
 					</li>
 				</ul>
 			</nav>
