@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>浏览器信息 - 梦神十夜的小站</title>
+</head>
+<body>
+<div id="wrap" class="container clearfix">
+	<!-- 引入导航栏 -->
+	<div th:include="common/header::pagination"></div>
+	<!-- 引入第二菜单 -->
+	<div th:include="common/page::sys-manager-menu"></div>
+	<div th:include="common/browserinfo-common::browser-info"></div>
+	
+	<!-- 引入备案 -->
+	<div th:include="common/footer::common-beian"></div>
+</div>
+</body>
+</html>

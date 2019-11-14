@@ -51,6 +51,10 @@ public class UseController extends BaseController {
 		
 		return "user/log";
 	}
+	@RequestMapping("/browser")
+	public String browser(Model model) {
+		return "user/browser";
+	}
 	
 	@RequestMapping("/alllog/{page}")
 	public String alllog(Model model,@PathVariable Integer page) {

@@ -59,6 +59,11 @@
 							th:text="日志管理" th:href="@{/user/alllog/1}">
 						</a>
 					</li>
+					<li>
+						<a th:style="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(),'/user/browser')}? 'background:#2c9678;color:white;':''" 
+							th:text="浏览器信息" th:href="@{/user/browser}">
+						</a>
+					</li>
 					<li><a th:text="我的信息" href="javascript:void(0)" th:onclick= "'javascript:showme()'"></a></li>
 					<li><a th:text="修改密码" href="javascript:void(0)" th:onclick= "'javascript:showPwd()'"></a></li>
 					<li class="mobile_hide_flag" th:style="${session.user_session.role.id != 100001}? 'display:none':''" ><a th:text="创建用户" href="javascript:void(0)" th:onclick= "'javascript:showAddUser()'"></a></li>
