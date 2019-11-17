@@ -944,6 +944,7 @@ body .ui-tooltip {
 		50% top repeat-x;
 	color: #333;
 	-webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.9); 
+	max-width: 100%;/* 适配移动端浏览器 */
 }
 
 .ui-widget-content a {
