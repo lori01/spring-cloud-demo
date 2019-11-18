@@ -9,6 +9,9 @@
 .children_div {
 	padding : 10px;
 }
+.children_div a {
+	color: #2c9678;
+}
 </style>
 <body>
 <div id="wrap" class="container clearfix">
@@ -22,7 +25,7 @@
 		<div class="alpha">
 			<div class="entry clearfix">
 				<div id="parent_div">
-					<div class="children_div post-meta" id="div1">
+					<div class="children_div" id="div1">
 						<input class="inputclass" type="text"  value=""/>
 						<span>11111</span>
 						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
@@ -31,7 +34,7 @@
 						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:setdown(this)" >下移</a>
 						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:del(this)" >删除</a>
 					</div>
-					<div class="children_div post-meta" id="div2">
+					<div class="children_div" id="div2">
 						<input class="inputclass" type="text"  value=""/>
 						<span>22222</span>
 						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
@@ -40,7 +43,7 @@
 						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:setdown(this)" >下移</a>
 						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:del(this)" >删除</a>
 					</div>
-					<div class="children_div post-meta" id="div3">
+					<div class="children_div" id="div3">
 						<input class="inputclass" type="text"  value=""/>
 						<span>33333</span>
 						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
@@ -51,7 +54,7 @@
 					</div>
 				</div>
 				<div style="display:none;" id="new_div">
-					<div class="children_div post-meta" id="{id}">
+					<div class="children_div" id="{id}">
 						<input class="inputclass" type="text"  value=""/>
 						<span>{id}</span>
 						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
