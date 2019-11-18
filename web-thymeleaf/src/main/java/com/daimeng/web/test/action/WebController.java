@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/test")
 public class WebController {
 
-    @RequestMapping(value = { "", "/hello/{id}" })
+    @RequestMapping("/hello/{id}")
     public String hello(@PathVariable Integer id, Model model) {
         return "test/hello";
+    }
+    
+    @RequestMapping("/divadd")
+    public String divadd(Model model) {
+    	return "test/divadd";
     }
 }

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>div-test - 梦神十夜的小站</title>
+</head>
+<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+<style>
+.children_div {
+	padding : 10px;
+}
+</style>
+<body>
+<div id="wrap" class="container clearfix">
+	<div th:include="common/header::pagination"></div>
+	
+	<!-- 引入第二菜单 -->
+	<div th:include="common/page::test-menu"></div>
+	
+	
+	<div class="container">
+		<div class="alpha">
+			<div class="entry clearfix">
+				<div id="parent_div">
+					<div class="children_div post-meta" id="div1">
+						<input class="inputclass" type="text"  value=""/>
+						<span>11111</span>
+						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
+						<a class="onclick_insert_down"  href="javascript:void(0)" onclick= "javascript:add(this,1)" >向下新增</a>
+						<a class="onclick_up"  href="javascript:void(0)" onclick= "javascript:setup(this)" >上移</a>
+						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:setdown(this)" >下移</a>
+						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:del(this)" >删除</a>
+					</div>
+					<div class="children_div post-meta" id="div2">
+						<input class="inputclass" type="text"  value=""/>
+						<span>22222</span>
+						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
+						<a class="onclick_insert_down"  href="javascript:void(0)" onclick= "javascript:add(this,1)" >向下新增</a>
+						<a class="onclick_up"  href="javascript:void(0)" onclick= "javascript:setup(this)" >上移</a>
+						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:setdown(this)" >下移</a>
+						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:del(this)" >删除</a>
+					</div>
+					<div class="children_div post-meta" id="div3">
+						<input class="inputclass" type="text"  value=""/>
+						<span>33333</span>
+						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
+						<a class="onclick_insert_down"  href="javascript:void(0)" onclick= "javascript:add(this,1)" >向下新增</a>
+						<a class="onclick_up"  href="javascript:void(0)" onclick= "javascript:setup(this)" >上移</a>
+						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:setdown(this)" >下移</a>
+						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:del(this)" >删除</a>
+					</div>
+				</div>
+				<div style="display:none;" id="new_div">
+					<div class="children_div post-meta" id="{id}">
+						<input class="inputclass" type="text"  value=""/>
+						<span>{id}</span>
+						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
+						<a class="onclick_insert_down"  href="javascript:void(0)" onclick= "javascript:add(this,1)" >向下新增</a>
+						<a class="onclick_up"  href="javascript:void(0)" onclick= "javascript:setup(this)" >上移</a>
+						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:setdown(this)" >下移</a>
+						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:del(this)" >删除</a>
+					</div>
+				</div>
+				<a class="onclick_down" style=""  href="javascript:void(0)" onclick= "javascript:getdata(this)" >获取数据</a>
+			</div>
+		</div>
+	</div>
+	<!-- 引入备案 -->
+	<div th:include="common/footer::common-beian"></div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+});
+function getdata(){
+	var list = $("#parent_div .children_div");
+	var value = "";
+	for(var i = 0; i<list.length;i++){
+		value = value + list[i].children[0].value + "\r"
+	}
+	//alert(Date.parse(new Date()) +"\r"+new Date().getTime());
+	alert(value);
+}
+function setup(obj){
+	var trLength = $("#parent_div .children_div").length;
+	var orig = $(obj).parents();
+	var id = orig.attr('id');
+	var html = "<div class=\"children_div\" id=\"" +new Date().getTime()+"\">"+ $(obj).parents().html() + "</div>";
+	//alert('index='+orig.index()+',id='+orig.attr('id'));
+	if (orig.index() != 0) {
+		$("#"+id).prev().before(html);
+		$("#"+id).remove();
+		//setTimeout(function(){$("#"+id).remove();}, 100);
+	}else{
+        alert('不能再上移了...');
+    }
+}
+function setdown(obj){
+	var trLength = $("#parent_div .children_div").length;
+	var orig = $(obj).parents();
+	var id = orig.attr('id');
+	var html = "<div class=\"children_div\" id=\"" +new Date().getTime()+"\">"+ $(obj).parents().html() + "</div>";
+	//alert('index='+orig.index()+',id='+orig.attr('id'));
+	if (orig.index() != (trLength-1)) {
+		$("#"+id).next().after(html);
+		$("#"+id).remove();
+	}else{
+        alert('不能再下移了...');
+    }
+}
+function add(obj,type){
+	var html = $("#new_div").html().replace(/{id}/g,new Date().getTime());
+	var orig = $(obj).parents();
+	//alert($(obj).parents().attr('id'));
+	//alert(html);
+	var id = orig.attr('id');
+	if(type == 0){
+		//$(obj).parents().insertBefore($("#new_div").children()[0]);
+		//$(obj).parents().before(html);
+		$("#"+id).before(html);
+		//alert(type);
+	}else{
+		//$(obj).parents().insertAfter($("#new_div").children()[0]);
+		//$(obj).parents().after(html);
+		$("#"+id).after(html);
+		//alert(type);
+	}
+	//alert(type);
+}
+function del(obj){
+	var trLength = $("#parent_div .children_div").length;
+	if(trLength == 1){
+		alert('不能再删除了...');
+		return;
+	}
+	var orig = $(obj).parents();
+	var id = orig.attr('id');
+	$("#"+id).remove();
+}
+</script>
+</body>
+</html>
