@@ -18,13 +18,14 @@
 	<div th:include="common/page::test-menu"></div>
 	
 	
-	<div class="container">
+	<div id="main"  class="container">
 		<div class="alpha">
 			<div class="entry clearfix">
 				<div id="parent_div">
 					<div class="children_div post-meta" id="div1">
-						<input class="inputclass" type="text"  value=""/>
-						<span>11111</span>
+						<!-- <textarea class="inputclass" type="text"  value=""></textarea> -->
+						<span>index=</span><span class="que_index" id="index-1"></span>
+						<span class="id_index" id="id-1">id=1</span>
 						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
 						<a class="onclick_insert_down"  href="javascript:void(0)" onclick= "javascript:add(this,1)" >向下新增</a>
 						<a class="onclick_up"  href="javascript:void(0)" onclick= "javascript:setup(this)" >上移</a>
@@ -32,8 +33,9 @@
 						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:del(this)" >删除</a>
 					</div>
 					<div class="children_div post-meta" id="div2">
-						<input class="inputclass" type="text"  value=""/>
-						<span>22222</span>
+						<!-- <textarea class="inputclass" type="text"  value=""></textarea> -->
+						<span>index=</span><span class="que_index" id="index-2"></span>
+						<span class="id_index" id="id-2">id=2</span>
 						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
 						<a class="onclick_insert_down"  href="javascript:void(0)" onclick= "javascript:add(this,1)" >向下新增</a>
 						<a class="onclick_up"  href="javascript:void(0)" onclick= "javascript:setup(this)" >上移</a>
@@ -41,8 +43,9 @@
 						<a class="onclick_down"  href="javascript:void(0)" onclick= "javascript:del(this)" >删除</a>
 					</div>
 					<div class="children_div post-meta" id="div3">
-						<input class="inputclass" type="text"  value=""/>
-						<span>33333</span>
+						<!-- <textarea class="inputclass" type="text"  value=""></textarea> -->
+						<span>index=</span><span class="que_index" id="index-3"></span>
+						<span class="id_index" id="id-3">id=3</span>
 						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
 						<a class="onclick_insert_down"  href="javascript:void(0)" onclick= "javascript:add(this,1)" >向下新增</a>
 						<a class="onclick_up"  href="javascript:void(0)" onclick= "javascript:setup(this)" >上移</a>
@@ -52,8 +55,9 @@
 				</div>
 				<div style="display:none;" id="new_div">
 					<div class="children_div post-meta" id="{id}">
-						<input class="inputclass" type="text"  value=""/>
-						<span>{id}</span>
+						<!-- <textarea class="inputclass" type="text"  value=""></textarea> -->
+						<span>index=</span><span class="que_index" id="index-{id}"></span>
+						<span class="id_index" id="id-{id}">id={id}</span>
 						<a class="onclick_insert_up"  href="javascript:void(0)" onclick= "javascript:add(this,0)" >向上新增</a>
 						<a class="onclick_insert_down"  href="javascript:void(0)" onclick= "javascript:add(this,1)" >向下新增</a>
 						<a class="onclick_up"  href="javascript:void(0)" onclick= "javascript:setup(this)" >上移</a>
@@ -71,16 +75,31 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	$(".children_div").mouseover(function(e){
+		
+	}).mouseout(function(e){//不论鼠标指针离开指定元素还是该元素子元素，都会触发 mouseout 事件
+		
+	});
+	flushIndex();
 });
 function getdata(){
-	var list = $("#parent_div .children_div");
+	var list = $("#parent_div .id_index");
 	var value = "";
 	for(var i = 0; i<list.length;i++){
-		value = value + list[i].children[0].value + "\r"
+		var id = list[i].getAttribute('id');
+		value = value + $("#"+id).html() + "\r"
 	}
 	//alert(Date.parse(new Date()) +"\r"+new Date().getTime());
 	alert(value);
+}
+function flushIndex(){
+	var list = $("#parent_div .que_index");
+	var value = "";
+	for(var i = 0; i<list.length;i++){
+		var id = list[i].getAttribute('id');
+		$("#"+id).html(i+1);
+	}
+	//alert(Date.parse(new Date()) +"\r"+new Date().getTime());
 }
 function setup(obj){
 	var trLength = $("#parent_div .children_div").length;
@@ -92,6 +111,7 @@ function setup(obj){
 		$("#"+id).prev().before(html);
 		$("#"+id).remove();
 		//setTimeout(function(){$("#"+id).remove();}, 100);
+		flushIndex();
 	}else{
         alert('不能再上移了...');
     }
@@ -105,6 +125,7 @@ function setdown(obj){
 	if (orig.index() != (trLength-1)) {
 		$("#"+id).next().after(html);
 		$("#"+id).remove();
+		flushIndex();
 	}else{
         alert('不能再下移了...');
     }
@@ -126,6 +147,7 @@ function add(obj,type){
 		$("#"+id).after(html);
 		//alert(type);
 	}
+	flushIndex();
 	//alert(type);
 }
 function del(obj){
