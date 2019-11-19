@@ -68,6 +68,22 @@
 				<a class="onclick_down" style=""  href="javascript:void(0)" onclick= "javascript:getdata(this)" >获取数据</a>
 			</div>
 		</div>
+		
+		<div class="alpha">
+			<div class="entry clearfix">
+				<div id="parent_div">
+					<div class="children_div post-meta">
+						<textarea style="width:600px;height:230px;" id="origin"></textarea>
+					</div>
+					<div class="children_div post-meta">
+						<a  href="javascript:void(0)" onclick= "javascript:formattext(this)" >格式化转换</a>
+					</div>
+					<div class="children_div post-meta">
+						<textarea style="width:600px;height:230px;" id="format"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!-- 引入备案 -->
 	<div th:include="common/footer::common-beian"></div>
@@ -159,6 +175,75 @@ function del(obj){
 	var orig = $(obj).parents();
 	var id = orig.attr('id');
 	$("#"+id).remove();
+}
+
+function formattext(obj){
+	var text = $("#origin").val();
+	var questionArry = new Array;
+	var question = {'question_text':'',
+			'question_type':'',
+			'question_no':'',
+			'answer_list' : ''
+	};
+	var answerArry = new Array;
+	//按照回车分割
+	var texts = text.split(/\n/g);
+	for(var i = 0; i < texts.length; i++){
+		if(texts[i] != null && texts[i] != ''){
+			//过滤空格
+			var str = texts[i].replace(/\s+/g,"");
+			if(str != null && str != ''){
+				if(isNumber(str.substring(0,1))){
+					if(i > 0){
+						question.answer_list = answerArry;
+						questionArry.push(question);
+					}
+					var question = {'question_text':'',
+									'question_type':'',
+									'question_no':'',
+									'answer_list' : ''
+							};
+					question.question_text = str;
+					//获取标题index
+					var strs = str.split(".");
+					if(strs.length > 1 && isNumber(strs[0])){
+						question.question_no = strs[0];
+					}
+					//获取中括号内的类型
+					var bracks = getBrackets(str);
+					if(bracks != ''){
+						question.question_type = bracks;
+					}
+					
+					answerArry = new Array;
+				}else{
+					var answer = {'answer_text':str,'answer_no':answerArry.length+1,'answer_type':''};
+					//获取中括号内的类型
+					var bracks = getBrackets(str);
+					if(bracks != ''){
+						answer.answer_type = bracks;
+						answer.answer_text = str.substring(0,str.indexOf('['));
+					}
+					answerArry.push(answer);
+					if(i == (texts.length - 1)){
+						question.answer_list = answerArry;
+						questionArry.push(question);
+					}
+				}
+			}
+		}
+	}
+	
+	$("#format").val(JSON.stringify(questionArry));
+}
+function isNumber(str){
+	return /^\d+$/.test(str);
+}
+function getBrackets(str){
+	var strs = str.split("[");
+	if(strs.length > 1 && strs[1].substring(strs[1].length-1,strs[1].length)==']'){
+		return strs[1].substring(0,strs[1].length-1);
+	}else return "";
 }
 </script>
 </body>
