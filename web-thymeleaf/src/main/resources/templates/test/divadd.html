@@ -187,54 +187,70 @@ function formattext(obj){
 	};
 	var answerArry = new Array;
 	//按照回车分割
-	var texts = text.split(/\n/g);
+	var texts = splitStringBrk(text);
 	for(var i = 0; i < texts.length; i++){
-		if(texts[i] != null && texts[i] != ''){
-			//过滤空格
-			var str = texts[i].replace(/\s+/g,"");
-			if(str != null && str != ''){
-				if(isNumber(str.substring(0,1))){
-					if(i > 0){
-						question.answer_list = answerArry;
-						questionArry.push(question);
-					}
-					var question = {'question_text':'',
-									'question_type':'',
-									'question_no':'',
-									'answer_list' : ''
-							};
-					question.question_text = str;
-					//获取标题index
-					var strs = str.split(".");
-					if(strs.length > 1 && isNumber(strs[0])){
-						question.question_no = strs[0];
-					}
-					//获取中括号内的类型
-					var bracks = getBrackets(str);
-					if(bracks != ''){
-						question.question_type = bracks;
-					}
-					
-					answerArry = new Array;
-				}else{
-					var answer = {'answer_text':str,'answer_no':answerArry.length+1,'answer_type':''};
-					//获取中括号内的类型
-					var bracks = getBrackets(str);
-					if(bracks != ''){
-						answer.answer_type = bracks;
-						answer.answer_text = str.substring(0,str.indexOf('['));
-					}
-					answerArry.push(answer);
-					if(i == (texts.length - 1)){
-						question.answer_list = answerArry;
-						questionArry.push(question);
-					}
-				}
+		var str = texts[i];
+		//如果由数字开始，比如“ 1.第一个题目”，此情况判断为题目
+		if(isNumber(str.substring(0,1))){
+			//从第二个题目开始，将上一个题目的数据push到列表中
+			if(i > 0){
+				question.answer_list = answerArry;
+				questionArry.push(question);
+			}
+			var question = {'question_text':'',
+							'question_type':'',
+							'question_no':'',
+							'answer_list' : ''
+					};
+			question.question_text = str;
+			//获取标题index
+			var strs = str.split(".");
+			if(strs.length > 1 && isNumber(strs[0])){
+				question.question_no = strs[0];
+			}
+			//获取中括号内的类型
+			var bracks = getBrackets(str);
+			if(bracks != ''){
+				question.question_type = bracks;
+			}
+			
+			answerArry = new Array;
+		}
+		//其他情况则判断为选项
+		else{
+			var answer = {'answer_text':str,
+						'answer_no':answerArry.length+1,
+						'answer_type':''
+					};
+			//获取中括号内的类型，比如“D。其他内容[文本]”
+			var bracks = getBrackets(str);
+			if(bracks != ''){
+				answer.answer_type = bracks;
+				answer.answer_text = str.substring(0,str.indexOf('['));
+			}
+			answerArry.push(answer);
+			if(i == (texts.length - 1)){
+				question.answer_list = answerArry;
+				questionArry.push(question);
 			}
 		}
 	}
 	
 	$("#format").val(JSON.stringify(questionArry));
+}
+//按照回车分割并过滤掉空格和空行
+function splitStringBrk(text){
+	//按照回车分割
+	var texts = text.split(/\n/g);
+	var finaltexts = new Array;
+	for(var i = 0; i < texts.length; i++){
+		//过滤空格
+		var str = texts[i].replace(/\s+/g,"");
+		if(str != null && str != ''){
+			finaltexts.push(str);
+		}
+	}
+	return finaltexts;
 }
 function isNumber(str){
 	return /^\d+$/.test(str);
