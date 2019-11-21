@@ -91,7 +91,14 @@ public class SysUserFilter extends AccessControlFilter {
         	String path = req.getRequestURI();
         	Constants.println(path);
         	
-        	if(!inWhiteList(path) && suser.getRole().getId() != 100001){
+        	if("".equals(req.getRequestURI()) || "/".equals(req.getRequestURI()) 
+        			||path.lastIndexOf(".js") > -1 || path.lastIndexOf(".css") > -1 
+        			|| path.lastIndexOf(".json") > -1 
+        			|| path.startsWith("/themes") || path.startsWith("/dialogs/")){
+        		System.out.println("资源文件="+path);
+        		hasAuth = true;
+        	}
+        	else if(!inWhiteList(path) && suser.getRole().getId() != 100001){
         		SysRole role = suser.getRole();
         		if(role != null){
         			if(role.getPermissions() != null && role.getPermissions().size() > 0){

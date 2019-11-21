@@ -83,15 +83,15 @@ public class LoginController extends BaseController{
     }
 	
 	@RequestMapping("/403")
-    public String unauthorizedRole(Model model){
+    public String unauthorizedRole(HttpServletRequest request,Model model){
     	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
-        Constants.println("------没有权限-------");
+        Constants.println("------没有权限-------"+getBashPathWithPort(request));
         return "error/403";
     }
     @RequestMapping("/500")
-    public String codeError(Model model){
+    public String codeError(HttpServletRequest request,Model model){
     	SysUser cuser = (SysUser)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_USER);
-    	Constants.println("------内部错误-------");
+    	Constants.println("------内部错误-------"+getBashPathWithPort(request));
     	return "error/500";
     }
 

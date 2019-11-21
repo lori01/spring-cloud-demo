@@ -649,9 +649,10 @@ function selectRole(){
 		},
 		"error" : function(msgjsonobj) {
 			//alert("引发了莫名的错误?");
-			$.showAlertMessage("error","查询角色列表失败",msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
+			console.log(msgjsonobj);
+			/*$.showAlertMessage("error","查询角色列表失败","查询角色列表失败"msgjsonobj.responseJSON.exception +"-"+ msgjsonobj.responseJSON.message,function(){
 				
-			});
+			});*/
 		}
 	});
 }
