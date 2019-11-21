@@ -86,7 +86,7 @@ public class ExcelRemove {
 		}
 	}
 	
-	private static void cloneCellFromType(HSSFCell cNew, HSSFCell cOld) {
+	/*private static void cloneCellFromType(HSSFCell cNew, HSSFCell cOld) {
 		cNew.setCellComment(cOld.getCellComment());
 		cNew.setCellStyle(cOld.getCellStyle());
 		switch (cNew.getCellType()) {
@@ -111,6 +111,6 @@ public class ExcelRemove {
 				break;
 			}
 		}
-	}
+	}*/
 	
 }

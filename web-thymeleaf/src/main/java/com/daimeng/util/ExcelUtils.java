@@ -770,7 +770,7 @@ public class ExcelUtils {
 	
 	/**
 	 * 
-	* @功能描述: 复制单元格内容-旧版本poi的方法
+	* @功能描述: 复制单元格内容-旧版本poi的方法 只支持poi-3.15
 	* @方法名称: cloneCellFromType 
 	* @路径 com.daimeng.util 
 	* @作者 daimeng@tansun.com.cn
@@ -780,7 +780,7 @@ public class ExcelUtils {
 	* @param cOld 
 	* @return void
 	 */
-	public static void cloneCellFromType(HSSFCell cNew, HSSFCell cOld) {
+	/*public static void cloneCellFromType(HSSFCell cNew, HSSFCell cOld) {
 		cNew.setCellComment(cOld.getCellComment());
 		cNew.setCellStyle(cOld.getCellStyle());
 		switch (cNew.getCellType()) {
@@ -805,7 +805,7 @@ public class ExcelUtils {
 				break;
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * 

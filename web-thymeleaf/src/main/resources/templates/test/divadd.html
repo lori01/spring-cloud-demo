@@ -5,6 +5,7 @@
     <title>div-test - 梦神十夜的小站</title>
 </head>
 <link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+<link rel="stylesheet" type="text/css" media="all" href="/ztree/zTreeStyle.css"/>
 <style>
 .children_div {
 	padding : 10px;
@@ -21,6 +22,7 @@
 	<div id="main"  class="container">
 		<div class="alpha">
 			<div class="entry clearfix">
+				<h1>DIV动态新增上移下移</h1>
 				<div id="parent_div">
 					<div class="children_div post-meta" id="div1">
 						<!-- <textarea class="inputclass" type="text"  value=""></textarea> -->
@@ -71,23 +73,42 @@
 		
 		<div class="alpha">
 			<div class="entry clearfix">
+				<h1>问卷内容识别</h1>
 				<div id="parent_div">
-					<div class="children_div post-meta">
+					<div class="children_div">
 						<textarea style="width:600px;height:230px;" id="origin"></textarea>
 					</div>
 					<div class="children_div post-meta">
 						<a  href="javascript:void(0)" onclick= "javascript:formattext(this)" >格式化转换</a>
 					</div>
-					<div class="children_div post-meta">
+					<div class="children_div">
 						<textarea style="width:600px;height:230px;" id="format"></textarea>
 					</div>
 				</div>
+			</div>
+		</div>
+		
+		<div class="alpha">
+			<div class="entry clearfix">
+				<h1>Ztree</h1>
+				<div id="parent_div">
+					<div class="children_div post-meta">
+						<div id="ztree" class="ztree" style="overflow: auto;"></div>
+						<!-- <select id="ztree"></select> -->
+					</div>
+				</div>
+				<div class="children_div post-meta">
+						<a  href="javascript:void(0)" onclick= "javascript:showCheckTree()" >查看选中节点</a>
+					</div>
 			</div>
 		</div>
 	</div>
 	<!-- 引入备案 -->
 	<div th:include="common/footer::common-beian"></div>
 </div>
+
+<script type="text/javascript" src="/ztree/jquery.ztree.core-3.5.js" ></script>
+<script type="text/javascript" src="/ztree/jquery.ztree.excheck-3.5.min.js" ></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -97,6 +118,7 @@ $(document).ready(function() {
 		
 	});
 	flushIndex();
+	initZTree();
 });
 function getdata(){
 	var list = $("#parent_div .id_index");
@@ -260,6 +282,171 @@ function getBrackets(str){
 	if(strs.length > 1 && strs[1].substring(strs[1].length-1,strs[1].length)==']'){
 		return strs[1].substring(0,strs[1].length-1);
 	}else return "";
+}
+/**
+ * 
+ 
+1.第000个题目[主观题]
+2.第一个题目[单选题]
+A答案1
+B答案2
+C答案3
+
+3.第二个题目[多选题]
+A答案4
+B答案5
+C答案6
+D其他[文本]
+
+
+
+4.第3个题目[排序题]
+A答案0
+B答案9
+C答案8
+5.THE QUESTIONS4
+ANSWER1
+ANSWER2
+
+ */
+ 
+function initZTree(){
+	var setting = {
+		check : {
+			/* enable : false,
+			nocheckInherit : false */
+			enable: true,
+			chkStyle: "checkbox",
+			/*
+				Y 属性定义 checkbox 被勾选后的情况。 
+				N 属性定义 checkbox 取消勾选后的情况； 
+				"p" 表示操作会影响父级节点； 
+				"s" 表示操作会影响子级节点。
+			*/
+			//表示checkbox勾选操作，仅仅影响子节点；取消勾选操作。影响父子节点
+			chkboxType: { "Y": "ps", "N": "ps" }
+		},
+		data : {
+			key : { name: "text"},
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				pIdKey : "pid",
+			}
+		},
+		callback:{
+				onClick: onClick
+			}
+	};
+	var data = [{id:'1',text:'福建',pid:''},
+	            {id:'10',text:'泉州',pid:'1'},
+	            {id:'11',text:'厦门',pid:'1'},
+	            {id:'12',text:'福州',pid:'1'},
+	            {id:'13',text:'漳州',pid:'1'},
+	            {id:'14',text:'南安',pid:'1'},
+	            {id:'15',text:'南安',pid:'1'},
+	            {id:'16',text:'南安',pid:'1'},
+	            {id:'17',text:'南安',pid:'1'},
+	            {id:'18',text:'南安',pid:'1'},
+	            {id:'19',text:'南安',pid:'1'},
+	            {id:'191',text:'南安',pid:'19'},
+	            {id:'192',text:'南安',pid:'19'},
+	            {id:'193',text:'南安',pid:'19'},
+	            {id:'194',text:'南安',pid:'19'},
+	            {id:'195',text:'南安',pid:'19'},
+	            {id:'196',text:'南安',pid:'19'},
+	            {id:'197',text:'南安',pid:'19'},
+	            {id:'198',text:'南安',pid:'19'},
+	            {id:'199',text:'南安',pid:'19'},
+	            {id:'2',text:'北京',pid:''},
+	            {id:'3',text:'天津',pid:''},
+	            {id:'4',text:'江苏',pid:''},
+	            {id:'41',text:'苏州',pid:'4'},
+	            {id:'42',text:'无锡',pid:'4'},
+	            {id:'43',text:'常州',pid:'4'},
+	            {id:'44',text:'南京',pid:'4'},
+	            {id:'45',text:'苏北',pid:'4'},
+	            {id:'46',text:'苏北',pid:'4'},
+	            {id:'47',text:'苏北',pid:'4'},
+	            {id:'48',text:'苏北',pid:'4'},
+	            {id:'49',text:'苏北',pid:'4'},
+	            {id:'5',text:'福建',pid:''},
+	            {id:'50',text:'泉州',pid:'5'},
+	            {id:'51',text:'厦门',pid:'5'},
+	            {id:'52',text:'福州',pid:'5'},
+	            {id:'53',text:'漳州',pid:'5'},
+	            {id:'54',text:'南安',pid:'5'},
+	            {id:'55',text:'南安',pid:'5'},
+	            {id:'56',text:'南安',pid:'5'},
+	            {id:'57',text:'南安',pid:'5'},
+	            {id:'58',text:'南安',pid:'5'},
+	            {id:'59',text:'南安',pid:'5'},
+	            {id:'6',text:'福建',pid:''},
+	            {id:'60',text:'泉州',pid:'6'},
+	            {id:'61',text:'厦门',pid:'6'},
+	            {id:'62',text:'福州',pid:'6'},
+	            {id:'63',text:'漳州',pid:'6'},
+	            {id:'64',text:'南安',pid:'6'},
+	            {id:'65',text:'南安',pid:'6'},
+	            {id:'66',text:'南安',pid:'6'},
+	            {id:'67',text:'南安',pid:'6'},
+	            {id:'68',text:'南安',pid:'6'},
+	            {id:'69',text:'南安',pid:'6'},
+	            {id:'7',text:'福建',pid:''},
+	            {id:'70',text:'泉州',pid:'7'},
+	            {id:'71',text:'厦门',pid:'7'},
+	            {id:'72',text:'福州',pid:'7'},
+	            {id:'73',text:'漳州',pid:'7'},
+	            {id:'74',text:'南安',pid:'7'},
+	            {id:'75',text:'南安',pid:'7'},
+	            {id:'76',text:'南安',pid:'7'},
+	            {id:'77',text:'南安',pid:'7'},
+	            {id:'78',text:'南安',pid:'7'},
+	            {id:'79',text:'南安',pid:'7'},
+	            {id:'8',text:'福建',pid:''},
+	            {id:'80',text:'泉州',pid:'8'},
+	            {id:'81',text:'厦门',pid:'8'},
+	            {id:'82',text:'福州',pid:'8'},
+	            {id:'83',text:'漳州',pid:'8'},
+	            {id:'84',text:'南安',pid:'8'},
+	            {id:'85',text:'南安',pid:'8'},
+	            {id:'86',text:'南安',pid:'8'},
+	            {id:'87',text:'南安',pid:'8'},
+	            {id:'88',text:'南安',pid:'8'},
+	            {id:'89',text:'南安',pid:'8'},
+	            {id:'9',text:'福建',pid:''},
+	            {id:'90',text:'泉州',pid:'9'},
+	            {id:'91',text:'厦门',pid:'9'},
+	            {id:'92',text:'福州',pid:'9'},
+	            {id:'93',text:'漳州',pid:'9'},
+	            {id:'94',text:'南安',pid:'9'},
+	            {id:'95',text:'南安',pid:'9'},
+	            {id:'96',text:'南安',pid:'9'},
+	            {id:'97',text:'南安',pid:'9'},
+	            {id:'98',text:'南安',pid:'9'},
+	            {id:'99',text:'南安',pid:'9'}
+	            ];
+			
+	$.fn.zTree.init($("#ztree"), setting, data);
+}
+function onClick(event, treeId, treeNode){
+	alert(1);
+	var treeObj = $.fn.zTree.getZTreeObj("ztree");
+    nodes = treeObj.getCheckedNodes(true);
+    v = "";
+    for (var i = 0; i < nodes.length; i++) {
+        v += nodes[i].name + ",";
+        console.log("节点id:" + nodes[i].id + "节点名称" + v); //获取选中节点的值
+    }
+}
+function showCheckTree(){
+	var nodes = $.fn.zTree.getZTreeObj("ztree").getCheckedNodes(true);
+	var v = "";
+	for (var i = 0; i < nodes.length; i++) {
+		var str = nodes[i].id + "--" + nodes[i].text+"--"+nodes[i].pid + "\r";
+        v +=  str;
+    }
+	alert(v);
 }
 </script>
 </body>
