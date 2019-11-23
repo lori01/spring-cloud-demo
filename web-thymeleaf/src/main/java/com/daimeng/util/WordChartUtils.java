@@ -9,7 +9,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,8 +63,10 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STVerticalJc;
 public class WordChartUtils {
 
 	public static void main(String[] args) throws Exception {
-		final String returnurl="d://poi/test.docx";
-		final String templateurl="D://poi/onepage.docx";
+		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
+		final String returnurl="D:/java_test/问卷调查test/Word_Test_" + date + ".docx";
+		final String templateurl="D:/java_test/问卷调查test/Word_Test.docx";
 		InputStream is = new FileInputStream(new File(templateurl));
 		XWPFDocument doc = new XWPFDocument(is);
 		replaceAll(doc);

@@ -91,10 +91,7 @@ public class SysUserFilter extends AccessControlFilter {
         	String path = req.getRequestURI();
         	Constants.println(path);
         	
-        	if("".equals(req.getRequestURI()) || "/".equals(req.getRequestURI()) 
-        			||path.lastIndexOf(".js") > -1 || path.lastIndexOf(".css") > -1 
-        			|| path.lastIndexOf(".json") > -1 
-        			|| path.startsWith("/themes") || path.startsWith("/dialogs/")){
+        	if("".equals(req.getRequestURI()) || "/".equals(req.getRequestURI())){
         		System.out.println("资源文件="+path);
         		hasAuth = true;
         	}
