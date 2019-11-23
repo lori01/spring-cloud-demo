@@ -17,6 +17,7 @@ import org.apache.poi.ss.formula.eval.NumberEval;
 import org.apache.poi.ss.formula.eval.OperandResolver;
 import org.apache.poi.ss.formula.eval.ValueEval;
 import org.apache.poi.ss.formula.functions.Function;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
@@ -37,6 +38,8 @@ public class ExcelUtils {
 	
 	
 	public static void main(String[] args) {
+		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		//删除等
 		/*String src = "D:/java_test/excel/Excel_Remove_Mod_less.xls";
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -68,8 +71,6 @@ public class ExcelUtils {
 		
 		//图
 		/*String src = "D:/java_test/excel/新设法人房地产模板.xls";
-		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
-		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		Constants.println(date);
 		String targ = "D:/java_test/excel/新设法人房地产模板_new_excel_" +date+ ".xls";
 		drawPic(src, targ);
@@ -81,13 +82,62 @@ public class ExcelUtils {
 	
 		//Constants.println(getFormulaAllCoordinate("A1+B1+c3+SUM(A1:B1)+(AA44*BB55+SS66)/C78+PGB1!A1+$C$3+$C4+C$5"));
 		
-		String formula = "K2+H1+J2+M1+O2+PGB11!K8+$A$1+B$2+$C3+$K$2+$K2+K$2+SUM(H1:M1)+SUM($H$1:$M1)+SUM(A10:D10)+SUM(M5:O5)+SUM(M$5:O5)";
+		//String formula = "K2+H1+J2+M1+O2+PGB11!K8+$A$1+B$2+$C3+$K$2+$K2+K$2+SUM(H1:M1)+SUM($H$1:$M1)+SUM(A10:D10)+SUM(M5:O5)+SUM(M$5:O5)";
 		//Constants.println(getFormulaAllSection(formula));
 		//Constants.println(reWriteFormulaWithSection(formula, 5, 10));
 		//Constants.println(reWriteFormulaWithoutSection(formula, 5, 10));
-		Constants.println(reWriteFormulaWithoutSection(reWriteFormulaWithSection(formula, 5, 10), 5, 10));
+		//Constants.println(reWriteFormulaWithoutSection(reWriteFormulaWithSection(formula, 5, 10), 5, 10));
 		//Constants.println(reWriteFormulaWithRelation("PGB2!$K$2+PGB2!$K2+PGB2!K$2+PGB2!K2", "PGB2", 5, 10));
+		
+		String src = "D:/java_test/问卷调查test/test.xls";
+		String targ = "D:/java_test/问卷调查test/test_" + date + ".xls";
+		init1Wdata(src, targ);
 	
+	}
+	
+	private static void init1Wdata(String src, String targ){
+		try {
+			long start = System.currentTimeMillis();
+			FileInputStream is = new FileInputStream(src);
+            HSSFWorkbook workbook = new HSSFWorkbook(is);
+            HSSFSheet sheet = getSheet(workbook, 0, "");
+            
+            HSSFRow row = sheet.createRow(0);
+            sheet.setColumnWidth(0, 5000);
+            HSSFCell cell0 = row.createCell(0);
+            cell0.setCellValue("用户");
+            for(int i = 1; i <= 30 ; i++){
+            	sheet.setColumnWidth(i, 10000);
+            	String title = i + ".这是第" + i + "个问题，请认真作答，您的答案只管重要。";
+            	HSSFCell cell = row.createCell(i);
+				cell.setCellValue(title);
+            }
+            for(int i = 1; i <= 10000 ; i++){
+            	System.out.println(i);
+            	HSSFRow rowindex = sheet.createRow(i); 
+            	for(int j = 0; j <= 30 ; j++){
+            		String title = "";
+            		if(j == 0){
+            			title = "用户" + i;
+            		}else{
+            			title = i+"用户得"+j+"A答案(这个是A答案得内容)";
+            		}
+            		HSSFCell cell = rowindex.createCell(j);
+    				cell.setCellValue(title);
+            	}
+            }
+            
+            FileOutputStream os = new FileOutputStream(targ);
+            workbook.write(os);
+            is.close();
+            os.close();
+            long end = System.currentTimeMillis();
+            Constants.println("===export excel success!===");
+            Constants.println(targ);
+            Constants.println("===生成成功整个过程消耗了"+(end-start)+"ms===");
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 	}
 	//测试修改数据后图会不会自动生成-答案是会的
 	private static void drawPic(String src, String targ){
