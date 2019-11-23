@@ -60,7 +60,7 @@
 					<li><a th:text="评论" th:href="@{/comment/list/1}"></a></li>
 					<li class="mobile_show_flag"><a th:text="发布" th:href="@{/article/fastEdit/0}"></a></li>
 					<li class="mobile_hide_flag"><a th:text="速记" href="javascript:void(0)" th:onclick= "'javascript:show()'"></a></li>
-					<li><a th:text="详记" th:href="@{/article/ueditor/0}"></a></li>
+					<li th:style="${session.user_session.role.id==100001}? '':'display:none'"><a th:text="详记" th:href="@{/article/ueditor/0}"></a></li>
 					<li><a th:text="我的文章" th:href="@{/article/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 					<li><a th:text="我的评论" th:href="@{/comment/user/{uid}/1(uid=${session.user_session.id})}"></a></li>
 					<li th:style="${session.user_session.role.id==100001}? '':'display:none'"><a th:text="TEST" th:href="@{/chart/line}"></a></li>

@@ -81,7 +81,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/ico/**", "anon");
 		filterChainDefinitionMap.put("/static/**", "anon");
 		//百度富文本，资源保存地址
-		filterChainDefinitionMap.put("/ueditor/**", "anon");
+		//登陆后，并且管理员才能使用富文本信息
+		/*filterChainDefinitionMap.put("/ueditor/**", "anon");
 		filterChainDefinitionMap.put("/ueditor.config.js", "anon");
 		filterChainDefinitionMap.put("/themes/**", "anon");
 		filterChainDefinitionMap.put("/dialogs/**", "anon");
@@ -90,7 +91,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/ueditor.all.js", "anon");
 		filterChainDefinitionMap.put("/ueditor.all.min.js", "anon");
 		filterChainDefinitionMap.put("/ueditor.parse.js", "anon");
-		filterChainDefinitionMap.put("/ueditor.parse.min.js", "anon");
+		filterChainDefinitionMap.put("/ueditor.parse.min.js", "anon");*/
 		//未登录的首页
 		filterChainDefinitionMap.put("/index", "anon");
 		filterChainDefinitionMap.put("/index/**", "anon");
