@@ -15,6 +15,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.poi.ooxml.POIXMLDocumentPart;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -22,7 +24,9 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.Units;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.Document;
 import org.apache.poi.xwpf.usermodel.XWPFChart;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -65,12 +69,176 @@ public class WordChartUtils {
 	public static void main(String[] args) throws Exception {
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
+		
+		//final String templateurl="D:/java_test/问卷调查test/Word_Test.docx";
+		final String templateurl="D:/java_test/问卷调查test/Word_Test_picture.docx";
+		
 		final String returnurl="D:/java_test/问卷调查test/Word_Test_" + date + ".docx";
-		final String templateurl="D:/java_test/问卷调查test/Word_Test.docx";
 		InputStream is = new FileInputStream(new File(templateurl));
 		XWPFDocument doc = new XWPFDocument(is);
-		replaceAll(doc);
-			//文件存在删除
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("title", "惠助你使用体验调查问卷");
+		map.put("desc", "这是第一个调查问卷，他的功能是为了调查惠助你上线后得使用心得和使用体验。请各位参与调查得用户认真作答，您的得答案将会作为后续惠助你APP得改进依据，谢谢。");
+		HashMap<String,Object> object01 = new HashMap<String,Object>();
+		object01.put("user", "赵某");
+		object01.put("time", "2019-10-11");
+		object01.put("totalTime", "2019-10-15");
+		object01.put("stDt", "2019-10-01");
+		object01.put("enDt", "2019-10-31");
+		object01.put("peopleCount", "150");
+		map.put("object_01", object01);
+		
+		ArrayList<HashMap<String,Object>> table01 = new ArrayList<HashMap<String,Object>>();
+		
+		HashMap<String,Object> quest1 = new HashMap<String,Object>();
+		quest1.put("no", "1");
+		quest1.put("title", "第一个问题的答案是什么?");
+		quest1.put("type", "01");
+		ArrayList<HashMap<String,Object>> answerList1 = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> ans1_1 = new HashMap<String,Object>();
+		ans1_1.put("no", "A");
+		ans1_1.put("desc", "这个是第一个问题的第一个答案");
+		ans1_1.put("per", "30");
+		HashMap<String,Object> ans1_2 = new HashMap<String,Object>();
+		ans1_2.put("no", "B");
+		ans1_2.put("desc", "这个是第一个问题的第二个答案");
+		ans1_2.put("per", "60");
+		HashMap<String,Object> ans1_3 = new HashMap<String,Object>();
+		ans1_3.put("no", "C");
+		ans1_3.put("desc", "这个是第一个问题的第三个答案");
+		ans1_3.put("per", "10");
+		HashMap<String,Object> ans1_4 = new HashMap<String,Object>();
+		ans1_4.put("no", "D");
+		ans1_4.put("desc", "这个是第一个问题的第四个答案");
+		ans1_4.put("per", "10");
+		HashMap<String,Object> ans1_5 = new HashMap<String,Object>();
+		ans1_5.put("no", "E");
+		ans1_5.put("desc", "这个是第一个问题的第wu个答案");
+		ans1_5.put("per", "9");
+		answerList1.add(ans1_1);
+		answerList1.add(ans1_2);
+		answerList1.add(ans1_3);
+		answerList1.add(ans1_4);
+		answerList1.add(ans1_5);
+		quest1.put("table_02", answerList1);
+		
+		HashMap<String,Object> quest2 = new HashMap<String,Object>();
+		quest2.put("no", "2");
+		quest2.put("title", "第二个问题的答案是什么?");
+		quest2.put("type", "02");
+		ArrayList<HashMap<String,Object>> answerList2 = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> ans2_1 = new HashMap<String,Object>();
+		ans2_1.put("no", "A");
+		ans2_1.put("desc", "这个是第二个问题的第一个答案");
+		ans2_1.put("per", "15");
+		HashMap<String,Object> ans2_2 = new HashMap<String,Object>();
+		ans2_2.put("no", "B");
+		ans2_2.put("desc", "这个是第二个问题的第二个答案");
+		ans2_2.put("per", "20");
+		HashMap<String,Object> ans2_3 = new HashMap<String,Object>();
+		ans2_3.put("no", "C");
+		ans2_3.put("desc", "这个是第二个问题的第三个答案");
+		ans2_3.put("per", "30");
+		HashMap<String,Object> ans2_4 = new HashMap<String,Object>();
+		ans2_4.put("no", "D");
+		ans2_4.put("desc", "这个是第二个问题的第四个答案");
+		ans2_4.put("per", "40");
+		answerList2.add(ans2_1);
+		answerList2.add(ans2_2);
+		answerList2.add(ans2_3);
+		answerList2.add(ans2_4);
+		quest2.put("table_02", answerList2);
+		
+		HashMap<String,Object> quest3 = new HashMap<String,Object>();
+		quest3.put("no", "3");
+		quest3.put("title", "第三个问题的答案是什么?");
+		quest3.put("type", "03");
+		ArrayList<HashMap<String,Object>> answerList3 = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> ans3_1 = new HashMap<String,Object>();
+		ans3_1.put("no", "A");
+		ans3_1.put("desc", "这个是第三个问题的第一个答案");
+		ans3_1.put("per", "10");
+		HashMap<String,Object> ans3_2 = new HashMap<String,Object>();
+		ans3_2.put("no", "B");
+		ans3_2.put("desc", "这个是第三个问题的第二个答案");
+		ans3_2.put("per", "20");
+		HashMap<String,Object> ans3_3 = new HashMap<String,Object>();
+		ans3_3.put("no", "C");
+		ans3_3.put("desc", "这个是第三个问题的第三个答案");
+		ans3_3.put("per", "30");
+		HashMap<String,Object> ans3_4 = new HashMap<String,Object>();
+		ans3_4.put("no", "D");
+		ans3_4.put("desc", "这个是第三个问题的第四个答案");
+		ans3_4.put("per", "40");
+		HashMap<String,Object> ans3_5 = new HashMap<String,Object>();
+		ans3_5.put("no", "E");
+		ans3_5.put("desc", "这个是第三个问题的第5个答案");
+		ans3_5.put("per", "50");
+		HashMap<String,Object> ans3_6 = new HashMap<String,Object>();
+		ans3_6.put("no", "F");
+		ans3_6.put("desc", "这个是第三个问题的第6个答案");
+		ans3_6.put("per", "30");
+		HashMap<String,Object> ans3_7 = new HashMap<String,Object>();
+		ans3_7.put("no", "G");
+		ans3_7.put("desc", "这个是第三个问题的第7个答案");
+		ans3_7.put("per", "20");
+		HashMap<String,Object> ans3_8 = new HashMap<String,Object>();
+		ans3_8.put("no", "H");
+		ans3_8.put("desc", "这个是第三个问题的第8个答案");
+		ans3_8.put("per", "10");
+		answerList3.add(ans3_1);
+		answerList3.add(ans3_2);
+		answerList3.add(ans3_3);
+		answerList3.add(ans3_4);
+		answerList3.add(ans3_5);
+		answerList3.add(ans3_6);
+		answerList3.add(ans3_7);
+		answerList3.add(ans3_8);
+		quest3.put("table_02", answerList3);
+		
+		HashMap<String,Object> quest4 = new HashMap<String,Object>();
+		quest4.put("no", "4");
+		quest4.put("title", "第4个问题的答案是什么?");
+		quest4.put("type", "01");
+		ArrayList<HashMap<String,Object>> answerList4 = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> ans4_1 = new HashMap<String,Object>();
+		ans4_1.put("no", "A");
+		ans4_1.put("desc", "这个是第4个问题的第一个答案");
+		ans4_1.put("per", "30");
+		HashMap<String,Object> ans4_2 = new HashMap<String,Object>();
+		ans4_2.put("no", "B");
+		ans4_2.put("desc", "这个是第4个问题的第二个答案");
+		ans4_2.put("per", "60");
+		HashMap<String,Object> ans4_3 = new HashMap<String,Object>();
+		ans4_3.put("no", "C");
+		ans4_3.put("desc", "这个是第4个问题的第三个答案");
+		ans4_3.put("per", "10");
+		HashMap<String,Object> ans4_4 = new HashMap<String,Object>();
+		ans4_4.put("no", "D");
+		ans4_4.put("desc", "这个是第4个问题的第四个答案");
+		ans4_4.put("per", "10");
+		HashMap<String,Object> ans4_5 = new HashMap<String,Object>();
+		ans4_5.put("no", "E");
+		ans4_5.put("desc", "这个是第4个问题的第wu个答案");
+		ans4_5.put("per", "9");
+		answerList4.add(ans4_1);
+		answerList4.add(ans4_2);
+		answerList4.add(ans4_3);
+		answerList4.add(ans4_4);
+		answerList4.add(ans4_5);
+		quest4.put("table_02", answerList4);
+		
+		table01.add(quest1);
+		table01.add(quest2);
+		table01.add(quest3);
+		table01.add(quest4);
+		map.put("table_01", table01);
+		
+		//replaceAll(doc);
+		replaceText(doc,map);
+		createTable(doc,map);
+		//文件存在删除
 		try {
 			File file = new File(returnurl);
 			if (file.exists()) {
@@ -83,527 +251,337 @@ public class WordChartUtils {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * @Description: 替换段落和表格中
-	 */
-	public static void replaceAll(XWPFDocument doc)
-			throws InvalidFormatException, FileNotFoundException, IOException {
-		/** ----------------------------处理段落------------------------------------ **/
+	
+	public static void replaceText(XWPFDocument doc,HashMap<String,Object> map){
+		Constants.println("======replaceText start======");
 		List<XWPFParagraph> paragraphList = doc.getParagraphs();
-		if (paragraphList != null && paragraphList.size() > 0) {
-			for (XWPFParagraph paragraph : paragraphList) {
-				List<XWPFRun> runs = paragraph.getRuns();
-				for (XWPFRun run : runs) {
-					String text = run.getText(0);
-					if (text != null) {
-						if (text.contains("${table1}")) {
-							run.setText("", 0);
-							XmlCursor cursor = paragraph.getCTP().newCursor();
-							XWPFTable tableOne = doc.insertNewTbl(cursor);// ---这个是关键
-							XWPFTableRow tableOneRowOne = tableOne.getRow(0);// 行
-							setWordCellSelfStyle(tableOneRowOne.getCell(0),
-									"微软雅黑", "9", 1, "left", "top", "#ffffff",
-									"#4472C4", 1, "序号");
-							XWPFTableCell cell12 = tableOneRowOne.createCell();
-							setWordCellSelfStyle(cell12, "微软雅黑", "9", 1,
-									"left", "top", "#ffffff", "#4472C4", 1,
-									"公司名称(英文)");
-							XWPFTableCell cell13 = tableOneRowOne.createCell();
-							setWordCellSelfStyle(cell13, "微软雅黑", "9", 1,
-									"left", "top", "#ffffff", "#4472C4", 1,
-									"公司名称(中文)");
-
-							XWPFTableRow tableOneRowTwo = tableOne.createRow();// 行
-							tableOneRowTwo.getCell(0).setText("第二行第一列");
-							setWordCellSelfStyle(tableOneRowTwo.getCell(0),
-									"微软雅黑", "9", 0, "left", "top", "#000000",
-									"#B4C6E7", 1, "一行一列");
-							tableOneRowTwo.getCell(1).setText("第二行第二列");
-							setWordCellSelfStyle(tableOneRowTwo.getCell(1),
-									"微软雅黑", "9", 0, "left", "top", "#000000",
-									"#B4C6E7", 1, "一行一列");
-							tableOneRowTwo.getCell(2).setText("第二行第二列");
-							setWordCellSelfStyle(tableOneRowTwo.getCell(2),
-									"微软雅黑", "9", 0, "left", "top", "#000000",
-									"#B4C6E7", 1, "一行一列");
-							XWPFTableRow tableOneRowThree = tableOne
-									.createRow();// 行
-							tableOneRowThree.getCell(0).setText("第三行第一列");
-							setWordCellSelfStyle(tableOneRowThree.getCell(0),
-									"微软雅黑", "9", 0, "left", "top", "#000000",
-									"#D9E2F3", 1, "一行一列");
-							tableOneRowThree.getCell(1).setText("第三行第二列");
-							setWordCellSelfStyle(tableOneRowThree.getCell(1),
-									"微软雅黑", "9", 0, "left", "top", "#000000",
-									"#D9E2F3", 1, "一行一列");
-							tableOneRowThree.getCell(2).setText("第三行第二列");
-							setWordCellSelfStyle(tableOneRowThree.getCell(2),
-									"微软雅黑", "9", 0, "left", "top", "#000000",
-									"#D9E2F3", 1, "一行一列");
-						} else {// 动态图表
-							List<String> showtailArr = new ArrayList<String>();
-							showtailArr.add("0");
-							showtailArr.add("2");
-							List<String> ispercentArr = new ArrayList<String>();
-							ispercentArr.add("0");
-							ispercentArr.add("0");
-							List<String> titleArr = new ArrayList<String>();// 标题
-							titleArr.add("行业类别");
-							titleArr.add("占基金资产净值比例(%)");
-							List<String> fldNameArr = new ArrayList<String>();// 字段名
-							fldNameArr.add("item1");
-							fldNameArr.add("item3");
-							List<Map<String, String>> listItemsByType = new ArrayList<Map<String, String>>();
-							Map<String, String> base1 = new HashMap<String, String>();// 相当于HashMap
-							base1.put("item1", "材料费用");
-							base1.put("item3", "500.10");
-							Map<String, String> base2 = new HashMap<String, String>();// 相当于HashMap
-							base2.put("item1", "出差费用");
-							base2.put("item3", "300.10");
-							listItemsByType.add(base1);
-							listItemsByType.add(base2);
-							// 动态刷新图表
-							List<POIXMLDocumentPart> relations = doc
-									.getRelations();
-							for (POIXMLDocumentPart poixmlDocumentPart : relations) {
-								if (poixmlDocumentPart instanceof XWPFChart) {
-									XWPFChart chart = (XWPFChart) poixmlDocumentPart;
-									chart.getCTChart();
-									// 根据属性第一列名称切换数据类型
-									CTChart ctChart = chart.getCTChart();
-									CTPlotArea plotArea = ctChart.getPlotArea();
-									CTBarChart barChart = plotArea
-											.getBarChartArray(0);
-									List<CTBarSer> barSerList = barChart
-											.getSerList();
-									// 刷新内置excel数据
-									refreshExcel(chart, listItemsByType,
-											fldNameArr, titleArr, showtailArr,
-											ispercentArr);
-									// 刷新页面显示数
-									refreshStrGraphContent(barChart,
-											barSerList, listItemsByType,
-											fldNameArr, titleArr, showtailArr,
-											ispercentArr, 1);
-								}
-							}
-						}
-					}
+		for(XWPFParagraph paragraph : paragraphList){
+			String paragraphText = paragraph.getText();
+			//Constants.println("替换前="+paragraphText);
+			String newText = getNewText(paragraphText, map);
+			/*XWPFRun insertNewRun = paragraph.insertNewRun(0);
+			insertNewRun.setText(newText);*/
+			replaceParagraph(paragraph, newText);
+			String paragraphText2 = paragraph.getText();
+			//Constants.println("替换后="+paragraphText2);
+		}
+		Constants.println("======replaceText end======");
+	}
+	
+	public static String getNewText(String value,HashMap<String,Object> dataMap){
+		if(value.contains("${") && value.contains("}")){
+			//获取所有${}字段
+			ArrayList<String> pars = getParamFromDollar(value);
+			for(String parameter : pars){
+				if(dataMap.get(parameter) != null){
+					value = value.replace("${"+parameter+"}",(String)dataMap.get(parameter));
+					//Constants.println("将"+parameter+"字段替换为"+(String)dataMap.get(parameter));
 				}
 			}
 		}
+		return value;
 	}
-
+	
 	/**
-	 * @Description:刷新数据方法(str进行分类)
-	 * @param typeChart
-	 *            :传递的图形类型
-	 * @param serList
-	 *            :传递的serList(数据)
-	 * @param dataList
-	 *            :显示的数据
-	 * @param fldNameArr
-	 *            :属性列
-	 * @param position
-	 *            :取数的列
-	 * @return boolean
-	 * @author nieds
-	 * @date 2019年6月11日上午10:36:56
-	 *
+	 * 
+	* @功能描述: 获取${name}字符串里面的name  一个context里面可能有多个
+	* @方法名称: getParamFromDollar 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng@tansun.com.cn
+	* @创建时间 2019年4月19日 下午4:20:04 
+	* @version V1.0   
+	* @param context
+	* @return 
+	* @return ArrayList<String>
 	 */
-	public static boolean refreshStrGraphContent(Object typeChart,
-			List<?> serList, List<Map<String, String>> dataList,
-			List<String> fldNameArr, List<String> titleArr,
-			List<String> showtailArr, List<String> ispercentArr, int position) {
-
-		boolean result = true;
-		// 更新数据区域
-		for (int i = 0; i < serList.size(); i++) {
-			// CTSerTx tx=null;
-			CTAxDataSource cat = null;
-			CTNumDataSource val = null;
-			CTBarSer ser = ((CTBarChart) typeChart).getSerArray(i);
-			// tx= ser.getTx();
-			// Category Axis Data
-			cat = ser.getCat();
-			// 获取图表的值
-			val = ser.getVal();
-			// strData.set
-			CTStrData strData = cat.getStrRef().getStrCache();
-			CTNumData numData = val.getNumRef().getNumCache();
-			strData.setPtArray((CTStrVal[]) null); // unset old axis text
-			numData.setPtArray((CTNumVal[]) null); // unset old values
-
-			// set model
-			long idx = 0;
-			for (int j = 0; j < dataList.size(); j++) {
-				// 判断获取的值是否为空
-				String value = "0";
-				if (new BigDecimal(dataList.get(j).get(
-						fldNameArr.get(i + position))) != null) {
-					value = new BigDecimal(dataList.get(j).get(
-							fldNameArr.get(i + position))).toString();
-				}
-				if (!"0".equals(value)) {
-					CTNumVal numVal = numData.addNewPt();// 序列值
-					numVal.setIdx(idx);
-					numVal.setV(value);
-				}
-				CTStrVal sVal = strData.addNewPt();// 序列名称
-				sVal.setIdx(idx);
-				sVal.setV(dataList.get(j).get(fldNameArr.get(0)));
-				idx++;
-			}
-			numData.getPtCount().setVal(idx);
-			strData.getPtCount().setVal(idx);
-
-			// 赋值横坐标数据区域
-			String axisDataRange = new CellRangeAddress(1, dataList.size(), 0,
-					0).formatAsString("Sheet1", true);
-			cat.getStrRef().setF(axisDataRange);
-
-			// 数据区域
-			String numDataRange = new CellRangeAddress(1, dataList.size(), i
-					+ position, i + position).formatAsString("Sheet1", true);
-			val.getNumRef().setF(numDataRange);
-			if ("1".equals(ispercentArr.get(i + position))) {// 是否设置百分比
-				// 设置Y轴的数字为百分比样式显示
-				StringBuilder sb = new StringBuilder();
-
-				if ("0".equals(showtailArr.get(i + position))) {// 保留几位小数
-					sb.append("0");
-					if ("1".equals(ispercentArr.get(i + position))) {// 是否百分比
-						sb.append("%");
-					}
-				} else {
-					sb.append("0.");
-					for (int k = 0; k < Integer.parseInt(showtailArr.get(i
-							+ position)); k++) {
-						sb.append("0");
-					}
-					if ("1".equals(ispercentArr.get(i + position))) {// 是否百分比
-						sb.append("%");
-					}
-				}
-				val.getNumRef().getNumCache().setFormatCode(sb.toString());
-			} else {
-				// 是否设置百分比
-				// 设置Y轴的数字为百分比样式显示
-				StringBuilder sb = new StringBuilder();
-
-				if ("0".equals(showtailArr.get(i + position))) {// 保留几位小数
-					sb.append("0");
-				} else {
-					sb.append("0.");
-					for (int k = 0; k < Integer.parseInt(showtailArr.get(i
-							+ position)); k++) {
-						sb.append("0");
-					}
-				}
-				val.getNumRef().getNumCache().setFormatCode(sb.toString());
-			}
-
+	public static ArrayList<String> getParamFromDollar(String context){
+		Pattern p = Pattern.compile("\\$\\{(.*?)\\}");
+		Matcher m = p.matcher(context);
+		ArrayList<String> result=new ArrayList<String>();
+		while(m.find()){
+			result.add(m.group(1));
 		}
 		return result;
 	}
-
-	public static boolean refreshExcel(XWPFChart chart,
-			List<Map<String, String>> dataList, List<String> fldNameArr,
-			List<String> titleArr, List<String> showtailArr,
-			List<String> ispercentArr) {
-		boolean result = true;
-		Workbook wb = new XSSFWorkbook();
-		Sheet sheet = wb.createSheet("Sheet1");
-		// 根据数据创建excel第一行标题行
-		for (int i = 0; i < titleArr.size(); i++) {
-			if (sheet.getRow(0) == null) {
-				sheet.createRow(0)
-						.createCell(i)
-						.setCellValue(
-								titleArr.get(i) == null ? "" : titleArr.get(i));
-			} else {
-				sheet.getRow(0)
-						.createCell(i)
-						.setCellValue(
-								titleArr.get(i) == null ? "" : titleArr.get(i));
-			}
+	
+	
+	public static void createTable(XWPFDocument doc,HashMap<String,Object> map){
+		Constants.println("======createTable start======");
+		List<XWPFTable> tableList = doc.getTables();
+		List<XWPFChart> charList = doc.getCharts();
+		List<POIXMLDocumentPart> realtionsList = doc.getRelations();
+		for(POIXMLDocumentPart realtions : realtionsList){
+			
 		}
-
-		// 遍历数据行
-		for (int i = 0; i < dataList.size(); i++) {
-			Map<String, String> baseFormMap = dataList.get(i);// 数据行
-			// fldNameArr字段属性
-			for (int j = 0; j < fldNameArr.size(); j++) {
-				if (sheet.getRow(i + 1) == null) {
-					if (j == 0) {
-						try {
-							sheet.createRow(i + 1)
-									.createCell(j)
-									.setCellValue(
-											baseFormMap.get(fldNameArr.get(j)) == null ? ""
-													: baseFormMap
-															.get(fldNameArr
-																	.get(j)));
-						} catch (Exception e) {
-							if (baseFormMap.get(fldNameArr.get(j)) == null) {
-								sheet.createRow(i + 1).createCell(j)
-										.setCellValue("");
-							} else {
-								sheet.createRow(i + 1)
-										.createCell(j)
-										.setCellValue(
-												baseFormMap.get(fldNameArr
-														.get(j)));
-							}
+		for(XWPFTable table : tableList){
+			//String tableName = table.getRow(0).getCell(0).getText().replace("${", "").replace("}", "");
+			String tableName = getTableName(table,"table");
+			if(tableName == null || "".equals(tableName)){
+				tableName = getTableName(table,"object");
+			}
+			Constants.println("table name="+tableName);
+			if(map.get(tableName) != null){
+				if(tableName.startsWith("object")){
+					HashMap<String,Object> obj = (HashMap<String,Object>) map.get(tableName);
+					replaceTable(doc, table, obj,tableName, 0);
+				}else if(tableName.startsWith("table")){
+					List<HashMap<String,Object>> list = (List<HashMap<String,Object>>) map.get(tableName);
+					List<XWPFTableRow> rowList = table.getRows();
+					int rowCount = table.getNumberOfRows();
+					for(HashMap<String,Object> obj : list){
+						String type = (String) obj.get("type");
+						for(int i = 0; i < rowCount; i ++){
+							XWPFTableRow r = rowList.get(i);
+							copyRow(table, r, rowList.size());
 						}
+						replaceTable(doc, table, obj, tableName, rowCount);
 					}
-				} else {
-					BigDecimal b = new BigDecimal(baseFormMap.get(fldNameArr
-							.get(j)));
-					double value = 0d;
-					if (b != null) {
-						value = b.doubleValue();
-					}
-					if (value == 0) {
-						sheet.getRow(i + 1).createCell(j);
-					} else {
-						sheet.getRow(i + 1).createCell(j)
-								.setCellValue(b.doubleValue());
-					}
-					if ("1".equals(ispercentArr.get(j))) {// 是否设置百分比
-						// 设置Y轴的数字为百分比样式显示
-						StringBuilder sb = new StringBuilder();
-
-						if ("0".equals(showtailArr.get(j))) {// 保留几位小数
-							sb.append("0");
-							if ("1".equals(ispercentArr.get(j))) {// 是否百分比
-								sb.append("%");
-							}
-						} else {
-							sb.append("0.");
-							for (int k = 0; k < Integer.parseInt(showtailArr
-									.get(j)); k++) {
-								sb.append("0");
-							}
-							if ("1".equals(ispercentArr.get(j))) {// 是否百分比
-								sb.append("%");
-							}
-						}
-						CellStyle cellStyle = wb.createCellStyle();
-						cellStyle.setDataFormat(wb.createDataFormat()
-								.getFormat(sb.toString()));
-						sheet.getRow(i + 1).getCell(j).setCellStyle(cellStyle);
-					} else {
-						// 是否设置百分比
-						// 设置Y轴的数字为百分比样式显示
-						StringBuilder sb = new StringBuilder();
-
-						if ("0".equals(showtailArr.get(j))) {// 保留几位小数
-							sb.append("0");
-						} else {
-							sb.append("0.");
-							for (int k = 0; k < Integer.parseInt(showtailArr
-									.get(j)); k++) {
-								sb.append("0");
-							}
-						}
-						CellStyle cellStyle = wb.createCellStyle();
-						cellStyle.setDataFormat(wb.createDataFormat()
-								.getFormat(sb.toString()));
-						sheet.getRow(i + 1).getCell(j).setCellStyle(cellStyle);
+					//删除模板，否则下次会继续循环
+					for(int i = 0; i < rowCount; i ++){
+						table.removeRow(0);
 					}
 				}
 			}
-
 		}
-		// 更新嵌入的workbook
-		POIXMLDocumentPart xlsPart = chart.getRelations().get(0);
-		OutputStream xlsOut = xlsPart.getPackagePart().getOutputStream();
-
-		try {
-			wb.write(xlsOut);
-			xlsOut.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			result = false;
-		} finally {
-			if (wb != null) {
-				try {
-					wb.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					result = false;
+		Constants.println("======createTable end======");
+	}
+	public static String getTableName(XWPFTable table, String key){
+		List<XWPFTableRow> rowList = table.getRows();
+		for(XWPFTableRow row : rowList){
+			List<XWPFTableCell> cellList = row.getTableCells();
+			for(int i = 0; i < cellList.size(); i ++){
+				String text = cellList.get(i).getText();
+				if(text.startsWith("${") && text.indexOf("${"+key+"_") > -1){
+					return text.substring(text.indexOf("${"+key+"_")+2,text.indexOf("${"+key+"_")+key.length()+5);
 				}
 			}
 		}
-		return result;
+		return "";
 	}
-
-	private static final BigDecimal bd2 = new BigDecimal("2");
-
-	private static void setWordCellSelfStyle(XWPFTableCell cell,
-			String fontName, String fontSize, int fontBlod, String alignment,
-			String vertical, String fontColor, String bgColor, long cellWidth,
-			String content) {
-
-		// poi对字体大小设置特殊，不支持小数，但对原word字体大小做了乘2处理
-		BigInteger bFontSize = new BigInteger("24");
-		if (fontSize != null && !fontSize.equals("")) {
-			// poi对字体大小设置特殊，不支持小数，但对原word字体大小做了乘2处理
-			BigDecimal fontSizeBD = new BigDecimal(fontSize);
-			fontSizeBD = bd2.multiply(fontSizeBD);
-			fontSizeBD = fontSizeBD.setScale(0, BigDecimal.ROUND_HALF_UP);// 这里取整
-			bFontSize = new BigInteger(fontSizeBD.toString());// 字体大小
+	/**
+	 * 
+	* @功能描述: 替换表格中cell的内容
+	* @方法名称: replaceCell 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng.fun
+	* @E-Mail sephy9527@qq.com
+	* @创建时间 2019年11月24日 下午4:02:10 
+	* @version V1.0   
+	* @param cell
+	* @param text 
+	* @return void
+	 */
+	public static void replaceCell(XWPFTableCell cell,String text){
+		List<XWPFParagraph> paragraphList = cell.getParagraphs();
+		for(int i = 0; i < paragraphList.size(); i++){
+			XWPFParagraph paragraph = paragraphList.get(i);
+			if(i == 0){
+				replaceParagraph(paragraph, text);
+			}else{
+				replaceParagraph(paragraph, "");
+			}
 		}
-		// =====获取单元格
-		CTTc tc = cell.getCTTc();
-		// ====tcPr开始====》》》》
-		CTTcPr tcPr = tc.getTcPr();// 获取单元格里的<w:tcPr>
-		if (tcPr == null) {// 没有<w:tcPr>，创建
-			tcPr = tc.addNewTcPr();
-		}
-
-		// --vjc开始-->>
-		CTVerticalJc vjc = tcPr.getVAlign();// 获取<w:tcPr> 的<w:vAlign
-											// w:val="center"/>
-		if (vjc == null) {// 没有<w:w:vAlign/>，创建
-			vjc = tcPr.addNewVAlign();
-		}
-		// 设置单元格对齐方式
-		vjc.setVal(vertical.equals("top") ? STVerticalJc.TOP : vertical
-				.equals("bottom") ? STVerticalJc.BOTTOM : STVerticalJc.CENTER); // 垂直对齐
-
-		CTShd shd = tcPr.getShd();// 获取<w:tcPr>里的<w:shd w:val="clear"
-									// w:color="auto" w:fill="C00000"/>
-		if (shd == null) {// 没有<w:shd>，创建
-			shd = tcPr.addNewShd();
-		}
-		// 设置背景颜色
-		shd.setFill(bgColor.substring(1));
-		// 《《《《====tcPr结束====
-
-		// ====p开始====》》》》
-		CTP p = tc.getPList().get(0);// 获取单元格里的<w:p w:rsidR="00C36068"
-										// w:rsidRPr="00B705A0"
-										// w:rsidRDefault="00C36068"
-										// w:rsidP="00C36068">
-
-		// ---ppr开始--->>>
-		CTPPr ppr = p.getPPr();// 获取<w:p>里的<w:pPr>
-		if (ppr == null) {// 没有<w:pPr>，创建
-			ppr = p.addNewPPr();
-		}
-		// --jc开始-->>
-		CTJc jc = ppr.getJc();// 获取<w:pPr>里的<w:jc w:val="left"/>
-		if (jc == null) {// 没有<w:jc/>，创建
-			jc = ppr.addNewJc();
-		}
-		// 设置单元格对齐方式
-		jc.setVal(alignment.equals("left") ? STJc.LEFT : alignment
-				.equals("right") ? STJc.RIGHT : STJc.CENTER); // 水平对齐
-		// <<--jc结束--
-		// --pRpr开始-->>
-		CTParaRPr pRpr = ppr.getRPr(); // 获取<w:pPr>里的<w:rPr>
-		if (pRpr == null) {// 没有<w:rPr>，创建
-			pRpr = ppr.addNewRPr();
-		}
-		CTFonts pfont = pRpr.getRFonts();// 获取<w:rPr>里的<w:rFonts w:ascii="宋体"
-											// w:eastAsia="宋体" w:hAnsi="宋体"/>
-		if (pfont == null) {// 没有<w:rPr>，创建
-			pfont = pRpr.addNewRFonts();
-		}
-		// 设置字体
-		pfont.setAscii(fontName);
-		pfont.setEastAsia(fontName);
-		pfont.setHAnsi(fontName);
-
-		CTOnOff pb = pRpr.getB();// 获取<w:rPr>里的<w:b/>
-		if (pb == null) {// 没有<w:b/>，创建
-			pb = pRpr.addNewB();
-		}
-		// 设置字体是否加粗
-		pb.setVal(fontBlod == 1 ? STOnOff.ON : STOnOff.OFF);
-
-		CTHpsMeasure psz = pRpr.getSz();// 获取<w:rPr>里的<w:sz w:val="32"/>
-		if (psz == null) {// 没有<w:sz w:val="32"/>，创建
-			psz = pRpr.addNewSz();
-		}
-		// 设置单元格字体大小
-		psz.setVal(bFontSize);
-		CTHpsMeasure pszCs = pRpr.getSzCs();// 获取<w:rPr>里的<w:szCs w:val="32"/>
-		if (pszCs == null) {// 没有<w:szCs w:val="32"/>，创建
-			pszCs = pRpr.addNewSzCs();
-		}
-		// 设置单元格字体大小
-		pszCs.setVal(bFontSize);
-		// <<--pRpr结束--
-		// <<<---ppr结束---
-
-		// ---r开始--->>>
-		List<CTR> rlist = p.getRList(); // 获取<w:p>里的<w:r w:rsidRPr="00B705A0">
-		CTR r = null;
-		if (rlist != null && rlist.size() > 0) {// 获取第一个<w:r>
-			r = rlist.get(0);
-		} else {// 没有<w:r>，创建
-			r = p.addNewR();
-		}
-		// --rpr开始-->>
-		CTRPr rpr = r.getRPr();// 获取<w:r w:rsidRPr="00B705A0">里的<w:rPr>
-		if (rpr == null) {// 没有<w:rPr>，创建
-			rpr = r.addNewRPr();
-		}
-		// ->-
-		CTFonts font = rpr.getRFonts();// 获取<w:rPr>里的<w:rFonts w:ascii="宋体"
-										// w:eastAsia="宋体" w:hAnsi="宋体"
-										// w:hint="eastAsia"/>
-		if (font == null) {// 没有<w:rFonts>，创建
-			font = rpr.addNewRFonts();
-		}
-		// 设置字体
-		font.setAscii(fontName);
-		font.setEastAsia(fontName);
-		font.setHAnsi(fontName);
-
-		CTOnOff b = rpr.getB();// 获取<w:rPr>里的<w:b/>
-		if (b == null) {// 没有<w:b/>，创建
-			b = rpr.addNewB();
-		}
-		// 设置字体是否加粗
-		b.setVal(fontBlod == 1 ? STOnOff.ON : STOnOff.OFF);
-		CTColor color = rpr.getColor();// 获取<w:rPr>里的<w:color w:val="FFFFFF"
-										// w:themeColor="background1"/>
-		if (color == null) {// 没有<w:color>，创建
-			color = rpr.addNewColor();
-		}
-		// 设置字体颜色
-		if (content.contains("↓")) {
-			color.setVal("43CD80");
-		} else if (content.contains("↑")) {
-			color.setVal("943634");
-		} else {
-			color.setVal(fontColor.substring(1));
-		}
-		CTHpsMeasure sz = rpr.getSz();
-		if (sz == null) {
-			sz = rpr.addNewSz();
-		}
-		sz.setVal(bFontSize);
-		CTHpsMeasure szCs = rpr.getSzCs();
-		if (szCs == null) {
-			szCs = rpr.addNewSz();
-		}
-		szCs.setVal(bFontSize);
-		// -<-
-		// <<--rpr结束--
-		List<CTText> tlist = r.getTList();
-		CTText t = null;
-		if (tlist != null && tlist.size() > 0) {// 获取第一个<w:r>
-			t = tlist.get(0);
-		} else {// 没有<w:r>，创建
-			t = r.addNewT();
-		}
-		t.setStringValue(content);
-		// <<<---r结束---
 	}
+	/**
+	 * 
+	* @功能描述: 替换文本内容
+	* @方法名称: replaceParagraph 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng.fun
+	* @E-Mail sephy9527@qq.com
+	* @创建时间 2019年11月24日 下午4:02:27 
+	* @version V1.0   
+	* @param paragraph
+	* @param text 
+	* @return void
+	 */
+	public static void replaceParagraph(XWPFParagraph paragraph,String text){
+		List<XWPFRun> runs = paragraph.getRuns();
+		for(int i = 0; i < runs.size(); i ++){
+			if(i == 0){
+				runs.get(i).setText(text, 0);
+			}else{
+				runs.get(i).setText("", 0);
+			}
+		}
+	}
+	
+	public static void replaceTable(XWPFDocument doc,XWPFTable table,HashMap<String,Object> obj,String tableName,int rowCount){
+		List<XWPFTableRow> rowList = table.getRows();
+		for(int i = rowCount; i < rowList.size(); i++){
+			XWPFTableRow row = rowList.get(i);
+			List<XWPFTableCell> cellList = row.getTableCells();
+			for(XWPFTableCell cell : cellList){
+				String text = cell.getText();
+				//替换表格名字
+				text = text.replace(tableName + "_", "");
+				//双重循环，支持最后一行
+				if(text.indexOf("${") > -1 && text.indexOf("}") > -1){
+					String type = (String)obj.get("type");
+					Constants.println("==table01==");
+					Constants.println("type="+type);
+					if(text.startsWith("${table_")){
+						int rowStart = i;
+						int rowEnd = rowList.size();
+						if(type == null || "01".equals(type)){
+							String tableName2 = text.substring(text.indexOf("${table_")+2,text.indexOf("${table_")+10);
+							Constants.println("table name2="+tableName2);
+							List<HashMap<String,Object>> list = (List<HashMap<String,Object>>) obj.get(tableName2);
+							
+							for(HashMap<String,Object> obj2 : list){
+								for(int j = rowStart; j <rowEnd ; j ++){
+									XWPFTableRow r = rowList.get(j);
+									copyRow(table, r, rowList.size());
+								}
+								replaceTable(doc, table, obj2,tableName2, rowStart+1);
+							}
+							//删除模板，否则下次会继续循环
+							for(int j = rowStart; j < rowEnd; j ++){
+								//Constants.println("remove==rowStart:"+rowStart+",rowEnd:"+rowEnd+",j="+j+":"+table.getRow(j).getCell(0).getText());
+								table.removeRow(rowStart);
+							}
+							break;
+						}else{
+							//删除表格的2行
+							for(int j = rowStart-1; j < rowEnd; j ++){
+								Constants.println("remove==rowStart:"+rowStart+",rowEnd:"+rowEnd+",j="+j+":");
+								table.removeRow(rowStart-1);
+							}
+							break;
+						}
+						
+					}
+					/*else if(text.indexOf("${answerTable_") > -1 && text.indexOf("}") > -1){
+						Constants.println("table name3="+text);
+						String tableName3 = text.substring(text.indexOf("table_"),text.length()-1);
+						Constants.println("table name3="+tableName3);
+						replaceCell(cell,"");
+						
+						List<XWPFParagraph> paragraphList = cell.getParagraphs();
+						//XmlCursor cursor = paragraphList.get(0).getCTP().newCursor();
+						XmlCursor cursor = row.getCtRow().newCursor();
+						Constants.println(paragraphList.get(0).getText());
+                        XWPFTable tableOne = doc.insertNewTbl(cursor);// ---这个是关键
+
+                        //设置表格宽度，第一行宽度就可以了，这个值的单位，目前我也还不清楚，还没来得及研究
+                        tableOne.setWidth(8500);
+
+                        // 表格第一行，对于每个列，必须使用createCell()，而不是getCell()，因为第一行嘛，肯定是属于创建的，没有create哪里来的get呢
+                        XWPFTableRow tableOneRowOne = tableOne.getRow(0);//行
+                        new WordPoiTools().setWordCellSelfStyle(tableOneRowOne.getCell(0), "微软雅黑", "9", 0, "left", "top", "#000000", "#B4C6E7", 10, "序号");
+                        new WordPoiTools().setWordCellSelfStyle(tableOneRowOne.createCell(), "微软雅黑", "9", 0, "left", "top", "#000000", "#B4C6E7", 10, "选项");
+                        new WordPoiTools().setWordCellSelfStyle(tableOneRowOne.createCell(), "微软雅黑", "9", 0, "left", "top", "#000000", "#B4C6E7", 10, "占比");
+
+                        List<HashMap<String,Object>> list = (List<HashMap<String,Object>>) obj.get(tableName3);
+                        for(HashMap<String,Object> map : list){
+                        	XWPFTableRow tableOneRowTwo = tableOne.createRow();//行
+                            new WordPoiTools().setWordCellSelfStyle(tableOneRowTwo.getCell(0), "微软雅黑", "9", 0, "left", "top", "#000000", "#B4C6E7", 10, (String)map.get("no"));
+                            new WordPoiTools().setWordCellSelfStyle(tableOneRowTwo.getCell(1), "微软雅黑", "9", 0, "left", "top", "#000000", "#B4C6E7", 10, (String)map.get("desc"));
+                            new WordPoiTools().setWordCellSelfStyle(tableOneRowTwo.getCell(2), "微软雅黑", "9", 0, "left", "top", "#000000", "#B4C6E7", 10, (String)map.get("per"));
+                        }
+                        // 表格第二行
+                        
+
+					}*/
+					else if(text.startsWith("${img_")){
+						String tableName2 = text.substring(text.indexOf("table_"),text.length()-1);
+						Constants.println("==table02=="+tableName2);
+						replaceCell(cell,"");
+						if(type != null && ("02".equals(type) || "03".equals(type))){
+							String name = "img-"+type+"-"+System.currentTimeMillis()+".jpg";
+							String imgPath = "D:/java_test/问卷调查test/"+name;
+							List<HashMap<String,Object>> list = (List<HashMap<String,Object>>) obj.get(tableName2);
+							String[] names = new String[list.size()];
+							Double[] data = new Double[list.size()];
+							for(int k = 0 ; k < list.size(); k++){
+								HashMap<String,Object> map = list.get(k);
+								names[k] = (String) map.get("no");
+								data[k] = Double.valueOf((String) map.get("per"));
+							}
+							if("02".equals(type)){
+								JFreeCharUtils.makeBarChart(names, data, imgPath);
+							}else{
+								JFreeCharUtils.makePieChart(names, data, imgPath);
+							}
+							
+							List<XWPFParagraph> paragraphList = cell.getParagraphs();
+							List<XWPFRun> runList = paragraphList.get(0).getRuns();
+							//(pictureData, pictureType, filename, width, height)
+							try {
+								runList.get(0).addPicture(new FileInputStream(imgPath), 
+										Document.PICTURE_TYPE_PNG, 
+										name, 
+										Units.toEMU(400), Units.toEMU(400));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}else{
+							//删除图片的行
+							table.removeRow(i);
+						}
+					}
+					else{
+						String newText = getNewText(text, obj);
+						replaceCell(cell,newText);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 
+	* @功能描述: 复制row
+	* addRow中的row是浅拷贝，所以复制出来的行其实都是传入的row对象
+	* @方法名称: copyRow 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng.fun
+	* @E-Mail sephy9527@qq.com
+	* @创建时间 2019年11月24日 下午5:13:56 
+	* @version V1.0   
+	* @param table
+	* @param sourceRow
+	* @param rowIndex 
+	* @return void
+	 */
+	public static void copyRow(XWPFTable table,XWPFTableRow sourceRow,int rowIndex){
+	    //在表格指定位置新增一行
+		XWPFTableRow targetRow = table.insertNewTableRow(rowIndex);
+		//复制行属性
+		targetRow.getCtRow().setTrPr(sourceRow.getCtRow().getTrPr());
+		List<XWPFTableCell> cellList = sourceRow.getTableCells();
+		if (null == cellList) {
+		    return;
+		}
+		//复制列及其属性和内容
+		XWPFTableCell targetCell = null;
+		for (XWPFTableCell sourceCell : cellList) {
+		    targetCell = targetRow.addNewTableCell();
+		    //列属性
+		    targetCell.getCTTc().setTcPr(sourceCell.getCTTc().getTcPr());
+		    //段落属性
+		    if(sourceCell.getParagraphs()!=null&&sourceCell.getParagraphs().size()>0){                     
+		    	targetCell.getParagraphs().get(0).getCTP().setPPr(sourceCell.getParagraphs().get(0).getCTP().getPPr());
+	            if(sourceCell.getParagraphs().get(0).getRuns()!=null&&sourceCell.getParagraphs().get(0).getRuns().size()>0){
+	            	XWPFRun cellR = targetCell.getParagraphs().get(0).createRun();
+	    	        cellR.setText(sourceCell.getText());
+	    	        cellR.setBold(sourceCell.getParagraphs().get(0).getRuns().get(0).isBold());
+	            }else{
+	            	targetCell.setText(sourceCell.getText());
+	            }
+	        }else{
+	        	targetCell.setText(sourceCell.getText());
+	        }
+	    }
+	}
+	
+	
+	
+	
+	
+	
+	
+
+	
 }
