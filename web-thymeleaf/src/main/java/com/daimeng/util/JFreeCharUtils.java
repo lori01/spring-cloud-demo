@@ -78,7 +78,7 @@ public class JFreeCharUtils {
 		//设置总的背景颜色   
 		chart.setBackgroundPaint(ChartColor.white);   
 		//显示横坐标详细信息
-		chart.getLegend().setVisible(true);    
+		chart.getLegend().setVisible(false);    
 		
 		BarRenderer renderer = new BarRenderer(); 
 		//设置条目标签生成器
