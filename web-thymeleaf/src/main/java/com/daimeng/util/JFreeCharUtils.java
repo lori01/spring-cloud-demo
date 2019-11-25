@@ -77,7 +77,7 @@ public class JFreeCharUtils {
 		chart.getTitle().setFont(new Font(FONT_NAME, Font.PLAIN, FONT_SIZE));//宋体
 		//设置总的背景颜色   
 		chart.setBackgroundPaint(ChartColor.white);   
-		//显示横坐标详细信息
+		//显示横坐标详细信息true展示 false不展示
 		chart.getLegend().setVisible(false);    
 		
 		BarRenderer renderer = new BarRenderer(); 

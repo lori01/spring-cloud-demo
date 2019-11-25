@@ -94,7 +94,7 @@ public class WordChartUtils {
 		HashMap<String,Object> quest1 = new HashMap<String,Object>();
 		quest1.put("no", "1");
 		quest1.put("title", "第一个问题的答案是什么?");
-		quest1.put("type", "01");
+		quest1.put("type", "01"); 
 		ArrayList<HashMap<String,Object>> answerList1 = new ArrayList<HashMap<String,Object>>();
 		HashMap<String,Object> ans1_1 = new HashMap<String,Object>();
 		ans1_1.put("no", "A");
