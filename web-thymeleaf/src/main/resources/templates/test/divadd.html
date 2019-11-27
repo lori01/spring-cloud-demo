@@ -120,6 +120,9 @@ $(document).ready(function() {
 	flushIndex();
 	initZTree();
 });
+/*
+ * div上移下移删除插入
+ */
 function getdata(){
 	var list = $("#parent_div .id_index");
 	var value = "";
@@ -199,13 +202,20 @@ function del(obj){
 	$("#"+id).remove();
 }
 
+/**
+ * format字符串，变成问卷
+ */
 function formattext(obj){
 	var text = $("#origin").val();
 	var questionArry = new Array;
-	var question = {'question_text':'',
-			'question_type':'',
-			'question_no':'',
-			'answer_list' : ''
+	var question = {
+			'Rsk_Eval_Ttl_ID':'',//模板编号
+			'QrSrch_ID':'',//问卷调查编号
+			'Rsk_Eval_Ttl_Seq_No':'',//题目顺序号
+			'Rsk_Eval_Sel_TpCd':'',//类型
+			'Rsk_Eval_Ttl_Ttl':'',//标题
+			'Rsk_Eval_Prblm_Dsc':'',//描述
+			'Opt_Inf_Grp' : ''
 	};
 	var answerArry = new Array;
 	//按照回车分割
@@ -216,40 +226,64 @@ function formattext(obj){
 		if(isNumber(str.substring(0,1))){
 			//从第二个题目开始，将上一个题目的数据push到列表中
 			if(i > 0){
-				question.answer_list = answerArry;
+				question.Opt_Inf_Grp = answerArry;
 				questionArry.push(question);
 			}
-			var question = {'question_text':'',
-							'question_type':'',
-							'question_no':'',
-							'answer_list' : ''
-					};
-			question.question_text = str;
+			var question = {
+					'Rsk_Eval_Ttl_ID':'',//题目编号
+					'QrSrch_ID':'',//问卷调查编号
+					'Rsk_Eval_Ttl_Seq_No':'',//题目顺序号
+					'Rsk_Eval_Sel_TpCd':'',//类型
+					'Rsk_Eval_Ttl_Ttl':'',//标题
+					'Rsk_Eval_Prblm_Dsc':'',//描述
+					'Opt_Inf_Grp' : ''
+			};
+			question.Rsk_Eval_Ttl_Ttl = str;
+			question.Rsk_Eval_Prblm_Dsc = str;
 			//获取标题index
 			var strs = str.split(".");
 			if(strs.length > 1 && isNumber(strs[0])){
-				question.question_no = strs[0];
+				question.Rsk_Eval_Ttl_Seq_No = strs[0];
+				question.Rsk_Eval_Ttl_Ttl = strs[1];
+				question.Rsk_Eval_Prblm_Dsc = strs[1];
 			}
 			//获取中括号内的类型
 			var bracks = getBrackets(str);
 			if(bracks != ''){
-				question.question_type = bracks;
-			}
+				question.Rsk_Eval_Sel_TpCd = getSelTpCd(bracks);
+				question.Rsk_Eval_Ttl_Ttl = question.Rsk_Eval_Ttl_Ttl.replace("["+bracks+"]","");
+				question.Rsk_Eval_Prblm_Dsc = question.Rsk_Eval_Prblm_Dsc.replace("["+bracks+"]","");
+			}else question.Rsk_Eval_Sel_TpCd = "01";
 			
 			answerArry = new Array;
 		}
 		//其他情况则判断为选项
 		else{
-			var answer = {'answer_text':str,
-						'answer_no':answerArry.length+1,
-						'answer_type':''
+			var answer = {
+						'Rsk_Evl_Opt_ID':'',//选项编号
+						'QrSrch_ID':'',//调查问卷编号
+						'Rsk_Eval_Ttl_ID':'',//题目编号
+						'Rsk_Evl_Opt_Ttl':str,//标题
+						'Rsk_Evl_Opt_Cntnt':str,//内容
+						'Rsk_Evl_Opt_Mode_Cd':''//模式代码
+						
 					};
 			//获取中括号内的类型，比如“D。其他内容[文本]”
+			if(str.length > 2){
+				var firstLetter = str.substring(0,1);
+				var secLetter = str.substring(1,2);
+				if(isLetter(firstLetter) && secLetter == "."){
+					str = str.substring(2,str.length);
+					answer.Rsk_Evl_Opt_Ttl = str;
+					answer.Rsk_Evl_Opt_Cntnt = str;
+				}
+			}
 			var bracks = getBrackets(str);
 			if(bracks != ''){
-				answer.answer_type = bracks;
-				answer.answer_text = str.substring(0,str.indexOf('['));
-			}
+				answer.Rsk_Evl_Opt_Mode_Cd = getSelTpCd(bracks);
+				answer.Rsk_Evl_Opt_Ttl = answer.Rsk_Evl_Opt_Ttl.replace("["+bracks+"]","");
+				answer.Rsk_Evl_Opt_Cntnt = answer.Rsk_Evl_Opt_Cntnt.replace("["+bracks+"]","");
+			}else answer.Rsk_Evl_Opt_Mode_Cd = "01";
 			answerArry.push(answer);
 			if(i == (texts.length - 1)){
 				question.answer_list = answerArry;
@@ -259,6 +293,7 @@ function formattext(obj){
 	}
 	
 	$("#format").val(JSON.stringify(questionArry));
+	return questionArry;
 }
 //按照回车分割并过滤掉空格和空行
 function splitStringBrk(text){
@@ -274,8 +309,16 @@ function splitStringBrk(text){
 	}
 	return finaltexts;
 }
+/*
+ * var p = /[0-9]/; var b = p.test(string);//true,说明有数字。
+ * var p = /[a-z]/i; var b = p.test(string);//true,说明有英文字母。
+ * var p = /[0-9a-z]/i; var b = p.test(string);//true,说明有英文字母或数字
+ */
 function isNumber(str){
 	return /^\d+$/.test(str);
+}
+function isLetter(str){
+	return /[a-z]/i.test(str);
 }
 function getBrackets(str){
 	var strs = str.split("[");
@@ -283,30 +326,43 @@ function getBrackets(str){
 		return strs[1].substring(0,strs[1].length-1);
 	}else return "";
 }
+function getSelTpCd(str){
+	//题目
+	if(str == '单选题'|| str == '单' || str == '单选'){
+		return "01";
+	}else if(str == '多选题'|| str == '多' || str == '多选'){
+		return "02";
+	}else if(str == '问答题'|| str == '问' || str == '问答'){
+		return "03";
+	}else if(str == '排序题'|| str == '排' || str == '排序'){
+		return "04";
+	}
+	//选项
+	else if(str == '允许填空'|| str == '填空' || str == '允许'){
+		return "03";
+	}
+	else return "01";
+}
+
 /**
  * 
  
-1.第000个题目[主观题]
-2.第一个题目[单选题]
-A答案1
-B答案2
-C答案3
-
-3.第二个题目[多选题]
-A答案4
-B答案5
-C答案6
-D其他[文本]
-
-
-
-4.第3个题目[排序题]
-A答案0
-B答案9
-C答案8
-5.THE QUESTIONS4
-ANSWER1
-ANSWER2
+ 1.请描述你对此APP的看法[问答]
+ 2.请选择您的年龄段[单选]
+ A.18岁以内
+ B.19-30岁
+ C.31-50岁
+ D.51岁以上
+ 3.您的兴趣爱好有哪些[多选]
+ A.足球
+ B.篮球
+ C.游泳
+ D.其他[文本]
+ 4.按照喜好程度进行排序[排序]
+ 球类运动
+ 田径运动
+ 电竞
+ 协作运动
 
  */
  
