@@ -75,9 +75,13 @@ public class WordChartUtils {
 	private static final String DEFAULT_TABLE_NAME = "table_02";
 	//排序题每个排序排行的列表
 	private static final String OPT_SORT_TABLE_NAME = "table_03";
+	//排序题每个排序排行的列表
+	private static final String OPT_SORT_TABLE_DTL_NAME = "table_03_DTL";
+	//排序题每个排序统计的展示形式
+	private static final String OPT_SORT_SHOW_TYPE_NAME = "table_04";
 	//图表图片生成地址
 	private static String CHART_IMG_PATH = "D:/java_test/问卷调查test/";
-
+	
 	public static void main(String[] args) throws Exception {
 		long start = System.currentTimeMillis();
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -91,236 +95,107 @@ public class WordChartUtils {
 		XWPFDocument doc = new XWPFDocument(is);
 		
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		//标题 描述
 		map.put("title", "惠助你使用体验调查问卷");
 		map.put("desc", "这是第一个调查问卷，他的功能是为了调查惠助你上线后得使用心得和使用体验。请各位参与调查得用户认真作答，您的得答案将会作为后续惠助你APP得改进依据，谢谢。");
-		HashMap<String,Object> object01 = new HashMap<String,Object>();
-		object01.put("user", "赵某");
-		object01.put("time", "2019-10-11");
-		object01.put("totalTime", "2019-10-15");
-		object01.put("stDt", "2019-10-01");
-		object01.put("enDt", "2019-10-31");
-		object01.put("peopleCount", "150");
-		map.put(RSK_BSC_OBJ_NAME, object01);
+		HashMap<String,Object> bascInf = new HashMap<String,Object>();
+		bascInf.put("stDt", "2019-10-01");//生效时间
+		bascInf.put("enDt", "2019-10-31");//失效时间
+		bascInf.put("peopleCount", "150");//人数统计
+		bascInf.put("type", "惠助你");//发布渠道
 		
-		ArrayList<HashMap<String,Object>> table01 = new ArrayList<HashMap<String,Object>>();
+		map.put(RSK_BSC_OBJ_NAME, bascInf);
 		
-		HashMap<String,Object> quest1 = new HashMap<String,Object>();
-		quest1.put("no", "1");
-		quest1.put("title", "第一个问题的答案是什么?");
-		quest1.put("showType", "02"); 
-		quest1.put("selType", "01"); 
-		ArrayList<HashMap<String,Object>> answerList1 = new ArrayList<HashMap<String,Object>>();
-		HashMap<String,Object> ans1_1 = new HashMap<String,Object>();
-		ans1_1.put("no", "A");
-		ans1_1.put("desc", "这个是第一个问题的第一个答案");
-		ans1_1.put("per", "30");
-		ans1_1.put("count", "10");
-		HashMap<String,Object> ans1_2 = new HashMap<String,Object>();
-		ans1_2.put("no", "B");
-		ans1_2.put("desc", "这个是第一个问题的第二个答案");
-		ans1_2.put("per", "60");
-		ans1_2.put("count", "20");
-		HashMap<String,Object> ans1_3 = new HashMap<String,Object>();
-		ans1_3.put("no", "C");
-		ans1_3.put("desc", "这个是第一个问题的第三个答案");
-		ans1_3.put("per", "10");
-		ans1_3.put("count", "15");
-		HashMap<String,Object> ans1_4 = new HashMap<String,Object>();
-		ans1_4.put("no", "D");
-		ans1_4.put("desc", "这个是第一个问题的第四个答案");
-		ans1_4.put("per", "10");
-		ans1_4.put("count", "50");
-		HashMap<String,Object> ans1_5 = new HashMap<String,Object>();
-		ans1_5.put("no", "E");
-		ans1_5.put("desc", "这个是第一个问题的第wu个答案");
-		ans1_5.put("per", "9");
-		ans1_5.put("count", "550");
-		answerList1.add(ans1_1);
-		answerList1.add(ans1_2);
-		answerList1.add(ans1_3);
-		answerList1.add(ans1_4);
-		answerList1.add(ans1_5);
-		quest1.put("table_02", answerList1);
+		//题目列表
+		ArrayList<HashMap<String,Object>> questionList = new ArrayList<HashMap<String,Object>>();
+		//题目
+		for(int i = 0; i < 20; i++){
+			HashMap<String,Object> question = new HashMap<String,Object>();
+			//序号，自动生成
+			int no = i + 1;
+			//展示类型 01-表格 02-柱状图 03-饼图 ,需要传参
+			String showType = "0"+(i%3+1);
+			//题目类型 01-单选题 02-多选题 03-问答题 04-排序题 ,需要传参
+			String selType = "0"+(i%4+1);
+			//题目,需要传参
+			String title = "第" + no + "个问题的答案是什么?";
+			if(selType == null || "".equals(selType) || "01".equals(selType)){
+				title += "【单选题】";
+			}else if("02".equals(selType)){
+				title += "【多选题】";
+			}else if("03".equals(selType)){
+				title += "【问答题】";
+			}else if("04".equals(selType)){
+				title += "【排序题】";
+			}
+			//题目展示类容数据填充
+			question.put("no", String.valueOf(no));
+			question.put("title", title);
+			question.put("showType", showType); 
+			question.put("selType", selType); 
+			//单选题 多选题 选项赋值
+			if(selType == null || "".equals(selType) || "01".equals(selType) || "02".equals(selType)){
+				ArrayList<HashMap<String,Object>> answerList = new ArrayList<HashMap<String,Object>>();
+				for(int j = 0 ; j < 4; j ++){
+					HashMap<String,Object> answer = new HashMap<String,Object>();
+					answer.put("no", numberToLetter(j+1));//数字index转成ABCD的字母
+					answer.put("title", "这个是第"+(i+1)+"个问题的第"+(j+1)+"个答案。");
+					double random = Math.random();
+					answer.put("count", String.valueOf(10000*random));//数量
+					answer.put("ratio", String.valueOf(100*random));//比例
+					answerList.add(answer);
+				}
+				question.put(DEFAULT_TABLE_NAME, answerList);
+			}
+			//排序题选项赋值
+			else if("04".equals(selType)){
+				//综合评分数据
+				ArrayList<HashMap<String,Object>> answerList = new ArrayList<HashMap<String,Object>>();
+				for(int j = 0 ; j < 4; j ++){
+					HashMap<String,Object> answer = new HashMap<String,Object>();
+					answer.put("no", numberToLetter(j+1));//数字index转成ABCD的字母
+					answer.put("title", "这个是第"+(i+1)+"个问题的第"+(j+1)+"个答案。");
+					double random = Math.random();
+					answer.put("count", String.valueOf(10000*random));//综合评分
+					answer.put("ratio", String.valueOf(10000*random));//综合评分
+					answerList.add(answer);
+				}
+				question.put(DEFAULT_TABLE_NAME, answerList);
+				
+				//每题的排序数据
+				ArrayList<HashMap<String,Object>> answerTotleList = new ArrayList<HashMap<String,Object>>();
+				//选项题目
+				for(int j = 0 ; j < 4; j ++){
+					HashMap<String,Object> answer = new HashMap<String,Object>();
+					answer.put("no", numberToLetter(j+1));//数字index转成ABCD的字母
+					answer.put("title", "这个是第"+(i+1)+"个问题的第"+(j+1)+"个答案。");
+					//选项排序名次列表
+					ArrayList<HashMap<String,Object>> answerTotleDtlList = new ArrayList<HashMap<String,Object>>();
+					for(int k = 0; k < 4; k++){
+						HashMap<String,Object> dtl = new HashMap<String,Object>();
+						double random = Math.random();
+						dtl.put("count", String.valueOf(10000*random));//数量
+						dtl.put("ratio", String.valueOf(100*random));//比例
+						answerTotleDtlList.add(dtl);
+					}
+					answer.put(OPT_SORT_TABLE_DTL_NAME, answerTotleDtlList);
+					answerTotleList.add(answer);
+				}
+				question.put(OPT_SORT_TABLE_NAME, answerTotleList);
+				
+				//每题的排序数据的展示方式
+				ArrayList<HashMap<String,Object>> showTypeList = new ArrayList<HashMap<String,Object>>();
+				for(int j = 0 ; j < 4; j ++){
+					HashMap<String,Object> showTypeOjb = new HashMap<String,Object>();
+					showTypeOjb.put("showType", "0"+(i%3+1));//数字index转成ABCD的字母
+					showTypeList.add(showTypeOjb);
+				}
+				question.put(OPT_SORT_SHOW_TYPE_NAME, showTypeList);
+			}
+			questionList.add(question);
+		}
+		map.put(RSK_TABLE_NAME, questionList);
 		
-		HashMap<String,Object> quest2 = new HashMap<String,Object>();
-		quest2.put("no", "2");
-		quest2.put("title", "第二个问题的答案是什么?");
-		quest2.put("showType", "03");
-		quest2.put("selType", "01");
-		ArrayList<HashMap<String,Object>> answerList2 = new ArrayList<HashMap<String,Object>>();
-		HashMap<String,Object> ans2_1 = new HashMap<String,Object>();
-		ans2_1.put("no", "A");
-		ans2_1.put("desc", "这个是第二个问题的第一个答案");
-		ans2_1.put("per", "15");
-		ans2_1.put("count", "60");
-		HashMap<String,Object> ans2_2 = new HashMap<String,Object>();
-		ans2_2.put("no", "B");
-		ans2_2.put("desc", "这个是第二个问题的第二个答案");
-		ans2_2.put("per", "20");
-		ans2_2.put("count", "10");
-		HashMap<String,Object> ans2_3 = new HashMap<String,Object>();
-		ans2_3.put("no", "C");
-		ans2_3.put("desc", "这个是第二个问题的第三个答案");
-		ans2_3.put("per", "30");
-		ans2_3.put("count", "1000");
-		HashMap<String,Object> ans2_4 = new HashMap<String,Object>();
-		ans2_4.put("no", "D");
-		ans2_4.put("desc", "这个是第二个问题的第四个答案");
-		ans2_4.put("per", "40");
-		ans2_4.put("count", "0");
-		answerList2.add(ans2_1);
-		answerList2.add(ans2_2);
-		answerList2.add(ans2_3);
-		answerList2.add(ans2_4);
-		quest2.put("table_02", answerList2);
-		
-		HashMap<String,Object> quest3 = new HashMap<String,Object>();
-		quest3.put("no", "3");
-		quest3.put("title", "第三个问题的答案是什么?");
-		quest3.put("showType", "02");
-		quest3.put("selType", "02");
-		ArrayList<HashMap<String,Object>> answerList3 = new ArrayList<HashMap<String,Object>>();
-		HashMap<String,Object> ans3_1 = new HashMap<String,Object>();
-		ans3_1.put("no", "A");
-		ans3_1.put("desc", "这个是第三个问题的第一个答案");
-		ans3_1.put("per", "10");
-		ans3_1.put("count", "14670");
-		HashMap<String,Object> ans3_2 = new HashMap<String,Object>();
-		ans3_2.put("no", "B");
-		ans3_2.put("desc", "这个是第三个问题的第二个答案");
-		ans3_2.put("per", "20");
-		ans3_2.put("count", "340");
-		HashMap<String,Object> ans3_3 = new HashMap<String,Object>();
-		ans3_3.put("no", "C");
-		ans3_3.put("desc", "这个是第三个问题的第三个答案");
-		ans3_3.put("per", "30");
-		ans3_3.put("count", "10");
-		HashMap<String,Object> ans3_4 = new HashMap<String,Object>();
-		ans3_4.put("no", "D");
-		ans3_4.put("desc", "这个是第三个问题的第四个答案");
-		ans3_4.put("per", "40");
-		ans3_4.put("count", "410");
-		HashMap<String,Object> ans3_5 = new HashMap<String,Object>();
-		ans3_5.put("no", "E");
-		ans3_5.put("desc", "这个是第三个问题的第5个答案");
-		ans3_5.put("per", "50");
-		ans3_5.put("count", "510");
-		HashMap<String,Object> ans3_6 = new HashMap<String,Object>();
-		ans3_6.put("no", "F");
-		ans3_6.put("desc", "这个是第三个问题的第6个答案");
-		ans3_6.put("per", "30");
-		ans3_6.put("count", "60");
-		HashMap<String,Object> ans3_7 = new HashMap<String,Object>();
-		ans3_7.put("no", "G");
-		ans3_7.put("desc", "这个是第三个问题的第7个答案");
-		ans3_7.put("per", "20");
-		ans3_7.put("count", "70");
-		HashMap<String,Object> ans3_8 = new HashMap<String,Object>();
-		ans3_8.put("no", "H");
-		ans3_8.put("desc", "这个是第三个问题的第8个答案");
-		ans3_8.put("per", "10");
-		ans3_8.put("count", "810");
-		answerList3.add(ans3_1);
-		answerList3.add(ans3_2);
-		answerList3.add(ans3_3);
-		answerList3.add(ans3_4);
-		answerList3.add(ans3_5);
-		answerList3.add(ans3_6);
-		answerList3.add(ans3_7);
-		answerList3.add(ans3_8);
-		quest3.put("table_02", answerList3);
-		
-		HashMap<String,Object> quest4 = new HashMap<String,Object>();
-		quest4.put("no", "4");
-		quest4.put("title", "第4个问题的答案是什么?");
-		quest4.put("showType", "01");
-		quest4.put("selType", "04");
-		ArrayList<HashMap<String,Object>> answerList4 = new ArrayList<HashMap<String,Object>>();
-		HashMap<String,Object> ans4_1 = new HashMap<String,Object>();
-		ans4_1.put("no", "A");
-		ans4_1.put("desc", "这个是第4个问题的第一个答案");
-		ans4_1.put("per", "10");
-		ans4_1.put("count", "10");
-		HashMap<String,Object> ans4_2 = new HashMap<String,Object>();
-		ans4_2.put("no", "B");
-		ans4_2.put("desc", "这个是第4个问题的第二个答案");
-		ans4_2.put("per", "20");
-		ans4_2.put("count", "20");
-		HashMap<String,Object> ans4_3 = new HashMap<String,Object>();
-		ans4_3.put("no", "C");
-		ans4_3.put("desc", "这个是第4个问题的第三个答案");
-		ans4_3.put("per", "70");
-		ans4_3.put("count", "70");
-		answerList4.add(ans4_1);
-		answerList4.add(ans4_2);
-		answerList4.add(ans4_3);
-		quest4.put("table_02", answerList4);
-		//排序
-		ArrayList<HashMap<String,Object>> answerList4sort = new ArrayList<HashMap<String,Object>>();
-		HashMap<String,Object> ans4_1_1 = new HashMap<String,Object>();
-		ans4_1_1.put("no", "A");
-		ans4_1_1.put("desc", "这个是第4个问题的第一个答案");
-		ans4_1_1.put("per", "2");
-		ans4_1_1.put("count", "10");
-		HashMap<String,Object> ans4_1_2 = new HashMap<String,Object>();
-		ans4_1_2.put("no", "A");
-		ans4_1_2.put("desc", "这个是第4个问题的第一个答案");
-		ans4_1_2.put("per", "3");
-		ans4_1_2.put("count", "20");
-		HashMap<String,Object> ans4_1_3 = new HashMap<String,Object>();
-		ans4_1_3.put("no", "A");
-		ans4_1_3.put("desc", "这个是第4个问题的第一个答案");
-		ans4_1_3.put("per", "5");
-		ans4_1_3.put("count", "20");
-		HashMap<String,Object> ans4_2_1 = new HashMap<String,Object>();
-		ans4_2_1.put("no", "B");
-		ans4_2_1.put("desc", "这个是第4个问题的第二个答案");
-		ans4_2_1.put("per", "4");
-		ans4_2_1.put("count", "50");
-		HashMap<String,Object> ans4_2_2 = new HashMap<String,Object>();
-		ans4_2_2.put("no", "B");
-		ans4_2_2.put("desc", "这个是第4个问题的第二个答案");
-		ans4_2_2.put("per", "5");
-		ans4_2_2.put("count", "20");
-		HashMap<String,Object> ans4_2_3 = new HashMap<String,Object>();
-		ans4_2_3.put("no", "B");
-		ans4_2_3.put("desc", "这个是第4个问题的第二个答案");
-		ans4_2_3.put("per", "1");
-		ans4_2_3.put("count", "10");
-		HashMap<String,Object> ans4_3_1 = new HashMap<String,Object>();
-		ans4_3_1.put("no", "C");
-		ans4_3_1.put("desc", "这个是第4个问题的第3个答案");
-		ans4_3_1.put("per", "50");
-		ans4_3_1.put("count", "30");
-		HashMap<String,Object> ans4_3_2 = new HashMap<String,Object>();
-		ans4_3_2.put("no", "C");
-		ans4_3_2.put("desc", "这个是第4个问题的第3个答案");
-		ans4_3_2.put("per", "60");
-		ans4_3_2.put("count", "4104");
-		HashMap<String,Object> ans4_3_3 = new HashMap<String,Object>();
-		ans4_3_3.put("no", "C");
-		ans4_3_3.put("desc", "这个是第4个问题的第3个答案");
-		ans4_3_3.put("per", "7");
-		ans4_3_3.put("count", "70");
-		
-		answerList4sort.add(ans4_1_1);
-		answerList4sort.add(ans4_1_2);
-		answerList4sort.add(ans4_1_3);
-		answerList4sort.add(ans4_2_1);
-		answerList4sort.add(ans4_2_2);
-		answerList4sort.add(ans4_2_3);
-		answerList4sort.add(ans4_3_1);
-		answerList4sort.add(ans4_3_2);
-		answerList4sort.add(ans4_3_3);
-		quest4.put("table_03", answerList4sort);
-		
-		table01.add(quest1);
-		table01.add(quest2);
-		table01.add(quest3);
-		table01.add(quest4);
-		map.put(RSK_TABLE_NAME, table01);
-		
-		//replaceAll(doc);
 		replaceAllRskWord(doc,map);
 		//文件存在删除
 		try {
@@ -338,6 +213,32 @@ public class WordChartUtils {
 		System.out.println("end,消耗="+(end-start));
 		System.out.println("url="+returnurl);
 	}
+	/**
+	 * 
+	* @功能描述: 数字转字母
+	* @方法名称: numberToLetter 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng.fun
+	* @E-Mail sephy9527@qq.com
+	* @创建时间 2019年11月29日 下午2:28:22 
+	* @version V1.0   
+	* @param num
+	* @return 
+	* @return String
+	 */
+	public static String numberToLetter(int num) {
+	    if (num <= 0) { // 检测列数是否正确
+	        return null;
+	    }
+	    StringBuffer letter = new StringBuffer();
+	    do {
+	        --num;
+	        int mod = num % 26; // 取余
+	        letter.append((char) (mod + 'A')); // 组装字符串
+	        num = (num - mod) / 26; // 计算剩下值
+	    } while (num > 0);
+	    return letter.reverse().toString(); // 返回反转后的字符串
+	}
 	
 	public static void replaceAllRskWord(XWPFDocument doc, HashMap<String,Object> map){
 		replaceText(doc,map);
@@ -345,11 +246,21 @@ public class WordChartUtils {
 		//获取所有题目的列表
 		ArrayList<HashMap<String,Object>> rskList = (ArrayList<HashMap<String,Object>>)map.get(RSK_TABLE_NAME);
 		for(HashMap<String,Object> rsk : rskList){
-			String title = (String) rsk.get("no") + "." + (String) rsk.get("title");
-			createTable(doc, title, rsk);
+			String title = "";
+			if(rsk.get("no") != null){
+				title += (String) rsk.get("no") + ".";
+			}
+			if(rsk.get("title") != null){
+				title +=  (String) rsk.get("title");
+			}
+			String peopleCount = "0";
+			if(map.get(RSK_BSC_OBJ_NAME) != null && ((HashMap<String,Object>)map.get(RSK_BSC_OBJ_NAME)).get("peopleCount") != null){
+				peopleCount = (String) ((HashMap<String,Object>)map.get(RSK_BSC_OBJ_NAME)).get("peopleCount");
+			}
+			createTable(doc, title,peopleCount, rsk);
 		}
-		List<XWPFChart> charList = doc.getCharts();
-		List<POIXMLDocumentPart> realtionsList = doc.getRelations();
+		//List<XWPFChart> charList = doc.getCharts();
+		//List<POIXMLDocumentPart> realtionsList = doc.getRelations();
 		
 	}
 	/**
@@ -370,64 +281,93 @@ public class WordChartUtils {
 		return paragraphList.get(paragraphList.size()-1).getCTP().newCursor();
 	}
 	public static void createDefaultText(XWPFDocument doc,HashMap<String,Object> map){
-		String title = (String)map.get("");
 		XWPFParagraph paragraph = doc.insertNewParagraph(getBottomCurrsor(doc));
-		replaceParagraph(paragraph, title);
+		replaceParagraph(paragraph, "");
 		//return paragraph.getCTP().newCursor();
 	}
 	
-	public static void createTable(XWPFDocument doc,String title,HashMap<String,Object> map){
+	public static void createTable(XWPFDocument doc,String title,String peopleCount,HashMap<String,Object> map){
+		//创建标题
 		if(title != null && !"".equals(title)){
 			XWPFParagraph paragraph = doc.insertNewParagraph(getBottomCurrsor(doc));
 			replaceParagraph(paragraph, title);
         }
+		String selType = "01";
+		if(map.get("selType") != null){
+			selType = (String)map.get("selType");
+		}
+		String showType = "01";
+		if(map.get("showType") != null){
+			showType = (String)map.get("showType");
+		}
 		
-		String selType = (String)map.get("selType");
-		String showType = (String)map.get("showType");
+		//单选题和多选题的数据格式
+		if(selType == null || "".equals(selType) || "01".equals(selType) || "02".equals(selType)){
+			//table_02:[{no,count,per},{no,count,per},{no,count,per}...]
+			//获取对象中的选项统计列表
+			List<HashMap<String,Object>> answerList = (List<HashMap<String,Object>>) map.get(DEFAULT_TABLE_NAME);
+			if(showType == null || "01".equals(showType)){
+				createDefaultTable(doc, answerList,peopleCount);
+			}else if(showType != null && ("02".equals(showType) || "03".equals(showType))){
+				drawChartsToWord(doc, showType, answerList);
+			}
+		}
 		//排序题
-		if(selType != null && "04".equals(selType)){
+		else if(selType != null && "04".equals(selType)){
 			//获取排序题的加权分数列表
 			//table_02:[{no,count},{no,count},{no,count}...]
-			List<HashMap<String,Object>> list = (List<HashMap<String,Object>>) map.get(DEFAULT_TABLE_NAME);
+			List<HashMap<String,Object>> answerList = (List<HashMap<String,Object>>) map.get(DEFAULT_TABLE_NAME);
 			if(showType == null || "01".equals(showType)){
-				createSortTable(doc, list);
-			}else{
-				drawChartsToWord(doc, showType, list);
+				createSortTable(doc, answerList,peopleCount);
+			}else if(showType != null && ("02".equals(showType) || "03".equals(showType))){
+				drawChartsToWord(doc, showType, answerList);
 			}
 			//排序题内部每个排位的列表展示
 			List<HashMap<String,Object>> sortList = (List<HashMap<String,Object>>) map.get(OPT_SORT_TABLE_NAME);
-			int optCount = list.size();
-			int sortCount = sortList.size();
-			if(sortCount == optCount*optCount){
+			List<HashMap<String,Object>> showTypeList = (List<HashMap<String,Object>>) map.get(OPT_SORT_SHOW_TYPE_NAME);
+			int optCount = answerList.size();//选项数量
+			//排序题数量要等于选项数量等于showtype数量，否则数据对不上
+			if(optCount == sortList.size() && optCount == showTypeList.size()){
+				//排序
 				for(int i = 0; i < optCount; i ++){
 					String newtitle = "选项排在第"+(i+1)+"位的统计";
 					List<HashMap<String,Object>> tmpList = new ArrayList<HashMap<String,Object>>();
+					//选项
+					/*
+					 * [
+{"no":"1","title":"第一个选项","OPT_SORT_TABLE_DTL_NAME":[{"sort":"1","count":"100","ratio":"10"},{"sort":"2","count":"100","ratio":"10"},{"sort":"3","count":"100","ratio":"10"},{"sort":"4","count":"100","ratio":"10"}]},
+{"no":"2","title":"第二个选项","OPT_SORT_TABLE_DTL_NAME":[{"sort":"1","count":"100","ratio":"10"},{"sort":"2","count":"100","ratio":"10"},{"sort":"3","count":"100","ratio":"10"},{"sort":"4","count":"100","ratio":"10"}]},
+{"no":"3","title":"第三个选项","OPT_SORT_TABLE_DTL_NAME":[{"sort":"1","count":"100","ratio":"10"},{"sort":"2","count":"100","ratio":"10"},{"sort":"3","count":"100","ratio":"10"},{"sort":"4","count":"100","ratio":"10"}]},
+{"no":"4","title":"第四个选项","OPT_SORT_TABLE_DTL_NAME":[{"sort":"1","count":"100","ratio":"10"},{"sort":"2","count":"100","ratio":"10"},{"sort":"3","count":"100","ratio":"10"},{"sort":"4","count":"100","ratio":"10"}]}
+]
+					 */
 					for(int j = 0; j < optCount; j ++){
-						//1 4 7 -0> 0 3 6
-						//2 5 8 -1> 1 4 7
-						//3 6 9 -2> 2 5 8
-						tmpList.add(sortList.get(i+j*optCount));
+						List<HashMap<String,Object>> sortOptList = new ArrayList<HashMap<String,Object>>();
+						if(sortList.get(j).get(OPT_SORT_TABLE_DTL_NAME) != null){
+							sortOptList = (List<HashMap<String,Object>>) sortList.get(j).get(OPT_SORT_TABLE_DTL_NAME);
+						}
+						if(sortOptList.size() == optCount){
+							HashMap<String,Object> dtl = new HashMap<String,Object>();
+							if(sortOptList.get(i) != null){
+								dtl = (HashMap<String,Object>) sortOptList.get(i);
+								dtl.put("no", sortList.get(j).get("no"));
+								dtl.put("title", sortList.get(j).get("title"));
+								tmpList.add(dtl);
+							}
+						}
 					}
 					XWPFParagraph paragraph = doc.insertNewParagraph(getBottomCurrsor(doc));
 					replaceParagraph(paragraph, newtitle);
-					String showTypeSort = showType;//待修改
+					String showTypeSort = "";
+					if(showTypeList.get(i) != null && showTypeList.get(i).get("showType") != null){
+						showTypeSort = (String) showTypeList.get(i).get("showType");
+					}
 					if(showTypeSort == null || "01".equals(showTypeSort)){
-						createDefaultTable(doc, tmpList);
-					}else{
+						createDefaultTable(doc, tmpList,peopleCount);
+					}else if(showTypeSort != null && ("02".equals(showTypeSort) || "03".equals(showTypeSort))){
 						drawChartsToWord(doc, showTypeSort, tmpList);
 					}
 				}
-			}
-		}
-		//单选题和多选题的数据格式
-		else{
-			//table_02:[{no,count,per},{no,count,per},{no,count,per}...]
-			//获取对象中的选项统计列表
-			List<HashMap<String,Object>> list = (List<HashMap<String,Object>>) map.get(DEFAULT_TABLE_NAME);
-			if(showType == null || "01".equals(showType)){
-				createSortTable(doc, list);
-			}else{
-				drawChartsToWord(doc, showType, list);
 			}
 		}
 	}
@@ -491,17 +431,19 @@ public class WordChartUtils {
 	* @return void
 	 */
 	public static void drawCharts(String imgPath,String showType,List<HashMap<String,Object>> list){
-		String[] names = new String[list.size()];
-		Double[] data = new Double[list.size()];
-		for(int k = 0 ; k < list.size(); k++){
-			HashMap<String,Object> map = list.get(k);
-			names[k] = (String) map.get("no");
-			data[k] = Double.valueOf((String) map.get("per"));
-		}
-		if("02".equals(showType)){
-			JFreeCharUtils.makeBarChart(names, data, imgPath);
-		}else{
-			JFreeCharUtils.makePieChart(names, data, imgPath);
+		if(list != null && list.size() > 0){
+			String[] names = new String[list.size()];
+			Double[] data = new Double[list.size()];
+			for(int k = 0 ; k < list.size(); k++){
+				HashMap<String,Object> map = list.get(k);
+				names[k] = (String) map.get("title");
+				data[k] = Double.valueOf((String) map.get("ratio"));
+			}
+			if("02".equals(showType)){
+				JFreeCharUtils.makeBarChart(names, data, imgPath);
+			}else{
+				JFreeCharUtils.makePieChart(names, data, imgPath);
+			}
 		}
 	}
 	/**
@@ -519,22 +461,45 @@ public class WordChartUtils {
 	* @param tableName 
 	* @return void
 	 */
-	public static void createDefaultTable(XWPFDocument doc,List<HashMap<String,Object>> list){
+	public static void createDefaultTable(XWPFDocument doc,List<HashMap<String,Object>> list,String peopleCount){
 		XWPFTable table = doc.insertNewTbl(getBottomCurrsor(doc));// ---这个是关键
 		//设置表格宽度，第一行宽度就可以了，这个值的单位，目前我也还不清楚，还没来得及研究
         table.setWidth(8500);
         //表格第一行，对于每个列，必须使用createCell()，而不是getCell()，因为第一行嘛，肯定是属于创建的，没有create哪里来的get呢
         XWPFTableRow row1 = table.getRow(0);
         WordPoiTools.setDefaultWordCellSelfStyle(row1.getCell(0), 100, "选项");
+        WordPoiTools.setDefaultWordCellSelfStyle(row1.createCell(), 100, "选项内容");
         WordPoiTools.setDefaultWordCellSelfStyle(row1.createCell(), 100, "数量");
-        WordPoiTools.setDefaultWordCellSelfStyle(row1.createCell(), 100, "占比");
+        WordPoiTools.setDefaultWordCellSelfStyle(row1.createCell(), 100, "比例");
 
         for(HashMap<String,Object> obj : list){
+        	String no = "";
+        	String title = "";
+        	String count = "";
+        	String ratio = "";
+        	if(obj.get("no") != null){
+        		no = (String)obj.get("no");
+        	}
+        	if(obj.get("title") != null){
+        		title = (String)obj.get("title");
+        	}
+        	if(obj.get("count") != null){
+        		count = (String)obj.get("count");
+        	}
+        	if(obj.get("ratio") != null){
+        		ratio = (String)obj.get("ratio");
+        	}
         	XWPFTableRow tmpRow = table.createRow();//行
-        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(0), 100, (String)obj.get("no"));
-        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(1), 100, (String)obj.get("count"));
-        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(2), 100, (String)obj.get("per"));
+        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(0), 100, no);
+        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(1), 100, title);
+        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(2), 100, count);
+        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(3), 100, ratio);
         }
+        XWPFTableRow tmpRow = table.createRow();//行
+    	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(0), 100, "");
+    	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(1), 100, "<有效填写人数>");
+    	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(2), 100, peopleCount);
+    	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(3), 100, "");
         //return table.getCTTbl().newCursor();
 	}
 	/**
@@ -553,20 +518,38 @@ public class WordChartUtils {
 	* @param tableName 
 	* @return void
 	 */
-	public static void createSortTable(XWPFDocument doc,List<HashMap<String,Object>> list){
+	public static void createSortTable(XWPFDocument doc,List<HashMap<String,Object>> list,String peopleCount){
 		XWPFTable table = doc.insertNewTbl(getBottomCurrsor(doc));// ---这个是关键
 		//设置表格宽度，第一行宽度就可以了，这个值的单位，目前我也还不清楚，还没来得及研究
         table.setWidth(8500);
         //表格第一行，对于每个列，必须使用createCell()，而不是getCell()，因为第一行嘛，肯定是属于创建的，没有create哪里来的get呢
         XWPFTableRow row1 = table.getRow(0);
         WordPoiTools.setDefaultWordCellSelfStyle(row1.getCell(0), 100, "选项");
-        WordPoiTools.setDefaultWordCellSelfStyle(row1.createCell(), 100, "得分");
+        WordPoiTools.setDefaultWordCellSelfStyle(row1.createCell(), 100, "选项内容");
+        WordPoiTools.setDefaultWordCellSelfStyle(row1.createCell(), 100, "综合得分");
 
         for(HashMap<String,Object> obj : list){
+        	String no = "";
+        	String title = "";
+        	String count = "";
+        	if(obj.get("no") != null){
+        		no = (String)obj.get("no");
+        	}
+        	if(obj.get("title") != null){
+        		title = (String)obj.get("title");
+        	}
+        	if(obj.get("count") != null){
+        		count = (String)obj.get("count");
+        	}
         	XWPFTableRow tmpRow = table.createRow();//行
-        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(0), 100, (String)obj.get("no"));
-        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(1), 100, (String)obj.get("count"));
+        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(0), 100, no);
+        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(1), 100, title);
+        	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(2), 100, count);
         }
+        XWPFTableRow tmpRow = table.createRow();//行
+    	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(0), 100, "");
+    	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(1), 100, "<有效填写人数>");
+    	WordPoiTools.setDefaultWordCellSelfStyle(tmpRow.getCell(2), 100, peopleCount);
         //return table.getCTTbl().newCursor();
 	}
 	/**

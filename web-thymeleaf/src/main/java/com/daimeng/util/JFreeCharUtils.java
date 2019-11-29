@@ -64,11 +64,10 @@ public class JFreeCharUtils {
 		Constants.println("success");
 	}
 	
-	private static final String BAR_CHART_TITLE = "选项比例(%)柱状图";
+	private static final String BAR_CHART_TITLE = "柱状图统计";
 	private static final String BAR_CHART_X_LABEL = "选项";
-	private static final String BAR_CHART_Y_LABEL = "选项比例(%)";
-	
-	private static final String PIE_CHART_TITLE = "选项比例(%)饼图";
+	private static final String BAR_CHART_Y_LABEL = "比例(%)";
+	private static final String PIE_CHART_TITLE = "饼状图统计";
 	private static final String NO_DATA_MSG = "没有数据";
 	
 	private static final String FONT_NAME = "黑体";//sans-serif  宋体
