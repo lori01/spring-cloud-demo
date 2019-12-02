@@ -115,9 +115,11 @@ public class JFreeCharUtils {
 		numberaxis.setUpperBound(100);
 		numberaxis.setLowerBound(0);
 		
-		/*CategoryAxis domainAxis = categoryplot.getDomainAxis();
+		CategoryAxis domainAxis = categoryplot.getDomainAxis();
 		//横轴上的 Lable 90度倾斜
-		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);*/
+		//domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
+		domainAxis.setMaximumCategoryLabelLines(10); //标题行数，每个字显示一行
+		domainAxis.setMaximumCategoryLabelWidthRatio(0.5f); //每个标题宽度，控制为1个字的宽度
 		
 		FileOutputStream out = null;
 		try {
