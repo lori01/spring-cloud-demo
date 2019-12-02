@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Paint;
 import java.awt.Rectangle;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -20,6 +19,7 @@ import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.DateTickUnitType;
@@ -57,7 +57,7 @@ import org.jfree.data.time.TimeSeries;
 public class JFreeCharUtils {
 
 	public static void main(String[] args) {
-		String[] names = {"A选项","B选项","C选项","D选项","E选项"};
+		String[] names = {"A.第一个答案","B.第二个答案","C.第三个答案","D.第四个答案","E.第五个答案"};
 		Double[] data = {10d,20d,30d,50d,15d};
 		makeBarChart(names, data, "D:/java_test/问卷调查test/柱状图1.jpg");
 		makePieChart(names, data, "D:/java_test/问卷调查test/饼图1.jpg");
@@ -94,7 +94,8 @@ public class JFreeCharUtils {
 		DefaultCategoryDataset ds = new DefaultCategoryDataset();
 		for(int i = 0; i < names.length; i ++){
 			//ds.addValue(value, rowKey, columnKey);
-			ds.addValue(data[i], names[i], names[i]);
+			//ds.addValue(data[i], names[i], names[i]);
+			ds.addValue(data[i], BAR_CHART_X_LABEL, names[i]);
 		}
 		JFreeChart chart = ChartFactory.createBarChart(
 				BAR_CHART_TITLE, //图表标题  
@@ -113,6 +114,10 @@ public class JFreeCharUtils {
 		//y轴精度 最大值和最小值
 		numberaxis.setUpperBound(100);
 		numberaxis.setLowerBound(0);
+		
+		/*CategoryAxis domainAxis = categoryplot.getDomainAxis();
+		//横轴上的 Lable 90度倾斜
+		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);*/
 		
 		FileOutputStream out = null;
 		try {
