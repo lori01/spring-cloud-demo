@@ -257,7 +257,13 @@ public class WordChartUtils {
 			if(map.get(RSK_BSC_OBJ_NAME) != null && ((HashMap<String,Object>)map.get(RSK_BSC_OBJ_NAME)).get("peopleCount") != null){
 				peopleCount = (String) ((HashMap<String,Object>)map.get(RSK_BSC_OBJ_NAME)).get("peopleCount");
 			}
-			createTable(doc, title,peopleCount, rsk);
+			try {
+				createTable(doc, title,peopleCount, rsk);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				System.out.println(e.getLocalizedMessage());
+			}
+			
 		}
 		//List<XWPFChart> charList = doc.getCharts();
 		//List<POIXMLDocumentPart> realtionsList = doc.getRelations();
