@@ -441,9 +441,17 @@ public class WordChartUtils {
 			String[] names = new String[list.size()];
 			Double[] data = new Double[list.size()];
 			for(int k = 0 ; k < list.size(); k++){
+				String no = "";
 				HashMap<String,Object> map = list.get(k);
-				names[k] = (String) map.get("title");
-				data[k] = Double.valueOf((String) map.get("ratio"));
+				if(map.get("no") != null){
+					no = ((String) map.get("no"));
+				}
+				if(map.get("title") != null){
+					names[k] = no + "." + (String) map.get("title");
+				}else names[k] = "";
+				if(map.get("ratio") != null){
+					data[k] = Double.valueOf((String) map.get("ratio"));
+				}else data[k] = 0d;
 			}
 			if("02".equals(showType)){
 				JFreeCharUtils.makeBarChart(names, data, imgPath);
