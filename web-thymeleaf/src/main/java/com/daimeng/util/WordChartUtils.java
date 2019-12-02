@@ -580,14 +580,14 @@ public class WordChartUtils {
 	* @return void
 	 */
 	public static void replaceText(XWPFDocument doc,HashMap<String,Object> map){
-		Constants.println("======replaceText start======");
+		//Constants.println("======replaceText start======");
 		List<XWPFParagraph> paragraphList = doc.getParagraphs();
 		for(XWPFParagraph paragraph : paragraphList){
 			String paragraphText = paragraph.getText();
 			String newText = getNewText(paragraphText, map);
 			replaceParagraph(paragraph, newText);
 		}
-		Constants.println("======replaceText end======");
+		//Constants.println("======replaceText end======");
 	}
 	/**
 	 * 
@@ -653,7 +653,7 @@ public class WordChartUtils {
 	* @return void
 	 */
 	public static void replaceTable(XWPFDocument doc,HashMap<String,Object> map){
-		Constants.println("======createTable start======");
+		//Constants.println("======createTable start======");
 		List<XWPFTable> tableList = doc.getTables();
 		for(XWPFTable table : tableList){
 			//String tableName = table.getRow(0).getCell(0).getText().replace("${", "").replace("}", "");
@@ -661,7 +661,7 @@ public class WordChartUtils {
 			if(tableName == null || "".equals(tableName)){
 				tableName = getTableName(table,"object");
 			}
-			Constants.println("table name="+tableName);
+			//Constants.println("table name="+tableName);
 			if(map.get(tableName) != null){
 				//如果是object，替换一次
 				if(tableName.startsWith("object")){
@@ -687,7 +687,7 @@ public class WordChartUtils {
 				}
 			}
 		}
-		Constants.println("======createTable end======");
+		//Constants.println("======createTable end======");
 	}
 	/**
 	 * 
@@ -796,8 +796,8 @@ public class WordChartUtils {
 				//双重循环，支持最后一行
 				if(text.indexOf("${") > -1 && text.indexOf("}") > -1){
 					String showType = (String)obj.get("showType");
-					Constants.println("==table01==");
-					Constants.println("showType="+showType);
+					//Constants.println("==table01==");
+					//Constants.println("showType="+showType);
 					
 					//替换表格，双循环，仅支持后几行
 					if(text.startsWith("${table_")){
@@ -805,7 +805,7 @@ public class WordChartUtils {
 						int rowEnd = rowList.size();
 						if(showType == null || "01".equals(showType)){
 							String tableName2 = text.substring(text.indexOf("${table_")+2,text.indexOf("${table_")+10);
-							Constants.println("table name2="+tableName2);
+							//Constants.println("table name2="+tableName2);
 							List<HashMap<String,Object>> list = (List<HashMap<String,Object>>) obj.get(tableName2);
 							
 							for(HashMap<String,Object> obj2 : list){
@@ -824,7 +824,7 @@ public class WordChartUtils {
 						}else{
 							//删除表格的2行
 							for(int j = rowStart-1; j < rowEnd; j ++){
-								Constants.println("remove==rowStart:"+rowStart+",rowEnd:"+rowEnd+",j="+j+":");
+								//Constants.println("remove==rowStart:"+rowStart+",rowEnd:"+rowEnd+",j="+j+":");
 								table.removeRow(rowStart-1);
 							}
 							break;
@@ -834,7 +834,7 @@ public class WordChartUtils {
 					//替换图片
 					else if(text.startsWith("${img_")){
 						String tableName2 = text.substring(text.indexOf("table_"),text.length()-1);
-						Constants.println("==table02=="+tableName2);
+						//Constants.println("==table02=="+tableName2);
 						replaceCell(cell,"");
 						if(showType != null && ("02".equals(showType) || "03".equals(showType))){
 							String name = "img-"+showType+"-"+System.currentTimeMillis()+".jpg";

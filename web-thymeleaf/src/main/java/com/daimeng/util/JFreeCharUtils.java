@@ -61,7 +61,7 @@ public class JFreeCharUtils {
 		Double[] data = {10d,20d,30d,50d,15d};
 		makeBarChart(names, data, "D:/java_test/问卷调查test/柱状图1.jpg");
 		makePieChart(names, data, "D:/java_test/问卷调查test/饼图1.jpg");
-		Constants.println("success");
+		//Constants.println("success");
 	}
 	
 	private static final String BAR_CHART_TITLE = "柱状图统计";
