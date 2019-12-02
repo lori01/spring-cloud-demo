@@ -28,6 +28,7 @@
 		<module>api-server-jpa</module>
 		<module>web-thymeleaf</module>
 		<module>admin</module>
+		<module>daemon-async</module>
 	</modules>
 
 	<properties>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pkg:part pkg:name="/word/document.xml">
+	<pkg:xmlData>
+		<pkg:xmlData>
+			<w:body>
+				<!-- w:p标签 -->
+				<!-- 一个w:p为一行数据 -->
+				<!-- 以下是一个普通的单行替换的w:p内容 -->
+				<w:p w:rsidR="004B4BFC" w:rsidRDefault="009E5F4C" w:rsidP="009E5F4C">
+					<w:rPr>
+						<w:rFonts w:ascii="宋体" w:eastAsia="宋体" w:hAnsi="宋体"/>
+						<w:sz w:val="36"/>
+						<w:szCs w:val="36"/>
+					</w:rPr>
+					<w:bookmarkStart w:id="0" w:name="_GoBack"/>
+					<w:bookmarkEnd w:id="0"/>
+					<!-- w:r标签 -->
+					<w:r w:rsidRPr="009E5F4C">
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:eastAsia="宋体" w:hAnsi="宋体" w:hint="eastAsia"/>
+							<w:sz w:val="36"/>
+							<w:szCs w:val="36"/>
+						</w:rPr>
+						<!-- w:t标签 -->
+						<w:t>这是$</w:t>
+					</w:r>
+					<w:r w:rsidRPr="009E5F4C">
+						<w:t>{</w:t>
+					</w:r>
+					<w:r w:rsidRPr="009E5F4C">
+						<w:t>cst_name</w:t>
+					</w:r>
+					<w:r w:rsidRPr="009E5F4C">
+						<w:t>}</w:t>
+					</w:r>
+					<w:r w:rsidRPr="009E5F4C">
+						<w:t>的服务方案，发起行为$</w:t>
+					</w:r>
+					<w:r w:rsidRPr="009E5F4C">
+						<w:t>{</w:t>
+					</w:r>
+					<w:r w:rsidRPr="009E5F4C">
+						<w:t>inst_name</w:t>
+					</w:r>
+					<w:r w:rsidRPr="009E5F4C">
+						<w:t>}</w:t>
+					</w:r>
+				</w:p>
+				
+				<w:p>
+					<w:pPr>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:eastAsia="宋体" w:hAnsi="宋体"/><w:sz w:val="28"/><w:szCs w:val="28"/>
+						</w:rPr>
+					</w:pPr>
+					<w:r><w:t>这里是循环表头信息，下面是循环列表</w:t></w:r>
+				</w:p>
+				
+				<!-- 以下是一个表格替换的w:tbl内容 -->
+				<!-- 这是单行单格的table，将table边框设置为无，则可以作为普通文字格式的循环,格式内容如下 -->
+				<!-- 1.第一条 2.第二条 3.第三条。。。。 -->
+				<w:tbl>
+					<w:tblPr>
+						<w:tblStyle w:val="a9"/>
+						<w:tblW w:w="0" w:type="auto"/>
+						<w:tblBorders>
+							<w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+							<w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+							<w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+							<w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+							<w:insideH w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+							<w:insideV w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+						</w:tblBorders>
+						<w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/>
+					</w:tblPr>
+					<w:tblGrid>
+						<w:gridCol w:w="8296"/>
+					</w:tblGrid>
+					<!-- w:tr是table的一行 -->
+					<!-- w:tc是tr中的一个单元格 -->
+					<!-- w:p是文字内容，内部会被拆分成多个w:r和w:t -->
+					<w:tr w:rsidR="00893D1B" w:rsidTr="00D161A6">
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="8296" w:type="dxa"/>
+							</w:tcPr>
+							<w:p w:rsidR="00893D1B" w:rsidRDefault="00893D1B" w:rsidP="009E5F4C">
+								<w:r>
+									<w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr>
+									<w:t>$</w:t>
+								</w:r>
+								<w:r>
+									<w:t>
+										{table_02_index}.${table_02_demand}:${table_02_mod_name}
+									</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+					</w:tr>
+				</w:tbl>
+				
+				
+				<w:tbl>
+					<w:tr>
+						<w:tc>
+							<w:p>
+								<w:r>
+									<w:t>学校</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:p>
+								<w:r>
+									<w:t>地址</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:p>
+								<w:r>
+									<w:t>公司</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:p>
+								<w:r>
+									<w:t>法人</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+					</w:tr>
+					<w:tr>
+						<w:tc>
+							<w:p>
+								<w:r>
+									<w:t>$</w:t>
+								</w:r>
+								<w:r>
+									<w:t>{</w:t>
+								</w:r>
+								<w:r>
+									<w:t>table_30_</w:t>
+								</w:r>
+								<w:r>
+									<w:t>school}</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:p>
+								<w:r>
+									<w:t>$</w:t>
+								</w:r>
+								<w:r>
+									<w:t>{</w:t>
+								</w:r>
+								<w:r>
+									<w:t>table_30_</w:t>
+								</w:r>
+								<w:r>
+									<w:t>add}</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:p>
+								<w:r>
+									<w:t>$</w:t>
+								</w:r>
+								<w:r>
+									<w:t>{</w:t>
+								</w:r>
+								<w:r>
+									<w:t>table_30_</w:t>
+								</w:r>
+								<w:r>
+									<w:t>comp}</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:p>
+								<w:r>
+									<w:t>$</w:t>
+								</w:r>
+								<w:r>
+									<w:t>{</w:t>
+								</w:r>
+								<w:r>
+									<w:t>table_30_</w:t>
+								</w:r>
+								<w:r>
+									<w:t>lgl}</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+					</w:tr>
+				</w:tbl>
+			</w:body>
+		</pkg:xmlData>
+	</pkg:xmlData>
+</pkg:part>
