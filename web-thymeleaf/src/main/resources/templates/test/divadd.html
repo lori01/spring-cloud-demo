@@ -215,7 +215,7 @@ function formattext(obj){
 			'Rsk_Eval_Sel_TpCd':'',//类型
 			'Rsk_Eval_Ttl_Ttl':'',//标题
 			'Rsk_Eval_Prblm_Dsc':'',//描述
-			'Opt_Inf_Grp' : ''
+			'Opt_Inf_GRP' : []
 	};
 	var answerArry = new Array;
 	//按照回车分割
@@ -223,10 +223,10 @@ function formattext(obj){
 	for(var i = 0; i < texts.length; i++){
 		var str = texts[i];
 		//如果由数字开始，比如“ 1.第一个题目”，此情况判断为题目
-		if(isNumber(str.substring(0,1))){
+		if(isQuestion(str)){
 			//从第二个题目开始，将上一个题目的数据push到列表中
 			if(i > 0){
-				question.Opt_Inf_Grp = answerArry;
+				question.Opt_Inf_GRP = answerArry;
 				questionArry.push(question);
 			}
 			var question = {
@@ -236,7 +236,7 @@ function formattext(obj){
 					'Rsk_Eval_Sel_TpCd':'',//类型
 					'Rsk_Eval_Ttl_Ttl':'',//标题
 					'Rsk_Eval_Prblm_Dsc':'',//描述
-					'Opt_Inf_Grp' : ''
+					'Opt_Inf_GRP' : []
 			};
 			question.Rsk_Eval_Ttl_Ttl = str;
 			question.Rsk_Eval_Prblm_Dsc = str;
@@ -256,16 +256,19 @@ function formattext(obj){
 			}else question.Rsk_Eval_Sel_TpCd = "01";
 			
 			answerArry = new Array;
+			if(i == (texts.length - 1)){
+				questionArry.push(question);
+			}
 		}
 		//其他情况则判断为选项
 		else{
 			var answer = {
-						'Rsk_Evl_Opt_ID':'',//选项编号
+						'Rsk_Eval_Opt_ID':'',//选项编号
 						'QrSrch_ID':'',//调查问卷编号
 						'Rsk_Eval_Ttl_ID':'',//题目编号
-						'Rsk_Evl_Opt_Ttl':str,//标题
-						'Rsk_Evl_Opt_Cntnt':str,//内容
-						'Rsk_Evl_Opt_Mode_Cd':''//模式代码
+						'Rsk_Eval_Opt_Ttl':str,//标题
+						'Rsk_Eval_Opt_Cntnt':str,//内容
+						'Rsk_Eval_Opt_Mode_Cd':''//模式代码
 						
 					};
 			//获取中括号内的类型，比如“D。其他内容[文本]”
@@ -274,19 +277,19 @@ function formattext(obj){
 				var secLetter = str.substring(1,2);
 				if(isLetter(firstLetter) && secLetter == "."){
 					str = str.substring(2,str.length);
-					answer.Rsk_Evl_Opt_Ttl = str;
-					answer.Rsk_Evl_Opt_Cntnt = str;
+					answer.Rsk_Eval_Opt_Ttl = str;
+					answer.Rsk_Eval_Opt_Cntnt = str;
 				}
 			}
 			var bracks = getBrackets(str);
 			if(bracks != ''){
-				answer.Rsk_Evl_Opt_Mode_Cd = getSelTpCd(bracks);
-				answer.Rsk_Evl_Opt_Ttl = answer.Rsk_Evl_Opt_Ttl.replace("["+bracks+"]","");
-				answer.Rsk_Evl_Opt_Cntnt = answer.Rsk_Evl_Opt_Cntnt.replace("["+bracks+"]","");
-			}else answer.Rsk_Evl_Opt_Mode_Cd = "01";
+				answer.Rsk_Eval_Opt_Mode_Cd = getSelTpCd(bracks);
+				answer.Rsk_Eval_Opt_Ttl = answer.Rsk_Eval_Opt_Ttl.replace("["+bracks+"]","");
+				answer.Rsk_Eval_Opt_Cntnt = answer.Rsk_Eval_Opt_Cntnt.replace("["+bracks+"]","");
+			}else answer.Rsk_Eval_Opt_Mode_Cd = "01";
 			answerArry.push(answer);
 			if(i == (texts.length - 1)){
-				question.answer_list = answerArry;
+				question.Opt_Inf_GRP = answerArry;
 				questionArry.push(question);
 			}
 		}
@@ -295,6 +298,14 @@ function formattext(obj){
 	$("#format").val(JSON.stringify(questionArry));
 	return questionArry;
 }
+function isQuestion(str){
+	var strings = str.split(".");
+	if(strings.length > 1){
+		return isNumber(strings[0]);
+	}
+	return false;
+	
+}
 //按照回车分割并过滤掉空格和空行
 function splitStringBrk(text){
 	//按照回车分割
@@ -302,7 +313,7 @@ function splitStringBrk(text){
 	var finaltexts = new Array;
 	for(var i = 0; i < texts.length; i++){
 		//过滤空格
-		var str = texts[i].replace(/\s+/g,"");
+		var str = texts[i].replace(/\s+/g,"").replace(/\【/g,"[").replace(/\】/g,"]");
 		if(str != null && str != ''){
 			finaltexts.push(str);
 		}
@@ -338,7 +349,7 @@ function getSelTpCd(str){
 		return "04";
 	}
 	//选项
-	else if(str == '允许填空'|| str == '填空' || str == '允许'){
+	else if(str == '允许填空'|| str == '填空' || str == '允许' || str == '文本'){
 		return "03";
 	}
 	else return "01";
@@ -347,12 +358,12 @@ function getSelTpCd(str){
 /**
  * 
  
- 1.请描述你对此APP的看法[问答]
- 2.请选择您的年龄段[单选]
- A.18岁以内
- B.19-30岁
- C.31-50岁
- D.51岁以上
+ 1.请描述你对此APP的看法【问答】
+ 2.请选择您的年龄段【单选】
+ 18岁以内
+ 19-30岁
+ 31-50岁
+ 51岁以上
  3.您的兴趣爱好有哪些[多选]
  A.足球
  B.篮球

@@ -9,6 +9,10 @@ import org.springframework.context.annotation.ImportResource;
 public class DaemonAsyncApplication  {
 	
 	public static void main(String[] args) {
+		Thread thread = new Thread();
+		thread.setDaemon(true);
+		thread.start();
+
 		SpringApplication.run(DaemonAsyncApplication.class, args);
 	}
 
