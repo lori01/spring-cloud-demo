@@ -1,0 +1,4 @@
+git stauts
+git add .     git add xxx
+git commit -m '修复XXX'
+git push -u origin master
