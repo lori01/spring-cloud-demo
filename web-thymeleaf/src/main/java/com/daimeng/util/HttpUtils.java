@@ -47,7 +47,8 @@ public class HttpUtils {
 					connection.getInputStream()));
 			String line;
 			while ((line = in.readLine()) != null) {
-				result += new String(line.getBytes("ISO-8859-1"),"UTF-8");;
+				result += new String(line.getBytes("ISO-8859-1"),"UTF-8");
+				//result = new String(result.getBytes("UTF-8"),"GBK"); 锟斤拷
 			}
 			//result = new String(result.getBytes("ISO-8859-1"),"UTF-8");
 		} catch (Exception e) {
