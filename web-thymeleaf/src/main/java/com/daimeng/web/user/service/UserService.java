@@ -28,4 +28,5 @@ public interface UserService {
 	public List<SysRole> findAllRole();
 	
 	public void saveSysUserLog(HttpServletRequest request,long executeTime);
+	public String getIpAddress(String ip);
 }

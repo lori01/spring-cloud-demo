@@ -30,6 +30,7 @@ public class HttpUtils {
 			URLConnection connection = realUrl.openConnection();
 			// 设置通用的请求属性
 			connection.setRequestProperty("accept", "*/*");
+			connection.setRequestProperty("charset", "utf-8");
 			connection.setRequestProperty("connection", "Keep-Alive");
 			connection.setRequestProperty("user-agent",
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
@@ -46,8 +47,9 @@ public class HttpUtils {
 					connection.getInputStream()));
 			String line;
 			while ((line = in.readLine()) != null) {
-				result += line;
+				result += new String(line.getBytes("ISO-8859-1"),"UTF-8");;
 			}
+			//result = new String(result.getBytes("ISO-8859-1"),"UTF-8");
 		} catch (Exception e) {
 			System.out.println("发送GET请求出现异常！" + e);
 			e.printStackTrace();
@@ -84,6 +86,7 @@ public class HttpUtils {
 			URLConnection conn = realUrl.openConnection();
 			// 设置通用的请求属性
 			conn.setRequestProperty("accept", "*/*");
+			conn.setRequestProperty("charset", "utf-8");
 			conn.setRequestProperty("connection", "Keep-Alive");
 			conn.setRequestProperty("user-agent",
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");

@@ -3,6 +3,7 @@ package com.daimeng.web.user.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,7 +24,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.daimeng.util.Constants;
+import com.daimeng.util.HttpUtils;
 import com.daimeng.web.common.ResponseVo;
 import com.daimeng.web.user.entity.SysRole;
 import com.daimeng.web.user.entity.SysUser;
@@ -45,6 +48,8 @@ public class UserServiceImpl implements UserService{
     private String algorithmName;//设置算法
 	@Value("${shiro.password.hashIterations}")
     private int hashIterations;//生成Hash值的迭代次数
+	@Value("${get_ip_address_url}")
+	private String ipAddressUrl;//ip转地址
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -280,6 +285,7 @@ public class UserServiceImpl implements UserService{
 			userlog.setParameter(request.getRequestURI());
 			userlog.setExecuteTime(executeTime);
 			userlog.setIp(getIpAddress(request));
+			//userlog.setAddress(getIpAddress(userlog.getIp()));
 			userlog.setSysUser(cuser);
 			userLogRepository.save(userlog);
     	}
@@ -305,6 +311,24 @@ public class UserServiceImpl implements UserService{
 			ip = request.getRemoteAddr();
 		}
 		return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
+	}
+
+	@Override
+	public String getIpAddress(String ip) {
+		ip = "218.192.3.42";
+		if(ip != null && !"".equals(ip) && ipAddressUrl != null && !"".equals(ipAddressUrl)){
+			//if(window.IPCallBack) {IPCallBack({"ip":"218.192.3.42","pro":"�㶫ʡ","proCode":"440000","city":"������","cityCode":"440100","region":"","regionCode":"0","addr":"�㶫ʡ������ ���ݴ�ѧ��֯��װѧԺ","regionNames":"","err":""});}
+			//{"ip":"218.192.3.42","pro":"�㶫ʡ","proCode":"440000","city":"������","cityCode":"440100","region":"","regionCode":"0","addr":"�㶫ʡ������ ���ݴ�ѧ��֯��װѧԺ","regionNames":"","err":""}
+			String tjson = HttpUtils.sendGet(ipAddressUrl, "ip="+ip);
+			String json = tjson.substring(tjson.indexOf("({")+1,tjson.indexOf("});}")+1);
+			Map tmap = (Map) JSONObject.parse(json);
+			if(tmap != null){
+				String address = (String)tmap.get("pro") + (String)tmap.get("city") 
+						+ (String)tmap.get("region") + (String)tmap.get("addr");
+				return address;
+			}
+		}
+		return null;
 	}
 
 	

@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.daimeng.web.article.entity.ArticleInfo;
 
@@ -37,6 +38,10 @@ public class SysUserLog implements Serializable{
 	@ManyToOne(fetch= FetchType.LAZY)//
 	@JoinColumn(name="uid")
 	private SysUser sysUser;
+	
+	//不映射数据库
+	@Transient
+	private String address;
 	
 	public Integer getId() {
 		return id;
@@ -92,6 +97,13 @@ public class SysUserLog implements Serializable{
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 	
 	
 }

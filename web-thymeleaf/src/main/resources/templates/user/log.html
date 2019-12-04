@@ -48,6 +48,10 @@
 									<td width="70%"><span th:text="${info.ip}"></span></td>
 								</tr>
 								<tr>
+									<th width="30%"><span th:text="地址"></span></th>
+									<td width="70%"><span class="address-class" th:text="${info.ip}" th:id="${info.id}+'ip'"></span></td>
+								</tr>
+								<tr>
 									<th width="30%"><span th:text="参数"></span></th>
 									<td width="70%"><span th:text="${info.parameter}"></span></td>
 								</tr>
@@ -86,4 +90,48 @@
 <!-- 引入底部 -->
 <div th:include="common/footer::common-pagination"></div>
 </body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var list = $(".address-class");
+		for(var i = 0; i<list.length;i++){
+			var id = list[i].getAttribute('id');
+			var ip = $("#"+id).text();
+			//getIpAddress("218.192.3.42");
+			getIpAddress(ip);
+		}
+	});
+	
+	function getIpAddress(ip){
+		var script = document.createElement('script');
+	    script.type = 'text/javascript';
+	    // 传参并指定回调执行函数为onBack
+	    script.src = "http://whois.pconline.com.cn/ipJson.jsp?ip="+ip;
+	    document.head.appendChild(script);
+	}
+	/*{"ip":"211.97.129.146",
+		"pro":"福建省",
+		"proCode":"350000",
+		"city":"福州市",
+		"cityCode":"350100",
+		"region":"",
+		"regionCode":"0",
+		"addr":"福建省福州市 联通",
+		"regionNames":"",
+		"err":""}
+	
+	*/
+	function IPCallBack(data){
+		console.log(data);
+		var list = $(".address-class");
+		for(var i = 0; i<list.length;i++){
+			var id = list[i].getAttribute('id');
+			var ip = $("#"+id).text();
+			//getIpAddress("218.192.3.42");
+			if(ip == data.ip){
+				$("#"+id).text(data.addr);
+			}
+		}
+	}
+</script>
 </html>
