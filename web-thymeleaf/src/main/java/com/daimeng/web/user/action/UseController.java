@@ -46,11 +46,11 @@ public class UseController extends BaseController {
 		SysUserLog info = new SysUserLog();
 		info.setUid(uid);
 		Page<SysUserLog> logs = userService.getUserLogPage(info, page);
-		/*for(SysUserLog log : logs){
+		for(SysUserLog log : logs){
 			if(log.getAddress() == null || "".equals(log.getAddress())){
 				log.setAddress(userService.getIpAddress(log.getIp()));
 			}
-		}*/
+		}
 		setPageToModel(model, logs, page);
 		
 		return "user/log";

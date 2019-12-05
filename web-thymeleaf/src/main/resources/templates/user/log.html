@@ -49,7 +49,8 @@
 								</tr>
 								<tr>
 									<th width="30%"><span th:text="地址"></span></th>
-									<td width="70%"><span class="address-class" th:text="${info.ip}" th:id="${info.id}+'ip'"></span></td>
+									<!-- <td width="70%"><span class="address-class" th:text="${info.ip}" th:id="${info.id}+'ip'"></span></td> -->
+									<td width="70%"><span th:text="${info.address}"></span></td>
 								</tr>
 								<tr>
 									<th width="30%"><span th:text="参数"></span></th>
@@ -93,13 +94,13 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		var list = $(".address-class");
+		/* var list = $(".address-class");
 		for(var i = 0; i<list.length;i++){
 			var id = list[i].getAttribute('id');
 			var ip = $("#"+id).text();
 			//getIpAddress("218.192.3.42");
 			getIpAddress(ip);
-		}
+		} */
 	});
 	
 	function getIpAddress(ip){

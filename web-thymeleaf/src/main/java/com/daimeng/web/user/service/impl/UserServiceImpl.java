@@ -1,5 +1,8 @@
 package com.daimeng.web.user.service.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +28,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.daimeng.util.BaiduSnCal;
 import com.daimeng.util.Constants;
 import com.daimeng.util.HttpUtils;
 import com.daimeng.web.common.ResponseVo;
@@ -50,6 +54,15 @@ public class UserServiceImpl implements UserService{
     private int hashIterations;//生成Hash值的迭代次数
 	@Value("${get_ip_address_url}")
 	private String ipAddressUrl;//ip转地址
+	
+	/*baidu_ak=tlrgpbkZkwnZnNPeBc77wNVwplSDKxYq
+	baidu_ip_to_address_url=http://api.map.baidu.com/location/ip*/	
+	@Value("${baidu_ak}")
+	private String baiduAk;
+	@Value("${baidu_sk}")
+	private String baiduSk;
+	@Value("${baidu_ip_to_address_url}")
+	private String baiduAddressUrl;
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -315,16 +328,45 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String getIpAddress(String ip) {
-		ip = "218.192.3.42";
-		if(ip != null && !"".equals(ip) && ipAddressUrl != null && !"".equals(ipAddressUrl)){
-			//if(window.IPCallBack) {IPCallBack({"ip":"218.192.3.42","pro":"�㶫ʡ","proCode":"440000","city":"������","cityCode":"440100","region":"","regionCode":"0","addr":"�㶫ʡ������ ���ݴ�ѧ��֯��װѧԺ","regionNames":"","err":""});}
-			//{"ip":"218.192.3.42","pro":"�㶫ʡ","proCode":"440000","city":"������","cityCode":"440100","region":"","regionCode":"0","addr":"�㶫ʡ������ ���ݴ�ѧ��֯��װѧԺ","regionNames":"","err":""}
-			String tjson = HttpUtils.sendGet(ipAddressUrl, "ip="+ip);
-			String json = tjson.substring(tjson.indexOf("({")+1,tjson.indexOf("});}")+1);
-			Map tmap = (Map) JSONObject.parse(json);
-			if(tmap != null){
-				String address = (String)tmap.get("pro") + (String)tmap.get("city") 
-						+ (String)tmap.get("region") + (String)tmap.get("addr");
+		//ip = "218.192.3.42";
+		if("127.0.0.1".equals(ip) || "localhost".equals(ip)){
+			return "本地机器localhost";
+		}
+		if(ip != null && !"".equals(ip) && baiduAddressUrl != null && !"".equals(baiduAddressUrl)){
+			String sn = "";
+			try {
+				sn = BaiduSnCal.getSnForIp(baiduAk, baiduSk, ip);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			
+			/*
+			 * {
+			 * 		"address":"CN|\u5e7f\u4e1c|\u5e7f\u5dde|None|CERNET|0|0",
+			 * 		"content":{
+			 * 			"address_detail":{
+			 * 				"province":"\u5e7f\u4e1c\u7701",
+			 * 				"city":"\u5e7f\u5dde\u5e02",
+			 * 				"district":"",
+			 * 				"street":"",
+			 * 				"street_number":"",
+			 * 				"city_code":257
+			 * 			},
+			 * 			"address":"\u5e7f\u4e1c\u7701\u5e7f\u5dde\u5e02",
+			 * 			"point":{
+			 * 				"y":"2629614.08",
+			 * 				"x":"12613487.11"
+			 * 			}
+			 * 		},
+			 * 		"status":0
+			 * }
+			 */
+			String tjson = HttpUtils.sendPost(baiduAddressUrl, "ak="+baiduAk+"&ip="+ip+"&sn="+sn);
+			Map tmap = (Map) JSONObject.parse(tjson);
+			if(tmap != null && (Integer)tmap.get("status") == 0){
+				String address = (String)((Map)tmap.get("content")).get("address");
 				return address;
 			}
 		}
