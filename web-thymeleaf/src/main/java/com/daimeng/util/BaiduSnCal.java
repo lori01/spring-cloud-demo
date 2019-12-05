@@ -33,7 +33,16 @@ public class BaiduSnCal {
 		// 调用下面的MD5方法得到最后的sn签名7de5a22212ffaa9e326444c75a58f9a0
 		System.out.println(BaiduSnCal.MD5(tempStr));*/
 	}
-	
+	/**
+	 * 
+	* @功能描述: 计算sn跟参数对出现顺序有关，
+	* get请求请使用LinkedHashMap保存<key,value>，该方法根据key的插入顺序排序；
+	* post请使用TreeMap保存<key,value>，该方法会自动将key按照字母a-z顺序排序。
+	* 所以get请求可自定义参数顺序（sn参数必须在最后）发送请求，
+	* 但是post请求必须按照字母a-z顺序填充body（sn参数必须在最后）。
+	* 以get请求为例：http://api.map.baidu.com/geocoder/v2/?address=百度大厦&output=json&ak=yourak，
+	* paramsMap中先放入address，再放output，然后放ak，放入顺序必须跟get请求中对应参数的出现顺序保持一致。
+	 */
 	public static String getSnForIp(String ak,String sk, String ip) throws UnsupportedEncodingException,
 	NoSuchAlgorithmException{
 		Map paramsMap = new LinkedHashMap<String, String>();
