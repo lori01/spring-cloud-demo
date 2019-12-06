@@ -357,10 +357,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
 	outline: 0
 }
 
-/* 纹理 daimeng 戴猛 */
+/* 纹理 daimeng 戴猛 wenli wenli2*/
 body {
 	background: #F0ECE0;
-	background-image: url(/ico/wenli.png);
+	/* background-image: url(/ico/wenli.png); */
+	background-image: url(/ico/wenli2.jpg);
 	line-height: 1
 }
 
