@@ -466,8 +466,9 @@ public class WordPoiTools {
 
 	public static void setDefaultWordCellSelfStyle(XWPFTableCell cell,
 			long cellWidth, String content) {
-		setWordCellSelfStyle(cell, "微软雅黑", "9", 0, "left", "top", "#000000",
-				"#FFFFFF", cellWidth, content);
+		cell.setText(content);
+		/*setWordCellSelfStyle(cell, "微软雅黑", "9", 0, "left", "top", "#000000",
+				"#FFFFFF", cellWidth, content);*/
 	}
 
 	/**
