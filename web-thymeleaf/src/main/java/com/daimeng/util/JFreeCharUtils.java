@@ -817,7 +817,8 @@ public class JFreeCharUtils {
 		piePlot.setLabelOutlinePaint(null);// 去掉边框
 		piePlot.setShadowPaint(null);
 		// 0:category 1:value:2 :percentage
-		piePlot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}:{2}"));// 显示标签数据
+		//piePlot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}:{2}"));// 显示标签数据
+		piePlot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}:{1}({2}%)"));// 显示标签数据
 	}
 
 	/**
