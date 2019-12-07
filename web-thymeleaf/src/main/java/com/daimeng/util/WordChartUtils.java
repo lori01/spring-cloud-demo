@@ -87,8 +87,8 @@ public class WordChartUtils {
 		SimpleDateFormat sdf_datetime_format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf_datetime_format.format(Calendar.getInstance().getTime());
 		
-		//final String templateurl="D:/java_test/问卷调查test/Word_Test.docx";
-		final String templateurl="D:/java_test/问卷调查test/Word_Test_2.docx";
+		//final String templateurl="D:/java_test/问卷调查test/问卷调查模板-替换.docx";
+		final String templateurl="D:/java_test/问卷调查test/问卷调查模板-生成.docx";
 		
 		final String returnurl="D:/java_test/问卷调查test/Word_Test_" + date + ".docx";
 		InputStream is = new FileInputStream(new File(templateurl));
