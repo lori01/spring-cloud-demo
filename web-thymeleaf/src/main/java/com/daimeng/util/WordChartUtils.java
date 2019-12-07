@@ -420,7 +420,7 @@ public class WordChartUtils {
 			
 			//修复poi3.7-3.9的缺陷
 			/*String pid = doc.addPictureData(new FileInputStream(imgPath), Document.PICTURE_TYPE_JPEG);
-			doc.createPicture(pid,run, 400, 400);*/
+			doc.createPicture(pid,doc.getNextPicNameNumber(XWPFDocument.PICTURE_TYPE_JPEG),run, 400, 400);*/
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
