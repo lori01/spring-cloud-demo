@@ -57,10 +57,14 @@ import org.jfree.data.time.TimeSeries;
 public class JFreeCharUtils {
 
 	public static void main(String[] args) {
-		String[] names = {"A.第一个答案","B.第二个答案","C.第三个答案","D.第四个答案","E.第五个答案"};
+		String[] row = {"A","B","C","D"};
+		String[] column = {"题目一","题目二","题目三","题目四","题目五"};
 		Double[] data = {10d,20d,30d,50d,15d};
-		makeBarChart(names, data, "D:/java_test/问卷调查test/柱状图1.jpg");
-		makePieChart(names, data, "D:/java_test/问卷调查test/饼图1.jpg");
+		Double[][] data2 = {{10d,11d,12d,13d},{20d,21d,22d,23d},{30d,31d,32d,33d},{40d,41d,42d,43d},{50d,51d,52d,53d}};
+		makeBarChart(column, data, "D:/java_test/问卷调查test/柱状图1.jpg");
+		makePieChart(column, data, "D:/java_test/问卷调查test/饼图1.jpg");
+		
+		makeBarChartMult(row, column, data2, "D:/java_test/问卷调查test/柱状图-多列.jpg");
 		//Constants.println("success");
 	}
 	
@@ -88,6 +92,20 @@ public class JFreeCharUtils {
 		new Color(153,158,255), new Color(255,117,153), new Color(253,236,109), new Color(128,133,232),
 		new Color(158,90,102),new Color(255, 204, 102) };// 颜色
 	
+	/**
+	 * 
+	* @功能描述: 单维柱状图
+	* @方法名称: makeBarChart 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng.fun
+	* @E-Mail sephy9527@qq.com
+	* @创建时间 2019年12月7日 下午10:09:21 
+	* @version V1.0   
+	* @param names 横坐标
+	* @param data 数据
+	* @param imgPath 
+	* @return void
+	 */
 	public static void makeBarChart(String[] names, Double[] data, String imgPath) {
 		setChartTheme();
 		//CategoryDataset ds = getDataSet();
@@ -136,6 +154,86 @@ public class JFreeCharUtils {
 			}
 		} 
 	}
+	/**
+	 * 
+	* @功能描述: 多维柱状图
+	* @方法名称: makeBarChartMult 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng.fun
+	* @E-Mail sephy9527@qq.com
+	* @创建时间 2019年12月7日 下午10:08:04 
+	* @version V1.0   
+	* @param row 每个横坐标上的柱状明细
+	* @param column 横坐标内容
+	* @param data 二维数组{{},{},{}} Double[row.length][column.length]
+	* @param imgPath 
+	* @return void
+	 */
+	public static void makeBarChartMult(String[] row,String[] column, Double[][] data, String imgPath) {
+		setChartTheme();
+		//CategoryDataset ds = getDataSet();
+		DefaultCategoryDataset ds = new DefaultCategoryDataset();
+		for(int i = 0; i < column.length; i ++){
+			//ds.addValue(value, rowKey, columnKey);
+			//ds.addValue(data[i], names[i], names[i]);
+			for(int j = 0; j < row.length; j ++){
+				ds.addValue(data[i][j], row[j], column[i]);
+			}
+		}
+		JFreeChart chart = ChartFactory.createBarChart(
+				BAR_CHART_TITLE, //图表标题  
+				BAR_CHART_X_LABEL, //目录轴的显示标签
+				BAR_CHART_Y_LABEL, //数值轴的显示标签  
+				ds,//数据集  
+				PlotOrientation.VERTICAL, //图表方向  
+				true, //是否显示图例，对于简单的柱状图必须为false  
+				false, //是否生成提示工具  
+				false //是否生成url链接  
+				);
+		CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
+		setBarRenderer(categoryplot, true);
+		
+		NumberAxis numberaxis = (NumberAxis) categoryplot.getRangeAxis();
+		//y轴精度 最大值和最小值
+		//numberaxis.setUpperBound(100);
+		numberaxis.setLowerBound(0);
+		
+		CategoryAxis domainAxis = categoryplot.getDomainAxis();
+		//横轴上的 Lable 90度倾斜
+		//domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
+		domainAxis.setMaximumCategoryLabelLines(10); //标题行数，每个字显示一行
+		domainAxis.setMaximumCategoryLabelWidthRatio(0.5f); //每个标题宽度，控制为1个字的宽度
+		
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(imgPath);
+			ChartUtils.writeChartAsJPEG(out, CHAR_QUALITY, chart, CHAR_WIDTH, CHAR_HEIGHT, null);
+			//ChartUtils.saveChartAsJPEG(new File("D:/java_test/问卷调查test/img-test-"+System.currentTimeMillis()+".jpg"), chart, CHAR_WIDTH, CHAR_HEIGHT);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				out.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		} 
+	}
+	
+	/**
+	 * 
+	* @功能描述: 饼图
+	* @方法名称: makePieChart 
+	* @路径 com.daimeng.util 
+	* @作者 daimeng.fun
+	* @E-Mail sephy9527@qq.com
+	* @创建时间 2019年12月7日 下午10:09:55 
+	* @version V1.0   
+	* @param names
+	* @param data
+	* @param imgPath 
+	* @return void
+	 */
 	public static void makePieChart(String[] names, Double[] data, String imgPath) {
 		setChartTheme();
 		DefaultPieDataset ds = new DefaultPieDataset();
