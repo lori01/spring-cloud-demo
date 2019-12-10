@@ -6,14 +6,26 @@ public class LetterTest {
 		/*String word = "abcarsbcebrefgfghsth";
 		System.out.println(getNoRepeatLetter(word));
 		System.out.println(getNoRepeatLetter2(word));*/
-		String stttt = "中azAZ";
+		
+		/*String stttt = "中azAZ";
 		System.out.println(stttt.length());
 		byte[]  buff = stttt.getBytes();
 		int i = buff.length;
 		System.out.println(i);
 		for(byte b : buff){
 			System.out.println(b);
-		}
+		}*/
+		String a = "ssabc";
+		String b = a;
+		String c = new String(a);
+		System.out.println(a == b);
+		System.out.println(a == c);
+		b += "ccc";
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(c);
+		System.out.println(a == b);
+		System.out.println(a == c);
 	}
 	//获取单词内第一个不重复的字母
 	public static String getNoRepeatLetter(String word){
