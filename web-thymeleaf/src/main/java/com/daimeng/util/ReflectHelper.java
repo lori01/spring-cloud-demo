@@ -113,4 +113,15 @@ public class ReflectHelper {
         
     }
     
+    public static Object getObjectForName(String className){
+    	Class clazz = null;
+        try {
+            clazz = Class.forName(className);
+            return clazz.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 }
