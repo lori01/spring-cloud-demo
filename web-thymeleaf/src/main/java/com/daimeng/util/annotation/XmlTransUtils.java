@@ -1,4 +1,4 @@
-package com.daimeng.util;
+package com.daimeng.util.annotation;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.daimeng.util.annotation.XmlTransMappingAnnotation;
+import com.daimeng.util.DateUtils;
 import com.daimeng.web.article.entity.ArticleInfo;
 import com.daimeng.web.comment.entity.CommentInfo;
 

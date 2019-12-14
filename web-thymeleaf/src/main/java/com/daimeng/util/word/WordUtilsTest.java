@@ -1,9 +1,11 @@
-package com.daimeng.util;
+package com.daimeng.util.word;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+
+import com.daimeng.util.Constants;
 
 public class WordUtilsTest {
 

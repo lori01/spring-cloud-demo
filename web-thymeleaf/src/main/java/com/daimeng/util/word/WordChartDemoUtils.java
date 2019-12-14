@@ -1,4 +1,4 @@
-package com.daimeng.util;
+package com.daimeng.util.word;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

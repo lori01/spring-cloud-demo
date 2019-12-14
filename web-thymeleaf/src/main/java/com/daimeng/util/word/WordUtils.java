@@ -1,4 +1,4 @@
-package com.daimeng.util;
+package com.daimeng.util.word;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -26,6 +26,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.daimeng.util.Constants;
 
 /**
  * 
