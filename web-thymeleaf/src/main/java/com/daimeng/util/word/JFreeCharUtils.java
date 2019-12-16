@@ -24,6 +24,7 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.DateTickUnitType;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.ItemLabelAnchor;
@@ -132,6 +133,8 @@ public class JFreeCharUtils {
 		//y轴精度 最大值和最小值
 		numberaxis.setUpperBound(100);
 		numberaxis.setLowerBound(0);
+		//纵坐标间隔
+		numberaxis.setTickUnit(new NumberTickUnit(20d));
 		
 		CategoryAxis domainAxis = categoryplot.getDomainAxis();
 		//横轴上的 Lable 90度倾斜
@@ -163,9 +166,10 @@ public class JFreeCharUtils {
 	* @E-Mail sephy9527@qq.com
 	* @创建时间 2019年12月7日 下午10:08:04 
 	* @version V1.0   
-	* @param row 每个横坐标上的柱状明细
-	* @param column 横坐标内容
+	* @param row 每个横坐标上的柱状明细，比如{"A","B","C","D"};
+	* @param column 横坐标内容，比如{"题目一","题目二","题目三","题目四","题目五"};
 	* @param data 二维数组{{},{},{}} Double[row.length][column.length]
+	* 比如{{10d,11d,12d,13d},{20d,21d,22d,23d},{30d,31d,32d,33d},{40d,41d,42d,43d},{50d,51d,52d,53d}};
 	* @param imgPath 
 	* @return void
 	 */
@@ -197,6 +201,8 @@ public class JFreeCharUtils {
 		//y轴精度 最大值和最小值
 		//numberaxis.setUpperBound(100);
 		numberaxis.setLowerBound(0);
+		//纵坐标间隔
+		numberaxis.setTickUnit(new NumberTickUnit(10d));
 		
 		CategoryAxis domainAxis = categoryplot.getDomainAxis();
 		//横轴上的 Lable 90度倾斜
