@@ -15,10 +15,10 @@ eureka:
     
 zuul:
   routes:
-    api-a:
-      path: /producer/**
-      serviceId: spring-cloud-producer
-    api-b: 
+    web:
+      path: /web/**
+      serviceId: spring-boot-web-app
+    api-1: 
       path: /consumer/**
       serviceId: spring-cloud-consumer
   #是否开启重试功能
